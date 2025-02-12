@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('initials', 12);
             $table->integer('parent')->unsigned()->nullable();
             $table->integer('level')->unsigned();
-            $table->foreignId('state')->default(1)->constrained()->cascadeOnUpdate()->cascadeOnDelete();
+            $table->foreignId('state_id')->default(1)->constrained('states')->cascadeOnUpdate()->cascadeOnDelete();
             $table->timestamps();
         });
     }

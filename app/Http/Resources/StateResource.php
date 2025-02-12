@@ -17,8 +17,10 @@ class StateResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'initials' => $this->initials,
-            'state' => $this->state,
+            'description' => $this->description,
+            'code' => $this->code,
+            'color' => $this->color,
+            'order' => $this->order,
             'created_at' => $this->created_at->format('d-m-Y H:m'),
             'upates_at' => $this->updated_at->format('d-m-Y H:m') 
         ];

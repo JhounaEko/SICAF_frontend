@@ -1,0 +1,77 @@
+###Test get states routes
+GET http://127.0.0.1:8000/api/v1/states?sort_by=created_at&sort_order=desc
+###Test post states routes
+POST http://127.0.0.1:8000/api/v1/states
+Content-Type: application/json
+
+{
+    "name": "inactive",
+    "description": "RegISTratiON is inactive or disabled.",
+    "code": "INA",
+    "color": "#FF0000",
+    "order": 2
+}
+
+###Test post states routes
+POST http://127.0.0.1:8000/api/v1/states
+Content-Type: application/json
+
+{
+    "name": "active",
+    "description": "RegISTratiON is in use.",
+    "code": "ACT",
+    "color": "#FF0000",
+    "order": 1
+}
+###Test put states routes
+PUT http://127.0.0.1:8000/api/v1/states/1
+Content-Type: application/json
+
+{
+    "name": "active",
+    "description": "RegISTratiON iS iN USE.",
+    "code": "ACT",
+    "color": "#00FF00",
+    "order": 23
+}
+###Test patch states routes
+PATCH http://127.0.0.1:8000/api/v1/states/1
+Content-Type: application/json
+
+{
+    "order": 1
+}
+###Test show state
+GET http://127.0.0.1:8000/api/v1/states/2
+
+###Test get offices
+GET http://127.0.0.1:8000/api/v1/offices?page=5&include_hierarchy=0&sort_by=id&sort_order=asc
+###Test post offices
+POST http://127.0.0.1:8000/api/v1/offices
+Content-Type: application/json
+
+{
+    "name" : "SECRETARÍA MUNICIPAL DE ADMINISTRACIÓN Y FINANZAS",
+    "initials": "SMAF",
+    "level": 1
+}
+###Test put offices
+PUT http://127.0.0.1:8000/api/v1/offices/1
+Content-Type: application/json
+
+{
+    "name" : "SECRETARÍA MUNICIPAL DE ADMINISTRACIÓN Y FINANZAS.",
+    "initials": "SMAFI",
+    "level": 1
+}
+###Test patch offices
+PATCH http://127.0.0.1:8000/api/v1/offices/1
+Content-Type: application/json
+
+{
+    "initials": "SMAF",
+    "state_id": 1
+}
+###Test show offices
+GET http://127.0.0.1:8000/api/v1/offices/1
+

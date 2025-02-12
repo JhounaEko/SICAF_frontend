@@ -1,0 +1,76 @@
+<?php
+
+namespace App\Http\Requests;
+
+use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
+
+class FilterRequest extends FormRequest
+{
+    public function authorize(): bool
+    {
+        return true;
+    }
+    public function rules(): array
+    {
+        $sortableColumns = $this->input('sortable_columns', []);
+
+        return [
+            // Validaciones generales para los filtros
+            'sort_by' => ['nullable', 'string', Rule::in($sortableColumns)],
+            'sort_order' => ['nullable', 'string', 'in:ASC,DESC'],
+            'state' => ['nullable', 'integer', 'exists:states,id'],
+            'start_date' => ['nullable', 'date', 'before_or_equal:end_date'],
+            'end_date' => ['nullable', 'date', 'after_or_equal:start_date'],
+            'search' => ['nullable', 'string', 'max:255', 'regex:/^[a-zA-ZÁÉÍÓÚÑáéíóúñ\s\-,.]+$/'],
+            //Validaciones para filstros de estados
+            'code' => ['nullable', 'string', 'max:10'],
+            'color' => ['nullable', 'string', 'regex:/^#([0-9A-Fa-f]{3}){1,2}$/'],
+            'order' => ['nullable', 'int', 'min:0'],
+            // Validaciones para filtros de oficinas
+            'level' => ['nullable', 'integer', 'in:1,2,3'],
+            'parent' => ['nullable', 'integer'],
+            'include_hierarchy' => ['nullable', 'boolean'],
+            // Validaciones para filtros de usuarios
+            // 'email' => ['nullable', 'string', 'email'],
+            'phone_number' => ['nullable', 'string', 'regex:/^\[1-9]\d{1,14}$/'],
+            'username' => ['nullable', 'string', 'max:30'],
+            'office' => ['nullable', 'integer', 'exists:offices,id']
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'sort_order.in' => 'The sort_order field must be either ASC or DESC.',
+            'start_date.before_or_equal' => 'The start_date must be before or equal to the end_date.',
+            'end_date.after_or_equal' => 'The end_date must be after or equal to the start_date.',
+            'search.regex' => 'The search field only allows characters.',
+            'color.regex' => 'The color field must be hexadecimal values.',
+            'level.in' => 'The level field must be either 1, 2 or 3.',
+            'include_hierarchy.boolean' => 'The include hierarchy field must be 1 (true) or 0 (false).',
+        ];
+    }
+
+    public function prepareForValidation()
+    {
+        if ($this->has('sort_order')) {
+            $this->merge([
+                'sort_order' => mb_strtoupper($this->input('sort_order')),
+            ]);
+        }
+
+        if ($this->has('search')) {
+            $this->merge([
+                'search' => mb_strtoupper($this->input('search')),
+            ]);
+        }
+
+        if ($this->has('code')) {
+            $this->merge([
+                'code' => mb_strtoupper($this->input('code')),
+            ]);
+        }
+    }
+
+}

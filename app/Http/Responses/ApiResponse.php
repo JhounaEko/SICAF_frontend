@@ -10,7 +10,7 @@ class ApiResponse
             'statusCode' => $statusCode,
             'message' => $message,
             'error' => false,
-            'data' => $data
+            'results' => $data
 
         ], $statusCode, ['Content-Type' => 'application/json; charset=utf-8']);
     }
