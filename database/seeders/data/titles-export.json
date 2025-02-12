@@ -1,0 +1,12 @@
+[
+ {"name":"Ingeniero", "abbreviation":"Ing."},
+ {"name":"Doctor", "abbreviation":"Dr."},
+ {"name":"Arquitecto", "abbreviation":"Arq."},
+ {"name":"Técnico", "abbreviation":"Tec."},
+ {"name":"Profesor", "abbreviation":"Prof."},
+ {"name":"Contador", "abbreviation":"C.P."},
+ {"name":"Psicólogo", "abbreviation":"Psic."},
+ {"name":"Abogado", "abbreviation":"Abg."},
+ {"name":"Enfermero", "abbreviation":"Enf."},
+ {"name":"Honorable", "abbreviation":"H."},
+ {"name":"Mayor", "abbreviation":"My."}]

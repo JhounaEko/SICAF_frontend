@@ -20,8 +20,8 @@ return new class extends Migration
             $table->string('password');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
-            $table->foreignId('office')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
-            $table->foreignId('state')->default(1)->constrained()->cascadeOnUpdate()->cascadeOnDelete();
+            $table->foreignId('office_id')->constrained('offices')->cascadeOnUpdate()->cascadeOnDelete();
+            $table->foreignId('state_id')->default(1)->constrained('states')->cascadeOnUpdate()->cascadeOnDelete();
 
             $table->rememberToken();
             $table->timestamps();

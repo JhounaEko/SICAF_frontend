@@ -1,0 +1,38 @@
+[
+    {
+        "name": "DIRECTOR GENERAL",
+        "description": "Lidera y dirige la entidad, asegurando el cumplimiento de objetivos estratégicos."
+    },
+    {
+        "name": "JEFE SUPERVISOR DE PASANTÍAS",
+        "description": "Cumple con las funciones de jefe y supervisa las pasantías en la entidad."
+    },
+    {
+        "name": "SECRETARIO MUNICIPAL",
+        "description": "Gestiona y administra las actividades municipales y asuntos administrativos."
+    },
+    {
+        "name": "JEFE de UNIDAD",
+        "description": "Encargado de liderar una unidad específica dentro de la organización."
+    },
+    {
+        "name": "COORDINADOR DE PASANTÍAS Y TRABAJO DIRIGIDO",
+        "description": "Coordina programas de pasantías y trabajo dirigido."
+    },
+    {
+        "name": "RESPONSABLE SUPERVISOR DE PASANTíAS",
+        "description": "Supervisa y coordina las actividades de pasantías."
+    },
+    {
+        "name": "DIRECTOR SUPERVISOR DE PASANTíAS",
+        "description": "Cumple con las funciones de director y supervisa las pasantías en la entidad."
+    },
+    {
+        "name": "RESPONSABLE SUPERVISOR DE TRABAJO DIRIGIDO",
+        "description": "Supervisa y coordina actividades de trabajo dirigido."
+    },
+    {
+        "name": "RESPONSABLE SUPERVISOR DE PASANTIAS Y TRABAJO DIRIGIDO",
+        "description": "Encargado de la supervisión de pasantías y trabajo dirigido."
+    }
+]

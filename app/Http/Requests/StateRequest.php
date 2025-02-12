@@ -22,17 +22,27 @@ class StateRequest extends FormRequest
      */
     public function rules(): array
     {
+        if ($this->method() === 'PATCH') {
+            return [
+                'name' => ['sometimes', 'string', 'max:15'],
+                'description' => ['sometimes', 'string', 'max:50'],
+                'code' => ['sometimes', 'string', 'max:10' ,Rule::unique('states', 'code')->ignore($this->state)],
+                'color' => ['sometimes', 'string', 'regex:/^#([0-9A-Fa-f]{3}){1,2}$/'],
+                'order' => ['sometimes', 'int', 'min:0']
+            ];
+        }
         return [
             'name' => ['required', 'string', 'max:15'],
             'description' => ['required', 'string', 'max:50'],
-            'code' => ['required', 'string', 'max:10' ,Rule::unique('states', 'code')],
-            'color' => ['required', 'regex:/^#([0-9A-Fa-f]{3}){1,2}$/']
+            'code' => ['required', 'string', 'max:10' ,Rule::unique('states', 'code')->ignore($this->state)],
+            'color' => ['required', 'string', 'regex:/^#([0-9A-Fa-f]{3}){1,2}$/'],
+            'order' => ['required', 'int', 'min:0']
         ];
     }
 
     public function messages(): array {
         return [
-            'color:regex' => 'Enter hexadecimal values.'
+            'color.regex' => 'Enter hexadecimal values.'
         ];
     }
 }
