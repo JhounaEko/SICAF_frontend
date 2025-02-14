@@ -7,11 +7,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable, HasRoles;
+    use HasFactory, Notifiable, HasRoles, HasApiTokens;
 
     /**
      * The attributes that are mass assignable.
@@ -105,15 +106,20 @@ class User extends Authenticatable
         }
     }
 
-    public function scopeFilterByNameOrEmail($query, $input)
+    public function scopeFilterByName($query, $input)
     {
         $search = mb_strtoupper(trim($input));
         if (!is_null($search)) {
             $query->where(function ($q) use ($search) {
                 $q->where('first_name', 'LIKE', "%{$search}%")
-                    ->orWhere('last_name', 'LIKE', "%{$search}%")
-                    ->orWhere('email', 'LIKE', "%{$search}%");
+                    ->orWhere('last_name', 'LIKE', "%{$search}%");
             });
+        }
+    }
+
+    public function scopeFilterByEmail($query, $email){
+        if (!is_null($email)){
+            $query->where('email', 'LIKE', $email);
         }
     }
 

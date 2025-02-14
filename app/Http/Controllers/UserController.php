@@ -17,7 +17,8 @@ class UserController extends Controller
             $query->filterByState($request->input('state'))
                 ->filterByOffice($request->input('office'))
                 ->filterByUsername($request->input('username'))
-                ->filterByNameOrEmail($request->input('search'))
+                ->filterByEmail($request->input('email'))
+                ->filterByName($request->input('search'))
                 ->filterByDates($request->input('start_date'), $request->input('end_date'));
             
             if($request->filled('sort_by')){
@@ -44,7 +45,7 @@ class UserController extends Controller
     }
     public function store(UserRequest $request) {
         try {
-            $user = User::create($request->validated);
+            $user = User::create($request->validated());
             return ApiResponse::success('User registered successfully.', 201, $user);
         } catch (\Exception $e) {
             return ApiResponse::error('An error unexpected ocurred', 500, $e->getMessage());
