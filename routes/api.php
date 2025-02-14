@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\OfficeController;
 use App\Http\Controllers\StateController;
 use App\Http\Controllers\UserController;
@@ -12,12 +13,17 @@ use Illuminate\Support\Facades\Route;
 // })->middleware('auth:sanctum');
 
 Route::prefix('v1')->group(function(){ 
-    Route::middleware([SetSortableColumns::class])->group(function(){
-        Route::get('states', [StateController::class, 'index'])->name('v1.states.index');
-        Route::get('offices', [OfficeController::class, 'index'])->name('v1.offices.index');
-        Route::get('users', [UserController::class, 'index'])->name('v1.users.index');
-    });
-    Route::apiResource('states', StateController::class)->except('index');
-    Route::apiResource('offices', OfficeController::class)->except('index');
-    Route::apiResource('users', UserController::class)->except('index');
+    Route::post('register', [UserController::class, 'store']);
+    Route::post('login',[AuthController::class, 'login']);
+    Route::middleware(['auth:sanctum'])->group(function () {
+        Route::middleware([SetSortableColumns::class])->group(function(){
+            Route::get('states', [StateController::class, 'index'])->name('v1.states.index');
+            Route::get('offices', [OfficeController::class, 'index'])->name('v1.offices.index');
+            Route::get('users', [UserController::class, 'index'])->name('v1.users.index');
+        });
+        Route::apiResource('states', StateController::class)->except('index');
+        Route::apiResource('offices', OfficeController::class)->except('index');
+        Route::apiResource('users', UserController::class)->except('index');
+        Route::post('logout', [AuthController::class, 'logout']);
+    });    
 });

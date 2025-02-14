@@ -1,8 +1,11 @@
-###Test get states routes
+###Test get states
 GET http://127.0.0.1:8000/api/v1/states?sort_by=created_at&sort_order=desc
-###Test post states routes
+Authorization: Bearer 2|l7SirljDhDTBt9loJ93K08U2p0KF2qXe8sm3uZYy7dc7f9a8
+Accept: application/json
+###Test post states
 POST http://127.0.0.1:8000/api/v1/states
 Content-Type: application/json
+Accept: application/json
 
 {
     "name": "inactive",
@@ -12,9 +15,10 @@ Content-Type: application/json
     "order": 2
 }
 
-###Test post states routes
+###Test post states
 POST http://127.0.0.1:8000/api/v1/states
 Content-Type: application/json
+Accept: application/json
 
 {
     "name": "active",
@@ -23,9 +27,10 @@ Content-Type: application/json
     "color": "#FF0000",
     "order": 1
 }
-###Test put states routes
+###Test put states
 PUT http://127.0.0.1:8000/api/v1/states/1
 Content-Type: application/json
+Accept: application/json
 
 {
     "name": "active",
@@ -34,21 +39,24 @@ Content-Type: application/json
     "color": "#00FF00",
     "order": 23
 }
-###Test patch states routes
+###Test patch states
 PATCH http://127.0.0.1:8000/api/v1/states/1
 Content-Type: application/json
+Accept: application/json
 
 {
     "order": 1
 }
 ###Test show state
 GET http://127.0.0.1:8000/api/v1/states/2
-
+Accept: application/json
 ###Test get offices
-GET http://127.0.0.1:8000/api/v1/offices?page=5&include_hierarchy=0&sort_by=id&sort_order=asc
+GET http://127.0.0.1:8000/api/v1/offices?page=1&include_hierarchy=1&sort_by=id&sort_order=asc&search=ACTIVO
+Accept: application/json
 ###Test post offices
 POST http://127.0.0.1:8000/api/v1/offices
 Content-Type: application/json
+Accept: application/json
 
 {
     "name" : "SECRETARÍA MUNICIPAL DE ADMINISTRACIÓN Y FINANZAS",
@@ -58,6 +66,7 @@ Content-Type: application/json
 ###Test put offices
 PUT http://127.0.0.1:8000/api/v1/offices/1
 Content-Type: application/json
+Accept: application/json
 
 {
     "name" : "SECRETARÍA MUNICIPAL DE ADMINISTRACIÓN Y FINANZAS.",
@@ -65,13 +74,73 @@ Content-Type: application/json
     "level": 1
 }
 ###Test patch offices
-PATCH http://127.0.0.1:8000/api/v1/offices/1
+PATCH http://127.0.0.1:8000/api/v1/offices/41
 Content-Type: application/json
+Accept: application/json
 
 {
-    "initials": "SMAF",
-    "state_id": 1
+    "state_id": 2
 }
 ###Test show offices
-GET http://127.0.0.1:8000/api/v1/offices/1
+GET http://127.0.0.1:8000/api/v1/offices/41
+Accept: application/json
+###Test get users
+GET http://127.0.0.1:8000/api/v1/users?page=1&sort_by=id&sort_order=desc
+Accept: application/json
+###Test post users
+POST http://127.0.0.1:8000/api/v1/users
+Content-Type: application/json
+Accept: application/json
 
+{
+    "first_name": "Alejandro Joel",
+    "last_name": "mAGNo LÓpez",
+    "phone_number": "61231132",
+    "username": "aleLoPez",
+    "password": "Danger3@",
+    "password_confirmation": "Danger3@",
+    "email": "ale@hotmail.com",
+    "office_id": 126
+}
+
+###Test update users
+PUT http://127.0.0.1:8000/api/v1/users/1
+Content-Type: application/json
+Accept: application/json
+
+{
+    "first_name": "Alejandro Joel",
+    "last_name": "mAGNo LÓpez",
+    "phone_number": "61231132",
+    "username": "aleLoPez",
+    "password": "Danger33@",
+    "password_confirmation": "Danger33@",
+    "email": "ale@hotmail.com",
+    "office_id": 126
+}
+###Test patch users
+PATCH http://127.0.0.1:8000/api/v1/users/1
+Content-Type: application/json
+Accept: application/json
+
+{
+    "state_id" : 1
+}
+###Test show users
+GET http://127.0.0.1:8000/api/v1/users/1
+Accept: application/json
+###Test login user 
+POST http://127.0.0.1:8000/api/v1/login
+Content-Type: application/json
+Accept: application/json
+
+{
+    "username": "zRiVas",
+    "password": "Danger3@"
+}
+
+###Test logout user
+POST http://127.0.0.1:8000/api/v1/logout
+Content-Type: application/json
+Authorization: Bearer 2|l7SirljDhDTBt9loJ93K08U2p0KF2qXe8sm3uZYy7dc7f9a8
+Accept: application/json
