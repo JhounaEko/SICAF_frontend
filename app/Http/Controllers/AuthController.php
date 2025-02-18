@@ -17,7 +17,8 @@ class AuthController extends Controller
             return ApiResponse::error('Invalid credentials.', 401);
         }
         $user = User::where('username', mb_strtoupper(trim($request->username)))->first();
-        $token = $user->createToken($user->first_name);
+        $tokenName = $user->username . ' - ' . now()->format('Y-m-d');
+        $token = $user->createToken($tokenName)->plainTextToken;
 
         return ApiResponse::success('User successfully authenticated.', 200, [
              'access_token' => $token,
