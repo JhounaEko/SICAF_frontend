@@ -1,6 +1,6 @@
 ###Test get states
 GET http://127.0.0.1:8000/api/v1/states?sort_by=created_at&sort_order=desc
-Authorization: Bearer 2|l7SirljDhDTBt9loJ93K08U2p0KF2qXe8sm3uZYy7dc7f9a8
+Authorization: Bearer 3|XWYbQGgIY3b3FqVJ2MA5VEeATy4hks2UFAOCwoRXbce367b3
 Accept: application/json
 ###Test post states
 POST http://127.0.0.1:8000/api/v1/states
@@ -87,6 +87,8 @@ Accept: application/json
 ###Test get users
 GET http://127.0.0.1:8000/api/v1/users?page=1&sort_by=id&sort_order=desc
 Accept: application/json
+Authorization: Bearer 4|wMgsWiE1tKJoVh8IoJ3LkD0UXLq2kJ6787CeR1zh0741f0f6
+
 ###Test post users
 POST http://127.0.0.1:8000/api/v1/users
 Content-Type: application/json
@@ -129,18 +131,20 @@ Accept: application/json
 ###Test show users
 GET http://127.0.0.1:8000/api/v1/users/1
 Accept: application/json
+Authorization: Bearer 4|wMgsWiE1tKJoVh8IoJ3LkD0UXLq2kJ6787CeR1zh0741f0f6
 ###Test login user 
 POST http://127.0.0.1:8000/api/v1/login
 Content-Type: application/json
 Accept: application/json
 
+
 {
-    "username": "zRiVas",
+    "username": "GUiLleM.PICharDo",
     "password": "Danger3@"
 }
 
 ###Test logout user
 POST http://127.0.0.1:8000/api/v1/logout
 Content-Type: application/json
-Authorization: Bearer 2|l7SirljDhDTBt9loJ93K08U2p0KF2qXe8sm3uZYy7dc7f9a8
+Authorization: Bearer 3|XWYbQGgIY3b3FqVJ2MA5VEeATy4hks2UFAOCwoRXbce367b3
 Accept: application/json
