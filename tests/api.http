@@ -1,6 +1,6 @@
 ###Test get states
 GET http://127.0.0.1:8000/api/v1/states?sort_by=created_at&sort_order=desc
-Authorization: Bearer 3|XWYbQGgIY3b3FqVJ2MA5VEeATy4hks2UFAOCwoRXbce367b3
+Authorization: Bearer 12|16Uy0hzz2TdKPIlNehfMqdWviJ5dauh4mhKcTAyB448801e3
 Accept: application/json
 ###Test post states
 POST http://127.0.0.1:8000/api/v1/states
@@ -43,6 +43,7 @@ Accept: application/json
 PATCH http://127.0.0.1:8000/api/v1/states/1
 Content-Type: application/json
 Accept: application/json
+Authorization: Bearer 12|16Uy0hzz2TdKPIlNehfMqdWviJ5dauh4mhKcTAyB448801e3
 
 {
     "order": 1
@@ -50,6 +51,7 @@ Accept: application/json
 ###Test show state
 GET http://127.0.0.1:8000/api/v1/states/2
 Accept: application/json
+Authorization: Bearer 12|16Uy0hzz2TdKPIlNehfMqdWviJ5dauh4mhKcTAyB448801e3
 ###Test get offices
 GET http://127.0.0.1:8000/api/v1/offices?page=1&include_hierarchy=1&sort_by=id&sort_order=asc&search=ACTIVO
 Accept: application/json
@@ -85,9 +87,9 @@ Accept: application/json
 GET http://127.0.0.1:8000/api/v1/offices/41
 Accept: application/json
 ###Test get users
-GET http://127.0.0.1:8000/api/v1/users?page=1&sort_by=id&sort_order=desc
+GET http://127.0.0.1:8000/api/v1/users?page=1&sort_by=id&sort_order=asc
 Accept: application/json
-Authorization: Bearer 4|wMgsWiE1tKJoVh8IoJ3LkD0UXLq2kJ6787CeR1zh0741f0f6
+Authorization: Bearer 12|16Uy0hzz2TdKPIlNehfMqdWviJ5dauh4mhKcTAyB448801e3
 
 ###Test post users
 POST http://127.0.0.1:8000/api/v1/users
@@ -124,19 +126,21 @@ Accept: application/json
 PATCH http://127.0.0.1:8000/api/v1/users/1
 Content-Type: application/json
 Accept: application/json
+Authorization: Bearer 10|7V3dJaPa7mpQv1U8nJwz8HFXzjhJAdH8E5JtGv7gf9b17e1b
 
 {
-    "state_id" : 1
+    "roles" : [1, 2]
 }
 ###Test show users
 GET http://127.0.0.1:8000/api/v1/users/1
 Accept: application/json
-Authorization: Bearer 4|wMgsWiE1tKJoVh8IoJ3LkD0UXLq2kJ6787CeR1zh0741f0f6
+Authorization: Bearer 10|7V3dJaPa7mpQv1U8nJwz8HFXzjhJAdH8E5JtGv7gf9b17e1b
+
+# Authorization: Bearer 4|wMgsWiE1tKJoVh8IoJ3LkD0UXLq2kJ6787CeR1zh0741f0f6
 ###Test login user 
 POST http://127.0.0.1:8000/api/v1/login
 Content-Type: application/json
 Accept: application/json
-
 
 {
     "username": "GUiLleM.PICharDo",
@@ -146,5 +150,78 @@ Accept: application/json
 ###Test logout user
 POST http://127.0.0.1:8000/api/v1/logout
 Content-Type: application/json
-Authorization: Bearer 3|XWYbQGgIY3b3FqVJ2MA5VEeATy4hks2UFAOCwoRXbce367b3
+Authorization: Bearer 12|16Uy0hzz2TdKPIlNehfMqdWviJ5dauh4mhKcTAyB448801e3
 Accept: application/json
+
+###Test get permission
+GET http://127.0.0.1:8000/api/v1/permissions?sort_by=id
+Accept: application/json
+Authorization: Bearer 12|16Uy0hzz2TdKPIlNehfMqdWviJ5dauh4mhKcTAyB448801e3
+
+###Test post permission
+POST http://127.0.0.1:8000/api/v1/permissions
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer 11|XBq2aKQr4RyYhL2v4HYSn3yZKTQRRmrYIwiOrhAybf8628eb
+
+{
+    "name": "delete roles"
+}
+###Test show permission
+GET http://127.0.0.1:8000/api/v1/permissions/3
+Accept: application/json
+Authorization: Bearer 7|ORfkdK9zgDkoCHB7Zim7HqPGq5wA4PXrW6MC2Vx3c13a89ee
+###Test update permission
+PUT http://127.0.0.1:8000/api/v1/permissions/2
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer 6|4aMki3bMPJE86XxziaZ2wzGWzLjjwkdi2ZbYSzkt8d75a773
+
+{
+    "name": "Edit Data."
+}
+###Test patch permission
+PATCH http://127.0.0.1:8000/api/v1/permissions/1
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer 6|4aMki3bMPJE86XxziaZ2wzGWzLjjwkdi2ZbYSzkt8d75a773
+
+{
+    "name": "RegisTer DAta.",
+    "state_id": 1
+}
+###Test get roles
+GET http://127.0.0.1:8000/api/v1/roles
+Accept: application/json
+Authorization: Bearer 12|16Uy0hzz2TdKPIlNehfMqdWviJ5dauh4mhKcTAyB448801e3
+###Test post roles
+POST http://127.0.0.1:8000/api/v1/roles
+Content-Type: application/json
+Accept: application/json
+Authorization: Bearer 7|ORfkdK9zgDkoCHB7Zim7HqPGq5wA4PXrW6MC2Vx3c13a89ee
+
+{
+    "name": "user"
+}
+###Test put roles
+PUT http://127.0.0.1:8000/api/v1/roles/1
+Content-Type: application/json
+Accept: application/json
+Authorization: Bearer 7|ORfkdK9zgDkoCHB7Zim7HqPGq5wA4PXrW6MC2Vx3c13a89ee
+
+{
+}
+###Test patch roles
+PATCH http://127.0.0.1:8000/api/v1/roles/2
+Content-Type: application/json
+Accept: application/json
+Authorization: Bearer 12|16Uy0hzz2TdKPIlNehfMqdWviJ5dauh4mhKcTAyB448801e3
+
+{
+    "permissions": [3, 7, 11]
+}
+###Test show roles
+GET http://127.0.0.1:8000/api/v1/roles/2
+Accept: application/json
+Authorization: Bearer 12|16Uy0hzz2TdKPIlNehfMqdWviJ5dauh4mhKcTAyB448801e3
+

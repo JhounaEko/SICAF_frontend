@@ -7,12 +7,20 @@ use App\Models\State;
 use App\Http\Requests\StateRequest;
 use App\Http\Resources\StateResource;
 use App\Http\Responses\ApiResponse;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 
-class StateController extends Controller
+class StateController extends Controller implements HasMiddleware
 {
-    /**
-     * Display a listing of the resource.
-     */
+    public static function middleware()
+    {
+        return [
+            new Middleware('permission:VIEW STATES', only: ['index', 'show']),
+            new Middleware('permission:CREATE STATES', only: ['store']),
+            new Middleware('permission:UPDATE STATES', only: ['update']),
+        ];
+    }
+    
     public function index(FilterRequest $request)
     {
         try {

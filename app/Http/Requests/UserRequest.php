@@ -31,7 +31,9 @@ class UserRequest extends FormRequest
                 'password' => ['sometimes', 'string', 'min:8', 'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/', 'confirmed'],
                 'email' => ['sometimes', 'string', 'email', 'regex:/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/', Rule::unique('users', 'email')->ignore($this->user)],
                 'office_id' => ['sometimes', 'integer', 'exists:offices,id'],
-                'state_id' => ['sometimes', 'integer', 'exists:states,id']
+                'state_id' => ['sometimes', 'integer', 'exists:states,id'],
+                'roles' => ['sometimes', 'array'],
+                'roles.*' => ['exists:roles,id']
             ];
         }
         return [
@@ -42,7 +44,9 @@ class UserRequest extends FormRequest
             'password' => ['required', 'string', 'min:8', 'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/', 'confirmed'],
             'email' => ['required', 'string', 'email', 'regex:/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/', Rule::unique('users', 'email')->ignore($this->user)],
             'office_id' => ['required', 'integer', 'exists:offices,id'],
-            'state_id' => ['nullable', 'integer', 'exists:states,id']
+            'state_id' => ['nullable', 'integer', 'exists:states,id'],
+            'roles' => ['sometimes', 'array'],
+            'roles.*' => ['exists:roles,id']
         ];
     }
 

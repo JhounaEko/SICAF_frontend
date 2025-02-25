@@ -8,9 +8,22 @@ use App\Http\Resources\UserResource;
 use App\Http\Responses\ApiResponse;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 
-class UserController extends Controller
+
+
+class UserController extends Controller implements HasMiddleware
 {
+    public static function middleware()
+    {
+        return [
+            new Middleware('permission:VIEW USERS', only: ['index', 'show']),
+            new Middleware('permission:CREATE USERS', only: ['store']),
+            new Middleware('permission:UPDATE USERS', only: ['update']),
+        ];
+    }
+
     public function index(FilterRequest $request) {
         try {
             $query = User::query();
@@ -46,6 +59,9 @@ class UserController extends Controller
     public function store(UserRequest $request) {
         try {
             $user = User::create($request->validated());
+            if ($request->has('roles')) {
+                $user->assignRole($request->input('roles'));
+            }
             return ApiResponse::success('User registered successfully.', 201, $user);
         } catch (\Exception $e) {
             return ApiResponse::error('An error unexpected ocurred', 500, $e->getMessage());
@@ -56,11 +72,11 @@ class UserController extends Controller
             if (!is_numeric($id)) {
                 return ApiResponse::error('Invalid ID format.', 400);
             }
-            $state = User::find($id);
-            if (!$state) {
+            $user = User::find($id);
+            if (!$user) {
                 return ApiResponse::error('User not found.', 200);
             }
-            return ApiResponse::success('User found', 200, UserResource::make($state));
+            return ApiResponse::success('User found', 200, UserResource::make($user));
         } catch (\Exception $e) {
             return ApiResponse::error('An error unexpected.', 500, $e->getMessage());
         }
@@ -75,6 +91,9 @@ class UserController extends Controller
                 return ApiResponse::error('User not found.', 200);
             }
             $user->update($request->validated());
+            if ($request->has('roles')) {
+                $user->syncRoles($request->input('roles'));
+            }
             return ApiResponse::success('User updated succesfully.', 200, $user);
         } catch (\Exception $e) {
             return ApiResponse::error('An error unexpected.', 500, $e->getMessage());

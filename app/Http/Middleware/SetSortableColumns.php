@@ -18,10 +18,14 @@ class SetSortableColumns
         $sortableColumns = [];
         if ($request->routeIs('v1.states.index')) {
             $sortableColumns = ['id', 'name', 'description', 'code', 'color', 'order', 'created_at', 'updated_at'];
-        } else if ($request->routeIs('v1.offices.index')) {
+        }else if ($request->routeIs('v1.offices.index')) {
             $sortableColumns = ['id', 'name', 'initials', 'parent', 'level', 'state_id', 'created_at', 'updated_at'];
         }else if ($request->routeIs('v1.users.index')){
             $sortableColumns = ['id', 'first_name', 'last_name', 'phone_number', 'username', 'email', 'office_id', 'state_id', 'created_at', 'updated_at'];
+        }else if ($request->routeIs('v1.permissions.index')) {
+            $sortableColumns = ['id', 'name', 'guard', 'state_id', 'created_at', 'updated_at'];
+        }else if ($request->routeIs('v1.roles.index')) {
+            $sortableColumns = ['id', 'name', 'guard', 'state_id', 'created_at', 'updated_at'];
         }
 
         $request->merge(['sortable_columns' => $sortableColumns]);
