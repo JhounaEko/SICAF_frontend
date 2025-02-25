@@ -7,9 +7,21 @@ use App\Http\Requests\OfficeRequest;
 use App\Http\Resources\OfficeResource;
 use App\Http\Responses\ApiResponse;
 use App\Models\Office;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 
-class OfficeController extends Controller
+
+class OfficeController extends Controller implements HasMiddleware
 {
+    public static function middleware()
+    {
+        return [
+            new Middleware('permission:VIEW OFFICES', only: ['index', 'show']),
+            new Middleware('permission:CREATE OFFICES', only: ['store']),
+            new Middleware('permission:UPDATE OFFICES', only: ['update']),
+        ];
+    }
+
     public function index(FilterRequest $request)
     {
         try {
