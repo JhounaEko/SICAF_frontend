@@ -19,7 +19,7 @@ class PermissionController extends Controller implements HasMiddleware
     {
         return [
             new Middleware('permission:VIEW PERMISSIONS', only: ['index', 'show']),
-            new Middleware('permission:CREATE PERMISSIONS', only: ['store']),
+            new Middleware('permission:REGISTER PERMISSIONS', only: ['store']),
             new Middleware('permission:UPDATE PERMISSIONS', only: ['update']),
         ];
     }

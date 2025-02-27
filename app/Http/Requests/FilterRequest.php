@@ -23,7 +23,7 @@ class FilterRequest extends FormRequest
             'start_date' => ['nullable', 'date', 'before_or_equal:end_date'],
             'end_date' => ['nullable', 'date', 'after_or_equal:start_date'],
             'search' => ['nullable', 'string', 'max:255', 'regex:/^[a-zA-ZÁÉÍÓÚÑáéíóúñ\s\-,.]+$/'],
-            //Validaciones para filstros de estados
+            // Validaciones para filstros de estados
             'code' => ['nullable', 'string', 'max:10'],
             'color' => ['nullable', 'string', 'regex:/^#([0-9A-Fa-f]{3}){1,2}$/'],
             'order' => ['nullable', 'int', 'min:0'],
@@ -36,7 +36,7 @@ class FilterRequest extends FormRequest
             'phone_number' => ['nullable', 'string', 'regex:/^\[1-9]\d{1,14}$/'],
             'username' => ['nullable', 'string', 'max:30'],
             'email' => ['nullable', 'string', 'email', 'regex:/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/'],
-
+            //
             'office' => ['nullable', 'integer', 'exists:offices,id']
         ];
     }

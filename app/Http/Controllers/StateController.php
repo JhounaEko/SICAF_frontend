@@ -16,7 +16,7 @@ class StateController extends Controller implements HasMiddleware
     {
         return [
             new Middleware('permission:VIEW STATES', only: ['index', 'show']),
-            new Middleware('permission:CREATE STATES', only: ['store']),
+            new Middleware('permission:REGISTER STATES', only: ['store']),
             new Middleware('permission:UPDATE STATES', only: ['update']),
         ];
     }
