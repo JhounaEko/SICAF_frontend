@@ -17,7 +17,7 @@ class OfficeController extends Controller implements HasMiddleware
     {
         return [
             new Middleware('permission:VIEW OFFICES', only: ['index', 'show']),
-            new Middleware('permission:CREATE OFFICES', only: ['store']),
+            new Middleware('permission:REGISTER OFFICES', only: ['store']),
             new Middleware('permission:UPDATE OFFICES', only: ['update']),
         ];
     }

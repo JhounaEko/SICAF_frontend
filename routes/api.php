@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\OfficeController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\RoleController;
@@ -24,12 +25,14 @@ Route::prefix('v1')->group(function(){
             Route::get('users', [UserController::class, 'index'])->name('v1.users.index');
             Route::get('permissions', [PermissionController::class, 'index'])->name('v1.permissions.index');
             Route::get('roles', [RoleController::class, 'index'])->name('v1.roles.index');
+            Route::get('employees', [EmployeeController::class , 'index'])->name('v1.employees.index');
         });
         Route::apiResource('states', StateController::class)->except('index');
         Route::apiResource('offices', OfficeController::class)->except('index');
         Route::apiResource('users', UserController::class)->except('index');
         Route::apiResource('permissions', PermissionController::class)->except('index');
         Route::apiResource('roles', RoleController::class)->except('index');
+        Route::apiResource('employees', EmployeeController::class)->except('index');
         Route::post('logout', [AuthController::class, 'logout']);
     });    
 });
