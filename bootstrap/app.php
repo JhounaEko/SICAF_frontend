@@ -31,4 +31,10 @@ return Application::configure(basePath: dirname(__DIR__))
                 'responseStatus' => 403,
             ], 403);
         });
+         $exceptions->render(function (\Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException $e, $request) {
+            return response()->json([
+                'responseMessage' => 'You are not authorized to view or update this user.',
+                'responseStatus' => 403,
+            ], 403);
+        });
     })->create();
