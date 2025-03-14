@@ -10,17 +10,18 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 
 
 class UserController extends Controller implements HasMiddleware
 {
+    use AuthorizesRequests;
     public static function middleware()
     {
         return [
-            new Middleware('permission:VIEW USERS', only: ['index', 'show']),
+            new Middleware('permission:VIEW USERS', only: ['index']),
             new Middleware('permission:REGISTER USERS', only: ['store']),
-            new Middleware('permission:UPDATE USERS', only: ['update']),
         ];
     }
 
@@ -32,6 +33,8 @@ class UserController extends Controller implements HasMiddleware
                 ->filterByUsername($request->input('username'))
                 ->filterByEmail($request->input('email'))
                 ->filterByName($request->input('search'))
+                ->filterByOfficeName($request->input('office_name')) 
+                ->filterByOfficeInitials($request->input('office_initials'))
                 ->filterByDates($request->input('start_date'), $request->input('end_date'));
             
             if($request->filled('sort_by')){
@@ -67,33 +70,24 @@ class UserController extends Controller implements HasMiddleware
             return ApiResponse::error('An error unexpected ocurred', 500, $e->getMessage());
         }
     }
-    public function show($id) {
+    public function show(User $user) {
+        $this->authorize('view', $user);
         try {
-            if (!is_numeric($id)) {
-                return ApiResponse::error('Invalid ID format.', 400);
-            }
-            $user = User::find($id);
-            if (!$user) {
-                return ApiResponse::error('User not found.', 200);
-            }
             return ApiResponse::success('User found', 200, UserResource::make($user));
-        } catch (\Exception $e) {
+        } 
+        catch (\Exception $e) {
             return ApiResponse::error('An error unexpected.', 500, $e->getMessage());
         }
     }
-    public function update(UserRequest $request, $id) {
+    public function update(UserRequest $request, User $user) {
+        $this->authorize('view', $user);
         try {
-            if (!is_numeric($id)) {
-                return ApiResponse::error('Invalid ID format.', 400);
-            }
-            $user = User::find($id);
-            if (!$user) {
-                return ApiResponse::error('User not found.', 200);
-            }
             $user->update($request->validated());
+    
             if ($request->has('roles')) {
                 $user->syncRoles($request->input('roles'));
             }
+    
             return ApiResponse::success('User updated succesfully.', 200, $user);
         } catch (\Exception $e) {
             return ApiResponse::error('An error unexpected.', 500, $e->getMessage());

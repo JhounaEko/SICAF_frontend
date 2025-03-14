@@ -90,6 +90,13 @@ class User extends Authenticatable
 
     public function scopeSort($query, $sortBy, $sortOrder = 'asc')
     {
+        if (in_array($sortBy, ['office_name', 'office_initials'])) {
+            $officeField = ($sortBy === 'office_name') ? 'name' : 'initials';
+            return $query->join('offices', 'users.office_id', '=', 'offices.id')
+                ->orderBy("offices.{$officeField}", $sortOrder)
+                ->select('users.*'); 
+        }
+    
         return $query->orderBy($sortBy, $sortOrder);
     }
 
@@ -103,6 +110,24 @@ class User extends Authenticatable
     public function scopeFilterByOffice($query, $office) {
         if (!is_null($office)){
             $query->where('office_id', $office);
+        }
+    }
+
+    public function scopeFilterByOfficeName($query, $officeName)
+    {
+        if (!is_null($officeName)) {
+            $query->join('offices', 'users.office_id', '=', 'offices.id')
+                ->where('offices.name', 'LIKE', "%{$officeName}%")
+                ->select('users.*');
+        }
+    }
+
+    public function scopeFilterByOfficeInitials($query, $officeInitials)
+    {
+        if (!is_null($officeInitials)) {
+            $query->join('offices', 'users.office_id', '=', 'offices.id')
+                ->where('offices.initials', 'LIKE', "%{$officeInitials}%")
+                ->select('users.*');
         }
     }
 

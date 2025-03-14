@@ -28,6 +28,13 @@ class AuthController extends Controller
             if (!$user->roles()->exists()) {
                 return ApiResponse::error('User has no roles assigned.', 403); // 403 Forbidden
             }
+            $roles = $user->roles->map(function ($role) {
+                return [
+                    'id' => $role->id,
+                    'name' => $role->name,
+                    // Añade otros campos del rol si es necesario
+                ];
+            });
             
             $tokenName = $user->username . ' - ' . now()->format('Y-m-d');
             $token = $user->createToken($tokenName)->plainTextToken;
@@ -35,6 +42,7 @@ class AuthController extends Controller
             return ApiResponse::success('User successfully authenticated.', 200, [
                 'access_token' => $token,
                 'token_type' => 'Bearer',
+                'roles' => $roles
             ]);
         }
 

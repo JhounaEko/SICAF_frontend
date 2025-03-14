@@ -21,10 +21,16 @@ class UserResource extends JsonResource
             'phone_number' => $this->phone_number,
             'username' => $this->username,
             'email' => $this->email,
-            'roles' => $this->roles ? $this->roles->map(function ($roles) {
+            'roles' => $this->roles ? $this->roles->map(function ($role) {
                 return [
-                    'name' => $roles->name,
-                    'id' => $roles->id,
+                    'name' => $role->name,
+                    'id' => $role->id,
+                    'permissions' => $role->permissions->map(function ($permission) {
+                        return [
+                            'id' => $permission->id,
+                            'name' => $permission->name,
+                        ];
+                    }),
                 ];
             }) : [],
             'office' => [

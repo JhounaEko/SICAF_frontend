@@ -36,6 +36,8 @@ class FilterRequest extends FormRequest
             'phone_number' => ['nullable', 'string', 'regex:/^\[1-9]\d{1,14}$/'],
             'username' => ['nullable', 'string', 'max:30'],
             'email' => ['nullable', 'string', 'email', 'regex:/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/'],
+            'office_name' => ['nullable', 'string', 'exists:offices,name'],
+            'office_initials' => ['nullable', 'string', 'exists:offices,initials'],
             //
             'office' => ['nullable', 'integer', 'exists:offices,id']
         ];
