@@ -31,6 +31,17 @@ class UserResource extends JsonResource
                             'name' => $permission->name,
                         ];
                     }),
+                    'menus' => $role->menus->map(function ($menu) {
+                        return [
+                            'id' => $menu->id,
+                            'label' => $menu->label,
+                            'route' => $menu->route,
+                            'icon' => $menu->icon,
+                            'level' => $menu->level,
+                            'parent' => $menu->parent,
+                            // Puedes incluir más detalles del menú si es necesario
+                        ];
+                    }),
                 ];
             }) : [],
             'office' => [

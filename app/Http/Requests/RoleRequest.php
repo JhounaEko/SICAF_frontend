@@ -27,6 +27,8 @@ class RoleRequest extends FormRequest
                 'name' => ['sometimes', 'string', Rule::unique('roles', 'name')->ignore($this->role), 'min:4'],
                 'permissions' => ['sometimes', 'array'],
                 'permissions.*' => ['exists:permissions,id'],
+                'menus' => ['nullable', 'array'], // Añadimos la regla para el campo 'menus'
+                'menus.*' => ['exists:menus,id'],
                 'state_id' => ['sometimes', 'integer', 'exists:states,id']
             ];
         }
@@ -34,6 +36,8 @@ class RoleRequest extends FormRequest
             'name' => ['required', 'string', Rule::unique('roles', 'name')->ignore($this->role), 'min:4'],
             'permissions' => ['sometimes', 'array'],
             'permissions.*' => ['exists:permissions,id'],
+            'menus' => ['sometimes', 'array'], // Añadimos la regla para el campo 'menus'
+            'menus.*' => ['exists:menus,id'],
             'state_id' => ['nullable', 'integer', 'exists:states,id']
         ];
     }

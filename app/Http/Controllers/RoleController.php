@@ -61,7 +61,11 @@ class RoleController extends Controller implements HasMiddleware
                 $role->syncPermissions($request->input('permissions'));
             }
 
-            return ApiResponse::success('Role registered successfully', 201, $role->load('permissions'));
+            if ($request->has('menus')) {
+                $role->menus()->sync($request->input('menus'));
+            }
+
+            return ApiResponse::success('Role registered successfully', 201, $role->load(['permissions', 'menus']));
         } catch (\Exception $e) {
             return ApiResponse::error('An error occurred while registering the role.', 500, $e->getMessage());
         }
@@ -102,7 +106,11 @@ class RoleController extends Controller implements HasMiddleware
                 $role->syncPermissions($request->input('permissions'));
             }
 
-            return ApiResponse::success('Role updated succesfully.', 200, $role->load('permissions'));
+            if ($request->has('menus')) {
+                $role->menus()->sync($request->input('menus'));
+            }
+
+            return ApiResponse::success('Role updated succesfully.', 200, $role->load(['permissions', 'menus']));
         } catch (\Exception $e) {
             return ApiResponse::error('An error unexpected.', 500, $e->getMessage());
         }

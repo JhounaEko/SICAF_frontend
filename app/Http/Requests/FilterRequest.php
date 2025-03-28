@@ -30,6 +30,7 @@ class FilterRequest extends FormRequest
             // Validaciones para filtros de oficinas
             'level' => ['nullable', 'integer', 'in:1,2,3'],
             'parent' => ['nullable', 'integer'],
+            // Util tanto para oficinas como para los menus
             'include_hierarchy' => ['nullable', 'boolean'],
             // Validaciones para filtros de usuarios
             // 'email' => ['nullable', 'string', 'email'],
@@ -38,8 +39,10 @@ class FilterRequest extends FormRequest
             'email' => ['nullable', 'string', 'email', 'regex:/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/'],
             'office_name' => ['nullable', 'string', 'exists:offices,name'],
             'office_initials' => ['nullable', 'string', 'exists:offices,initials'],
-            //
-            'office' => ['nullable', 'integer', 'exists:offices,id']
+            'office' => ['nullable', 'integer', 'exists:offices,id'],
+            // Validacion para menus
+            'simple_view' => ['nullable', 'boolean'],
+
         ];
     }
 

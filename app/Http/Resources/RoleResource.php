@@ -24,6 +24,16 @@ class RoleResource extends JsonResource
                     'id' => $permission->id,
                 ];
             }) : [],
+            'menus' => $this->menus ? $this->menus->map(function ($menu) {
+                return [
+                    'label' => $menu->label,
+                    'id' => $menu->id,
+                    'route' => $menu->route,
+                    'icon' => $menu->icon,
+                    'level' => $menu->level,
+                    'parent' => $menu->parent,
+                ];
+            }) : [],
             'state' => [
                 'name' => $this->state->name,
                 'code' => $this->state->code,
