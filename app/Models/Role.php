@@ -3,9 +3,12 @@
 namespace App\Models;
 
 use Spatie\Permission\Models\Role as SpatieRole;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class Role extends SpatieRole
+
+class Role extends SpatieRole implements Auditable
 {
+    use \OwenIt\Auditing\Auditable;
     protected $fillable = [
         'name',
         'guard_name',
@@ -15,6 +18,10 @@ class Role extends SpatieRole
     public function state()
     {
         return $this->belongsTo(State::class, 'state_id');
+    }
+
+    public function menus (){
+        return $this->belongsToMany(Menu::class, 'role_menu', 'role_id', 'menu_id');
     }
 
     public function setNameAttribute($value){

@@ -2,20 +2,19 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use OwenIt\Auditing\Contracts\Auditable;
 
-class Office extends Model implements Auditable
+class Menu extends Model implements Auditable
 {
-    /** @use HasFactory<\Database\Factories\OfficeFactory> */
-    use \OwenIt\Auditing\Auditable, HasFactory;
-
+    use \OwenIt\Auditing\Auditable;
     protected $fillable = [
-        'name',
-        'initials',
+        'label',
         'parent',
+        'route',
+        'icon',
         'level',
+        'order',
         'state_id'
     ];
 
@@ -24,24 +23,32 @@ class Office extends Model implements Auditable
         return $this->belongsTo(State::class, 'state_id');
     }
 
-    public function setNameAttribute($value)
+    public function roles (){
+        return $this->belongsToMany(Role::class, 'role_menu', 'menu_id', 'role_id');
+    }
+    public function setLabelAttribute($value)
     {
-        $this->attributes['name'] = mb_strtoupper(trim($value));
+        $this->attributes['label'] = mb_strtoupper(trim($value));
     }
 
-    public function setInitialsAttribute($value)
+    public function setRouteAttribute($value)
     {
-        $this->attributes['initials'] = mb_strtoupper(trim($value));
+        $this->attributes['route'] = mb_strtoupper(trim($value));
+    }
+
+    public function setIconAttribute($value)
+    {
+        $this->attributes['icon'] = mb_strtoupper(trim($value));
     }
 
     public function parent()
     {
-        return $this->belongsTo(Office::class, 'parent');
+        return $this->belongsTo(Menu::class, 'parent');
     }
 
-    public function childOffices()
+    public function childMenus()
     {
-        return $this->hasMany(Office::class, 'parent')->with('childOffices');
+        return $this->hasMany(Menu::class, 'parent')->with('childMenus');
     }
 
     public function scopeSort($query, $sortBy, $sortOrder = 'asc')
@@ -56,10 +63,10 @@ class Office extends Model implements Auditable
         }
     }
 
-    public function scopeFilterByLevel($query, $level)
+    public function scopeFilterByIcon($query, $icon)
     {
-        if (!is_null($level)) {
-            $query->where('level', $level);
+        if (!is_null($icon)) {
+            $query->where('icon',  'LIKE', "%{$icon}%");
         }
     }
 
@@ -70,13 +77,13 @@ class Office extends Model implements Auditable
         }
     }
 
-    public function scopeFilterByInitialsOrName($query, $input)
+    public function scopeFilterByLabelOrRoute($query, $input)
     {
         $search = mb_strtoupper(trim($input));
         if (!is_null($search)) {
             $query->where(function ($q) use ($search) {
-                $q->where('initials', 'LIKE', "%{$search}%")
-                    ->orWhere('name', 'LIKE', "%{$search}%");
+                $q->where('label', 'LIKE', "%{$search}%")
+                    ->orWhere('route', 'LIKE', "%{$search}%");
             });
         }
     }

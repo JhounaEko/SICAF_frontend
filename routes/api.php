@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\MenuController;
 use App\Http\Controllers\OfficeController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\RoleController;
@@ -15,17 +16,18 @@ use Illuminate\Support\Facades\Route;
 //     return $request->user();
 // })->middleware('auth:sanctum');
 
-Route::prefix('v1')->group(function(){ 
+Route::prefix('v1')->group(function () {
     Route::post('register', [UserController::class, 'store']);
-    Route::post('login',[AuthController::class, 'login']);
+    Route::post('login', [AuthController::class, 'login']);
     Route::middleware(['auth:sanctum'])->group(function () {
-        Route::middleware([SetSortableColumns::class])->group(function(){
+        Route::middleware([SetSortableColumns::class])->group(function () {
             Route::get('states', [StateController::class, 'index'])->name('v1.states.index');
             Route::get('offices', [OfficeController::class, 'index'])->name('v1.offices.index');
             Route::get('users', [UserController::class, 'index'])->name('v1.users.index');
             Route::get('permissions', [PermissionController::class, 'index'])->name('v1.permissions.index');
             Route::get('roles', [RoleController::class, 'index'])->name('v1.roles.index');
-            Route::get('employees', [EmployeeController::class , 'index'])->name('v1.employees.index');
+            Route::get('employees', [EmployeeController::class, 'index'])->name('v1.employees.index');
+            Route::get('menus', [MenuController::class, 'index'])->name('v1.menus.index');
         });
         Route::apiResource('states', StateController::class)->except('index');
         Route::apiResource('offices', OfficeController::class)->except('index');
@@ -33,6 +35,7 @@ Route::prefix('v1')->group(function(){
         Route::apiResource('permissions', PermissionController::class)->except('index');
         Route::apiResource('roles', RoleController::class)->except('index');
         Route::apiResource('employees', EmployeeController::class)->except('index');
+        Route::apiResource('menus', MenuController::class)->except('index');
         Route::post('logout', [AuthController::class, 'logout']);
-    });    
+    });
 });
