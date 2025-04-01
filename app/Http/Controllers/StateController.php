@@ -9,6 +9,7 @@ use App\Http\Resources\StateResource;
 use App\Http\Responses\ApiResponse;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
+use Illuminate\Support\Facades\DB;
 
 class StateController extends Controller implements HasMiddleware
 {
@@ -59,9 +60,12 @@ class StateController extends Controller implements HasMiddleware
     public function store(StateRequest $request)
     {
         try {
+            DB::beginTransaction();
             $state = State::create($request->validated());
+            DB::commit();
             return ApiResponse::success('State created sucessfully', 201, $state);
         } catch (\Exception $e) {
+            DB::rollBack();
             return ApiResponse::error('An unexpected error ocurred.', 500, $e->getMessage());
         }
     }
@@ -91,6 +95,7 @@ class StateController extends Controller implements HasMiddleware
     public function update(StateRequest $request,  $id)
     {
         try {
+            DB::beginTransaction();
             if (!is_numeric($id)) {
                 return ApiResponse::error('Invalid ID format.', 400);
             }
@@ -99,8 +104,10 @@ class StateController extends Controller implements HasMiddleware
                 return ApiResponse::error('State not found.', 200);
             }
             $state->update($request->validated());
+            DB::commit();
             return ApiResponse::success('State updated succesfully.', 200, $state);
         } catch (\Exception $e) {
+            DB::rollBack();
             return ApiResponse::error('An error unexpected.', 500, $e->getMessage());
         }
     }

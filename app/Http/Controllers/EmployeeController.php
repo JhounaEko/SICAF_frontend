@@ -10,6 +10,7 @@ use App\Models\Employee;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
+use Illuminate\Support\Facades\DB;
 
 class EmployeeController extends Controller implements HasMiddleware
 {
@@ -58,9 +59,12 @@ class EmployeeController extends Controller implements HasMiddleware
     public function store(EmployeeRequest $request)
     {
         try {
+            DB::beginTransaction();
             $employee = Employee::create($request->validated());
+            DB::commit();
             return ApiResponse::success('Employee registered successfully.', 201, $employee);
         } catch (\Exception $e) {
+            DB::rollBack();
             return ApiResponse::error('An error unexpected ocurred.', 500, $e->getMessage());
         }
     }
@@ -86,6 +90,7 @@ class EmployeeController extends Controller implements HasMiddleware
     public function update(EmployeeRequest $request, $id)
     {
         try {
+            DB::beginTransaction();
             if (!is_numeric($id)) {
                 return ApiResponse::error('Invalid ID format.', 400);
             }
@@ -96,9 +101,10 @@ class EmployeeController extends Controller implements HasMiddleware
             }
 
             $employee->update($request->validated());
-
+            DB::commit();
             return ApiResponse::success('Employee updated succesfully.', 200, $employee);
         } catch (\Exception $e) {
+            DB::rollBack();
             return ApiResponse::error('An error unexpected ocurred.', 500, $e->getMessage());
         }
     }

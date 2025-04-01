@@ -11,8 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-
-
+use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller implements HasMiddleware
 {
@@ -61,12 +60,15 @@ class UserController extends Controller implements HasMiddleware
     }
     public function store(UserRequest $request) {
         try {
+            DB::beginTransaction();
             $user = User::create($request->validated());
             if ($request->has('roles')) {
                 $user->assignRole($request->input('roles'));
             }
+            DB::commit();
             return ApiResponse::success('User registered successfully.', 201, $user);
         } catch (\Exception $e) {
+            DB::rollBack(); 
             return ApiResponse::error('An error unexpected ocurred', 500, $e->getMessage());
         }
     }
@@ -82,14 +84,16 @@ class UserController extends Controller implements HasMiddleware
     public function update(UserRequest $request, User $user) {
         $this->authorize('view', $user);
         try {
+            DB::beginTransaction();
             $user->update($request->validated());
     
             if ($request->has('roles')) {
                 $user->syncRoles($request->input('roles'));
             }
-    
+            DB::commit();
             return ApiResponse::success('User updated succesfully.', 200, $user);
         } catch (\Exception $e) {
+            DB::rollBack(); 
             return ApiResponse::error('An error unexpected.', 500, $e->getMessage());
         }
     }

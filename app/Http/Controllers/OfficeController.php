@@ -9,7 +9,7 @@ use App\Http\Responses\ApiResponse;
 use App\Models\Office;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
-
+use Illuminate\Support\Facades\DB;
 
 class OfficeController extends Controller implements HasMiddleware
 {
@@ -62,9 +62,12 @@ class OfficeController extends Controller implements HasMiddleware
     public function store(OfficeRequest $request)
     {
         try {
+            DB::beginTransaction();
             $office = Office::create($request->validated());
+            DB::commit();
             return ApiResponse::success('Office registered successfully.', 201, $office);
         } catch (\Exception $e) {
+            DB::rollBack();
             return ApiResponse::error('An error occurred while registering the office.', 500, $e->getMessage());
         }
     }
@@ -98,6 +101,7 @@ class OfficeController extends Controller implements HasMiddleware
     public function update(OfficeRequest $request, $id)
     {
         try {
+            DB::beginTransaction();
             if (!is_numeric($id)) {
                 return ApiResponse::error('Invalid ID format.', 400);
             }
@@ -106,8 +110,10 @@ class OfficeController extends Controller implements HasMiddleware
                 return ApiResponse::error('Office not found.', 200);
             }
             $office->update($request->validated());
+            DB::commit();
             return ApiResponse::success('Office updated succesfully.', 200, $office);
         } catch (\Exception $e) {
+            DB::rollBack();
             return ApiResponse::error('An unexpected error ocurred', 500, $e->getMessage());
         }
     }

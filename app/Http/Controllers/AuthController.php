@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Responses\ApiResponse;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
@@ -18,13 +19,13 @@ class AuthController extends Controller
             'password.regex' => 'The password field must contain at least one lowercase letter, one uppercase letter, one digit, and one special character.'
         ]);
         $user = User::where('username', mb_strtoupper(trim($request->username)))->first();
-        
+
         if ($user && Hash::check($request->password, $user->password)) {
 
             if ($user->state_id !== 1) {
                 return ApiResponse::error('User is disabled.', 403); // 403 Forbidden
             }
-    
+
             if (!$user->roles()->exists()) {
                 return ApiResponse::error('User has no roles assigned.', 403); // 403 Forbidden
             }
@@ -35,19 +36,24 @@ class AuthController extends Controller
                     // Añade otros campos del rol si es necesario
                 ];
             });
-            
-            $tokenName = $user->username . ' - ' . now()->format('Y-m-d');
-            $token = $user->createToken($tokenName)->plainTextToken;
-
-            return ApiResponse::success('User successfully authenticated.', 200, [
-                'access_token' => $token,
-                'id' => $user->id,
-                'first_name' => $user->first_name,
-                'last_name' => $user->last_name,
-                'state_id' => $user->state_id,
-                'token_type' => 'Bearer',
-                'roles' => $roles
-            ]);
+            try {
+                DB::beginTransaction();
+                $tokenName = $user->username . ' - ' . now()->format('Y-m-d');
+                $token = $user->createToken($tokenName)->plainTextToken;
+                DB::commit();
+                return ApiResponse::success('User successfully authenticated.', 200, [
+                    'access_token' => $token,
+                    'id' => $user->id,
+                    'first_name' => $user->first_name,
+                    'last_name' => $user->last_name,
+                    'state_id' => $user->state_id,
+                    'token_type' => 'Bearer',
+                    'roles' => $roles
+                ]);
+            } catch (\Exception $e) {
+                DB::rollBack();
+                return ApiResponse::error('Authentication failed due to a token creation error.', 500, $e->getMessage());
+            }
         }
 
         return ApiResponse::error('Invalid credentials.', 401);
@@ -55,7 +61,14 @@ class AuthController extends Controller
 
     public function logout(Request $request)
     {
-        $request->user()->tokens()->delete();
-        return ApiResponse::success('Session closed succesfully.', 200);
+        try {
+            DB::beginTransaction();
+            $request->user()->tokens()->delete();
+            DB::commit();
+            return ApiResponse::success('Session closed succesfully.', 200);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return ApiResponse::error('Error occurred during logout.', 500, $e->getMessage());
+        }
     }
 }
