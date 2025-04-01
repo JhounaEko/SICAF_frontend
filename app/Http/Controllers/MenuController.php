@@ -11,6 +11,7 @@ use App\Models\Menu;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
+use Illuminate\Support\Facades\DB;
 
 class MenuController extends Controller
 // implements HasMiddleware
@@ -72,11 +73,13 @@ class MenuController extends Controller
 
     public function store(MenuRequest $request)
     {
-
         try {
+            DB::beginTransaction();
             $menu = Menu::create($request->validated());
+            DB::commit();
             return ApiResponse::success('Menu registered successfully', 201, $menu);
         } catch (\Exception $e) {
+            DB::rollBack();
             return ApiResponse::error('An error occurred while registering the menu.', 500, $e->getMessage());
         }
     }
@@ -103,6 +106,7 @@ class MenuController extends Controller
     public function update(MenuRequest $request, $id)
     {
         try {
+            DB::beginTransaction();
             if (!is_numeric($id)) {
                 return ApiResponse::error('Invalid ID format.', 400);
             }
@@ -111,8 +115,10 @@ class MenuController extends Controller
                 return ApiResponse::error('Menu not found.', 200);
             }
             $menu->update($request->validated());
+            DB::commit();
             return ApiResponse::success('Menu updated succesfully.', 200, $menu);
         } catch (\Exception $e) {
+            DB::rollBack();
             return ApiResponse::error('An error unexpected.', 500, $e->getMessage());
         }
     }

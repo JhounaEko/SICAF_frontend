@@ -31,7 +31,7 @@ class UserResource extends JsonResource
                             'name' => $permission->name,
                         ];
                     }),
-                    'menus' => $role->menus->map(function ($menu) {
+                    'menus' => $role->menus ? $role->menus->map(function ($menu) { // Agrega esta verificación
                         return [
                             'id' => $menu->id,
                             'label' => $menu->label,
@@ -39,9 +39,8 @@ class UserResource extends JsonResource
                             'icon' => $menu->icon,
                             'level' => $menu->level,
                             'parent' => $menu->parent,
-                            // Puedes incluir más detalles del menú si es necesario
                         ];
-                    }),
+                    }) : [],
                 ];
             }) : [],
             'office' => [
