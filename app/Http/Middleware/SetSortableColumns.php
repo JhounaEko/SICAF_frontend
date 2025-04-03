@@ -30,6 +30,8 @@ class SetSortableColumns
             $sortableColumns = ['id', 'first_name', 'last_name', 'phone_number', 'position', 'office_id', 'state_id', 'created_at', 'updated_at'];
         }else if ($request->routeIs('v1.menus.index')){
             $sortableColumns = ['id', 'label', 'route', 'parent', 'icon', 'state_id', 'created_at', 'updated_at'];
+        }else if ($request->routeIs('v1.motives.index')){
+            $sortableColumns = ['id', 'name', 'description', 'state_id', 'created_at', 'updated_at'];
         }
 
         $request->merge(['sortable_columns' => $sortableColumns]);

@@ -17,13 +17,14 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        $data = User::factory(30)->make()->toArray();
+        $data = User::factory(5)->make()->toArray();
         $apiUrl = 'http://127.0.0.1:8000/api/v1/users';
         foreach ($data as $user) {
             try {
                 $response = Http::withHeaders([
                     'Content-Type' => 'application/json',
                     'Accept' => 'application/json',
+                    'Authorization' => 'Bearer 69|SwhNoBHKmo4OUFVZWRvwte8zI4WtS1yRMgmDoANP30da0b50'
                 ])->post($apiUrl, [
                     'first_name' => $user['first_name'],
                     'last_name' => $user['last_name'],
