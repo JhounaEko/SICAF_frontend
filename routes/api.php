@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\MenuController;
+use App\Http\Controllers\MotiveController;
 use App\Http\Controllers\OfficeController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\RoleController;
@@ -28,6 +29,7 @@ Route::prefix('v1')->group(function () {
             Route::get('roles', [RoleController::class, 'index'])->name('v1.roles.index');
             Route::get('employees', [EmployeeController::class, 'index'])->name('v1.employees.index');
             Route::get('menus', [MenuController::class, 'index'])->name('v1.menus.index');
+            Route::get('motives', [MotiveController::class])->name('v1.motives.index');
         });
         Route::apiResource('states', StateController::class)->except('index');
         Route::apiResource('offices', OfficeController::class)->except('index');
@@ -36,6 +38,8 @@ Route::prefix('v1')->group(function () {
         Route::apiResource('roles', RoleController::class)->except('index');
         Route::apiResource('employees', EmployeeController::class)->except('index');
         Route::apiResource('menus', MenuController::class)->except('index');
+        Route::apiResource('motives', MotiveController::class)->except('index');
+
         Route::post('logout', [AuthController::class, 'logout']);
     });
 });
