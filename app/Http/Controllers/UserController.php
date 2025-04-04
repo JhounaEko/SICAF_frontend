@@ -78,7 +78,7 @@ class UserController extends Controller implements HasMiddleware
             return ApiResponse::success('User found', 200, UserResource::make($user));
         } 
         catch (\Exception $e) {
-            return ApiResponse::error('An error unexpected.', 500, $e->getMessage());
+            return ApiResponse::error('An unexpected error occurred while processing the request.', 500, $e->getMessage());
         }
     }
     public function update(UserRequest $request, User $user) {

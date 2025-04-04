@@ -2,8 +2,10 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\IncreaseTypeController;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\MotiveController;
+use App\Http\Controllers\NoteTypeController;
 use App\Http\Controllers\OfficeController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\RoleController;
@@ -29,7 +31,10 @@ Route::prefix('v1')->group(function () {
             Route::get('roles', [RoleController::class, 'index'])->name('v1.roles.index');
             Route::get('employees', [EmployeeController::class, 'index'])->name('v1.employees.index');
             Route::get('menus', [MenuController::class, 'index'])->name('v1.menus.index');
-            Route::get('motives', [MotiveController::class])->name('v1.motives.index');
+            Route::get('motives', [MotiveController::class, 'index'])->name('v1.motives.index');
+            Route::get('note_types', [NoteTypeController::class, 'index'])->name('v1.note_types.index');
+            Route::get('increase_types', [IncreaseTypeController::class, 'index'])->name('v1.increase_types.index');
+       
         });
         Route::apiResource('states', StateController::class)->except('index');
         Route::apiResource('offices', OfficeController::class)->except('index');
@@ -39,6 +44,8 @@ Route::prefix('v1')->group(function () {
         Route::apiResource('employees', EmployeeController::class)->except('index');
         Route::apiResource('menus', MenuController::class)->except('index');
         Route::apiResource('motives', MotiveController::class)->except('index');
+        Route::apiResource('note_types', NoteTypeController::class)->except('index');
+        Route::apiResource('increase_types', IncreaseTypeController::class)->except('index');
 
         Route::post('logout', [AuthController::class, 'logout']);
     });
