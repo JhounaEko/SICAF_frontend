@@ -5,8 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use OwenIt\Auditing\Contracts\Auditable;
 
-
-class Motive extends Model implements Auditable
+class NoteType extends Model implements Auditable
 {
     use \OwenIt\Auditing\Auditable;
     protected $fillable = [
@@ -59,4 +58,5 @@ class Motive extends Model implements Auditable
             $query->whereBetween('created_at', [$start, $end]);
         }
     }
+
 }

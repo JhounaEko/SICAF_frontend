@@ -63,7 +63,7 @@ class StateController extends Controller implements HasMiddleware
             DB::beginTransaction();
             $state = State::create($request->validated());
             DB::commit();
-            return ApiResponse::success('State created sucessfully', 201, $state);
+            return ApiResponse::success('State created sucessfully.', 201, $state);
         } catch (\Exception $e) {
             DB::rollBack();
             return ApiResponse::error('An unexpected error ocurred.', 500, $e->getMessage());
