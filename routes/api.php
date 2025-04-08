@@ -39,6 +39,8 @@ Route::prefix('v1')->group(function () {
         Route::apiResource('states', StateController::class)->except('index');
         Route::apiResource('offices', OfficeController::class)->except('index');
         Route::apiResource('users', UserController::class)->except('index');
+        Route::post('users/password', [UserController::class, 'updatePassword']);
+        Route::patch('users/{user}/reset-password-change-limit', [UserController::class, 'resetPasswordChangeLimit']);
         Route::apiResource('permissions', PermissionController::class)->except('index');
         Route::apiResource('roles', RoleController::class)->except('index');
         Route::apiResource('employees', EmployeeController::class)->except('index');

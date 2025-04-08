@@ -35,6 +35,8 @@ class FilterRequest extends FormRequest
             // Validaciones para filtros de usuarios
             // 'email' => ['nullable', 'string', 'email'],
             'phone_number' => ['nullable', 'string', 'regex:/^\[1-9]\d{1,14}$/'],
+            'identity_card' => ['nullable', 'string', 'regex:/^[A-Za-z0-9-]+$/'],
+            'issued_by' => ['nullable', 'string', 'in:LP,CH,CB,OR,PT,TJ,SC,BE,PD,S/E'],
             'username' => ['nullable', 'string', 'max:30'],
             'email' => ['nullable', 'string', 'email', 'regex:/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/'],
             'office_name' => ['nullable', 'string', 'exists:offices,name'],

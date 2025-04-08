@@ -26,8 +26,11 @@ class User extends Authenticatable implements Auditable
         'first_name',
         'last_name',
         'phone_number',
+        'identity_card',
+        'issued_by',
         'username',
         'password',
+        // 'password_change_count',
         'email',
         'office_id',
         'state_id'
@@ -86,6 +89,16 @@ class User extends Authenticatable implements Auditable
         $this->attributes['phone_number'] = trim($value);
     }
 
+    public function setIdentityCardAttribute($value)
+    {
+        $this->attributes['identity_card'] = mb_strtoupper(trim($value));
+    }
+
+    public function setIssuedByAttribute($value)
+    {
+        $this->attributes['issued_by'] = mb_strtoupper(trim($value));
+    }
+
     public function setEmailAttribute($value)
     {
         $this->attributes['email'] = trim($value);
@@ -97,9 +110,9 @@ class User extends Authenticatable implements Auditable
             $officeField = ($sortBy === 'office_name') ? 'name' : 'initials';
             return $query->join('offices', 'users.office_id', '=', 'offices.id')
                 ->orderBy("offices.{$officeField}", $sortOrder)
-                ->select('users.*'); 
+                ->select('users.*');
         }
-    
+
         return $query->orderBy($sortBy, $sortOrder);
     }
 
@@ -109,9 +122,10 @@ class User extends Authenticatable implements Auditable
             $query->where('state_id', $state);
         }
     }
-    
-    public function scopeFilterByOffice($query, $office) {
-        if (!is_null($office)){
+
+    public function scopeFilterByOffice($query, $office)
+    {
+        if (!is_null($office)) {
             $query->where('office_id', $office);
         }
     }
@@ -145,12 +159,28 @@ class User extends Authenticatable implements Auditable
         }
     }
 
-    public function scopeFilterByEmail($query, $email){
-        if (!is_null($email)){
+    public function scopeFilterByEmail($query, $email)
+    {
+        if (!is_null($email)) {
             $query->where('email', 'LIKE', $email);
         }
     }
 
+    public function scopeFilterByIdentityCard($query, $identityCard)
+    {
+        $search = mb_strtoupper(trim($identityCard));
+        if (!is_null($search)) {
+            $query->where('identity_card', 'LIKE', "%{$search}%");
+        }
+    }
+
+    public function scopeFilterByIssuedBy($query, $issuedBy)
+    {
+        $search = mb_strtoupper(trim($issuedBy));
+        if (!is_null($search)) {
+            $query->where('issued_by', 'LIKE', "%{$search}%");
+        }
+    }
     public function scopeFilterByDates($query, $start, $end)
     {
         if ($start && $end) {
@@ -158,10 +188,10 @@ class User extends Authenticatable implements Auditable
         }
     }
 
-    public function scopeFilterByUsername($query, $username) {
+    public function scopeFilterByUsername($query, $username)
+    {
         if (!is_null($username)) {
             $query->where('username', $username);
         }
     }
-
 }

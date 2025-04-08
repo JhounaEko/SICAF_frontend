@@ -21,7 +21,7 @@ class SetSortableColumns
         }else if ($request->routeIs('v1.offices.index')) {
             $sortableColumns = ['id', 'name', 'initials', 'parent', 'level', 'state_id', 'created_at', 'updated_at'];
         }else if ($request->routeIs('v1.users.index')){
-            $sortableColumns = ['id', 'first_name', 'last_name', 'phone_number', 'username', 'email', 'office_id', 'office_name', 'office_initials', 'state_id', 'created_at', 'updated_at'];
+            $sortableColumns = ['id', 'first_name', 'last_name', 'phone_number', 'identity_card', 'issued_by', 'username', 'email', 'office_id', 'office_name', 'office_initials', 'state_id', 'created_at', 'updated_at'];
         }else if ($request->routeIs('v1.permissions.index')) {
             $sortableColumns = ['id', 'name', 'guard', 'state_id', 'created_at', 'updated_at'];
         }else if ($request->routeIs('v1.roles.index')) {
