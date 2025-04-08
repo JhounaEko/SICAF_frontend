@@ -14,7 +14,7 @@ class AuthController extends Controller
     {
         $request->validate([
             'username' => ['required', 'string', 'max:30'],
-            'password' => ['required', 'string', 'min:8', 'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/']
+            'password' => ['required', 'string', 'min:8']
         ], [
             'password.regex' => 'The password field must contain at least one lowercase letter, one uppercase letter, one digit, and one special character.'
         ]);

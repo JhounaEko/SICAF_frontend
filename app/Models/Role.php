@@ -20,11 +20,13 @@ class Role extends SpatieRole implements Auditable
         return $this->belongsTo(State::class, 'state_id');
     }
 
-    public function menus (){
+    public function menus()
+    {
         return $this->belongsToMany(Menu::class, 'role_menu', 'role_id', 'menu_id');
     }
 
-    public function setNameAttribute($value){
+    public function setNameAttribute($value)
+    {
         $this->attributes['name'] = mb_strtoupper(trim($value));
     }
 
@@ -37,13 +39,15 @@ class Role extends SpatieRole implements Auditable
         return $query->orderBy($sortBy, $sortOrder);
     }
 
-    public function scopeFilterByState($query, $state){
+    public function scopeFilterByState($query, $state)
+    {
         if (!is_null($state)) {
             $query->where('state_id', $state);
         }
     }
 
-    public function scopeFilterByName($query, $name){
+    public function scopeFilterByName($query, $name)
+    {
         if (!is_null($name)) {
             $query->where('name', 'LIKE', $name);
         }

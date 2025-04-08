@@ -16,13 +16,15 @@ return new class extends Migration
             $table->string('first_name', 30);
             $table->string('last_name', 30);
             $table->string('phone_number', 15)->nullable();
+            $table->string('identity_card', 15);
+            $table->string('issued_by', 4);
             $table->string('username', 30)->unique();
             $table->string('password');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->foreignId('office_id')->nullable()->constrained('offices')->cascadeOnUpdate()->cascadeOnDelete();
             $table->foreignId('state_id')->default(1)->constrained('states')->cascadeOnUpdate()->cascadeOnDelete();
-
+            $table->unsignedInteger('password_change_count')->default(3);
             $table->rememberToken();
             $table->timestamps();
         });
