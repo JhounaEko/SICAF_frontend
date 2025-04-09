@@ -9,6 +9,7 @@ use App\Http\Controllers\NoteTypeController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\OfficeController;
 use App\Http\Controllers\PermissionController;
+use App\Http\Controllers\PositionController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\StateController;
 use App\Http\Controllers\UserController;
@@ -35,7 +36,7 @@ Route::prefix('v1')->group(function () {
             Route::get('motives', [MotiveController::class, 'index'])->name('v1.motives.index');
             Route::get('note_types', [NoteTypeController::class, 'index'])->name('v1.note_types.index');
             Route::get('increase_types', [IncreaseTypeController::class, 'index'])->name('v1.increase_types.index');
-       
+            Route::get('positions', [PositionController::class, 'index'])->name('v1.positions.index');
         });
         Route::apiResource('states', StateController::class)->except('index');
         Route::apiResource('offices', OfficeController::class)->except('index');
@@ -45,7 +46,6 @@ Route::prefix('v1')->group(function () {
         Route::get('notifications', [NotificationController::class, 'index']);
         Route::patch('notifications/{id}/mark-as-read', [NotificationController::class, 'markAsRead']);
         Route::patch('notifications/mark-all-as-read', [NotificationController::class, 'markAllAsRead']);
-
         Route::apiResource('permissions', PermissionController::class)->except('index');
         Route::apiResource('roles', RoleController::class)->except('index');
         Route::apiResource('employees', EmployeeController::class)->except('index');
@@ -53,6 +53,7 @@ Route::prefix('v1')->group(function () {
         Route::apiResource('motives', MotiveController::class)->except('index');
         Route::apiResource('note_types', NoteTypeController::class)->except('index');
         Route::apiResource('increase_types', IncreaseTypeController::class)->except('index');
+        Route::apiResource('positions', PositionController::class)->except('index');
 
         Route::post('logout', [AuthController::class, 'logout']);
     });

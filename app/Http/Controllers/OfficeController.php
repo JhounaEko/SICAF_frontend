@@ -99,23 +99,16 @@ class OfficeController extends Controller implements HasMiddleware
         }
     }
 
-    public function update(OfficeRequest $request, $id)
+    public function update(OfficeRequest $request, Office $office)
     {
         try {
             DB::beginTransaction();
-            if (!is_numeric($id)) {
-                return ApiResponse::error('Invalid ID format.', 400);
-            }
-            $office = Office::find($id);
-            if (!$office) {
-                return ApiResponse::error('Office not found.', 200);
-            }
             $office->update($request->validated());
             DB::commit();
             return ApiResponse::success('Office updated succesfully.', 200, $office);
         } catch (\Exception $e) {
             DB::rollBack();
-            return ApiResponse::error('An unexpected error ocurred', 500, $e->getMessage());
+            return ApiResponse::error('An error occurred while updating the office.', 500, $e->getMessage());
         }
     }
 }
