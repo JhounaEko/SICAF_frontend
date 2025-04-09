@@ -79,7 +79,7 @@ class UserController extends Controller implements HasMiddleware
         } catch (\Illuminate\Database\UniqueConstraintViolationException $e) {
             return ApiResponse::error('The Identity Card provided is already in use.', 422); // Código de estado 422 (Unprocessable Entity) es apropiado para errores de validación
         } catch (\Exception $e) {
-            return ApiResponse::error('An error unexpected ocurred', 500, $e->getMessage());
+            return ApiResponse::error('An error occurred while registering the user.', 500, $e->getMessage());
         }
     }
 
@@ -103,7 +103,7 @@ class UserController extends Controller implements HasMiddleware
         } catch (\Illuminate\Database\UniqueConstraintViolationException $e) {
             return ApiResponse::error('The Identity Card provided is already in use.', 422); // Código de estado 422 (Unprocessable Entity) es apropiado para errores de validación
         } catch (\Exception $e) {
-            return ApiResponse::error('An error unexpected.', 500, $e->getMessage());
+            return ApiResponse::error('An error occurred while updating the user.', 500, $e->getMessage());
         }
     }
 
@@ -135,7 +135,7 @@ class UserController extends Controller implements HasMiddleware
             }
             return ApiResponse::success('Password updated successfully.', 200, $updatedUser);
         } catch (\Exception $e) {
-            return ApiResponse::error('An error unexpected occurred.', 500, $e->getMessage());
+            return ApiResponse::error('An error occurred while updating the password.', 500, $e->getMessage());
         }
     }
 

@@ -65,41 +65,23 @@ class EmployeeController extends Controller implements HasMiddleware
             return ApiResponse::success('Employee registered successfully.', 201, $employee);
         } catch (\Exception $e) {
             DB::rollBack();
-            return ApiResponse::error('An error unexpected ocurred.', 500, $e->getMessage());
+            return ApiResponse::error('An error occurred while registering the employee.', 500, $e->getMessage());
         }
     }
 
-    public function show($id)
+    public function show(Employee $employee)
     {
         try {
-            if (!is_numeric($id)) {
-                return ApiResponse::error('Invalid ID format.', 400);
-            }
-
-            $employee = Employee::find($id);
-            if (!$employee) {
-                return ApiResponse::error('Employee not found.', 200);
-            }
-
             return ApiResponse::success('Employee fonud.', 200, EmployeeResource::make($employee));
         } catch (\Exception $e) {
             return ApiResponse::error('An error unexpected ocurred.', 500, $e->getMessage());
         }
     }
 
-    public function update(EmployeeRequest $request, $id)
+    public function update(EmployeeRequest $request, Employee $employee)
     {
         try {
             DB::beginTransaction();
-            if (!is_numeric($id)) {
-                return ApiResponse::error('Invalid ID format.', 400);
-            }
-
-            $employee = Employee::find($id);
-            if (!$employee) {
-                return ApiResponse::error('Employee not found.', 200);
-            }
-
             $employee->update($request->validated());
             DB::commit();
             return ApiResponse::success('Employee updated succesfully.', 200, $employee);

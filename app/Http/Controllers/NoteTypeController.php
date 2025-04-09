@@ -61,14 +61,14 @@ class NoteTypeController extends Controller
             return ApiResponse::success('Note type created successfully.', 201, $note_type);
         } catch (\Exception $e) {
             DB::rollBack();
-            return ApiResponse::error('An unexpected error ocurred.', 500, $e->getMessage());
+            return ApiResponse::error('An error occurred while registering the note type.', 500, $e->getMessage());
         }
     }
 
     public function show(NoteType $noteType)
     {
         try {
-            return ApiResponse::success('Note found.', 201, NoteTypeResource::make($noteType));
+            return ApiResponse::success('Note type found.', 201, NoteTypeResource::make($noteType));
         } catch (\Exception $e) {
             return ApiResponse::error('An error unexpected ocurred.', 500, $e->getMessage());
         }
@@ -83,7 +83,7 @@ class NoteTypeController extends Controller
             return ApiResponse::success('Note type updated successfully.', 200, $noteType);
         } catch (\Exception $e) {
             DB::rollBack();
-            return ApiResponse::error('An error unexpected ocurred.', 500, $e->getMessage());
+            return ApiResponse::error('An error occurred while updating the note type.', 500, $e->getMessage());
         }
     }
 }

@@ -61,7 +61,7 @@ class IncreaseTypeController extends Controller implements HasMiddleware
             return ApiResponse::success('Increase type created succesfully.', 201, $increaseType);
         } catch (\Exception $e) {
             DB::rollBack();
-            return ApiResponse::error('An unexpected error ocurred.', 500, $e->getMessage());
+            return ApiResponse::error('An error occurred while registering the increase type.', 500, $e->getMessage());
         }
     }
 
@@ -82,7 +82,7 @@ class IncreaseTypeController extends Controller implements HasMiddleware
             DB::commit();
             return ApiResponse::success('Increase type updated successfully.', 200, $increaseType);
         } catch (\Exception $e) {
-            return ApiResponse::error('An error unexpected ocurred.', 500, $e->getMessage());
+            return ApiResponse::error('An error occurred while updating the increase type.', 500, $e->getMessage());
         }
     }
 }

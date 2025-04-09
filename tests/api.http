@@ -93,9 +93,9 @@ GET http://127.0.0.1:8000/api/v1/offices/41
 Authorization: Bearer 15|KLgOgvpBWJqdXkYrJk1Gen3t8gVu0yAHNV8NShoNc19b0661
 Accept: application/json
 ###Test get users &sort_by=office_name&sort_order=desc
-GET http://127.0.0.1:8000/api/v1/users?page=1&sort_by=id
+GET http://127.0.0.1:8000/api/v1/users?page=1&sort_by=id&row_num=4
 Accept: application/json
-Authorization: Bearer 79|KNO9jgJhXWodzqSmd36QkETtA1K84UXRRgeH1SjZb116da99
+Authorization: Bearer 82|cSSZQgbDB24lKyOOTifwiBbJfMqh1cxBBsDcJvew6d9e324e
 ###Test post users
 POST http://127.0.0.1:8000/api/v1/users
 Content-Type: application/json

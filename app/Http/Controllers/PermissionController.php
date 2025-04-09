@@ -68,16 +68,8 @@ class PermissionController extends Controller implements HasMiddleware
         }
     }
     
-    public function show($id){
+    public function show(Permission $permission){
         try {
-            if(!is_numeric($id)){
-                return ApiResponse::error('Invalid ID format.', 400);
-            }
-
-            $permission = Permission::find($id);
-            if (!$permission) {
-                return ApiResponse::error('Permission not found.', 200);
-            } 
             return ApiResponse::success('Permission found.', 200, PermissionResource::make($permission));
         } catch (\Illuminate\Database\QueryException $e) {
             return ApiResponse::error('Database error occurred.', 500, $e->getMessage());
@@ -86,22 +78,15 @@ class PermissionController extends Controller implements HasMiddleware
         }
     }
 
-    public function update(PermissionRequest $request, $id) {
+    public function update(PermissionRequest $request, Permission $permission) {
         try {
             DB::beginTransaction();
-            if (!is_numeric($id)) {
-                return ApiResponse::error('Invalid ID format.', 400);
-            }
-            $permission = Permission::find($id);
-            if (!$permission) {
-                return ApiResponse::error('Permission not found.', 200);
-            }
             $permission->update($request->validated());
             DB::commit();
             return ApiResponse::success('Permission updated succesfully.', 200, $permission);
         } catch (\Exception $e) {
             DB::rollBack();
-            return ApiResponse::error('An error unexpected.', 500, $e->getMessage());
+            return ApiResponse::error('An error occurred while updating the permission.', 500, $e->getMessage());
         }
     }
 

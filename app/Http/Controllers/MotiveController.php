@@ -61,7 +61,7 @@ class MotiveController extends Controller implements HasMiddleware
             return ApiResponse::success('Motive created successfully.', 201, $motive);
         } catch (\Exception $e) {
             DB::rollBack();
-            return ApiResponse::error('An unexpected error ocurred.', 500, $e->getMessage());
+            return ApiResponse::error('An error occurred while registering the motive.', 500, $e->getMessage());
         }
     }
 
