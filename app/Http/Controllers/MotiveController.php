@@ -37,7 +37,9 @@ class MotiveController extends Controller implements HasMiddleware
                     return ApiResponse::error('Error in sorting.', 400, $e->getMessage());
                 }
             }
-            $motives = $query->paginate(10);
+            $perPage = $request->input('row_num');
+            $motives = $query->paginate($perPage);
+
             if ($motives->isEmpty()) {
                 return ApiResponse::error("There're not registered motives.", 200);
             }

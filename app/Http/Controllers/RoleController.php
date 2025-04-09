@@ -39,7 +39,9 @@ class RoleController extends Controller implements HasMiddleware
                     return ApiResponse::error('Error in sorting.', 400, $e->getMessage());
                 }
             }
-            $roles = $query->paginate(10);
+            
+            $perPage = $request->input('row_num');
+            $roles = $query->paginate($perPage);
 
             if ($roles->isEmpty()) {
                 return ApiResponse::error("There're not registered roles.", 200);

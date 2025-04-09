@@ -42,10 +42,11 @@ class OfficeController extends Controller implements HasMiddleware
             }
 
             if ($request->boolean('include_hierarchy')) {
-                $offices = $query->with(['childOffices', 'state'])->paginate(10); 
-            } else {
-                $offices = $query->paginate(10); 
+                $query->with('childOffices');
             }
+    
+            $perPage = $request->input('row_num'); 
+            $offices = $query->paginate($perPage);
 
             if ($offices->isEmpty()) {
                 return ApiResponse::error("There're not registered offices.", 200);

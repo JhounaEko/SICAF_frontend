@@ -23,6 +23,7 @@ class FilterRequest extends FormRequest
             'start_date' => ['nullable', 'date', 'before_or_equal:end_date'],
             'end_date' => ['nullable', 'date', 'after_or_equal:start_date'],
             'search' => ['nullable', 'string', 'max:255', 'regex:/^[a-zA-ZÁÉÍÓÚÑáéíóúñ\s\-,.]+$/'],
+            'row_num' => ['nullable', 'integer', 'min:1'],
             // Validaciones para filstros de estados
             'code' => ['nullable', 'string', 'max:10'],
             'color' => ['nullable', 'string', 'regex:/^#([0-9A-Fa-f]{3}){1,2}$/'],
@@ -58,6 +59,8 @@ class FilterRequest extends FormRequest
             'color.regex' => 'The color field must be hexadecimal values.',
             'level.in' => 'The level field must be either 1, 2 or 3.',
             'include_hierarchy.boolean' => 'The include hierarchy field must be 1 (true) or 0 (false).',
+            'row_num.integer' => 'The row_num must be an integer.',
+            'row_num.min' => 'The row_num must be at least 1.',
         ];
     }
 

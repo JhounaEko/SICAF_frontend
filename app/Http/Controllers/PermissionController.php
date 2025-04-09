@@ -38,7 +38,9 @@ class PermissionController extends Controller implements HasMiddleware
                     return ApiResponse::error('Error in sorting.', 400, $e->getMessage());
                 }
             }
-            $permissions = $query->paginate(10);
+            
+            $perPage = $request->input('row_num');
+            $permissions = $query->paginate($perPage);
 
             if ($permissions->isEmpty()) {
                 return ApiResponse::error("There're not registered permissions.", 200);

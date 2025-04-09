@@ -28,7 +28,7 @@ class StateController extends Controller implements HasMiddleware
             $query = State::query();
 
             $query->filterByDescriptionOrName($request->input('search'))
-                ->filterByDates($request->input('start_date'), $request->input('end_date'));
+                  ->filterByDates($request->input('start_date'), $request->input('end_date'));
 
             if ($request->filled('sort_by')) {
                 try {
@@ -38,7 +38,8 @@ class StateController extends Controller implements HasMiddleware
                 }
             }
 
-            $states = $query->paginate(10);
+            $perPage = $request->input('row_num');
+            $states = $query->paginate($perPage);
 
             if ($states->isEmpty()) {
                 return ApiResponse::error("There're not registered states.", 200);
