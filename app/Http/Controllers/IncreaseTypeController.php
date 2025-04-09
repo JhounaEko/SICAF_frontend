@@ -37,7 +37,8 @@ class IncreaseTypeController extends Controller implements HasMiddleware
                     return ApiResponse::error('Error in sorting.', 400, $e->getMessage());
                 }
             }
-            $increaseType = $query->paginate(10);
+            $perPage = $request->input('row_num');
+            $increaseType = $query->paginate($perPage);
             if ($increaseType->isEmpty()) {
                 return ApiResponse::error("There're not registered increase types.", 200);
             }

@@ -40,8 +40,8 @@ class EmployeeController extends Controller implements HasMiddleware
                     return ApiResponse::error('Error in sorting', 400, $e->getMessage());
                 }
             }
-
-            $employees = $query->paginate(10);
+            $perPage = $request->input('row_num');
+            $employees = $query->paginate($perPage);
 
             if ($employees->isEmpty()) {
                 return ApiResponse::error("There're not registered employees.", 200);
