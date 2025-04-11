@@ -28,7 +28,7 @@ class StateController extends Controller implements HasMiddleware
             $query = State::query();
 
             $query->filterByDescriptionOrName($request->input('search'))
-                ->filterByDates($request->input('start_date'), $request->input('end_date'));
+                  ->filterByDates($request->input('start_date'), $request->input('end_date'));
 
             if ($request->filled('sort_by')) {
                 try {
@@ -38,7 +38,8 @@ class StateController extends Controller implements HasMiddleware
                 }
             }
 
-            $states = $query->paginate(10);
+            $perPage = $request->input('row_num');
+            $states = $query->paginate($perPage);
 
             if ($states->isEmpty()) {
                 return ApiResponse::error("There're not registered states.", 200);
@@ -66,23 +67,16 @@ class StateController extends Controller implements HasMiddleware
             return ApiResponse::success('State created sucessfully.', 201, $state);
         } catch (\Exception $e) {
             DB::rollBack();
-            return ApiResponse::error('An unexpected error ocurred.', 500, $e->getMessage());
+            return ApiResponse::error('An error occurred while registering the state.', 500, $e->getMessage());
         }
     }
 
     /**
      * Display the specified resource.
      */
-    public function show($id)
+    public function show(State $state)
     {
         try {
-            if (!is_numeric($id)) {
-                return ApiResponse::error('Invalid ID format.', 400);
-            }
-            $state = State::find($id);
-            if (!$state) {
-                return ApiResponse::error('State not found.', 200);
-            }
             return ApiResponse::success('State found', 200, StateResource::make($state));
         } catch (\Exception $e) {
             return ApiResponse::error('An error unexpected.', 500, $e->getMessage());
@@ -92,28 +86,16 @@ class StateController extends Controller implements HasMiddleware
     /**
      * Update the specified resource in storage.
      */
-    public function update(StateRequest $request,  $id)
+    public function update(StateRequest $request,  State $state)
     {
         try {
             DB::beginTransaction();
-            if (!is_numeric($id)) {
-                return ApiResponse::error('Invalid ID format.', 400);
-            }
-            $state = State::find($id);
-            if (!$state) {
-                return ApiResponse::error('State not found.', 200);
-            }
             $state->update($request->validated());
             DB::commit();
             return ApiResponse::success('State updated succesfully.', 200, $state);
         } catch (\Exception $e) {
             DB::rollBack();
-            return ApiResponse::error('An error unexpected.', 500, $e->getMessage());
+            return ApiResponse::error('An error occurred while updating the state.', 500, $e->getMessage());
         }
     }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-
 }

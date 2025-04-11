@@ -37,7 +37,9 @@ class MotiveController extends Controller implements HasMiddleware
                     return ApiResponse::error('Error in sorting.', 400, $e->getMessage());
                 }
             }
-            $motives = $query->paginate(10);
+            $perPage = $request->input('row_num');
+            $motives = $query->paginate($perPage);
+
             if ($motives->isEmpty()) {
                 return ApiResponse::error("There're not registered motives.", 200);
             }
@@ -59,7 +61,7 @@ class MotiveController extends Controller implements HasMiddleware
             return ApiResponse::success('Motive created successfully.', 201, $motive);
         } catch (\Exception $e) {
             DB::rollBack();
-            return ApiResponse::error('An unexpected error ocurred.', 500, $e->getMessage());
+            return ApiResponse::error('An error occurred while registering the motive.', 500, $e->getMessage());
         }
     }
 
