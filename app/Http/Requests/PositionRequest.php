@@ -24,14 +24,14 @@ class PositionRequest extends FormRequest
 
         if ($this->method() === 'PATCH') {
             return [
-                'name' => ['sometimes', 'string', 'max:60', 'regex:/^[a-zA-ZÁÉÍÓÚÑáéíóúñ\s\-,.]+$/'],
-                'description' => ['sometimes', 'string', 'max:100', 'regex:/^[a-zA-ZÁÉÍÓÚÑáéíóúñ\s\-,.]+$/'],
+                'name' => ['sometimes', 'string', 'max:60',],
+                'description' => ['sometimes', 'string', 'max:100'],
                 'state_id' => ['nullable', 'integer', 'exists:states,id']
             ];
         }
         return [
-            'name' => ['required', 'string', 'max:60', 'regex:/^[a-zA-ZÁÉÍÓÚÑáéíóúñ\s\-,.]+$/'],
-            'description' => ['required', 'string', 'max:100', 'regex:/^[a-zA-ZÁÉÍÓÚÑáéíóúñ\s\-,.]+$/'],
+            'name' => ['required', 'string', 'max:60'],
+            'description' => ['required', 'string', 'max:100'],
             'state_id' => ['nullable', 'integer', 'exists:states,id']
         ];
     }

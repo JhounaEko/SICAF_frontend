@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 
 class FilterRequest extends FormRequest
@@ -13,6 +14,12 @@ class FilterRequest extends FormRequest
     }
     public function rules(): array
     {
+        Validator::extend('model_exists', function ($attribute, $value, $parameters, $validator) {
+            $modelNamespace = 'App\\Models\\'; // Ajusta si es necesario
+            $modelClass = $modelNamespace . $value;
+            return class_exists($modelClass) && is_subclass_of($modelClass, \Illuminate\Database\Eloquent\Model::class);
+        });
+
         $sortableColumns = $this->input('sortable_columns', []);
 
         return [
@@ -24,6 +31,11 @@ class FilterRequest extends FormRequest
             'end_date' => ['nullable', 'date', 'after_or_equal:start_date'],
             'search' => ['nullable', 'string', 'max:255', 'regex:/^[a-zA-ZÁÉÍÓÚÑáéíóúñ\s\-,.]+$/'],
             'row_num' => ['nullable', 'integer', 'min:1'],
+            // Validaciones para los filtros de auditoria
+            'model' => ['nullable', 'string', 'max:255', 'model_exists'], // Puedes refinar esta validación si conoces los posibles modelos
+            'user' => ['nullable', 'integer', 'exists:users,id'], // Asumiendo que 'users' es tu tabla de usuarios y 'id' la columna primaria
+            'event' => ['nullable', 'string', 'max:255', 'in:CREATED,UPDATED'], // Puedes refinar esta validación si tienes un conjunto limitado de eventos
+            'auditable_id' => ['nullable', 'integer', 'min:1'],
             // Validaciones para filstros de estados
             'code' => ['nullable', 'string', 'max:10'],
             'color' => ['nullable', 'string', 'regex:/^#([0-9A-Fa-f]{3}){1,2}$/'],
@@ -61,6 +73,8 @@ class FilterRequest extends FormRequest
             'include_hierarchy.boolean' => 'The include hierarchy field must be 1 (true) or 0 (false).',
             'row_num.integer' => 'The row_num must be an integer.',
             'row_num.min' => 'The row_num must be at least 1.',
+            'model.model_exists' => 'The selected model does not exist.',
+
         ];
     }
 
