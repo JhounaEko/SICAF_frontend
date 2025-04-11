@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuditController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\IncreaseTypeController;
@@ -37,6 +38,8 @@ Route::prefix('v1')->group(function () {
             Route::get('note_types', [NoteTypeController::class, 'index'])->name('v1.note_types.index');
             Route::get('increase_types', [IncreaseTypeController::class, 'index'])->name('v1.increase_types.index');
             Route::get('positions', [PositionController::class, 'index'])->name('v1.positions.index');
+            Route::get('audits', [AuditController::class, 'index'])->name('v1.audits.index');;
+       
         });
         Route::apiResource('states', StateController::class)->except('index');
         Route::apiResource('offices', OfficeController::class)->except('index');
@@ -46,6 +49,7 @@ Route::prefix('v1')->group(function () {
         Route::get('notifications', [NotificationController::class, 'index']);
         Route::patch('notifications/{id}/mark-as-read', [NotificationController::class, 'markAsRead']);
         Route::patch('notifications/mark-all-as-read', [NotificationController::class, 'markAllAsRead']);
+        Route::get('audits/{id}', [AuditController::class, 'show']);
         Route::apiResource('permissions', PermissionController::class)->except('index');
         Route::apiResource('roles', RoleController::class)->except('index');
         Route::apiResource('employees', EmployeeController::class)->except('index');

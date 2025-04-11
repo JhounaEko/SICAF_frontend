@@ -2,10 +2,12 @@
 
 namespace App\Models;
 
+use OwenIt\Auditing\Contracts\Auditable;
 use Illuminate\Database\Eloquent\Model;
 
-class Position extends Model
+class Position extends Model implements Auditable
 {
+    use \OwenIt\Auditing\Auditable;
     protected $fillable = [
         'name',
         'description',
@@ -32,7 +34,7 @@ class Position extends Model
         }
     }
     
-    public function scopeFilterByNameOrDescrription($query, $input)
+    public function scopeFilterByNameOrDescription($query, $input)
     {
         $search = mb_strtoupper(trim($input));
         if (!is_null($search)) {
