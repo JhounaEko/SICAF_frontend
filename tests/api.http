@@ -125,6 +125,7 @@ Authorization: Bearer 77|X7Ih5NgcPbl5EVVNvMP7PgFpMeoWC9gtP3YhPCvpa0647397
     "password": "Danger3@",
     "password_confirmation": "Danger3@"
 }
+
 ###Test update users
 PUT http://127.0.0.1:8000/api/v1/users/3
 Content-Type: application/json
@@ -152,10 +153,10 @@ Authorization: Bearer 76|e1B4X7FmJTYmGybFOBdnHJkHPol8eOlzjiq92ysC58c0b0ba
      "password_change_count" : 1
 }
 
-
 # {
 #      "issued_by" : "LP"  
 # }
+
 ###Test show users
 GET http://127.0.0.1:8000/api/v1/users/1
 Accept: application/json
@@ -173,6 +174,7 @@ Authorization: Bearer 77|X7Ih5NgcPbl5EVVNvMP7PgFpMeoWC9gtP3YhPCvpa0647397
 POST http://127.0.0.1:8000/api/v1/login
 Content-Type: application/json
 Accept: application/json
+
 
 {
     "username": "ZRIVAS",

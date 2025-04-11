@@ -160,11 +160,13 @@ class User extends Authenticatable implements Auditable
     }
 
     public function scopeFilterByEmail($query, $email)
-    {
+    {     
         if (!is_null($email)) {
-            $query->where('email', 'LIKE', $email);
+            $query->where('email', 'LIKE', "%{$email}%");         
         }
     }
+
+    
 
     public function scopeFilterByIdentityCard($query, $identityCard)
     {
@@ -190,8 +192,9 @@ class User extends Authenticatable implements Auditable
 
     public function scopeFilterByUsername($query, $username)
     {
-        if (!is_null($username)) {
-            $query->where('username', $username);
+        $search = mb_strtoupper(trim($username));
+        if (!is_null($username)) {        
+            $query->where('username', 'LIKE', "%{$search}%");
         }
     }
 }

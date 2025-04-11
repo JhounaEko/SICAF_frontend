@@ -49,7 +49,12 @@ class UserController extends Controller implements HasMiddleware
                 }
             }
 
-            $users = $query->paginate(10);
+            if($request->input('row_num')){
+                $users = $query->paginate($request->input('row_num'));
+            } else {
+                $users = $query->paginate(10);
+            }
+            
 
             if ($users->isEmpty()) {
                 return ApiResponse::error("There're not registered users.", 200);
