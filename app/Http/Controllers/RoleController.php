@@ -39,7 +39,9 @@ class RoleController extends Controller implements HasMiddleware
                     return ApiResponse::error('Error in sorting.', 400, $e->getMessage());
                 }
             }
-            $roles = $query->paginate(10);
+            
+            $perPage = $request->input('row_num');
+            $roles = $query->paginate($perPage);
 
             if ($roles->isEmpty()) {
                 return ApiResponse::error("There're not registered roles.", 200);
@@ -58,7 +60,6 @@ class RoleController extends Controller implements HasMiddleware
     {
         try {
             DB::beginTransaction();
-
             $role = Role::create($request->validated());
 
             if ($request->has('permissions')) {
@@ -76,18 +77,9 @@ class RoleController extends Controller implements HasMiddleware
         }
     }
 
-    public function show($id)
+    public function show(Role $role)
     {
         try {
-            if (!is_numeric($id)) {
-                return ApiResponse::error('Invalid ID format.', 400);
-            }
-
-            $role = Role::find($id);
-            if (!$role) {
-                return ApiResponse::error('Role not found.', 200);
-            }
-
             return ApiResponse::success('Role found.', 200, RoleResource::make($role));
         } catch (\Illuminate\Database\QueryException $e) {
             return ApiResponse::error('Database error occurred.', 500, $e->getMessage());
@@ -96,18 +88,10 @@ class RoleController extends Controller implements HasMiddleware
         }
     }
 
-    public function update(RoleRequest $request, $id)
+    public function update(RoleRequest $request, Role $role)
     {
         try {
             DB::beginTransaction();
-            if (!is_numeric($id)) {
-                return ApiResponse::error('Invalid ID format.', 400);
-            }
-            $role = Role::find($id);
-            if (!$role) {
-                return ApiResponse::error('Role not found.', 200);
-            }
-
             $role->update($request->validated());
 
             if ($request->has('permissions')) {
@@ -121,7 +105,7 @@ class RoleController extends Controller implements HasMiddleware
             return ApiResponse::success('Role updated succesfully.', 200, $role->load(['permissions', 'menus']));
         } catch (\Exception $e) {
             DB::rollBack();
-            return ApiResponse::error('An error unexpected.', 500, $e->getMessage());
+            return ApiResponse::error('An error occurred while updating the role.', 500, $e->getMessage());
         }
     }
 }

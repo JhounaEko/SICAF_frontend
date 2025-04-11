@@ -84,17 +84,9 @@ class MenuController extends Controller
         }
     }
 
-    public function show($id)
+    public function show(Menu $menu)
     {
         try {
-            if (!is_numeric($id)) {
-                return ApiResponse::error('Invalid ID format.', 400);
-            }
-
-            $menu = Menu::find($id);
-            if (!$menu) {
-                return ApiResponse::error('Menu not found.', 200);
-            }
             return ApiResponse::success('Menu found.', 200, MenuResource::make($menu));
         } catch (\Illuminate\Database\QueryException $e) {
             return ApiResponse::error('Database error occurred.', 500, $e->getMessage());
@@ -103,23 +95,16 @@ class MenuController extends Controller
         }
     }
 
-    public function update(MenuRequest $request, $id)
+    public function update(MenuRequest $request, Menu $menu)
     {
         try {
             DB::beginTransaction();
-            if (!is_numeric($id)) {
-                return ApiResponse::error('Invalid ID format.', 400);
-            }
-            $menu = Menu::find($id);
-            if (!$menu) {
-                return ApiResponse::error('Menu not found.', 200);
-            }
             $menu->update($request->validated());
             DB::commit();
             return ApiResponse::success('Menu updated succesfully.', 200, $menu);
         } catch (\Exception $e) {
             DB::rollBack();
-            return ApiResponse::error('An error unexpected.', 500, $e->getMessage());
+            return ApiResponse::error('An error occurred while updating the menu.', 500, $e->getMessage());
         }
     }
 }

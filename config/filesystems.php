@@ -60,6 +60,12 @@ return [
             'report' => false,
         ],
 
+        'local_backup' => [
+            'driver' => 'local',
+            'root' => storage_path('app/backups'), // Puedes cambiar la ruta si lo deseas
+            'throw' => false,
+        ],
+
     ],
 
     /*

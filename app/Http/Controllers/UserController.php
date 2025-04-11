@@ -7,6 +7,9 @@ use App\Http\Requests\UserRequest;
 use App\Http\Resources\UserResource;
 use App\Http\Responses\ApiResponse;
 use App\Models\User;
+use App\Notifications\NewUserNotification;
+use App\Notifications\PasswordChangedNotification;
+use App\Services\UserService;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
@@ -22,7 +25,6 @@ class UserController extends Controller implements HasMiddleware
     {
         return [
             new Middleware('permission:VIEW USERS', only: ['index']),
-            // new Middleware('permission:REGISTER USERS', only: ['store']),
         ];
     }
 
@@ -49,12 +51,17 @@ class UserController extends Controller implements HasMiddleware
                 }
             }
 
+<<<<<<< HEAD
             if($request->input('row_num')){
                 $users = $query->paginate($request->input('row_num'));
             } else {
                 $users = $query->paginate(10);
             }
             
+=======
+            $perPage = $request->input('row_num');
+            $users = $query->paginate($perPage);
+>>>>>>> 595971771846d108dc12d3d1d63d05ae2f6206f7
 
             if ($users->isEmpty()) {
                 return ApiResponse::error("There're not registered users.", 200);
@@ -68,37 +75,23 @@ class UserController extends Controller implements HasMiddleware
             return ApiResponse::error('An error unexpected ocurred.', 500, $e->getMessage());
         }
     }
-    public function store(UserRequest $request)
+
+    public function store(UserRequest $request, UserService $service)
     {
         try {
-            if (auth()->check()) {
-                if (!auth()->user()->can('REGISTER USERS')) {
-                    return ApiResponse::error('This action is unauthorized.', 403);
-                }
+            if (auth()->check() && (!auth()->user()->can('REGISTER USERS'))) {
+                return ApiResponse::error('This action is unauthorized.', 403);
             }
-            DB::beginTransaction();
             $data = $request->validated();
-            if (isset($data['complement']) && !empty($data['complement'])) {
-                if (isset($data['identity_card'])) {
-                    $data['identity_card'] .= '-' . $data['complement'];
-                }
-                unset($data['complement']);
-            }
-
-            $user = User::create($data);
-            if ($request->has('roles')) {
-                $user->assignRole($request->input('roles'));
-            }
-            DB::commit();
+            $user = $service->createUser($data);
             return ApiResponse::success('User registered successfully.', 201, $user);
         } catch (\Illuminate\Database\UniqueConstraintViolationException $e) {
-            DB::rollBack();
             return ApiResponse::error('The Identity Card provided is already in use.', 422); // Código de estado 422 (Unprocessable Entity) es apropiado para errores de validación
         } catch (\Exception $e) {
-            DB::rollBack();
-            return ApiResponse::error('An error unexpected ocurred', 500, $e->getMessage());
+            return ApiResponse::error('An error occurred while registering the user.', 500, $e->getMessage());
         }
     }
+
     public function show(User $user)
     {
         $this->authorize('view', $user);
@@ -108,99 +101,63 @@ class UserController extends Controller implements HasMiddleware
             return ApiResponse::error('An unexpected error occurred while processing the request.', 500, $e->getMessage());
         }
     }
-    public function update(UserRequest $request, User $user)
+
+    public function update(UserRequest $request, User $user, UserService $service)
     {
         $this->authorize('view', $user);
         try {
-            DB::beginTransaction();
             $data = $request->validated();
-
-            if (isset($data['complement']) && !empty($data['complement'])) {
-                if (isset($data['identity_card'])) {
-                    $data['identity_card'] .= '-' . $data['complement'];
-                }
-                unset($data['complement']);
-            }
-            $data = array_filter($data, function ($value) {
-                return $value !== "";
-            });
-
-            $user->update($data);
-
-            if ($request->has('roles')) {
-                $user->syncRoles($request->input('roles'));
-            }
-            DB::commit();
-            return ApiResponse::success('User updated succesfully.', 200, $user);
+            $updatedUser = $service->updateUser($user, $data);
+            return ApiResponse::success('User updated succesfully.', 200, $updatedUser);
         } catch (\Illuminate\Database\UniqueConstraintViolationException $e) {
-            DB::rollBack();
             return ApiResponse::error('The Identity Card provided is already in use.', 422); // Código de estado 422 (Unprocessable Entity) es apropiado para errores de validación
-
         } catch (\Exception $e) {
-            DB::rollBack();
-            return ApiResponse::error('An error unexpected.', 500, $e->getMessage());
+            return ApiResponse::error('An error occurred while updating the user.', 500, $e->getMessage());
         }
     }
 
-    public function updatePassword(Request $request)
+    public function updatePassword(Request $request, UserService $service)
     {
         $request->validate([
             'current_password' => 'required',
             'password' => 'required|confirmed|min:8|confirmed',
         ]);
         try {
-
-
             $user = auth()->user();
-
             if (!Hash::check($request->current_password, $user->password)) {
-                return ApiResponse::error(
-                    'The current password is incorrect.',
-                    422
-                );
+                return ApiResponse::error('The current password is incorrect.', 422);
             }
 
             $maxChangeAttempts = 0;
-
             if ($user->password_change_count <= $maxChangeAttempts) {
-                return ApiResponse::error(
-                    "You've reached your password change limit. Contact an administrator.",
-                    403
-                );
+                return ApiResponse::error("You've reached your password change limit. Contact an administrator.", 403);
             }
 
-            DB::beginTransaction();
+            $updatedUser = $service->updateUserPassword($user, $request->password);
 
-            $user->password = Hash::make($request->password);
-            $user->decrement('password_change_count');
-            $user->save();
+            $adminUsers = User::whereHas('roles', function ($query) {
+                $query->where('id', 1);
+            })->get();
 
-            DB::commit();
-
-            return ApiResponse::success('Password updated successfully.', 200, $user);
+            foreach ($adminUsers as $admin) {
+                $admin->notify(new PasswordChangedNotification($user));
+            }
+            return ApiResponse::success('Password updated successfully.', 200, $updatedUser);
         } catch (\Exception $e) {
-            DB::rollBack();
-            return ApiResponse::error('An error unexpected occurred.', 500, $e->getMessage());
+            return ApiResponse::error('An error occurred while updating the password.', 500, $e->getMessage());
         }
     }
 
-    public function resetPasswordChangeLimit(User $user)
-{
-    if (!auth()->user()->can('RESET PASSWORD CHANGE LIMIT')) {
-        return ApiResponse::error('This action is unauthorized.', 403);
+    public function resetPasswordChangeLimit(User $user, UserService $service)
+    {
+        if (!auth()->user()->can('RESET PASSWORD CHANGE LIMIT')) {
+            return ApiResponse::error('This action is unauthorized.', 403);
+        }
+        try {
+            $updatedUser = $service->resetPasswordChangeLimit($user, 3);
+            return ApiResponse::success('Password change limit reset successfully.', 200, $updatedUser);
+        } catch (\Exception $e) {
+            return ApiResponse::error('An unexpected error occurred.', 500, $e->getMessage());
+        }
     }
-
-    try {
-        DB::beginTransaction();
-        // Reiniciamos el contador a 0.
-        $user->password_change_count = 3;
-        $user->save();
-        DB::commit();
-
-        return ApiResponse::success('Password change limit reset successfully.', 200, $user);
-    } catch (\Exception $e) {
-        DB::rollBack();
-        return ApiResponse::error('An unexpected error occurred.', 500, $e->getMessage());
-    }
-}
 }

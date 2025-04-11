@@ -36,7 +36,12 @@ class SetSortableColumns
             $sortableColumns = ['id', 'name', 'description', 'state_id', 'created_at', 'updated_at'];
         }else if ($request->routeIs('v1.increase_types.index')){
             $sortableColumns = ['id', 'name', 'description', 'state_id', 'created_at', 'updated_at'];
+        }else if ($request->routeIs('v1.positions.index')){
+            $sortableColumns = ['id', 'name', 'description', 'state_id', 'created_at', 'updated_at'];
+        }else if ($request->routeIs('v1.audits.index')){
+            $sortableColumns = ['id', 'user_type', 'user_id', 'event', 'auditable_type', 'auditable_id', 'old_values', 'new_values', 'url', 'ip_address', 'user_agent', 'tags', 'created_at', 'updated_at'];
         }
+        
 
         $request->merge(['sortable_columns' => $sortableColumns]);
         return $next($request);

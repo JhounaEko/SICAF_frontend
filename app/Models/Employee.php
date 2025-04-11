@@ -2,11 +2,13 @@
 
 namespace App\Models;
 
+use OwenIt\Auditing\Contracts\Auditable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Employee extends Model
+class Employee extends Model implements Auditable
 {
+    use \OwenIt\Auditing\Auditable;
     /** @use HasFactory<\Database\Factories\EmployeeFactory> */
     use HasFactory;
 

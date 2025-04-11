@@ -37,7 +37,8 @@ class IncreaseTypeController extends Controller implements HasMiddleware
                     return ApiResponse::error('Error in sorting.', 400, $e->getMessage());
                 }
             }
-            $increaseType = $query->paginate(10);
+            $perPage = $request->input('row_num');
+            $increaseType = $query->paginate($perPage);
             if ($increaseType->isEmpty()) {
                 return ApiResponse::error("There're not registered increase types.", 200);
             }
@@ -60,7 +61,7 @@ class IncreaseTypeController extends Controller implements HasMiddleware
             return ApiResponse::success('Increase type created succesfully.', 201, $increaseType);
         } catch (\Exception $e) {
             DB::rollBack();
-            return ApiResponse::error('An unexpected error ocurred.', 500, $e->getMessage());
+            return ApiResponse::error('An error occurred while registering the increase type.', 500, $e->getMessage());
         }
     }
 
@@ -81,7 +82,7 @@ class IncreaseTypeController extends Controller implements HasMiddleware
             DB::commit();
             return ApiResponse::success('Increase type updated successfully.', 200, $increaseType);
         } catch (\Exception $e) {
-            return ApiResponse::error('An error unexpected ocurred.', 500, $e->getMessage());
+            return ApiResponse::error('An error occurred while updating the increase type.', 500, $e->getMessage());
         }
     }
 }
