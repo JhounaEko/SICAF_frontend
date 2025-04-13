@@ -39,6 +39,21 @@ class Office extends Model implements Auditable
         return $this->belongsTo(Office::class, 'parent');
     }
 
+    public function officeName($parent)
+    {
+        try {
+            if (!is_null($parent)) {
+                $respose = Office::find($parent);
+                return $respose->name;
+            } else {
+                return "Sin dependencia";
+            } 
+        } catch (\Throwable $th) {
+            return "Sin dependencia";
+        }
+     
+    }    
+
     public function childOffices()
     {
         return $this->hasMany(Office::class, 'parent')->with('childOffices');

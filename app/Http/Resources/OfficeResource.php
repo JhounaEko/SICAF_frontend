@@ -14,7 +14,10 @@ class OfficeResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'initials' => $this->initials,
-            'parent' => $this->parent,
+            'parent' => [
+                "id" => $this->parent,
+                "name" => $this->officeName($this->parent)
+            ],
             'children' => OfficeResource::collection($this->whenLoaded('childOffices')),
             'level' => $this->level,
             'state' => [

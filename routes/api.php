@@ -36,7 +36,6 @@ Route::prefix('v1')->group(function () {
             Route::get('menus', [MenuController::class, 'index'])->name('v1.menus.index');
             Route::get('motives', [MotiveController::class, 'index'])->name('v1.motives.index');
             Route::get('note_types', [NoteTypeController::class, 'index'])->name('v1.note_types.index');
-<<<<<<< HEAD
             Route::get('increase_types', [IncreaseTypeController::class, 'index'])->name('v1.increase_types.index');       
     });
         Route::apiResource('states', StateController::class)->except('index');
@@ -44,7 +43,6 @@ Route::prefix('v1')->group(function () {
         Route::apiResource('users', UserController::class)->except('index');
         Route::post('users/password', [UserController::class, 'updatePassword']);  // cambiar password // usesrs
         Route::patch('users/{user}/reset-password-change-limit', [UserController::class, 'resetPasswordChangeLimit']); ////solo el admin puede realizar
-=======
             Route::get('increase_types', [IncreaseTypeController::class, 'index'])->name('v1.increase_types.index');
             Route::get('positions', [PositionController::class, 'index'])->name('v1.positions.index');
             Route::get('audits', [AuditController::class, 'index'])->name('v1.audits.index');;
@@ -59,7 +57,6 @@ Route::prefix('v1')->group(function () {
         Route::patch('notifications/{id}/mark-as-read', [NotificationController::class, 'markAsRead']);
         Route::patch('notifications/mark-all-as-read', [NotificationController::class, 'markAllAsRead']);
         Route::get('audits/{id}', [AuditController::class, 'show']);
->>>>>>> 595971771846d108dc12d3d1d63d05ae2f6206f7
         Route::apiResource('permissions', PermissionController::class)->except('index');
         Route::apiResource('roles', RoleController::class)->except('index');
         Route::apiResource('employees', EmployeeController::class)->except('index');
@@ -71,4 +68,4 @@ Route::prefix('v1')->group(function () {
 
         Route::post('logout', [AuthController::class, 'logout']);
     });
-});
+
