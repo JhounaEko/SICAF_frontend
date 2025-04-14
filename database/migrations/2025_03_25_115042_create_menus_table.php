@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('menus', function (Blueprint $table) {
+        Schema::create('users.menus', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('parent')->unsigned()->nullable();
             $table->string('label');
@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('icon')->nullable();
             $table->smallInteger('level')->unsigned();
             $table->integer('order')->default(0);
-            $table->foreignId('state_id')->default(1)->constrained('states')->cascadeOnUpdate()->cascadeOnDelete();
+            $table->foreignId('state_id')->default(1)->constrained('public.states')->cascadeOnUpdate()->cascadeOnDelete();
             $table->timestamps();
         });
     }
@@ -29,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('menus');
+        Schema::dropIfExists('users.menus');
     }
 };

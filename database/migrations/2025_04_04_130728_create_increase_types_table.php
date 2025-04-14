@@ -11,11 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('increase_types', function (Blueprint $table) {
+        Schema::create('accounting.increase_types', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->string('description');
-            $table->foreignId('state_id')->default(1)->constrained('states')->cascadeOnUpdate()->cascadeOnDelete();
+            $table->foreignId('state_id')->default(1)->constrained('public.states')->cascadeOnUpdate()->cascadeOnDelete();
             $table->timestamps();
         });
     }
@@ -25,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('increase_types');
+        Schema::dropIfExists('accounting.increase_types');
     }
 };
