@@ -1,26 +1,26 @@
 ###Test get states
 GET http://127.0.0.1:8000/api/v1/states?page=1&sort_by=id&row_num=5
-Authorization: Bearer 82|cSSZQgbDB24lKyOOTifwiBbJfMqh1cxBBsDcJvew6d9e324e
+Authorization: Bearer 90|3OBp0BQauFsX4k547Sjtx8X7lYmc7XbkLdwdD7G8beca6603
 Accept: application/json
 ###Test post states
 POST http://127.0.0.1:8000/api/v1/states
 Content-Type: application/json
 Accept: application/json
-Authorization: Bearer 70|93SYTI5K3GIlTokXZsPk9VaCqnbn4G47VtFm53X409144379
+Authorization: Bearer 90|3OBp0BQauFsX4k547Sjtx8X7lYmc7XbkLdwdD7G8beca6603
 
 {
-    "name": "NEW",
-    "description": "Item or movement is new.",
-    "code": "NEW",
+    "name": "test",
+    "description": "test.",
+    "code": "test",
     "color": "#0000FF",
-    "order": 0
+    "order": 0,
 }
 
 ###Test post states
 POST http://127.0.0.1:8000/api/v1/states
 Content-Type: application/json
 Accept: application/json
-Authorization: Bearer 56|D3qWCjgybYJ9oLmLfbkeXsj7BrkFhTOtpxZPy8Gqffca252f
+Authorization: Bearer 90|3OBp0BQauFsX4k547Sjtx8X7lYmc7XbkLdwdD7G8beca6603
 
 {
     "name": "active",
@@ -42,28 +42,28 @@ Accept: application/json
     "order": 23
 }
 ###Test patch states
-PATCH http://127.0.0.1:8000/api/v1/states/1
+PATCH http://127.0.0.1:8000/api/v1/states/2
 Content-Type: application/json
 Accept: application/json
-Authorization: Bearer 21|FioIvl71fOKGcuDSBhmwOnYDbficrKPoQNnTaLVUfd66cf7c
+Authorization: Bearer 90|3OBp0BQauFsX4k547Sjtx8X7lYmc7XbkLdwdD7G8beca6603
 
 {
-    "order": 1
+    "order": 2
 }
 ###Test show state
 GET http://127.0.0.1:8000/api/v1/states/2
 Accept: application/json
-Authorization: Bearer 21|FioIvl71fOKGcuDSBhmwOnYDbficrKPoQNnTaLVUfd66cf7c
+Authorization: Bearer 90|3OBp0BQauFsX4k547Sjtx8X7lYmc7XbkLdwdD7G8beca6603
 ###Test get offices
 GET http://127.0.0.1:8000/api/v1/offices?include_hierarchy=1
 Accept: application/json
-Authorization: Bearer 89|BuzrPIEbTX5YgVFyk0y6LNfXcBZeugWjtwVV3hdTeff8b869
+Authorization: Bearer 90|3OBp0BQauFsX4k547Sjtx8X7lYmc7XbkLdwdD7G8beca6603
 
 ###Test post offices
 POST http://127.0.0.1:8000/api/v1/offices
 Content-Type: application/json
 Accept: application/json
-Authorization: Bearer 56|D3qWCjgybYJ9oLmLfbkeXsj7BrkFhTOtpxZPy8Gqffca252f
+Authorization: Bearer 90|3OBp0BQauFsX4k547Sjtx8X7lYmc7XbkLdwdD7G8beca6603
 
 {
     "name" : "SECRETARÍA MUNICIPAL DE ADMINISTRACIÓN Y FINANZAS",
@@ -73,45 +73,47 @@ Authorization: Bearer 56|D3qWCjgybYJ9oLmLfbkeXsj7BrkFhTOtpxZPy8Gqffca252f
 ###Test put offices
 PUT http://127.0.0.1:8000/api/v1/offices/1
 Content-Type: application/json
+Authorization: Bearer 90|3OBp0BQauFsX4k547Sjtx8X7lYmc7XbkLdwdD7G8beca6603
 Accept: application/json
 
 {
     "name" : "SECRETARÍA MUNICIPAL DE ADMINISTRACIÓN Y FINANZAS.",
     "initials": "SMAFI",
-    "level": 1
+    "level": 1,
 }
 ###Test patch offices
 PATCH http://127.0.0.1:8000/api/v1/offices/41
 Content-Type: application/json
 Accept: application/json
+Authorization: Bearer 90|3OBp0BQauFsX4k547Sjtx8X7lYmc7XbkLdwdD7G8beca6603
 
 {
-    "state_id": 2
+    "state_id": 1
 }
 ###Test show offices
 GET http://127.0.0.1:8000/api/v1/offices/41
-Authorization: Bearer 15|KLgOgvpBWJqdXkYrJk1Gen3t8gVu0yAHNV8NShoNc19b0661
+Authorization: Bearer 90|3OBp0BQauFsX4k547Sjtx8X7lYmc7XbkLdwdD7G8beca6603
 Accept: application/json
 ###Test get users &sort_by=office_name&sort_order=desc
 GET http://127.0.0.1:8000/api/v1/users?page=1&sort_by=id&row_num=4
 Accept: application/json
-Authorization: Bearer 82|cSSZQgbDB24lKyOOTifwiBbJfMqh1cxBBsDcJvew6d9e324e
+Authorization: Bearer 90|3OBp0BQauFsX4k547Sjtx8X7lYmc7XbkLdwdD7G8beca6603
 ###Test post users
 POST http://127.0.0.1:8000/api/v1/users
 Content-Type: application/json
 Accept: application/json
-Authorization: Bearer 76|e1B4X7FmJTYmGybFOBdnHJkHPol8eOlzjiq92ysC58c0b0ba
+Authorization: Bearer 90|3OBp0BQauFsX4k547Sjtx8X7lYmc7XbkLdwdD7G8beca6603
 
 {
-    "first_name": " Jose Pato",
-    "last_name": "mAGNo LÓpez",
+    "first_name": "Lucia Martina",
+    "last_name": "Angulo Llanque",
     "phone_number": "61231132",
     "identity_card": "1839212",
     "issued_by": "PT",
     "username": "aleLPZ",
     "password": "Danger3@",
     "password_confirmation": "Danger3@",
-    "email": "JosLopsz@hotmail.com",
+    "email": "LucyMart@hotmail.com",
     "office_id": 126
 }
 ### cambiar password
@@ -129,7 +131,7 @@ Authorization: Bearer 81|mZV0xyB0Xhzppzl6ert9Qlns2cmG3q3asM5EdmRMa367fab7
 PUT http://127.0.0.1:8000/api/v1/users/3
 Content-Type: application/json
 Accept: application/json
-Authorization: Bearer 18|xdEnNKoqit57NuIF6HygfR8JqUbQ8TzPHwifpuK8991350da
+Authorization: Bearer 90|3OBp0BQauFsX4k547Sjtx8X7lYmc7XbkLdwdD7G8beca6603
 
 {
     "first_name": "Alejandro Joel",
@@ -139,13 +141,13 @@ Authorization: Bearer 18|xdEnNKoqit57NuIF6HygfR8JqUbQ8TzPHwifpuK8991350da
     "password": "Danger33@",
     "password_confirmation": "Danger33@",
     "email": "aleA@hotmail.com",
-    "office_id": 126
+    "office_id": 126,
 }
 ###Test patch users
 PATCH http://127.0.0.1:8000/api/v1/users/1
 Content-Type: application/json
 Accept: application/json
-Authorization: Bearer 76|e1B4X7FmJTYmGybFOBdnHJkHPol8eOlzjiq92ysC58c0b0ba
+Authorization: Bearer 90|3OBp0BQauFsX4k547Sjtx8X7lYmc7XbkLdwdD7G8beca6603
 
 
 {
@@ -159,7 +161,7 @@ Authorization: Bearer 76|e1B4X7FmJTYmGybFOBdnHJkHPol8eOlzjiq92ysC58c0b0ba
 ###Test show users
 GET http://127.0.0.1:8000/api/v1/users/1
 Accept: application/json
-Authorization: Bearer 77|X7Ih5NgcPbl5EVVNvMP7PgFpMeoWC9gtP3YhPCvpa0647397
+Authorization: Bearer 90|3OBp0BQauFsX4k547Sjtx8X7lYmc7XbkLdwdD7G8beca6603
 
 # Authorization: Bearer 4|wMgsWiE1tKJoVh8IoJ3LkD0UXLq2kJ6787CeR1zh0741f0f6
 
@@ -167,7 +169,7 @@ Authorization: Bearer 77|X7Ih5NgcPbl5EVVNvMP7PgFpMeoWC9gtP3YhPCvpa0647397
 ###Test reset attempts change password users
 PATCH http://127.0.0.1:8000/api/v1/users/1/reset-password-change-limit
 Accept: application/json
-Authorization: Bearer 77|X7Ih5NgcPbl5EVVNvMP7PgFpMeoWC9gtP3YhPCvpa0647397
+Authorization: Bearer 90|3OBp0BQauFsX4k547Sjtx8X7lYmc7XbkLdwdD7G8beca6603
 ###Test login user 
 ###TOKEN USER: 16|KNiYrLygWGeiYEzZnYQMUNLaPqQCHeYaL4deiu8wab9e3620
 POST http://127.0.0.1:8000/api/v1/login
@@ -202,32 +204,32 @@ Accept: application/json
     "password_confirmation": "Danger3@",
     "email": "luciMelga@hotmail.com",
     "state_id": 2,
-    "office_id": 126
+    "office_id": 126,
 }
 
 ###Test get permission
-GET http://127.0.0.1:8000/api/v1/permissions?page=3&sort_by=id
+GET http://127.0.0.1:8000/api/v1/permissions?page=3&sort_by=id&row_num=10
 Accept: application/json
-Authorization: Bearer 56|D3qWCjgybYJ9oLmLfbkeXsj7BrkFhTOtpxZPy8Gqffca252f
+Authorization: Bearer 90|3OBp0BQauFsX4k547Sjtx8X7lYmc7XbkLdwdD7G8beca6603
 
 ###Test post permission
 POST http://127.0.0.1:8000/api/v1/permissions
 Accept: application/json
 Content-Type: application/json
-Authorization: Bearer 87|EnSm2nlwfhNB6UJH4FQ5DjmEAQ3p765M84fsGuP74744d944
+Authorization: Bearer 90|3OBp0BQauFsX4k547Sjtx8X7lYmc7XbkLdwdD7G8beca6603
 
 {
-    "name": "VIEW AUDIT ON MODULE"
+    "name": "VIEW AUDIT ON MODULE",
 }
 ###Test show permission
 GET http://127.0.0.1:8000/api/v1/permissions/1
 Accept: application/json
-Authorization: Bearer 20|HZ0mam02j1nZ3nDWbgqAlrxG2mymkEU11mlrU0T06d3f1c40
+Authorization: Bearer 90|3OBp0BQauFsX4k547Sjtx8X7lYmc7XbkLdwdD7G8beca6603
 ###Test update permission
 PUT http://127.0.0.1:8000/api/v1/permissions/1
 Accept: application/json
 Content-Type: application/json
-Authorization: Bearer 56|D3qWCjgybYJ9oLmLfbkeXsj7BrkFhTOtpxZPy8Gqffca252f
+Authorization: Bearer 90|3OBp0BQauFsX4k547Sjtx8X7lYmc7XbkLdwdD7G8beca6603
 
 {
     "name": "REGister STAtes",
@@ -236,7 +238,7 @@ Authorization: Bearer 56|D3qWCjgybYJ9oLmLfbkeXsj7BrkFhTOtpxZPy8Gqffca252f
 PATCH http://127.0.0.1:8000/api/v1/permissions/1
 Accept: application/json
 Content-Type: application/json
-Authorization: Bearer 56|D3qWCjgybYJ9oLmLfbkeXsj7BrkFhTOtpxZPy8Gqffca252f
+Authorization: Bearer 90|3OBp0BQauFsX4k547Sjtx8X7lYmc7XbkLdwdD7G8beca6603
 
 {
     "name": "RegisTer states",
@@ -244,12 +246,12 @@ Authorization: Bearer 56|D3qWCjgybYJ9oLmLfbkeXsj7BrkFhTOtpxZPy8Gqffca252f
 ###Test get roles
 GET http://127.0.0.1:8000/api/v1/roles?page=1&sort_by=id&sort_order=asc
 Accept: application/json
-Authorization: Bearer 79|KNO9jgJhXWodzqSmd36QkETtA1K84UXRRgeH1SjZb116da99
+Authorization: Bearer 90|3OBp0BQauFsX4k547Sjtx8X7lYmc7XbkLdwdD7G8beca6603
 ###Test post roles
 POST http://127.0.0.1:8000/api/v1/roles
 Content-Type: application/json
 Accept: application/json
-Authorization: Bearer 56|D3qWCjgybYJ9oLmLfbkeXsj7BrkFhTOtpxZPy8Gqffca252f
+Authorization: Bearer 90|3OBp0BQauFsX4k547Sjtx8X7lYmc7XbkLdwdD7G8beca6603
 
 {
     "name": "test",
@@ -266,7 +268,7 @@ Authorization: Bearer 7|ORfkdK9zgDkoCHB7Zim7HqPGq5wA4PXrW6MC2Vx3c13a89ee
 PATCH http://127.0.0.1:8000/api/v1/roles/1
 Content-Type: application/json
 Accept: application/json
-Authorization: Bearer 87|EnSm2nlwfhNB6UJH4FQ5DjmEAQ3p765M84fsGuP74744d944
+Authorization: Bearer 90|3OBp0BQauFsX4k547Sjtx8X7lYmc7XbkLdwdD7G8beca6603
 #     "menus" : [1, 2]
 # }
 
@@ -276,18 +278,18 @@ Authorization: Bearer 87|EnSm2nlwfhNB6UJH4FQ5DjmEAQ3p765M84fsGuP74744d944
 ###Test show roles
 GET http://127.0.0.1:8000/api/v1/roles/1
 Accept: application/json
-Authorization: Bearer 63|pvuFWxcfxwq7PjQ9R7Q0djaK57ThYzquKISmmp5I07038285
+Authorization: Bearer 90|3OBp0BQauFsX4k547Sjtx8X7lYmc7XbkLdwdD7G8beca6603
 
 ###Test get employees
 GET http://127.0.0.1:8000/api/v1/employees
 Accept: application/json
-Authorization: Bearer 56|D3qWCjgybYJ9oLmLfbkeXsj7BrkFhTOtpxZPy8Gqffca252f
+Authorization: Bearer 90|3OBp0BQauFsX4k547Sjtx8X7lYmc7XbkLdwdD7G8beca6603
 
 ###Test post employees
 POST http://127.0.0.1:8000/api/v1/employees
 Content-Type: application/json
 Accept: application/json
-Authorization: Bearer 56|D3qWCjgybYJ9oLmLfbkeXsj7BrkFhTOtpxZPy8Gqffca252f
+Authorization: Bearer 90|3OBp0BQauFsX4k547Sjtx8X7lYmc7XbkLdwdD7G8beca6603
 
 
 {
@@ -302,7 +304,7 @@ Authorization: Bearer 56|D3qWCjgybYJ9oLmLfbkeXsj7BrkFhTOtpxZPy8Gqffca252f
 PUT http://127.0.0.1:8000/api/v1/employees/1
 Content-Type: application/json
 Accept: application/json
-Authorization: Bearer 56|D3qWCjgybYJ9oLmLfbkeXsj7BrkFhTOtpxZPy8Gqffca252f
+Authorization: Bearer 90|3OBp0BQauFsX4k547Sjtx8X7lYmc7XbkLdwdD7G8beca6603
 
 {
 "first_name": "GErardo Arturo",
@@ -311,7 +313,7 @@ Authorization: Bearer 56|D3qWCjgybYJ9oLmLfbkeXsj7BrkFhTOtpxZPy8Gqffca252f
 PATCH http://127.0.0.1:8000/api/v1/employees/1
 Content-Type: application/json
 Accept: application/json
-Authorization: Bearer 56|D3qWCjgybYJ9oLmLfbkeXsj7BrkFhTOtpxZPy8Gqffca252f
+Authorization: Bearer 90|3OBp0BQauFsX4k547Sjtx8X7lYmc7XbkLdwdD7G8beca6603
 
 {
 "first_name": "<>/",
@@ -319,22 +321,22 @@ Authorization: Bearer 56|D3qWCjgybYJ9oLmLfbkeXsj7BrkFhTOtpxZPy8Gqffca252f
 ###Test show employees
 GET http://127.0.0.1:8000/api/v1/employees/1
 Accept: application/json
-Authorization: Bearer 56|D3qWCjgybYJ9oLmLfbkeXsj7BrkFhTOtpxZPy8Gqffca252f
+Authorization: Bearer 90|3OBp0BQauFsX4k547Sjtx8X7lYmc7XbkLdwdD7G8beca6603
 ####Test get menus
 GET http://127.0.0.1:8000/api/v1/menus?include_hierarchy=0
-Authorization: Bearer 70|93SYTI5K3GIlTokXZsPk9VaCqnbn4G47VtFm53X409144379
+Authorization: Bearer 90|3OBp0BQauFsX4k547Sjtx8X7lYmc7XbkLdwdD7G8beca6603
 ####Test post menus
 POST http://127.0.0.1:8000/api/v1/menus
 Content-Type: application/json
 Accept: application/json
-Authorization: Bearer 56|D3qWCjgybYJ9oLmLfbkeXsj7BrkFhTOtpxZPy8Gqffca252f
+Authorization: Bearer 90|3OBp0BQauFsX4k547Sjtx8X7lYmc7XbkLdwdD7G8beca6603
 
 {
     "label": "register_users",
     "route": "/users/register",
     "icon": "pi-plus-circle",
     "level": 2,
-    "parent": 2
+    "parent": 2,
 }
 
 ####Test put menus
@@ -360,35 +362,35 @@ Content-Type: application/json
 ####Test show menus
 GET http://127.0.0.1:8000/api/v1/menus/1
 Accept: application/json
-Authorization: Bearer 72|5N5QLBZP5R29exZkssB6GBjnLwidjx4nh0Xh59BS5c05d562
+Authorization: Bearer 90|3OBp0BQauFsX4k547Sjtx8X7lYmc7XbkLdwdD7G8beca6603
 ###GET motives
 GET http://127.0.0.1:8000/api/v1/motives
 Accept: application/json
-Authorization: Bearer 72|5N5QLBZP5R29exZkssB6GBjnLwidjx4nh0Xh59BS5c05d562
+Authorization: Bearer 91|uvEyLZBgVofv3j9yuPtDfMXoV4kG2vy1KTlHzXSPab01e345
 ###POST motives
 POST http://127.0.0.1:8000/api/v1/motives
 Accept: application/json
-Authorization: Bearer 72|5N5QLBZP5R29exZkssB6GBjnLwidjx4nh0Xh59BS5c05d562
+Authorization: Bearer 90|3OBp0BQauFsX4k547Sjtx8X7lYmc7XbkLdwdD7G8beca6603
 Content-Type: application/json
 
 {
     "name": "DECOMMISSIONING",
-    "description": "Official removal of an item from active use due to obsolescence or poor condition."
+    "description": "Official removal of an item from active use due to obsolescence or poor condition.",
 }
 ###PUT motives
 PUT http://127.0.0.1:8000/api/v1/motives/1
 Accept: application/json
-Authorization: Bearer 72|5N5QLBZP5R29exZkssB6GBjnLwidjx4nh0Xh59BS5c05d562
+Authorization: Bearer 90|3OBp0BQauFsX4k547Sjtx8X7lYmc7XbkLdwdD7G8beca6603
 Content-Type: application/json
 
 {
     "name": "DECOMMISSIONING",
-    "description": "Official removal of an item from active use due to obsolescence or poor condition."
+    "description": "Official removal of an item from active use due to obsolescence or poor condition.",
 }
 ###PATCH motives
 PATCH http://127.0.0.1:8000/api/v1/motives/1
 Accept: application/json
-Authorization: Bearer 72|5N5QLBZP5R29exZkssB6GBjnLwidjx4nh0Xh59BS5c05d562
+Authorization: Bearer 90|3OBp0BQauFsX4k547Sjtx8X7lYmc7XbkLdwdD7G8beca6603
 Content-Type: application/json
 
 {
@@ -397,25 +399,25 @@ Content-Type: application/json
 ###SHOW motives
 GET http://127.0.0.1:8000/api/v1/motives/3
 Accept: application/json
-Authorization: Bearer 72|5N5QLBZP5R29exZkssB6GBjnLwidjx4nh0Xh59BS5c05d562
+Authorization: Bearer 90|3OBp0BQauFsX4k547Sjtx8X7lYmc7XbkLdwdD7G8beca6603
 ###GET note types
 GET http://127.0.0.1:8000/api/v1/note_types
 Accept: application/json
-Authorization: Bearer 73|ICyad6zRZdYLN9RFVoxVn9XHqsauAYR1KDGY04U8548cf0ca
+Authorization: Bearer 91|uvEyLZBgVofv3j9yuPtDfMXoV4kG2vy1KTlHzXSPab01e345
 ###POST note types
 POST http://127.0.0.1:8000/api/v1/note_types
 Accept: application/json
-Authorization: Bearer 73|ICyad6zRZdYLN9RFVoxVn9XHqsauAYR1KDGY04U8548cf0ca
+Authorization: Bearer 91|uvEyLZBgVofv3j9yuPtDfMXoV4kG2vy1KTlHzXSPab01e345
 Content-Type: application/json
 
 {
     "name": "BUILDING AND LAND RECORD",
-    "description": "Document related to the inspection or evaluation of buildings and land."
+    "description": "Document related to the inspection or evaluation of buildings and land.",
 }
 ###PUT note types
 PUT http://127.0.0.1:8000/api/v1/note_types/1
 Accept: application/json
-Authorization: Bearer 72|5N5QLBZP5R29exZkssB6GBjnLwidjx4nh0Xh59BS5c05d562
+Authorization: Bearer 91|uvEyLZBgVofv3j9yuPtDfMXoV4kG2vy1KTlHzXSPab01e345
 Content-Type: application/json
 
 {
@@ -424,34 +426,34 @@ Content-Type: application/json
 ###PATCH note types
 PATCH http://127.0.0.1:8000/api/v1/note_types/1
 Accept: application/json
-Authorization: Bearer 73|ICyad6zRZdYLN9RFVoxVn9XHqsauAYR1KDGY04U8548cf0ca
+Authorization: Bearer 91|uvEyLZBgVofv3j9yuPtDfMXoV4kG2vy1KTlHzXSPab01e345
 Content-Type: application/json
 
 {
-    "state_id": 1
+    "state_id": 1,
 }
 ###SHOW note types
 GET http://127.0.0.1:8000/api/v1/note_types/2
 Accept: application/json
-Authorization: Bearer 73|ICyad6zRZdYLN9RFVoxVn9XHqsauAYR1KDGY04U8548cf0ca
+Authorization: Bearer 91|uvEyLZBgVofv3j9yuPtDfMXoV4kG2vy1KTlHzXSPab01e345
 ###GET increase types
 GET http://127.0.0.1:8000/api/v1/increase_types
 Accept: application/json
-Authorization: Bearer 74|3q1LebInDCDA0yUpKg0gj88sJAA79A1OfpmsUqAa87077f1d
+Authorization: Bearer 91|uvEyLZBgVofv3j9yuPtDfMXoV4kG2vy1KTlHzXSPab01e345
 ###POST increase types
 POST http://127.0.0.1:8000/api/v1/increase_types
 Accept: application/json
-Authorization: Bearer 74|3q1LebInDCDA0yUpKg0gj88sJAA79A1OfpmsUqAa87077f1d
+Authorization: Bearer 91|uvEyLZBgVofv3j9yuPtDfMXoV4kG2vy1KTlHzXSPab01e345
 Content-Type: application/json
 
 {
     "name": "CONSTRUCTION",
-    "description": "Process or result of building infrastructure or structures."
+    "description": "Process or result of building infrastructure or structures.",
 }
 ###PUT increase types
 PUT http://127.0.0.1:8000/api/v1/increase_types/1
 Accept: application/json
-Authorization: Bearer 72|5N5QLBZP5R29exZkssB6GBjnLwidjx4nh0Xh59BS5c05d562
+Authorization: Bearer 91|uvEyLZBgVofv3j9yuPtDfMXoV4kG2vy1KTlHzXSPab01e345
 Content-Type: application/json
 
 {
@@ -460,7 +462,7 @@ Content-Type: application/json
 ###PATCH increase types
 PATCH http://127.0.0.1:8000/api/v1/increase_types/1
 Accept: application/json
-Authorization: Bearer 74|3q1LebInDCDA0yUpKg0gj88sJAA79A1OfpmsUqAa87077f1d
+Authorization: Bearer 91|uvEyLZBgVofv3j9yuPtDfMXoV4kG2vy1KTlHzXSPab01e345
 Content-Type: application/json
 
 {
@@ -469,29 +471,29 @@ Content-Type: application/json
 ###SHOW increase types
 GET http://127.0.0.1:8000/api/v1/increase_types/2
 Accept: application/json
-Authorization: Bearer 74|3q1LebInDCDA0yUpKg0gj88sJAA79A1OfpmsUqAa87077f1d
+Authorization: Bearer 91|uvEyLZBgVofv3j9yuPtDfMXoV4kG2vy1KTlHzXSPab01e345
 ###View notifications
 GET http://127.0.0.1:8000/api/v1/notifications
 Accept: application/json
-Authorization: Bearer 82|cSSZQgbDB24lKyOOTifwiBbJfMqh1cxBBsDcJvew6d9e324e
+Authorization: Bearer 91|uvEyLZBgVofv3j9yuPtDfMXoV4kG2vy1KTlHzXSPab01e345
 ###GET increase types
 GET http://127.0.0.1:8000/api/v1/positions?row_num=5&search=tecnico
 Accept: application/json
-Authorization: Bearer 84|cVw5FrCHsz5aoprS9yFiDtDuGHBxJM3s9s3pFAFE2ceb6b40
+Authorization: Bearer 91|uvEyLZBgVofv3j9yuPtDfMXoV4kG2vy1KTlHzXSPab01e345
 ###POST increase types
 POST http://127.0.0.1:8000/api/v1/positions
 Accept: application/json
-Authorization: Bearer 84|cVw5FrCHsz5aoprS9yFiDtDuGHBxJM3s9s3pFAFE2ceb6b40
+Authorization: Bearer 91|uvEyLZBgVofv3j9yuPtDfMXoV4kG2vy1KTlHzXSPab01e345
 Content-Type: application/json
 
 {
     "name": "ENTRENADORA",
-    "description": "Persona que entrena a otros."
+    "description": "Persona que entrena a otros.",
 }
 ###PUT increase types
 PUT http://127.0.0.1:8000/api/v1/positions/1
 Accept: application/json
-Authorization: Bearer 72|5N5QLBZP5R29exZkssB6GBjnLwidjx4nh0Xh59BS5c05d562
+Authorization: Bearer 91|uvEyLZBgVofv3j9yuPtDfMXoV4kG2vy1KTlHzXSPab01e345
 Content-Type: application/json
 
 {
@@ -500,21 +502,21 @@ Content-Type: application/json
 ###PATCH increase types
 PATCH http://127.0.0.1:8000/api/v1/positions/466
 Accept: application/json
-Authorization: Bearer 84|cVw5FrCHsz5aoprS9yFiDtDuGHBxJM3s9s3pFAFE2ceb6b40
+Authorization: Bearer 91|uvEyLZBgVofv3j9yuPtDfMXoV4kG2vy1KTlHzXSPab01e345
 Content-Type: application/json
 
 {
-    "state_id":2
+    "state_id":1,
 }
 ###SHOW increase types
-GET http://127.0.0.1:8000/api/v1/positions/0
+GET http://127.0.0.1:8000/api/v1/positions/1
 Accept: application/json
-Authorization: Bearer 84|cVw5FrCHsz5aoprS9yFiDtDuGHBxJM3s9s3pFAFE2ceb6b40
+Authorization: Bearer 91|uvEyLZBgVofv3j9yuPtDfMXoV4kG2vy1KTlHzXSPab01e345
 ###View list of audits
 GET http://127.0.0.1:8000/api/v1/audits/?model=Menu&auditable_id=1&sort_by=id&sort_order=desc&row_num=5
 Accept: application/json
-Authorization: Bearer 89|BuzrPIEbTX5YgVFyk0y6LNfXcBZeugWjtwVV3hdTeff8b869
+Authorization: Bearer 91|uvEyLZBgVofv3j9yuPtDfMXoV4kG2vy1KTlHzXSPab01e345
 ###View list of audits filtered to Models
 GET http://127.0.0.1:8000/api/v1/audits/1000
 Accept: application/json
-Authorization: Bearer 89|BuzrPIEbTX5YgVFyk0y6LNfXcBZeugWjtwVV3hdTeff8b869
+Authorization: Bearer 91|uvEyLZBgVofv3j9yuPtDfMXoV4kG2vy1KTlHzXSPab01e345
