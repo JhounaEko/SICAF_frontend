@@ -107,7 +107,7 @@ const TablaList  = (getStatusCRUD)=>{
           {
 			name: 'Estado',
 			cell: (row) => (  
-                (row.state.name === "ACTIVE") ? (
+                (row.state.name === "ACTIVO") ? (
                     <div style={{display: 'flex', alignItems: 'center', gap: '10px', flexWrap: 'wrap', justifyContent: 'center', padding: '10px', boxSizing: 'border-box', }}>           
                         <i className='fas fa-check' style={{color: 'green', fontSize: '20px' }}></i> 
                         <p >Activo</p>
@@ -142,7 +142,7 @@ const TablaList  = (getStatusCRUD)=>{
 
     const changeStatus = (statusRow, idRow) => {
         Swal.fire({
-            title: (statusRow === "INACTIVE")? "¿ Esta seguro de cambiar el estado a activo ?":"¿ Esta seguro de cambiar el estado a inactivo ?" ,
+            title: (statusRow === "INACTIVO")? "¿ Esta seguro de cambiar el estado a activo ?":"¿ Esta seguro de cambiar el estado a inactivo ?" ,
             text: "",
             icon: "question",
             showCancelButton: true,
@@ -154,7 +154,7 @@ const TablaList  = (getStatusCRUD)=>{
             if (result.isConfirmed) {
                 axios.patch( `${process.env.REACT_APP_API_URL}/api/v1/roles/${idRow}`,
                     {
-                       "state_id": (statusRow === "INACTIVE")? 1 : 2 
+                       "state_id": (statusRow === "INACTIVO")? 1 : 2 
                     } ,{
                     headers: {
                     'Content-Type': 'application/json',    
@@ -190,7 +190,7 @@ const TablaList  = (getStatusCRUD)=>{
     }
     
     const handleSort = (columnTable, direction) => {  
-        console.log(columnTable.selector);
+    console.log(columnTable);
        setSort({column: columnRef[0][columnTable.name], order: direction });  
     };
 

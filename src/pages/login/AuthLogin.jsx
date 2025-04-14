@@ -5,7 +5,6 @@ import axios from 'axios';
 import {  useNavigate  } from 'react-router-dom';
 import { Store } from 'react-notifications-component';
 import Swal from 'sweetalert2'
-import { AppSettings } from './../../config/app-settings.js';
 
 function addNotification(notificationType, notificationTitle, notificationMessage, notificationPosition, duration, icon,notificationContent) {		                        
     Store.addNotification({

@@ -8,14 +8,11 @@ const Menu = [
   },
   { path: '/users', icon: 'fa fa-user', title: 'Gestion de usuarios',
     children: [
-      { path: '/users/pages', title: 'Usuarios' }    
+      { path: '/users/pages', title: 'Usuarios' },
+      { path: '/roles/pages', title: 'Roles' }, 
+      { path: '/oficinas/pages', title: 'Oficinas' }     
     ]
-  },
-  { path: '/roles', icon: 'fa fa-user', title: 'Gestion de roles',
-    children: [
-      { path: '/roles/pages', title: 'Roles' }    
-    ]
-  },
+  },  
   { path: '/ui', icon: 'fa fa-gem', title: 'UI Elements', label: 'NEW',
     children: [
       { path: '/ui/general', title: 'General', highlight: true },

@@ -64,7 +64,7 @@ const TableList = (getStatusCRUD) => {
 
 	const changeStatus = (statusRow, idRow) => {
         Swal.fire({
-            title: (statusRow === "INACTIVE")? "¿ Esta seguro de cambiar el estado a activo ?":"¿ Esta seguro de cambiar el estado a inactivo ?" ,
+            title: (statusRow === "INACTIVO")? "¿ Esta seguro de cambiar el estado a activo ?":"¿ Esta seguro de cambiar el estado a inactivo ?" ,
             text: "",
             icon: "question",
             showCancelButton: true,
@@ -76,7 +76,7 @@ const TableList = (getStatusCRUD) => {
             if (result.isConfirmed) {
                 axios.patch( `${process.env.REACT_APP_API_URL}/api/v1/users/${idRow}`,
                     {
-                       "state_id": (statusRow === "INACTIVE")? 1 : 2 
+                       "state_id": (statusRow === "INACTIVO")? 1 : 2 
                     } ,{
                     headers: {
                     'Content-Type': 'application/json',    
@@ -120,7 +120,8 @@ const TableList = (getStatusCRUD) => {
 		  cell: (row) => <div className="m-0 p-0"> 
 		  					<b>{row.first_name+" "+row.last_name}</b>
 							<p className="m-0 p-0" style={{fontSize:'12px'}}>{row.email}</p> 
-							<p className="m-0 p-0" style={{fontSize:'12px'}}>{row.phone_number}</p>
+							<p className="m-0 p-0" style={{fontSize:'12px'}}>{row.phone_number}</p>                    
+                            <p className="m-0 p-0" style={{fontSize:'12px'}}>{row.username}</p>
 						</div> ,		 
 		},
         { name: (<p className="m-0" style = {{fontWeight: 'bold', fontSize: '15px', textDecoration: 'underline'}}>C.I.</p>), 
@@ -163,7 +164,7 @@ const TableList = (getStatusCRUD) => {
 		  sortable: true ,
           selectorKey:'state_id',
 		  cell:  (row) =>(
-			(row.state.name === "ACTIVE") ? (<div className="btn-flex">
+			(row.state.name === "ACTIVO") ? (<div className="btn-flex">
 				<i className="fas fa-toggle-on fa-2x" id={`id_check${row.id}`} style = {{color: "#276BAA"}} onClick={ ()=> changeStatus(row.state.name, row.id)} ></i>
 				<label className="form-check-label mx-1" style={{color: 'green', fontSize: '13px' }} htmlFor={`id_check${row.id}`} >ACTIVO</label>
 			</div>):

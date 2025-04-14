@@ -4,7 +4,7 @@ import Modal from 'react-bootstrap/Modal';
 import Swal from 'sweetalert2';
 import AsyncSelect from 'react-select/async';
 import Button from 'react-bootstrap/Button';
-import { get, useForm, } from 'react-hook-form';
+import {useForm} from 'react-hook-form';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import CryptoJS from 'crypto-js'; 
@@ -185,19 +185,23 @@ const CompModalCreateUpdate = ( {StatusModal, title, CloseModal, updateTableData
 				},
 			});
 			
-		
-			/** Se verifica que la pagina actual sea menor a la ultima pagina */
+			console.log(response.data);
+			/** Se verifica que la pagina actual sea menor a la ultima pagina */				
 			if ( response.data.results.meta.current_page < response.data.results.meta.last_page ) {
 				hasMoreOffice.current = true;
 			}	else {
 				hasMoreOffice.current = false;
 			}	
-			
-			return response.data.results.data;
-
+			if (response.data.results.data){
+				return response.data.results.data;
+			} else {
+				return [];
+			}																					
 		} catch (error) {
+			//console.log("error")
 			console.log(error)	
-			addNotification('info', 'Problema inesperado', 'Revice su conexion', 'top-right',8000, "fas fa-exclamation-circle" ,null)  			
+			//addNotification('info', 'Problema inesperado', 'Revice su conexion', 'top-right',8000, "fas fa-exclamation-circle" ,null)  			
+			return [];
 		} finally {
 			setIsLoadingOffice(false);
 		  }
@@ -269,14 +273,14 @@ const CompModalCreateUpdate = ( {StatusModal, title, CloseModal, updateTableData
 				}	
 				return response.data.results.data;
 			} catch (error) {	
-				hasMoreRoles.current = false;			
+				console.log(error);						
 				return [];							
 			}	
 			
 
-		} catch (error) {
-			console.log(error)	
-			addNotification('info', 'Problema inesperadoOO', 'Revice su conexion', 'top-right',8000, "fas fa-exclamation-circle" ,null)  			
+		} catch (error) {		
+			console.log(error);		
+			return [];
 		} finally {
 			setIsLoadingRoles(false);
 		}
@@ -330,8 +334,7 @@ const CompModalCreateUpdate = ( {StatusModal, title, CloseModal, updateTableData
 	}
 
 	if (data.id !== 0  && statusUpdate && idRef.current != data.id)  {	
-		idRef.current = data.id	
-		//console.log("load data");
+		idRef.current = data.id		
 		setValue('id',data.id);
 		setValue('first_name',data.first_name);
 		setValue('last_name',data.last_name);
@@ -388,7 +391,6 @@ const CompModalCreateUpdate = ( {StatusModal, title, CloseModal, updateTableData
 									<input className="form-control" 
 										type="text" 															
 										id="first_name" 
-										//defaultValue={data.first_name}	
 										placeholder="nombre"
 										{...register("first_name", {
 												required: "El nombre es obligatorio",

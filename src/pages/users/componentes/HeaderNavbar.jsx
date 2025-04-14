@@ -116,9 +116,9 @@ const HeaderNavbar = ({updateTableData, searchData, searchDataParameter}) => {
                     >
                 <option value="search">Nombre</option>               
                 <option value="username">usuario</option>
-                <option value="email">Correo</option>
+                {/* <option value="email">Correo</option> */}
                 <option value="identity_card">Celula de identidad</option>             
-                <option value="data_crate">Fecha de registro</option>          
+                {/* <option value="data_crate">Fecha de registro</option>           */}
             </select>
             { (parameterSearchDataCreate == "data_crate")? ( <button type="button" onClick={()=> (console.log(fechaCreacion))   } className='btn btn-primary m-1'>  Buscar </button>):null}           
         </div>

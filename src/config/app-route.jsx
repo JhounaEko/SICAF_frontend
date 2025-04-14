@@ -27,6 +27,7 @@ import TablePlugins from './../pages/table/table-plugins.js';
 import ExtraError from './../pages/extra/extra-error.js';
 import UsersManager from '../pages/users/pages.jsx';
 import RolesManager from '../pages/roles/pages.jsx';
+import OfficeManager from '../pages/oficinas/pages.jsx';
 import Login from './../pages/login/pages.jsx';
 import RegisterPublicUser from './../pages/users/register.jsx';
 
@@ -54,14 +55,22 @@ const AppRoute = [
 					{ path: '*', element: <ExtraError /> }
 				]
 			},
-			{
-				path: 'users/*', 
+			{		
+				path: 'users/', 
 				element:  <ProtectedRoute><Outlet /></ProtectedRoute>,
 				children: [
-					{ path: 'pages', element: <UsersManager /> },						
+					{ path: 'pages', element: <UsersManager /> },									
 					{ path: '*', element: <ExtraError /> }
 				]
 			},	
+			{		
+				path: 'oficinas/', 
+				element:  <ProtectedRoute><Outlet /></ProtectedRoute>,
+				children: [
+					{ path: 'pages', element: <OfficeManager /> },									
+					{ path: '*', element: <ExtraError /> }
+				]
+			},
 			{
 				path: 'roles/*', 
 				element:  <ProtectedRoute><Outlet /></ProtectedRoute>,
