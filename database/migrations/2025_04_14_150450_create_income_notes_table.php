@@ -11,13 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('users.employees', function (Blueprint $table) {
+        Schema::create('items.income_notes', function (Blueprint $table) {
             $table->id();
-            $table->string('first_name', 30);
-            $table->string('last_name', 30);
-            $table->string('phone_number', 15)->nullable();
-            $table->string('position', 60);
-            $table->foreignId('office_id')->nullable()->constrained('users.offices')->cascadeOnUpdate()->cascadeOnDelete();
+            $table->string('note', 20)->nullable();
+            $table->string('payment_receipt', 25);
+            $table->string('expense_receipt', 25)->nullable();
+            $table->string('voucher_number', 20);
+            $table->decimal('dfm_amount', 10, 2)->nullable();
+            $table->date('dfm_date');
             $table->foreignId('state_id')->default(1)->constrained('public.states')->cascadeOnUpdate()->cascadeOnDelete();
             $table->timestamps();
         });
@@ -28,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('users.employees');
+        Schema::dropIfExists('items.income_notes');
     }
 };

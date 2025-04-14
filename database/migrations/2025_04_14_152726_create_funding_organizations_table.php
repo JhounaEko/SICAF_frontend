@@ -11,13 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('users.employees', function (Blueprint $table) {
+        Schema::create('items.funding_organizations', function (Blueprint $table) {
             $table->id();
-            $table->string('first_name', 30);
-            $table->string('last_name', 30);
-            $table->string('phone_number', 15)->nullable();
-            $table->string('position', 60);
-            $table->foreignId('office_id')->nullable()->constrained('users.offices')->cascadeOnUpdate()->cascadeOnDelete();
+            $table->string('code', 10)->unique();
+            $table->string('description', 100);
+            $table->string('abbreviation', 20)->nullable();
+            $table->integer('year')->nullable();
             $table->foreignId('state_id')->default(1)->constrained('public.states')->cascadeOnUpdate()->cascadeOnDelete();
             $table->timestamps();
         });
@@ -28,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('users.employees');
+        Schema::dropIfExists('items.funding_organizations');
     }
 };

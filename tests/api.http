@@ -370,7 +370,7 @@ Authorization: Bearer 91|uvEyLZBgVofv3j9yuPtDfMXoV4kG2vy1KTlHzXSPab01e345
 ###POST motives
 POST http://127.0.0.1:8000/api/v1/motives
 Accept: application/json
-Authorization: Bearer 90|3OBp0BQauFsX4k547Sjtx8X7lYmc7XbkLdwdD7G8beca6603
+Authorization: Bearer 91|uvEyLZBgVofv3j9yuPtDfMXoV4kG2vy1KTlHzXSPab01e345
 Content-Type: application/json
 
 {
@@ -380,7 +380,7 @@ Content-Type: application/json
 ###PUT motives
 PUT http://127.0.0.1:8000/api/v1/motives/1
 Accept: application/json
-Authorization: Bearer 90|3OBp0BQauFsX4k547Sjtx8X7lYmc7XbkLdwdD7G8beca6603
+Authorization: Bearer 91|uvEyLZBgVofv3j9yuPtDfMXoV4kG2vy1KTlHzXSPab01e345
 Content-Type: application/json
 
 {
@@ -399,7 +399,7 @@ Content-Type: application/json
 ###SHOW motives
 GET http://127.0.0.1:8000/api/v1/motives/3
 Accept: application/json
-Authorization: Bearer 90|3OBp0BQauFsX4k547Sjtx8X7lYmc7XbkLdwdD7G8beca6603
+Authorization: Bearer 91|uvEyLZBgVofv3j9yuPtDfMXoV4kG2vy1KTlHzXSPab01e345
 ###GET note types
 GET http://127.0.0.1:8000/api/v1/note_types
 Accept: application/json
@@ -513,7 +513,7 @@ GET http://127.0.0.1:8000/api/v1/positions/1
 Accept: application/json
 Authorization: Bearer 91|uvEyLZBgVofv3j9yuPtDfMXoV4kG2vy1KTlHzXSPab01e345
 ###View list of audits
-GET http://127.0.0.1:8000/api/v1/audits/?model=Menu&auditable_id=1&sort_by=id&sort_order=desc&row_num=5
+GET http://127.0.0.1:8000/api/v1/audits/?model=MENU&auditable_id=1&sort_by=id&sort_order=desc&row_num=5
 Accept: application/json
 Authorization: Bearer 91|uvEyLZBgVofv3j9yuPtDfMXoV4kG2vy1KTlHzXSPab01e345
 ###View list of audits filtered to Models
