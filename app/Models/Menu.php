@@ -88,6 +88,15 @@ class Menu extends Model implements Auditable
         }
     }
 
+    public function scopeFilterByStateName($query, $stateName)
+    {
+        if (!is_null($stateName)) {
+            $query->join('states', 'menus.state_id', '=', 'states.id')
+                  ->where('states.name', 'LIKE', "%{$stateName}%")
+                  ->select('menus.*');
+        }
+    }
+    
     public function scopeFilterByDates($query, $start, $end)
     {
         if ($start && $end) {

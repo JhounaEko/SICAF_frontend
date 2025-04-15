@@ -52,7 +52,8 @@ class FilterRequest extends FormRequest
             'issued_by' => ['nullable', 'string', 'in:LP,CH,CB,OR,PT,TJ,SC,BE,PD,S/E'],
             'username' => ['nullable', 'string', 'max:30'],
             'email' => ['nullable', 'string', 'email', 'regex:/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/'],
-            'office_name' => ['nullable', 'string', 'exists:offices,name'],
+            'office_name' => ['nullable', 'string'],
+            'state_name' => ['nullable', 'string'],
             'office_initials' => ['nullable', 'string', 'exists:offices,initials'],
             'office' => ['nullable', 'integer', 'exists:offices,id'],
             // Validacion para menus
@@ -95,6 +96,12 @@ class FilterRequest extends FormRequest
         if ($this->has('code')) {
             $this->merge([
                 'code' => mb_strtoupper($this->input('code')),
+            ]);
+        }
+
+        if ($this->has('state_name')) {
+            $this->merge([
+                'state_name' => mb_strtoupper($this->input('state_name')),
             ]);
         }
     }

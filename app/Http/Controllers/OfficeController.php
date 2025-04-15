@@ -31,6 +31,7 @@ class OfficeController extends Controller implements HasMiddleware
                 ->filterByLevel($request->input('level'))
                 ->filterByParent($request->input('parent'))
                 ->filterByInitialsOrName($request->input('search'))
+                ->filterByStateName($request->input('state_name'))
                 ->filterByDates($request->input('start_date'), $request->input('end_date'));
 
             if ($request->filled('sort_by')) {
