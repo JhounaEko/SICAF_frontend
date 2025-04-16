@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('transfers', function (Blueprint $table) {
+        Schema::create('items.transfers', function (Blueprint $table) {
             $table->id();
             $table->string('transfer_type', 15);
             $table->date('date');
@@ -19,7 +19,10 @@ return new class extends Migration
             $table->foreignId('from_person_id')->nullable()->constrained('users.persons')->cascadeOnUpdate()->cascadeOnDelete();
             $table->foreignId('to_office_id')->nullable()->constrained('users.offices')->cascadeOnUpdate()->cascadeOnDelete();
             $table->foreignId('to_person_id')->nullable()->constrained('users.persons')->cascadeOnUpdate()->cascadeOnDelete();
-
+            $table->integer('transfer_number')->nullable();
+            $table->foreignId('state_id')->default(1)->constrained('public.states')->cascadeOnUpdate()->cascadeOnDelete();
+            $table->text('observations')->nullable();
+            $table->text('objectives')->nullable();
             $table->timestamps();
         });
     }
@@ -29,6 +32,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('transfers');
+        Schema::dropIfExists('items.transfers');
     }
 };
