@@ -58,6 +58,23 @@ class FilterRequest extends FormRequest
             'office' => ['nullable', 'integer', 'exists:offices,id'],
             // Validacion para menus
             'simple_view' => ['nullable', 'boolean'],
+            // Validaciones para tipos de cambio
+            'ufv' => ['nullable', 'decimal:2'],
+            'exchange_rate' => ['nullable', 'decimal:2'],
+            'date' => ['nullable', 'date'],
+            // Validaciones para el correlativo
+            'value_number' => ['nullable', 'integer', 'min:0'],
+            // Validaciones para el detalle historico de las notas
+            'note' => ['nullable', 'integer'],
+            'income_note' => ['nullable', 'integer'],
+            'payment_voucher' => ['nullable', 'string'],
+            'expense_voucher' => ['nullable', 'string'],
+            'voucher' => ['nullable', 'string'],
+            // Validaciones para el incremento
+            'item' => ['nullable', 'integer'],
+            'is_active' => ['nullable', 'boolean']
+
+
 
         ];
     }
