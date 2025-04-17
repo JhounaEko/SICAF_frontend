@@ -47,7 +47,7 @@ class FilterRequest extends FormRequest
             'include_hierarchy' => ['nullable', 'boolean'],
             // Validaciones para filtros de usuarios
             // 'email' => ['nullable', 'string', 'email'],
-            'phone_number' => ['nullable', 'string', 'regex:/^\[1-9]\d{1,14}$/'],
+            'phone_number' => ['nullable', 'regex:/^(6|7)[0-9]{7}$/'],
             'identity_card' => ['nullable', 'string', 'regex:/^[A-Za-z0-9-]+$/'],
             'issued_by' => ['nullable', 'string', 'in:LP,CH,CB,OR,PT,TJ,SC,BE,PD,S/E'],
             'username' => ['nullable', 'string', 'max:30'],
@@ -72,10 +72,28 @@ class FilterRequest extends FormRequest
             'voucher' => ['nullable', 'string'],
             // Validaciones para el incremento
             'item' => ['nullable', 'integer'],
-            'is_active' => ['nullable', 'boolean']
-
-
-
+            'is_active' => ['nullable', 'boolean'],
+            // Validaciones para regs
+            'ni' => ['nullable', 'integer'],
+            'cp' => ['nullable', 'string'],
+            'ce' => ['nullable', 'integer'],
+            'cc' => ['nullable', 'integer'],
+            // Validaciones para empresas
+            'enterprise_rubric' => ['nullable', 'integer', 'exists:enterprise_rubrics,id'],
+            'branch_name' => ['nullable', 'string'],
+            'country' => ['nullable', 'string'],
+            'representative' => ['nullable', 'string'],
+            // Validaciones para pres_rubro
+            'lifespan' => ['nullable', 'integer'],
+            'rubric' => ['nullable', 'string'],
+            'is_depreciated' => ['nullable', 'boolean'],
+            // Validaciones para grupo items
+            'item_group_type' => ['nullable', 'integer'],
+            'alphanumeric_code' => ['nullable', 'string'],
+            'type' => ['nullable', 'string' ],
+            'is_intangible' => ['nullable',  'boolean'],
+            'useful_months' => ['nullable', 'integer'],
+            'budget_rubric_id' => ['nullable', 'integer', 'exists:budget_rubrics,id'],
         ];
     }
 
@@ -100,25 +118,49 @@ class FilterRequest extends FormRequest
     {
         if ($this->has('sort_order')) {
             $this->merge([
-                'sort_order' => mb_strtoupper($this->input('sort_order')),
+                'sort_order' => mb_strtoupper(trim($this->input('sort_order'))),
             ]);
         }
 
         if ($this->has('search')) {
             $this->merge([
-                'search' => mb_strtoupper($this->input('search')),
+                'search' => mb_strtoupper(trim($this->input('search'))),
             ]);
         }
 
         if ($this->has('code')) {
             $this->merge([
-                'code' => mb_strtoupper($this->input('code')),
+                'code' => mb_strtoupper(trim($this->input('code'))),
             ]);
         }
 
         if ($this->has('state_name')) {
             $this->merge([
-                'state_name' => mb_strtoupper($this->input('state_name')),
+                'state_name' => mb_strtoupper(trim($this->input('state_name'))),
+            ]);
+        }
+
+        if ($this->has('country')) {
+            $this->merge([
+                'country' => mb_strtoupper(trim($this->input('country'))),
+            ]);
+        }
+
+        if ($this->has('branch_name')) {
+            $this->merge([
+                'branch_name' => mb_strtoupper(trim($this->input('branch_name'))),
+            ]);
+        }
+
+        if ($this->has('rubric')) {
+            $this->merge([
+                'rubric' => mb_strtoupper(trim($this->input('rubric'))),
+            ]);
+        }
+
+        if ($this->has('email')) {
+            $this->merge([
+                'email' => trim($this->input('email')),
             ]);
         }
     }

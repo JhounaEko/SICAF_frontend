@@ -2,64 +2,94 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\FilterRequest;
+use App\Http\Requests\HistoricRegRequest;
+use App\Http\Resources\HistoricRegResource;
+use App\Http\Responses\ApiResponse;
 use App\Models\HistoricReg;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
+use Illuminate\Support\Facades\DB;
 
-class HistoricRegController extends Controller
+class HistoricRegController extends Controller implements HasMiddleware
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public static function middleware()
     {
-        //
+        return [
+            new Middleware('permission:VIEW HISTORIC REGS', only: ['index', 'show']),
+            new Middleware('permission:REGISTER HISTORIC REGS', only: ['store']),
+            new Middleware('permission:UPDATE HISTORIC REGS', only: ['update']),
+        ];
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function index(FilterRequest $request)
     {
-        //
+        try {
+            $query = HistoricReg::query();
+            $query->filterByState($request->input('state'))
+                ->filterByNi($request->input('ni'))
+                ->filterByCp($request->input('cp'))
+                ->filterByCe($request->input('ce'))
+                ->filterByCc($request->input('cc'))
+                ->filterByStateName($request->input('state_name'))
+                ->filterByDates($request->input('start_date'), $request->input('end_date'));
+
+            if ($request->filled('sort_by')) {
+                try {
+                    $query->sort($request->input('sort_by'), $request->input('sort_order', 'asc'));
+                } catch (\Exception $e) {
+                    return ApiResponse::error('Error in sorting', 400, $e->getMessage());
+                }
+            }
+
+            $perPage = $request->input('row_num');
+            $regs = $query->paginate($perPage);
+
+            if ($regs->isEmpty()) {
+                return ApiResponse::error("There're not registered regs.", 200);
+            }
+
+            $collection = HistoricRegResource::collection($regs);
+            $responseData = $collection->response()->getData(true);
+
+            return ApiResponse::success('Regs found.', 200, $responseData);
+        } catch (\Exception $e) {
+            return ApiResponse::error('An error unexpected ocurred.', 500, $e->getMessage());
+        }
+    }
+    public function store(HistoricRegRequest $request)
+    {
+        try {
+            DB::beginTransaction();
+            $reg = HistoricReg::create($request->validated());
+            DB::commit();
+            return ApiResponse::success('Reg registered successfully.', 201, $reg);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return ApiResponse::error('An error occurred while registering the reg.', 500, $e->getMessage());
+        }
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
     public function show(HistoricReg $historicReg)
     {
-        //
+        try {
+            return ApiResponse::success('Reg found.', 200, HistoricRegResource::make($historicReg));
+        } catch (\Exception $e) {
+            return ApiResponse::error('An error unexpected ocurred.', 500, $e->getMessage());
+        }
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(HistoricReg $historicReg)
+    public function update(HistoricRegRequest $request, HistoricReg $historicReg)
     {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, HistoricReg $historicReg)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(HistoricReg $historicReg)
-    {
-        //
+        try {
+            DB::beginTransaction();
+            $historicReg->update($request->validated());
+            DB::commit();
+            return ApiResponse::success('Reg updated succesfully.', 200, $historicReg);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return ApiResponse::error('An error unexpected ocurred.', 500, $e->getMessage());
+        }
     }
 }
