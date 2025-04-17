@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('accounting.enterprise_rubrics', function (Blueprint $table) {
             $table->id();
-            $table->string('description', 15)->nullable();
+            $table->string('description', 30)->nullable();
             $table->foreignId('state_id')->default(1)->constrained('public.states')->cascadeOnUpdate()->cascadeOnDelete();
             $table->timestamps();
         });

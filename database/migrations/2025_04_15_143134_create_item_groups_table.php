@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('item_description', 15);
             $table->integer('item_group_type_id');
             $table->string('alphanumeric_code')->nullable();
-            $table->string('item_group_description', 15);
+            $table->string('item_group_description', 50);
             $table->string('material', 15)->nullable();
             $table->string('type', 30)->nullable();
             $table->boolean('is_intangible')->default(0);
