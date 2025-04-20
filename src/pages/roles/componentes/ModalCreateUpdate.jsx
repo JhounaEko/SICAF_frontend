@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useRef,useEffect} from 'react';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import { get, useForm, } from 'react-hook-form';
@@ -12,6 +12,7 @@ const CompModalCreateUpdate = ( {StatusModal, title, CloseModal, updateTableData
 
     const [stateButton, setStateButton] = useState(false);
     const [getData, setData] = useState(data);
+    const idRef = useRef(data.id);
 
     function addNotification(notificationType, notificationTitle, notificationMessage, notificationPosition, duration, icon,notificationContent) {									
         Store.addNotification({
@@ -40,17 +41,13 @@ const CompModalCreateUpdate = ( {StatusModal, title, CloseModal, updateTableData
 				name: data.name ? data.name : "" ,						
 			}           
         }        
-    ); 
-   
-    // useEffect(() => {
-       
-    // }, [data.id,data.name,statusUpdate]);
+    );       
 
-    if (data.id !== 0 && statusUpdate)  {
+    if (data.id !== 0 && idRef.current != data.id)  {
+        idRef.current = data.id;
         setValue('id',data.id);
         setValue('name',data.name);
      }
-
 
     const onSubmit = (dataTable) =>{ 
         const sessionTokenSicaf = Cookies.get(process.env.REACT_APP_COOKIES_NAME_TOKEN); 
@@ -127,6 +124,7 @@ const CompModalCreateUpdate = ( {StatusModal, title, CloseModal, updateTableData
     }
 
     const reserForm = () => {	
+        idRef.current = 0;	
         CloseModal();
 		reset();		
 	};
@@ -158,7 +156,7 @@ const CompModalCreateUpdate = ( {StatusModal, title, CloseModal, updateTableData
                             {...register("name", {
                                     required: "El nombre es obligatorio",
                                     pattern: {
-                                    value: /^[a-zA-Z]+$/u,
+                                    value: /^[a-zA-Z\s]+$/u,
                                     message: "Solo se permite texto",
                                     },
                                     minLength: {

@@ -183,9 +183,7 @@ const CompModalCreateUpdate = ( {StatusModal, title, CloseModal, updateTableData
 				Accept: 'application/json',
 				Authorization: 'Bearer '+decryptedToken,
 				},
-			});
-			
-			console.log(response.data);
+			});					
 			/** Se verifica que la pagina actual sea menor a la ultima pagina */				
 			if ( response.data.results.meta.current_page < response.data.results.meta.last_page ) {
 				hasMoreOffice.current = true;

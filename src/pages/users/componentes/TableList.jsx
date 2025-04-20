@@ -347,6 +347,8 @@ const TableList = (getStatusCRUD) => {
         }      
     }
 
+    
+
     return ( <>
         <ReactNotifications /> 
 
@@ -444,7 +446,8 @@ const TableList = (getStatusCRUD) => {
             updateTableData = {updateTableData}  
             statusUpdate = {true}                  
         /> 
-        <DataTable title={<span></span>} 
+        <DataTable       
+            title={<span className="mb-1 text-primary fs-4 fw-bold">📋 Lista de Oficinas</span>}           
             columns={columns} 
             data={getDataTables} 
             selectableRows= {false}		

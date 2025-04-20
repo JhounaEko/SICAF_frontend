@@ -78,6 +78,14 @@ const AppRoute = [
 					{ path: 'pages', element: <RolesManager /> },						
 					{ path: '*', element: <ExtraError /> }
 				]
+			},	
+			{
+				path: 'permisos/*', 
+				element:  <ProtectedRoute><Outlet /></ProtectedRoute>,
+				children: [
+					{ path: 'pages', element: <ManagerPermisos /> },						
+					{ path: '*', element: <ExtraError /> }
+				]
 			},			
 			{
 				path: 'ui/*', 
