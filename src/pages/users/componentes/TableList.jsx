@@ -292,7 +292,7 @@ const TableList = (getStatusCRUD) => {
         }).finally(() => {
             setProgressData(false);				
         });	
-    },[getPag,getCountRows,getSort,getStatusCRUD.getDataSearh,getStatusUpdate]);
+    },[getPag,getCountRows,getSort,getStatusCRUD.getStatusCRUD,getStatusCRUD.getDataSearh,getStatusUpdate]);
 
     /** Form change password */
     const { register, handleSubmit, unregister, reset, setValue,formState: { errors },getValues} = useForm(); 
@@ -346,6 +346,8 @@ const TableList = (getStatusCRUD) => {
             addNotification('warning', 'Verificar las contraseñas', 'Las contraseñas no coincide', 'top-right',8000, "fas fa-exclamation-circle" ,null)  			
         }      
     }
+
+    
 
     return ( <>
         <ReactNotifications /> 
@@ -444,7 +446,8 @@ const TableList = (getStatusCRUD) => {
             updateTableData = {updateTableData}  
             statusUpdate = {true}                  
         /> 
-        <DataTable title={<span></span>} 
+        <DataTable       
+            title={<span className="mb-1 text-primary fs-4 fw-bold">📋 Lista de usuarios</span>}           
             columns={columns} 
             data={getDataTables} 
             selectableRows= {false}		

@@ -5,7 +5,9 @@ import AppRoute from './config/app-route.jsx';
 import '@fortawesome/fontawesome-free/css/all.css';
 import 'react-perfect-scrollbar/dist/css/styles.css';
 import './scss/react.scss';
-import './scss/formFrontend/formStyle.css'
+import './scss/formStyle.css'
+import './scss/tableStyle.css'
+
 
 const container = document.getElementById('root');
 const root = createRoot(container);

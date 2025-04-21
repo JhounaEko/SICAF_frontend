@@ -63,7 +63,7 @@ export const useInitSesion = () => {
 				},{
 				headers: {
 				'Content-Type': 'application/json',      
-			}}).then( response => {  				  					           
+			}}).then( response => {				  					           
 				if (response.data.statusCode === 200) {
 					if(checked){                               
 						Cookies.set(process.env.REACT_APP_COOKIES_NAME_USER, CryptoJS.AES.encrypt(data.username, process.env.REACT_APP_API_KEY).toString() , { expires: parseInt(process.env.REACT_APP_TIME_COOKIES, 10) }); 

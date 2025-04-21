@@ -1,67 +1,69 @@
-import React from 'react';
+import React,{ useEffect, useState, useRef} from 'react';
+import Swal from 'sweetalert2';
+import {modelReadNotificaciones} from './../modelNotificacion.jsx';
+import { use } from 'react';
+function DropdownNotification({items, functionRefreshNotificaciones}) {
 
-function DropdownNotification() {
+	const uselReadNotificaciones = modelReadNotificaciones();
+	
+
+	// const handleRemoveNotification = (idToRemove) => {
+	// 	const updatedNotifications = notifications.filter(item => item.id !== idToRemove);
+	
+	// };
+	
+	const viewNotification = ({id, message,created_at}) =>{			
+  		Swal.fire({
+			title: '<strong>¡Tienes una notificación!</strong>',
+			html: `
+			  <div style="font-size: 60px;">
+				<i class="fas fa-bell"></i>
+			  </div>
+			  <p>${message} - ${created_at}</p>
+			`,		
+			draggable: true,
+			timer: 10000,
+			confirmButtonColor: "#3085d6",
+			confirmButtonText: "ok"
+		}).then ( async  (result) =>{	
+			if (result.isConfirmed){				
+				const dataReturn = await uselReadNotificaciones(id);
+				if (!dataReturn.status) {	
+					alert("ocurrio un error");			
+				} else {
+					functionRefreshNotificaciones("Data");
+				}
+			}
+		});	
+	}
+
 	return (
 		<div className="navbar-item dropdown">
 			<a href="#/" data-bs-toggle="dropdown" className="navbar-link dropdown-toggle icon">
 				<i className="fa fa-bell"></i>
-				<span className="badge">5</span>
+				<span className="badge">{items.length}</span>
 			</a>
-			<div className="dropdown-menu media-list dropdown-menu-end">
-				<div className="dropdown-header">NOTIFICATIONS (5)</div>
-				<a href="#/" className="dropdown-item media">
-					<div className="media-left">
-						<i className="fa fa-bug media-object bg-gray-500"></i>
-					</div>
-					<div className="media-body">
-						<h6 className="media-heading">Server Error Reports <i className="fa fa-exclamation-circle text-danger"></i></h6>
-						<div className="text-muted fs-10px">3 minutes ago</div>
-					</div>
-				</a>
-				<a href="#/" className="dropdown-item media">
-					<div className="media-left">
-						<img src="" className="media-object" alt="" />
-						<i className="fab fa-facebook-messenger text-blue media-object-icon"></i>
-					</div>
-					<div className="media-body">
-						<h6 className="media-heading">John Smith</h6>
-						<p>Quisque pulvinar tellus sit amet sem scelerisque tincidunt.</p>
-						<div className="text-muted fs-10px">25 minutes ago</div>
-					</div>
-				</a>
-				<a href="#/" className="dropdown-item media">
-					<div className="media-left">
-						<img src="" className="media-object" alt="" />
-						<i className="fab fa-facebook-messenger text-blue media-object-icon"></i>
-					</div>
-					<div className="media-body">
-						<h6 className="media-heading">Olivia</h6>
-						<p>Quisque pulvinar tellus sit amet sem scelerisque tincidunt.</p>
-						<div className="text-muted fs-10px">35 minutes ago</div>
-					</div>
-				</a>
-				<a href="#/" className="dropdown-item media">
-					<div className="media-left">
-						<i className="fa fa-plus media-object bg-gray-500"></i>
-					</div>
-					<div className="media-body">
-						<h6 className="media-heading"> New User Registered</h6>
-						<div className="text-muted fs-10px">1 hour ago</div>
-					</div>
-				</a>
-				<a href="#/" className="dropdown-item media">
-					<div className="media-left">
-						<i className="fa fa-envelope media-object bg-gray-500"></i>
-						<i className="fab fa-google text-warning media-object-icon fs-14px"></i>
-					</div>
-					<div className="media-body">
-						<h6 className="media-heading"> New Email From John</h6>
-						<div className="text-muted fs-10px">2 hour ago</div>
-					</div>
-				</a>
-				<div className="dropdown-footer text-center">
-					<a href="#/" className="text-decoration-none">View more</a>
-				</div>
+			<div className="dropdown-menu media-list dropdown-menu-end" style={{ maxHeight: '500px', overflowY: 'auto' }}>
+				<div className="dropdown-header" style={{ position: 'sticky', top: '0', left: '0', right: '0', zIndex: '0' }} >NOTIFICACIONES ({items.length})</div>
+					{ 
+					items.map((item,i)=>(
+						<a onClick={() => viewNotification(item)} key={i} className="dropdown-item media">
+							<div className="media-left">
+								<i className="fa fa-envelope media-object bg-gray-500"></i>
+								<i className="fab fa-google text-warning media-object-icon fs-14px"></i>
+							</div>
+							<div className="media-body"> 
+							<h6 className="media-heading" style={{
+								overflow: 'hidden',
+								textOverflow: 'ellipsis',
+								whiteSpace: 'nowrap',
+								maxWidth: '210px' 
+								}}> {item.message}</h6>
+								<div className="text-muted fs-10px">{item.created_at}</div>
+							</div>
+						</a>
+					))	
+					}						
 			</div>
 		</div>
 	);

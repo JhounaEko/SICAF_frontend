@@ -1,13 +1,96 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useLocation  } from 'react-router-dom';
 import DropdownNotification from './dropdown/notification.jsx';
 import DropdownLanguage from './dropdown/language.jsx';
 import DropdownProfile from './dropdown/profile.jsx';
 import DropdownMegaMenu from './dropdown/mega.jsx';
+import Swal from 'sweetalert2';
 import { AppSettings } from './../../config/app-settings.js';
-
+import  modelUseNotificaciones, {modelReadNotificaciones}  from './modelNotificacion.jsx'
 function Header() {
 	const location = useLocation();
+
+	const useNotificaciones = modelUseNotificaciones();
+	const uselReadNotificaciones = modelReadNotificaciones ();
+	const [getListNotificaciones, setListNotificiones] = useState([]);
+	
+	const [refreshNotificaciones,setRefreshNotificaciones] = useState(false);
+
+	const functionRefreshNotificaciones = (data) =>{
+		console.log(data);
+		setRefreshNotificaciones(!refreshNotificaciones);
+	}
+
+	useEffect(()=>{
+		
+		const peticionNotificaciones = async () =>{
+			try {
+				setListNotificiones([]);
+				const returnResponse = await useNotificaciones()
+				if(returnResponse.status){
+					const listNotificacion = returnResponse.response
+					listNotificacion.map( (item,i) => {
+
+						if (item.data.message == "Se recomienda que actualice su contraseña por razones de seguridad."){
+							Swal.fire({
+								title: '<strong>¡Tienes una notificación!</strong>',
+								html: `
+								<div style="font-size: 60px;">
+									<i class="fas fa-bell"></i>
+								</div>
+								<p>Se recomienda que actualice su contraseña por razones de seguridad.</p>
+								`,		
+								draggable: true,								
+								confirmButtonColor: "#3085d6",
+								confirmButtonText: "ok",
+								allowOutsideClick: false,
+							}).then ( async (result) =>{
+								if (result.isConfirmed){									
+									const returnResponse =  await uselReadNotificaciones(item.id);
+									console.log(returnResponse);
+									if(!returnResponse.status){console.log(returnResponse.response)}
+								}
+							});	
+						} else {
+							setListNotificiones(prev => [...prev, {
+								id: item.id,
+								created_at: item.created_at,
+								message: item.data.message
+							}]);
+						}							
+					});
+				}	
+			} catch (error) {
+				
+			}
+		;
+		}
+
+		peticionNotificaciones();
+		
+	},[refreshNotificaciones]);
+
+	
+
+	const items = [
+		{
+		  message: 'fa-bug',
+		  id: '5be01c6e-05b1-419a-aea5-e0f5d0e5dcfc',
+		  created_at: 'Server Error Reports',		
+		},
+		{
+		  message: 'fa-envelope',
+		  id: '5be01c6e-05ssb1-419a-aea5-e0f5d0e5dcfcdas',
+		  created_at: 'Nuevo mensaje recibido',
+		},
+		{
+		  message: 'fa-envelope',
+		  id: '5be01c6e-05b1-419a-aea5-e0f5d0e5dcfcdsy',
+		  created_at: 'dsdsd Nuevo mensaje recibido',
+		}
+	  ];
+
+
 	return (
 		<AppSettings.Consumer>
 			{({toggleAppSidebarMobile, toggleAppSidebarEnd, toggleAppSidebarEndMobile, toggleAppTopMenuMobile, appHeaderLanguageBar, appHeaderMegaMenu, appHeaderInverse, appSidebarTwo, appTopMenu, appSidebarNone}) => (
@@ -59,7 +142,7 @@ function Header() {
 					)}
 					
 					<div className="navbar-nav">						
-						<DropdownNotification />
+						<DropdownNotification items = {getListNotificaciones} functionRefreshNotificaciones={functionRefreshNotificaciones} />
 						
 						{appHeaderLanguageBar && (
 							<DropdownLanguage />

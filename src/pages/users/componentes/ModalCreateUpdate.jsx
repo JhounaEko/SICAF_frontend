@@ -73,7 +73,7 @@ const CompModalCreateUpdate = ( {StatusModal, title, CloseModal, updateTableData
 								}						
 							}).then( response => {
 								reserForm();
-								updateTableData(true);						
+								updateTableData();						
 								Swal.fire({
 									title: "Registro exitoso",
 									icon: "success",
@@ -113,9 +113,9 @@ const CompModalCreateUpdate = ( {StatusModal, title, CloseModal, updateTableData
 							}						
 						}).then( response => {
 								reserForm();
-								updateTableData(true);						
+								updateTableData();						
 								Swal.fire({
-									title: "Acualización de datos existoso",
+									title: "Actualización de datos existoso",
 									icon: "success",
 									draggable: true,
 									timer: 3000,
@@ -183,9 +183,7 @@ const CompModalCreateUpdate = ( {StatusModal, title, CloseModal, updateTableData
 				Accept: 'application/json',
 				Authorization: 'Bearer '+decryptedToken,
 				},
-			});
-			
-			console.log(response.data);
+			});					
 			/** Se verifica que la pagina actual sea menor a la ultima pagina */				
 			if ( response.data.results.meta.current_page < response.data.results.meta.last_page ) {
 				hasMoreOffice.current = true;
@@ -198,9 +196,7 @@ const CompModalCreateUpdate = ( {StatusModal, title, CloseModal, updateTableData
 				return [];
 			}																					
 		} catch (error) {
-			//console.log("error")
 			console.log(error)	
-			//addNotification('info', 'Problema inesperado', 'Revice su conexion', 'top-right',8000, "fas fa-exclamation-circle" ,null)  			
 			return [];
 		} finally {
 			setIsLoadingOffice(false);

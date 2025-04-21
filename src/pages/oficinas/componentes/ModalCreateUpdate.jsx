@@ -139,7 +139,7 @@ const CompModalCreateUpdate = ({StatusModal,CloseModal,title, dataCurrentRow,fun
     }, []);
 
     if (dataCurrentRow.id !== 0 && idRef.current != dataCurrentRow.id){
-        idRef.current = dataCurrentRow.id	
+        idRef.current = dataCurrentRow.id;
         setValue('id',dataCurrentRow.id);
         setValue('name',dataCurrentRow.name);
         setValue('level',dataCurrentRow.level);   

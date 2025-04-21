@@ -6,27 +6,12 @@ import Cookies from 'js-cookie';
 import CryptoJS from 'crypto-js'; 
 import axios from 'axios';
 import ModalCreateUpdate from './ModalCreateUpdate.jsx'
+import {modelUseListRol} from './../modelRoles.jsx';
+import {addNotification} from './../../../components/alert/alert.jsx';
+
 const TablaList  = (getStatusCRUD)=>{
-    
-    function addNotification(notificationType, notificationTitle, notificationMessage, notificationPosition, duration, icon,notificationContent) {									
-		Store.addNotification({
-					title: notificationTitle,
-					message: (					
-						<div>				
-						  <i className={icon} style={{ fontSize: '25px', marginRight: '10px' }}></i> {notificationMessage}
-						</div>
-					  ),
-					type: notificationType,
-					insert: "top",
-					container: notificationPosition,
-					animationIn: ["animated", "fadeIn"],
-					animationOut: ["animated", "fadeOut"],
-					dismiss: {
-						duration: 8000,			
-					},
-					content: notificationContent
-		});
-	}
+ 
+    const useListRol = modelUseListRol();
 
     /** estado update */
     const [getStatusUpdate,setStatusUpdate] = useState(false);    
@@ -58,83 +43,95 @@ const TablaList  = (getStatusCRUD)=>{
     const decryptedToken = CryptoJS.AES.decrypt(sessionTokenSicaf, process.env.REACT_APP_API_KEY).toString(CryptoJS.enc.Utf8); 				         
     
     useEffect( ()=>{	          
-        setProgressData(true);       
-        axios.get( `${process.env.REACT_APP_API_URL}/api/v1/roles?sort_by=id&sort_order=desc&page=${getPag}&row_num=${getCountRows}&search=${getStatusCRUD.getDataSearh}`,{
-            headers: {
-            'Content-Type': 'application/json',    
-            'Authorization': "Bearer "+decryptedToken,  
-        }}).then( response => {	  
-            if (response.data.results){
-                setRowTotal(response.data.results.meta.total);
-                setDataTables(response.data.results.data)
-                setNum(response.data.results.meta.from);	
-            }  else    {
+        setProgressData(true);   
+        const peticionListRoles = async () =>{
+            const returnData =  await useListRol(getPag, getCountRows, getStatusCRUD.getDataSearh, getSort.column, getSort.order);
+            if (returnData.status){             
+                if (returnData.response.data.results){
+                    setRowTotal(returnData.response.data.results.meta.total);
+                    setDataTables(returnData.response.data.results.data)
+                    setNum(returnData.response.data.results.meta.from);	
+                } else {
+                    setRowTotal(0);
+                    setDataTables([])
+                    setNum(0);
+                }               
+            } else {
                 setRowTotal(0);
                 setDataTables([])
                 setNum(0);
             }
-        }).catch(error => {    				 
-            if(error.code === "ERR_NETWORK"){			
-                addNotification('info', 'Problema inesperado', 'Revice su conexion', 'top-right',8000, "fas fa-exclamation-circle" ,null)  			
-            } else if (error.code === "ERR_BAD_REQUEST") {	
-                addNotification('warning', 'Problema inesperado', "El campo de búsqueda sólo permite caracteres.", 'top-right',8000, "fas fa-exclamation-circle" ,null)	
-            } else {
-                addNotification('danger', 'Server', error.response, 'top-right',8000, "fas fa-exclamation-circle" ,null)	
-                console.log(error)
-            }                                                                                                             
-        }).finally(() => {
-        	setProgressData(false)				
-        });	
-    },[getPag, getCountRows, getStatusCRUD, getStatusUpdate]);
+            setProgressData(false)	
+        }
+        peticionListRoles();    	
+    },[getPag, getSort,getCountRows, getStatusCRUD, getStatusUpdate]);
 
     const columns = [
 		{
-			name: '#',  
-			selector: (row, index) => getNumRow+index,  
-			sortable: false,  
+			name: '#', 
+            sortable: true,
+            selectorKey: 'id', 
+			selector: (row, index) => getNumRow+index,  	 
 			width: '40px', 
 		},
-		{ name: 'Nombre',
+		{ name: (<p className="m-0 text-header-filter">Nombre de rol</p>),  
 		  sortable: true ,
-		  cell: (row) => row.name
+		  cell: (row) => row.name,
+          selectorKey: 'name',
+          width: '250px',
 		},	
-        { name: 'Permisos',
+        {   name: (<p className="m-0 text-header-filter" >Fecha de registro</p>),
+            sortable: true ,
+            selectorKey: 'created_at',
+            cell: (row) => row.created_at,
+            width: '150px',
+        },
+        {name: (<p className="m-0 text-header-filter" >Ultima actualización</p>),
+          sortable: true ,
+          selectorKey: 'updated_at',
+          cell: (row) => row.updated_at,
+          width: '150px',
+        }, 
+        {name: (<p className="m-0 text-header-not-filter" >Cantidad de permisos</p>),
             sortable: false ,
-            cell: (row) => { if( row.permissions.length === 0 )
-                             {  return ("Sin permisos"); }
-                             else { return (<button className='btn btn-primary'> <i className="fas fa-eye"></i> Ver permisos</button>); } }
-          },
-          {
-			name: 'Estado',
+            cell: (row) =>  <div className="m-0 text-center text-border-color" onClick={ () => { 
+                onChangeRow({
+                    id: row.id,
+                    name: row.name,
+                    permissions: row.permissions
+                }); 
+            } }>{(row.permissions).length}</div>,
+            width: '130px',
+          },       
+        {name: (<p className="m-0 text-header-filter" >Estado</p>),
+            sortable: true,
+            selectorKey: 'state_id',       
 			cell: (row) => (  
-                (row.state.name === "ACTIVO") ? (
-                    <div style={{display: 'flex', alignItems: 'center', gap: '10px', flexWrap: 'wrap', justifyContent: 'center', padding: '10px', boxSizing: 'border-box', }}>           
-                        <i className='fas fa-check' style={{color: 'green', fontSize: '20px' }}></i> 
-                        <p >Activo</p>
-                        <button className="btn btn-sm btn-primary" onClick={ ()=> changeStatus(row.state.name, row.id)}>cambiar estado</button>
-                    </div>  
-                ) :   (
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flexWrap: 'wrap', justifyContent: 'center', padding: '10px', boxSizing: 'border-box',  }}>           
-                        <i className='fas fa-ban' style={{color: 'red', fontSize: '20px' }}></i> 
-                        <p >Inactivo</p>
-                        <button className="btn btn-sm btn-primary" onClick={ ()=> changeStatus(row.state.name, row.id)} >cambiar estado</button>
-                    </div> 
-                )          			          
+                (row.state.name === "ACTIVO") ? (<div className="btn-flex">
+                    <i className="fas fa-toggle-on fa-2x" style = {{color: "#276BAA"}} onClick={ ()=> changeStatus(row.state.name, row.id)} ></i>
+                    <p className="form-check-label mb-2 ms-1" style={{color: 'green', fontSize: '13px' }}>ACTIVO</p>
+                </div>):
+                (<div className="btn-flex">
+                    <i className="fas fa-toggle-off fa-2x" onClick={ ()=> changeStatus(row.state.name, row.id)} ></i>
+                    <p className="form-check-label mb-2 ms-1" style={{color: 'red', fontSize: '13px' }}>INACTIVO</p>
+                </div>)     			          
 			),	
 		  },	
-          {
-			name: 'Acciones',
+          {name: (<p className="m-0 text-header-not-filter" >Acciones</p>),
+            sortable: false,		
 			cell: (row) => (
 			<>
 			  <button
-					className="btn btn-sm btn-info" 
+					className="btn btn-sm btn-info" title={"Editar registro"}
                     onClick={ () => { 
                         onChangeRow({
                             id: row.id,
-                            name: row.name
+                            name: row.name,
+                            permissions: row.permissions
                         }); 
-                    } }> <i className= "fas fa-wrench" ></i>Editar
-			  </button>			 		
+                    } }> <i className= "fas fa-wrench" ></i>
+			  </button>	
+             		 		
 			</>
 			),	
 		  },	
@@ -190,9 +187,8 @@ const TablaList  = (getStatusCRUD)=>{
     }
     
     const handleSort = (columnTable, direction) => {  
-    console.log(columnTable);
-       setSort({column: columnRef[0][columnTable.name], order: direction });  
-    };
+        setSort({column: columnTable.selectorKey, order: direction });        
+     };
 
     return (
         <>        
@@ -221,7 +217,7 @@ const TablaList  = (getStatusCRUD)=>{
                     rowsPerPageText: "Registros por página:", 
                     rangeSeparatorText: "del Total de",			
                 }}
-                paginationRowsPerPageOptions={[10,15, 20]}			
+                paginationRowsPerPageOptions={[10,25, 50,75,100]}			
                 paginationServer
                 noDataComponent={<div className="text-center mt-3">No hay registros disponibles.</div>}
             />
