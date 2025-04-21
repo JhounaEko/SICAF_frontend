@@ -175,7 +175,6 @@ POST http://127.0.0.1:8000/api/v1/login
 Content-Type: application/json
 Accept: application/json
 
-
 {
     "username": "ZRIVAS",
     "password": "Danger3@"
@@ -473,10 +472,14 @@ GET http://127.0.0.1:8000/api/v1/increase_types/2
 Accept: application/json
 Authorization: Bearer 74|3q1LebInDCDA0yUpKg0gj88sJAA79A1OfpmsUqAa87077f1d
 ###View notifications
+
+/*** solo en casos 
 GET http://127.0.0.1:8000/api/v1/notifications
 Accept: application/json
 Authorization: Bearer 82|cSSZQgbDB24lKyOOTifwiBbJfMqh1cxBBsDcJvew6d9e324e
 ###GET increase types
+
+
 GET http://127.0.0.1:8000/api/v1/positions?row_num=5&search=tecnico
 Accept: application/json
 Authorization: Bearer 84|cVw5FrCHsz5aoprS9yFiDtDuGHBxJM3s9s3pFAFE2ceb6b40
