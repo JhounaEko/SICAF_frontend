@@ -30,7 +30,8 @@ import RolesManager from '../pages/roles/pages.jsx';
 import OfficeManager from '../pages/oficinas/pages.jsx';
 import Login from './../pages/login/pages.jsx';
 import RegisterPublicUser from './../pages/users/register.jsx';
-
+import ManagerPermisos from './../pages/permisos/pages.jsx';
+import CargoManager from './../pages/cargo/pages.jsx';
 
 const AppRoute = [
 	{
@@ -84,6 +85,14 @@ const AppRoute = [
 				element:  <ProtectedRoute><Outlet /></ProtectedRoute>,
 				children: [
 					{ path: 'pages', element: <ManagerPermisos /> },						
+					{ path: '*', element: <ExtraError /> }
+				]
+			},
+			{
+				path: 'cargo/*', 
+				element:  <ProtectedRoute><Outlet /></ProtectedRoute>,
+				children: [
+					{ path: 'pages', element: <CargoManager /> },						
 					{ path: '*', element: <ExtraError /> }
 				]
 			},			
