@@ -16,7 +16,7 @@ export const modelUseCreate = () => {
     
         try{
             const respose = await axios.post(
-                process.env.REACT_APP_API_URL+'/api/v1/positions',                
+                process.env.REACT_APP_API_URL+'/api/v1/employees',                
                     dataForm
                 ,{
                     headers: {
@@ -57,7 +57,7 @@ export const modelChangeStatus = () =>{
         }
        try {
             const response = await axios.patch(
-                `${process.env.REACT_APP_API_URL}/api/v1/positions/${idRow}` ,
+                `${process.env.REACT_APP_API_URL}/api/v1/employees/${idRow}` ,
                 {
                     "state_id": (statusRow === "INACTIVO")? 1 : 2 
                 }, {
@@ -93,14 +93,14 @@ export const modelUseListTable = () =>{
         }
         try {
             const respose = await axios.get(
-                process.env.REACT_APP_API_URL+'/api/v1/positions', 
+                process.env.REACT_APP_API_URL+'/api/v1/employees', 
                 {
                     params: {
                         state_id: 1,
                         search: getSearh,
                         page: getPag,
-                        // sort_by: getSortColumn,
-                        // sort_order: getOrder,
+                        sort_by: getSortColumn,
+                        sort_order: getOrder,
                         row_num: getCountRows
                     },
                     headers: {
@@ -135,7 +135,7 @@ export const modelChageDataRow = () =>{
         const decryptedToken = CryptoJS.AES.decrypt(sessionTokenSicaf, process.env.REACT_APP_API_KEY).toString(CryptoJS.enc.Utf8); 				             
         try {
             const respose = await axios.patch(
-                `${process.env.REACT_APP_API_URL}/api/v1/positions/${dataForm.id}`  ,
+                `${process.env.REACT_APP_API_URL}/api/v1/employees/${dataForm.id}`  ,
                   dataForm,
                   {
                       headers: {

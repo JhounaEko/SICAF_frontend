@@ -106,11 +106,7 @@ function DropdownProfile({props}) {
 		}).then( response => {	                					
 			const dataNotification = response.data.results;
 			if (!dataNotification.length === 0) {
-<<<<<<< HEAD
 				
-=======
-
->>>>>>> e464a07204caecf46f0420f777c383f669747af4
 			} else {
 
 			}

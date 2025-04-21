@@ -32,6 +32,7 @@ import Login from './../pages/login/pages.jsx';
 import RegisterPublicUser from './../pages/users/register.jsx';
 import ManagerPermisos from './../pages/permisos/pages.jsx';
 import CargoManager from './../pages/cargo/pages.jsx';
+import EmpleadoManager from './../pages/empleados/pages.jsx';
 
 const AppRoute = [
 	{
@@ -93,6 +94,14 @@ const AppRoute = [
 				element:  <ProtectedRoute><Outlet /></ProtectedRoute>,
 				children: [
 					{ path: 'pages', element: <CargoManager /> },						
+					{ path: '*', element: <ExtraError /> }
+				]
+			},	
+			{
+				path: 'empleados/*', 
+				element:  <ProtectedRoute><Outlet /></ProtectedRoute>,
+				children: [
+					{ path: 'pages', element: <EmpleadoManager /> },						
 					{ path: '*', element: <ExtraError /> }
 				]
 			},			

@@ -2,10 +2,11 @@ import React, {useState, useEffect} from 'react';
 import DataTable from 'react-data-table-component';
 import Button from 'react-bootstrap/Button';
 import Swal from 'sweetalert2';
-import { modelUseListTable, modelChangeStatus}  from './../modelCargo.jsx';
+import { modelUseListTable, modelChangeStatus}  from './../modelEmpleados.jsx';
 import { ReactNotifications } from 'react-notifications-component';
 import {addNotification} from './../../../components/alert/alert.jsx';
 import CompModalCreateUpdate from './ModalCreateUpdate.jsx';
+
 
 const TableList = (getDataRefresch) => {
     
@@ -78,73 +79,86 @@ const TableList = (getDataRefresch) => {
     }
     const columns = [
         {
-            name:"#",
-            selector: (row, index) => getNumRow+index, 
+			name: '#',  
+			selector: (row, index) => getNumRow+index, 
             selectorKey: 'id' ,
 			sortable: true,  
 			width: '40px', 
-        },
+		},
+		{ name: (<p className="m-0" style = {{fontWeight: 'bold', fontSize: '15px', textDecoration: 'underline'}}>Usuarios</p>),      
+		  sortable: true ,
+		  width: '210px',
+          selectorKey: 'first_name',
+		  cell: (row) => <div className="m-0 p-0"> 
+		  					<b>{row.first_name+" "+row.last_name}</b>							
+							<p className="m-0 p-0" style={{fontSize:'12px'}}>{row.phone_number}</p>                                              
+						</div> ,		 
+		},      
+		{ name: (<p className="m-0" style = {{fontWeight: 'bold', fontSize: '15px'}}>Oficina</p>), 
+		  sortable: false,
+		  omit: false,
+          selectorKey : 'office_name',
+		  cell: (row) => <div className="m-0 p-0"> 
+							<b style={{fontSize:'12px'}}>{row.office.name}</b>
+							<p className="m-0 p-0" style={{fontSize:'12px'}}>{row.office.initials}</p> 							
+						</div> ,
+		  width: '200px'	 
+		},    
         {
-            name: (<p className="m-0" style = {{fontWeight: 'bold', fontSize: '15px', textDecoration: 'underline'}}>Nombre permiso</p>),      
-            sortable: true ,
-            width: '170px',
-            selectorKey: 'name',
-            cell: (row) => <p>{row.name}</p>,
-        },   
+			name: (<p className="m-0" style = {{fontWeight: 'bold', fontSize: '13px', textDecoration: 'underline'}}>Cargo</p>),
+			cell: (row) => (<p className="m-0 p-0" style={{fontSize:'12px'}}>{row.position}</p>),	
+            selectorKey:'created_at',
+            sortable: true, 
+            width: '140px',
+		},    
         {
-            name: (<p className="m-0" style = {{fontWeight: 'bold', fontSize: '15px', textDecoration: 'underline'}}>Descripcion</p>),      
-            sortable: true ,
-            width: '300px',
-            selectorKey: 'description',
-            cell: (row) => <p>{row.description}</p>,
-        },           
-        {
-            name: (<p className="m-0" style = {{fontWeight: 'bold', fontSize: '15px', textDecoration: 'underline'}}>Fecha de registro</p>),      
-            sortable: true ,
-            selectorKey: 'created_at',
-            cell: (row) => <p style={{fontSize:'14px'}}> {row.created_at}</p>,
-            width: '180px',
-        },
+			name: (<p className="m-0" style = {{fontWeight: 'bold', fontSize: '13px', textDecoration: 'underline'}}>Fecha de registro</p>),
+			cell: (row) => (<p className="m-0 p-0" style={{fontSize:'12px'}}>{row.created_at}</p>),	
+            selectorKey:'created_at',
+            sortable: true, 
+            width: '140px',
+		},       
         {
             name: (<p className="m-0" style = {{fontWeight: 'bold', fontSize: '15px', textDecoration: 'underline'}}>Ultima actualización</p>),      
             sortable: true ,
             selectorKey: 'created_at',
             cell: (row) => <p style={{fontSize:'14px'}}> {row.updated_at}</p>,
-            width: '180px',
+            width: '140px',
         },
-        {
-            name: (<p className="m-0" style = {{fontWeight: 'bold', fontSize: '15px'}}>Estado</p>),      
-            sortable: true,
-            selectorKey:'state_id',
-            cell:  (row) =>(
-                (row.state.name === "ACTIVO") ? (<div className="btn-flex">
-                    <i className="fas fa-toggle-on fa-2x" style = {{color: "#276BAA"}} onClick={ ()=> changeStatus(row.state.name, row.id)} ></i>
-                    <p className="form-check-label mb-2 ms-1" style={{color: 'green', fontSize: '13px' }}>ACTIVO</p>
-                </div>):
-                (<div className="btn-flex">
-                    <i className="fas fa-toggle-off fa-2x" onClick={ ()=> changeStatus(row.state.name, row.id)} ></i>
-                    <p className="form-check-label mb-2 ms-1" style={{color: 'red', fontSize: '13px' }}>INACTIVO</p>
-                </div>)
-            ),
-            width: '120px',
-        },
-        {
+		{ name: (<p className="m-0" style = {{fontWeight: 'bold', fontSize: '15px'}}>Estado</p >), 		
+		  sortable: true ,
+          selectorKey:'state_id',
+		  cell:  (row) =>(
+			(row.state.name === "ACTIVO") ? (<div className="btn-flex">
+				<i className="fas fa-toggle-on fa-2x" id={`id_check${row.id}`} style = {{color: "#276BAA"}} onClick={ ()=> changeStatus(row.state.name, row.id)} ></i>
+				<label className="form-check-label mx-1" style={{color: 'green', fontSize: '13px' }} htmlFor={`id_check${row.id}`} >ACTIVO</label>
+			</div>):
+			(<div className="btn-flex">
+				<i className="fas fa-toggle-off fa-2x" id={`id_check${row.id}`} onClick={ ()=> changeStatus(row.state.name, row.id)} ></i>
+				<label className="form-check-label mx-1" style={{color: 'red', fontSize: '13px' }} htmlFor={`id_check${row.id}`} >INACTIVO</label>
+			</div>)
+		  ),
+		  width: '120px',		
+		},	
+		{
 			name: (<p className="m-0" style = {{fontWeight: 'bold', fontSize: '15px'}}>Acciones</p>),
-            sortable: false,
-            cell: (row) => (
-                <>
-                    <button
-                        className="btn btn-sm btn-info"
-                        onClick={() => {onChangeRow({id: row.id,
-                                                    name: row.name,   
-                                                    description: row.description,                                                                                                   
-                        })}}>
-                        <i className="fas fa-wrench"></i> Editar
-                    </button>
-                </>
-            )
-        }
-
+			cell: (row) => (
+			<>
+			  	<button
+					className="btn btn-sm btn-info"
+					onClick={() => {onChangeRow({
+						id: row.id,
+						first_name: row.first_name,
+                        last_name: row.last_name,
+                        phone_number: row.phone_number,                      
+                        position: row.position,
+                        office: row.office,                                      
+					});  }}>
+					<i className="fas fa-wrench"></i> Editar
+			  	</button>	                 			
+			</>
+			),	
+		},
     ]
 
     useEffect( ()=>{         

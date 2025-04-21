@@ -16,7 +16,8 @@ const Menu = [
   },  
   { path: '/personal', icon: 'fa fa-user', title: 'Gestion de personal',
     children: [
-      { path: '/cargo/pages', title: 'Cargo' },       
+      { path: '/cargo/pages', title: 'Cargo' }, 
+      { path: '/empleados/pages', title: 'Empleados' },       
     ]
   }, 
   { path: '/ui', icon: 'fa fa-gem', title: 'UI Elements', label: 'NEW',
