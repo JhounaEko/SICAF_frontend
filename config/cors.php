@@ -19,11 +19,7 @@ return [
 
     'allowed_methods' => ['GET, POST, PUT, DELETE, OPTIONS, PATCH'],
 
-<<<<<<< HEAD
     'allowed_origins' => ['*'],
-=======
-    'allowed_origins' => ['http://localhost:3000'],
->>>>>>> ActualizacionPermisos
 
     'allowed_origins_patterns' => ['*'],
 
