@@ -18,9 +18,9 @@ class NoteTypeController extends Controller
     public static function middleware()
     {
         return [
-            new Middleware('permission:VIEW NOTE_TYPES', only: ['index', 'show']),
-            new Middleware('permission:REGISTER NOTE_TYPES', only: ['store']),
-            new Middleware('permission:UPDATE NOTE_TYPES', only: ['update'])
+            new Middleware('permission:VIEW NOTE TYPES', only: ['index', 'show']),
+            new Middleware('permission:REGISTER NOTE TYPES', only: ['store']),
+            new Middleware('permission:UPDATE NOTE TYPES', only: ['update'])
         ];
     }
     public function index(FilterRequest $request)
@@ -29,6 +29,7 @@ class NoteTypeController extends Controller
             $query = NoteType::query();
             $query->filterByState($request->input('state'))
                 ->filterByNameOrDescription($request->input('search'))
+                ->filterByStateName($request->input('state_name'))
                 ->filterByDates($request->input('start_date'), $request->input('end_date'));
 
             if ($request->filled('sort_by')) {

@@ -90,9 +90,18 @@ class Office extends Model implements Auditable
         $search = mb_strtoupper(trim($input));
         if (!is_null($search)) {
             $query->where(function ($q) use ($search) {
-                $q->where('initials', 'LIKE', "%{$search}%")
-                    ->orWhere('name', 'LIKE', "%{$search}%");
+                $q->where('offices.initials', 'LIKE', "%{$search}%")
+                    ->orWhere('offices.name', 'LIKE', "%{$search}%");
             });
+        }
+    }
+
+    public function scopeFilterByStateName($query, $stateName)
+    {
+        if (!is_null($stateName)) {
+            $query->join('states', 'offices.state_id', '=', 'states.id')
+                  ->where('states.name', 'LIKE', "%{$stateName}%")
+                  ->select('offices.*');
         }
     }
 
