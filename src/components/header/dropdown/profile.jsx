@@ -13,8 +13,13 @@ function DropdownProfile({props}) {
 	const CloseSesion = useCloseSesion();
 	const handleCloseSesion  = () =>{
 		Swal.fire({
-			title: "¿Esta seguro de cerrar la sesión?",
-			icon: "warning",
+			title: '<strong>¡Tienes una notificación!</strong>',
+			html: `
+				<div style="font-size: 40px; color: #f39c12;">
+				<i class="fas fa-bell"></i>
+				</div>
+				<p>${message} -ffffff ${created_at}</p>
+			`,
 			showCancelButton: true,
 			confirmButtonColor: "#3085d6",
 			cancelButtonColor: "#d33",
@@ -101,7 +106,11 @@ function DropdownProfile({props}) {
 		}).then( response => {	                					
 			const dataNotification = response.data.results;
 			if (!dataNotification.length === 0) {
+<<<<<<< HEAD
 				
+=======
+
+>>>>>>> e464a07204caecf46f0420f777c383f669747af4
 			} else {
 
 			}

@@ -10,9 +10,15 @@ const Menu = [
     children: [
       { path: '/users/pages', title: 'Usuarios' },
       { path: '/roles/pages', title: 'Roles' }, 
-      { path: '/oficinas/pages', title: 'Oficinas' }     
+      { path: '/oficinas/pages', title: 'Oficinas' },
+      { path: '/permisos/pages', title: 'Permisos' }     
     ]
   },  
+  { path: '/personal', icon: 'fa fa-user', title: 'Gestion de personal',
+    children: [
+      { path: '/cargo/pages', title: 'Cargo' },       
+    ]
+  }, 
   { path: '/ui', icon: 'fa fa-gem', title: 'UI Elements', label: 'NEW',
     children: [
       { path: '/ui/general', title: 'General', highlight: true },

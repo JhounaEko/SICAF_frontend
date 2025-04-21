@@ -447,7 +447,11 @@ const TableList = (getStatusCRUD) => {
             statusUpdate = {true}                  
         /> 
         <DataTable       
+<<<<<<< HEAD
             title={<span className="mb-1 text-primary fs-4 fw-bold">📋 Lista de usuarios</span>}           
+=======
+            title={<span className="mb-1 text-primary fs-4 fw-bold">📋 Lista de Oficinas</span>}           
+>>>>>>> e464a07204caecf46f0420f777c383f669747af4
             columns={columns} 
             data={getDataTables} 
             selectableRows= {false}		

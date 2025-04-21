@@ -13,6 +13,7 @@ function Header() {
 	const useNotificaciones = modelUseNotificaciones();
 	const uselReadNotificaciones = modelReadNotificaciones ();
 	const [getListNotificaciones, setListNotificiones] = useState([]);
+<<<<<<< HEAD
 	
 	const [refreshNotificaciones,setRefreshNotificaciones] = useState(false);
 
@@ -21,11 +22,16 @@ function Header() {
 		setRefreshNotificaciones(!refreshNotificaciones);
 	}
 
+=======
+>>>>>>> e464a07204caecf46f0420f777c383f669747af4
 	useEffect(()=>{
 		
 		const peticionNotificaciones = async () =>{
 			try {
+<<<<<<< HEAD
 				setListNotificiones([]);
+=======
+>>>>>>> e464a07204caecf46f0420f777c383f669747af4
 				const returnResponse = await useNotificaciones()
 				if(returnResponse.status){
 					const listNotificacion = returnResponse.response
@@ -59,7 +65,12 @@ function Header() {
 							}]);
 						}							
 					});
+<<<<<<< HEAD
 				}	
+=======
+				}
+				console.log(returnResponse.response);
+>>>>>>> e464a07204caecf46f0420f777c383f669747af4
 			} catch (error) {
 				
 			}
@@ -68,10 +79,14 @@ function Header() {
 
 		peticionNotificaciones();
 		
+<<<<<<< HEAD
 	},[refreshNotificaciones]);
 
 	
 
+=======
+	},[]);
+>>>>>>> e464a07204caecf46f0420f777c383f669747af4
 	const items = [
 		{
 		  message: 'fa-bug',
@@ -142,7 +157,11 @@ function Header() {
 					)}
 					
 					<div className="navbar-nav">						
+<<<<<<< HEAD
 						<DropdownNotification items = {getListNotificaciones} functionRefreshNotificaciones={functionRefreshNotificaciones} />
+=======
+						<DropdownNotification items = {getListNotificaciones} />
+>>>>>>> e464a07204caecf46f0420f777c383f669747af4
 						
 						{appHeaderLanguageBar && (
 							<DropdownLanguage />
