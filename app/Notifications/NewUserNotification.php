@@ -21,7 +21,7 @@ class NewUserNotification extends Notification
     public function toDatabase($notifiable)
     {
         return [
-            'message' => 'It is recommended that you update your password for security reasons.',
+            'message' => 'Se recomienda que actualice su contraseña por razones de seguridad.',
         ];
     }
 
