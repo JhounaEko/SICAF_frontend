@@ -19,7 +19,11 @@ return [
 
     'allowed_methods' => ['GET, POST, PUT, DELETE, OPTIONS, PATCH'],
 
+<<<<<<< HEAD
     'allowed_origins' => ['*'],
+=======
+    'allowed_origins' => ['http://localhost:3000'],
+>>>>>>> ActualizacionPermisos
 
     'allowed_origins_patterns' => ['*'],
 
@@ -29,6 +33,6 @@ return [
 
     'max_age' => 86400,
 
-    'supports_credentials' => false,
+    'supports_credentials' => true,
 
 ];

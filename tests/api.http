@@ -479,6 +479,7 @@ Authorization: Bearer 91|uvEyLZBgVofv3j9yuPtDfMXoV4kG2vy1KTlHzXSPab01e345
 GET http://127.0.0.1:8000/api/v1/notifications
 Accept: application/json
 <<<<<<< HEAD
+<<<<<<< HEAD
 Authorization: Bearer 82|cSSZQgbDB24lKyOOTifwiBbJfMqh1cxBBsDcJvew6d9e324e
 ###GET increase types
 
@@ -489,6 +490,11 @@ Authorization: Bearer 92|f9CNWPwEnseagK9LS52EczfJOBMLMZ1Uc1bNieQTeadf5880
 ###Read a notification
 PATCH http://127.0.0.1:8000/api/v1/notifications/b544846e-fed0-4de8-8411-5f5458d7bfa2/mark-as-read
 >>>>>>> TestCru
+=======
+Authorization: Bearer 92|f9CNWPwEnseagK9LS52EczfJOBMLMZ1Uc1bNieQTeadf5880
+###Read a notification
+PATCH http://127.0.0.1:8000/api/v1/notifications/b544846e-fed0-4de8-8411-5f5458d7bfa2/mark-as-read
+>>>>>>> ActualizacionPermisos
 Accept: application/json
 Authorization: Bearer 92|f9CNWPwEnseagK9LS52EczfJOBMLMZ1Uc1bNieQTeadf5880
 ###Read all notifications

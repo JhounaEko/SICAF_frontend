@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+<<<<<<< HEAD
 use OwenIt\Auditing\Contracts\Auditable;
 
 class FundingSource extends Model implements Auditable
@@ -70,4 +71,10 @@ class FundingSource extends Model implements Auditable
 
     
 
+=======
+
+class FundingSource extends Model
+{
+    //
+>>>>>>> ActualizacionPermisos
 }
