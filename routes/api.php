@@ -2,8 +2,18 @@
 
 use App\Http\Controllers\AuditController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\BudgetRubricController;
+use App\Http\Controllers\CorrelativeController;
 use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\EnterpriseController;
+use App\Http\Controllers\EnterpriseRubricController;
+use App\Http\Controllers\HistoricChangeController;
+use App\Http\Controllers\HistoricExchangeRateController;
+use App\Http\Controllers\HistoricIncrementController;
+use App\Http\Controllers\HistoricNoteDetailController;
+use App\Http\Controllers\HistoricRegController;
 use App\Http\Controllers\IncreaseTypeController;
+use App\Http\Controllers\ItemGroupController;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\MotiveController;
 use App\Http\Controllers\NoteTypeController;
@@ -15,6 +25,8 @@ use App\Http\Controllers\RoleController;
 use App\Http\Controllers\StateController;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\SetSortableColumns;
+use App\Models\Correlative;
+use App\Models\HistoricNoteDetail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -46,7 +58,17 @@ Route::prefix('v1')->group(function () {
             Route::get('increase_types', [IncreaseTypeController::class, 'index'])->name('v1.increase_types.index');
             Route::get('positions', [PositionController::class, 'index'])->name('v1.positions.index');
             Route::get('audits', [AuditController::class, 'index'])->name('v1.audits.index');;
-       
+            Route::get('historic_exchange_rates', [HistoricExchangeRateController::class, 'index'])->name('v1.historic_exchange_rates.index');
+            Route::get('historic_changes', [HistoricChangeController::class, 'index'])->name('v1.historic_changes.index');
+            Route::get('correlatives', [CorrelativeController::class, 'index'])->name('v1.correlatives.index');
+            Route::get('historic_note_details', [HistoricNoteDetailController::class, 'index'])->name('v1.historic_note_details.index');
+            Route::get('historic_increments', [HistoricIncrementController::class, 'index'])->name('v1.historic_increments.index');
+            Route::get('historic_regs', [HistoricRegController::class, 'index'])->name('v1.historic_regs.index');
+            Route::get('enterprise_rubrics', [EnterpriseRubricController::class, 'index'])->name('v1.enterprise_rubrics.index');
+            Route::get('enterprises', [EnterpriseController::class, 'index'])->name('v1.enterprises.index');
+            Route::get('budget_rubrics', [BudgetRubricController::class, 'index'])->name('v1.budget_rubrics.index');
+            Route::get('item_groups', [ItemGroupController::class, 'index'])->name('v1.item_groups.index');
+        
         });
         Route::apiResource('states', StateController::class)->except('index');
         Route::apiResource('offices', OfficeController::class)->except('index');
@@ -65,6 +87,16 @@ Route::prefix('v1')->group(function () {
         Route::apiResource('note_types', NoteTypeController::class)->except('index');
         Route::apiResource('increase_types', IncreaseTypeController::class)->except('index');
         Route::apiResource('positions', PositionController::class)->except('index');
+        Route::apiResource('historic_exchange_rates', HistoricExchangeRateController::class)->except('index');
+        Route::apiResource('historic_changes', HistoricChangeController::class)->except('index');
+        Route::apiResource('correlatives', CorrelativeController::class)->except('index');
+        Route::apiResource('historic_note_details', HistoricNoteDetailController::class)->except('index');
+        Route::apiResource('historic_increments', HistoricIncrementController::class)->except('index');
+        Route::apiResource('historic_regs', HistoricRegController::class)->except('index');
+        Route::apiResource('enterprise_rubrics', EnterpriseRubricController::class)->except('index');
+        Route::apiResource('enterprises', EnterpriseController::class)->except('index');
+        Route::apiResource('budget_rubrics', BudgetRubricController::class)->except('index');
+        Route::apiResource('item_groups', ItemGroupController::class)->except('index');
 
         Route::post('logout', [AuthController::class, 'logout']);
     });

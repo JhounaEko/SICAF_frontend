@@ -31,6 +31,7 @@ class EmployeeController extends Controller implements HasMiddleware
                 ->filterByOffice($request->input('office'))
                 ->filterByPosition($request->input('position'))
                 ->filterByName($request->input('search'))
+                ->filterByStateName($request->input('state_name'))
                 ->filterByDates($request->input('start_date'), $request->input('end_date'));
 
             if ($request->filled('sort_by')) {
@@ -72,7 +73,7 @@ class EmployeeController extends Controller implements HasMiddleware
     public function show(Employee $employee)
     {
         try {
-            return ApiResponse::success('Employee fonud.', 200, EmployeeResource::make($employee));
+            return ApiResponse::success('Employee found.', 200, EmployeeResource::make($employee));
         } catch (\Exception $e) {
             return ApiResponse::error('An error unexpected ocurred.', 500, $e->getMessage());
         }

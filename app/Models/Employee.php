@@ -87,6 +87,15 @@ class Employee extends Model implements Auditable
         }
     }
 
+    public function scopeFilterByStateName($query, $stateName)
+    {
+        if (!is_null($stateName)) {
+            $query->join('states', 'employees.state_id', '=', 'states.id')
+                  ->where('states.name', 'LIKE', "%{$stateName}%")
+                  ->select('employees.*');
+        }
+    }
+
     public function scopeFilterByDates($query, $start, $end)
     {
         if ($start && $end) {

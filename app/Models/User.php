@@ -138,6 +138,15 @@ class User extends Authenticatable implements Auditable
                 ->select('users.*');
         }
     }
+    
+    public function scopeFilterByStateName($query, $stateName)
+    {
+        if (!is_null($stateName)) {
+            $query->join('states', 'users.state_id', '=', 'states.id')
+                  ->where('states.name', 'LIKE', "%{$stateName}%")
+                  ->select('users.*');
+        }
+    }
 
     public function scopeFilterByOfficeInitials($query, $officeInitials)
     {

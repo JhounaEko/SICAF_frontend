@@ -40,6 +40,7 @@ class UserController extends Controller implements HasMiddleware
                 ->filterByIssuedBy($request->input('issued_by'))
                 ->filterByName($request->input('search'))
                 ->filterByOfficeName($request->input('office_name'))
+                ->filterByStateName($request->input('state_name'))
                 ->filterByOfficeInitials($request->input('office_initials'))
                 ->filterByDates($request->input('start_date'), $request->input('end_date'));
 

@@ -29,6 +29,7 @@ class PositionController extends Controller implements HasMiddleware
 
             $query->filterByState($request->input('state'))
                 ->filterByNameOrDescription($request->input('search'))
+                ->filterByStateName($request->input('state_name'))
                 ->filterByDates($request->input('start_date'), $request->input('end_date'));
 
             if ($request->filled('sort_by')) {
