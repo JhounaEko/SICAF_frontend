@@ -162,8 +162,8 @@ class User extends Authenticatable implements Auditable
         $search = mb_strtoupper(trim($input));
         if (!is_null($search)) {
             $query->where(function ($q) use ($search) {
-                $q->where('first_name', 'LIKE', "%{$search}%")
-                    ->orWhere('last_name', 'LIKE', "%{$search}%");
+                $q->where('users.first_name', 'LIKE', "%{$search}%")
+                    ->orWhere('users.last_name', 'LIKE', "%{$search}%");
             });
         }
     }
@@ -171,7 +171,7 @@ class User extends Authenticatable implements Auditable
     public function scopeFilterByEmail($query, $email)
     {
         if (!is_null($email)) {
-            $query->where('email', 'LIKE', $email);
+            $query->where('users.email', 'LIKE', $email);
         }
     }
 
@@ -179,7 +179,7 @@ class User extends Authenticatable implements Auditable
     {
         $search = mb_strtoupper(trim($identityCard));
         if (!is_null($search)) {
-            $query->where('identity_card', 'LIKE', "%{$search}%");
+            $query->where('users.identity_card', 'LIKE', "%{$search}%");
         }
     }
 
@@ -187,13 +187,13 @@ class User extends Authenticatable implements Auditable
     {
         $search = mb_strtoupper(trim($issuedBy));
         if (!is_null($search)) {
-            $query->where('issued_by', 'LIKE', "%{$search}%");
+            $query->where('users.issued_by', 'LIKE', "%{$search}%");
         }
     }
     public function scopeFilterByDates($query, $start, $end)
     {
         if ($start && $end) {
-            $query->whereBetween('created_at', [$start, $end]);
+            $query->whereBetween('users.created_at', [$start, $end]);
         }
     }
 

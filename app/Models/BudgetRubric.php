@@ -39,7 +39,7 @@ class BudgetRubric extends Model implements Auditable
     public function scopeFilterByState($query, $state)
     {
         if (!is_null($state)) {
-            $query->where('state_id', $state);
+            $query->where('budget_rubrics.state_id', $state);
         }
     }
 
@@ -47,28 +47,28 @@ class BudgetRubric extends Model implements Auditable
     {
         $search = mb_strtoupper(trim($description));
         if (!is_null($search)) {
-            $query->where('description', 'LIKE', "%{$search}%");
+            $query->where('budget_rubrics.description', 'LIKE', "%{$search}%");
         }
     }
 
     public function scopeFilterByRubric($query, $rubric)
     {
         if (!is_null($rubric)) {
-            $query->where('rubric', 'LIKE', "%{$rubric}%");
+            $query->where('budget_rubrics.rubric', 'LIKE', "%{$rubric}%");
         }
     }
 
     public function scopeFilterByLifespan($query, $lifespan)
     {
         if (!is_null($lifespan)) {
-            $query->where('lifespan', $lifespan);
+            $query->where('budget_rubrics.lifespan', $lifespan);
         }
     }
 
     public function scopeFilterByIsDepreciated($query, $is_depreciated)
     {
         if (!is_null($is_depreciated)) {
-            $query->where('is_depreciated', $is_depreciated);
+            $query->where('budget_rubrics.is_depreciated', $is_depreciated);
         }
     }
 
@@ -84,7 +84,7 @@ class BudgetRubric extends Model implements Auditable
     public function scopeFilterByDates($query, $start, $end)
     {
         if ($start && $end) {
-            $query->whereBetween('created_at', [$start, $end]);
+            $query->whereBetween('budget_rubrics.created_at', [$start, $end]);
         }
     }
 

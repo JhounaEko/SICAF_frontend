@@ -52,21 +52,21 @@ class Office extends Model implements Auditable
     public function scopeFilterByState($query, $state)
     {
         if (!is_null($state)) {
-            $query->where('state_id', $state);
+            $query->where('offices.state_id', $state);
         }
     }
 
     public function scopeFilterByLevel($query, $level)
     {
         if (!is_null($level)) {
-            $query->where('level', $level);
+            $query->where('offices.level', $level);
         }
     }
 
     public function scopeFilterByParent($query, $parent)
     {
         if (!is_null($parent)) {
-            $query->where('parent', $parent);
+            $query->where('offices.parent', $parent);
         }
     }
 
@@ -93,7 +93,7 @@ class Office extends Model implements Auditable
     public function scopeFilterByDates($query, $start, $end)
     {
         if ($start && $end) {
-            $query->whereBetween('created_at', [$start, $end]);
+            $query->whereBetween('offices.created_at', [$start, $end]);
         }
     }
 }

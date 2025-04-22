@@ -2,64 +2,95 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\FilterRequest;
+use App\Http\Requests\FundingSourceRequest;
+use App\Http\Resources\FundingSourceResource;
+use App\Http\Responses\ApiResponse;
 use App\Models\FundingSource;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
+use Illuminate\Support\Facades\DB;
 
-class FundingSourceController extends Controller
+class FundingSourceController extends Controller implements HasMiddleware
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public static function middleware()
     {
-        //
+        return [
+            new Middleware('permission:VIEW FUNDING SOURCES', only: ['index', 'show']),
+            new Middleware('permission:REGISTER FUNDING SOURCES', only: ['store']),
+            new Middleware('permission:UPDATE FUNDING SOURCES', only: ['update']),
+        ];
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function index(FilterRequest $request)
     {
-        //
+        try {
+            $query = FundingSource::query();
+            $query->filterByState($request->input('state'))
+                ->filterByDescriptionsOrAbbreviation($request->input('search'))
+                ->filterByYear($request->input('year'))
+                ->filterByCode($request->input('number'))
+                ->filterByStateName($request->input('state_name'))
+                ->filterByDates($request->input('start_date'), $request->input('end_date'));
+
+            if ($request->filled('sort_by')) {
+                try {
+                    $query->sort($request->input('sort_by'), $request->input('sort_order', 'asc'));
+                } catch (\Exception $e) {
+                    return ApiResponse::error('Error in sorting', 400, $e->getMessage());
+                }
+            }
+
+            $perPage = $request->input('row_num');
+            $funding_sources = $query->paginate($perPage);
+
+            if ($funding_sources->isEmpty()) {
+                return ApiResponse::error("There're not registered funding sources.", 200);
+            }
+
+            $collection = FundingSourceResource::collection($funding_sources);
+            $responseData = $collection->response()->getData(true);
+
+            return ApiResponse::success('Funding sources found.', 200, $responseData);
+        } catch (\Exception $e) {
+            return ApiResponse::error('An error unexpected ocurred.', 500, $e->getMessage());
+        }
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function store(FundingSourceRequest $request)
     {
-        //
+        try {
+            DB::beginTransaction();
+            $funding_source = FundingSource::create($request->validated());
+            DB::commit();
+            return ApiResponse::success('Funding source registered successfully.', 201, $funding_source);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return ApiResponse::error('An error occurred while registering the funding source.', 500, $e->getMessage());
+        }
     }
 
-    /**
-     * Display the specified resource.
-     */
+    
     public function show(FundingSource $fundingSource)
     {
-        //
+        try {
+            return ApiResponse::success('Funding source found.', 200, FundingSourceResource::make($fundingSource));
+        } catch (\Exception $e) {
+            return ApiResponse::error('An error unexpected ocurred.', 500, $e->getMessage());
+        }
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(FundingSource $fundingSource)
+    public function update(FundingSourceRequest $request, FundingSource $fundingSource)
     {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, FundingSource $fundingSource)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(FundingSource $fundingSource)
-    {
-        //
+        try {
+            DB::beginTransaction();
+            $fundingSource->update($request->validated());
+            DB::commit();
+            return ApiResponse::success('Funding source updated succesfully.', 200, $fundingSource);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return ApiResponse::error('An error unexpected ocurred.', 500, $e->getMessage());
+        }
     }
 }

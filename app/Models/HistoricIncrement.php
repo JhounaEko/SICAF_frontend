@@ -29,21 +29,21 @@ class HistoricIncrement extends Model implements Auditable
     public function scopeFilterByState($query, $state)
     {
         if (!is_null($state)) {
-            $query->where('state_id', $state);
+            $query->where('historic_increments.state_id', $state);
         }
     }
 
     public function scopeFilterByItem($query, $item)
     {
         if (!is_null($item)) {
-            $query->where('item_id', $item);
+            $query->where('historic_increments.item_id', $item);
         }
     }
 
     public function scopeFilterByDate($query, $date)
     {
         if (!is_null($date)) {
-            $query->where('date', 'LIKE', $date);
+            $query->where('historic_increments.date', 'LIKE', $date);
         }
     }
     public function scopeFilterByDescription($query, $input)
@@ -57,7 +57,7 @@ class HistoricIncrement extends Model implements Auditable
     public function scopeFilterByIsActive($query, $bool)
     {
         if (!is_null($bool)) {
-            $query->where('is_active', $bool);
+            $query->where('historic_increments.is_active', $bool);
         }
     }
     
@@ -73,7 +73,7 @@ class HistoricIncrement extends Model implements Auditable
     public function scopeFilterByDates($query, $start, $end)
     {
         if ($start && $end) {
-            $query->whereBetween('created_at', [$start, $end]);
+            $query->whereBetween('historic_increments.created_at', [$start, $end]);
         }
     }
 }

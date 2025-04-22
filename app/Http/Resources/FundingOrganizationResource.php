@@ -5,7 +5,7 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class FundingSourceResource extends JsonResource
+class FundingOrganizationResource extends JsonResource
 {
     public function toArray(Request $request): array
     {
@@ -21,7 +21,7 @@ class FundingSourceResource extends JsonResource
                 'color' => $this->state->color
             ],
             'created_at' => $this->created_at->format('d-m-Y h:m'),
-            'updated_at' => $this->updated_at->format('d-m-Y h:m') 
+            'updated_at' => $this->updated_at->format('d-m-Y h:m')
         ];
     }
 }

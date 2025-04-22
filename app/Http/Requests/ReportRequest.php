@@ -4,8 +4,11 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class FundingSourceRequest extends FormRequest
+class ReportRequest extends FormRequest
 {
+    /**
+     * Determine if the user is authorized to make this request.
+     */
     public function authorize(): bool
     {
         return true;
@@ -15,19 +18,15 @@ class FundingSourceRequest extends FormRequest
     {
         if ($this->method() === 'PATCH') {
             return [
-                'code' => ['sometimes', 'string'],
                 'description' => ['sometimes', 'string'],
-                'abbreviation' => ['sometimes', 'string'],
-                'year' => ['sometimes', 'integer', 'min:1900', 'max:'. (date('Y') + 10)],
+                'title' => ['sometimes', 'string'],
                 'state_id' => ['nullable', 'integer', 'exists:states,id'],
             ];
         }
         return [
 
-            'code' => ['required', 'string'],
             'description' => ['required', 'string'],
-            'abbreviation' => ['required', 'string'],
-            'year' => ['required', 'integer', 'min:1900', 'max:'. (date('Y') + 10)],
+            'title' => ['required', 'string'],
             'state_id' => ['nullable', 'integer', 'exists:states,id'],
         ];
     }

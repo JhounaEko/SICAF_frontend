@@ -60,7 +60,18 @@ class SetSortableColumns
             $sortableColumns = ['id', 'rubric', 'description', 'lifespan', 'is_depreciated', 'state_id', 'created_at', 'updated_at'];
         }else if ($request->routeIs('v1.item_groups.index')){
             $sortableColumns = ['id', 'item_description', 'item_group_type_id', 'alphanumeric_code', 'item_group_description', 'material', 'type', 'is_intangible', 'useful_months', 'state_id', 'budget_rubric_id', 'created_at', 'updated_at'];
+        }else if ($request->routeIs('v1.funding_sources.index')){
+            $sortableColumns = ['id', 'code', 'description', 'abbreviation', 'year', 'state_id', 'created_at', 'updated_at'];
+        }else if ($request->routeIs('v1.summaries.index')){
+            $sortableColumns = ['id', 'rubric', 'accumulated_depreciation', 'acquisition_cost', 'asset_cost', 'current_cost', 'annual_depreciation', 'current_depreciation', 'total_accumulated_depreciation', 'net_value', 'state_id', 'created_at', 'updated_at'];
+        }else if ($request->routeIs('v1.funding_organizations.index')){
+            $sortableColumns = ['id', 'code', 'description', 'abbreviation', 'year', 'state_id', 'created_at', 'updated_at'];
+        }else if ($request->routeIs('v1.reports.index')){
+            $sortableColumns = ['id', 'description', 'title', 'state_id', 'created_at', 'updated_at'];
+        }else if ($request->routeIs('v1.documents.index')){
+            $sortableColumns = ['id', 'item_id', 'year', 'original_value', 'date', 'useful_months', 'state_id', 'created_at', 'updated_at'];
         }
+        
         
 
         $request->merge(['sortable_columns' => $sortableColumns]);

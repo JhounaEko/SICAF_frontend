@@ -2,64 +2,95 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\FilterRequest;
+use App\Http\Requests\FundingOrganizationRequest;
+use App\Http\Resources\FundingOrganizationResource;
+use App\Http\Responses\ApiResponse;
 use App\Models\FundingOrganization;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
+use Illuminate\Support\Facades\DB;
 
-class FundingOrganizationController extends Controller
+class FundingOrganizationController extends Controller implements HasMiddleware
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public static function middleware()
     {
-        //
+        return [
+            new Middleware('permission:VIEW FUNDING ORGANIZATIONS', only: ['index', 'show']),
+            new Middleware('permission:REGISTER FUNDING ORGANIZATIONS', only: ['store']),
+            new Middleware('permission:UPDATE FUNDING ORGANIZATIONS', only: ['update']),
+        ];
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function index(FilterRequest $request)
     {
-        //
+        try {
+            $query = FundingOrganization::query();
+            $query->filterByState($request->input('state'))
+                ->filterByDescriptionOrAbbreviation($request->input('search'))
+                ->filterByCode($request->input('code'))
+                ->filterByYear($request->input('year'))
+                ->filterByStateName($request->input('state_name'))
+                ->filterByDates($request->input('start_date'), $request->input('end_date'));
+
+            if ($request->filled('sort_by')) {
+                try {
+                    $query->sort($request->input('sort_by'), $request->input('sort_order', 'asc'));
+                } catch (\Exception $e) {
+                    return ApiResponse::error('Error in sorting', 400, $e->getMessage());
+                }
+            }
+
+            $perPage = $request->input('row_num');
+            $funding_organizations = $query->paginate($perPage);
+
+            if ($funding_organizations->isEmpty()) {
+                return ApiResponse::error("There're not registered funding organizations.", 200);
+            }
+
+            $collection = FundingOrganizationResource::collection($funding_organizations);
+            $responseData = $collection->response()->getData(true);
+
+            return ApiResponse::success('Funding organizations found.', 200, $responseData);
+        } catch (\Exception $e) {
+            return ApiResponse::error('An error unexpected ocurred.', 500, $e->getMessage());
+        }
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function store(FundingOrganizationRequest $request)
     {
-        //
+        try {
+            DB::beginTransaction();
+            $funding_organization = FundingOrganization::create($request->validated());
+            DB::commit();
+            return ApiResponse::success('Funding organization registered successfully.', 201, $funding_organization);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return ApiResponse::error('An error occurred while registering the funding organization.', 500, $e->getMessage());
+        }
     }
 
-    /**
-     * Display the specified resource.
-     */
+    
     public function show(FundingOrganization $fundingOrganization)
     {
-        //
+        try {
+            return ApiResponse::success('Funding organization found.', 200, FundingOrganizationResource::make($fundingOrganization));
+        } catch (\Exception $e) {
+            return ApiResponse::error('An error unexpected ocurred.', 500, $e->getMessage());
+        }
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(FundingOrganization $fundingOrganization)
+    public function update(FundingOrganizationRequest $request, FundingOrganization $fundingOrganization)
     {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, FundingOrganization $fundingOrganization)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(FundingOrganization $fundingOrganization)
-    {
-        //
+        try {
+            DB::beginTransaction();
+            $fundingOrganization->update($request->validated());
+            DB::commit();
+            return ApiResponse::success('Funding organization updated succesfully.', 200, $fundingOrganization);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return ApiResponse::error('An error unexpected ocurred.', 500, $e->getMessage());
+        }
     }
 }

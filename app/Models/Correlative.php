@@ -33,7 +33,7 @@ class Correlative extends Model implements Auditable
     public function scopeFilterByState($query, $state)
     {
         if (!is_null($state)) {
-            $query->where('state_id', $state);
+            $query->where('correlatives.state_id', $state);
         }
     }
 
@@ -48,13 +48,13 @@ class Correlative extends Model implements Auditable
     public function scopeFilterByCurrentNumber($query, $number)
     {
         if (!is_null($number)) {
-            $query->where('current_number', $number);
+            $query->where('correlatives.current_number', $number);
         }
     }
     public function scopeFilterByLimitDate($query, $date)
     {
         if (!is_null($date)) {
-            $query->where('limit_date', 'LIKE', $date);
+            $query->where('correlatives.limit_date', 'LIKE', $date);
         }
     }
 
@@ -70,7 +70,7 @@ class Correlative extends Model implements Auditable
     public function scopeFilterByDates($query, $start, $end)
     {
         if ($start && $end) {
-            $query->whereBetween('created_at', [$start, $end]);
+            $query->whereBetween('correlatives.created_at', [$start, $end]);
         }
     }
 }

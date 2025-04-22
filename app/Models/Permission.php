@@ -34,13 +34,13 @@ class Permission extends SpatiePermission implements Auditable
 
     public function scopeFilterByState($query, $state){
         if (!is_null($state)) {
-            $query->where('state_id', $state);
+            $query->where('permissions.state_id', $state);
         }
     }
 
     public function scopeFilterByName($query, $name){
         if (!is_null($name)) {
-            $query->where('name', 'LIKE', $name);
+            $query->where('permissions.name', 'LIKE', $name);
         }
     }
 
@@ -56,7 +56,7 @@ class Permission extends SpatiePermission implements Auditable
     public function scopeFilterByDates($query, $start, $end)
     {
         if ($start && $end) {
-            $query->whereBetween('created_at', [$start, $end]);
+            $query->whereBetween('permissions.created_at', [$start, $end]);
         }
     }
 }

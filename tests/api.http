@@ -1,6 +1,6 @@
 ###Test get states
-GET http://127.0.0.1:8000/api/v1/states?page=1&sort_by=id&row_num=5
-Authorization: Bearer 90|3OBp0BQauFsX4k547Sjtx8X7lYmc7XbkLdwdD7G8beca6603
+GET http://127.0.0.1:8000/api/v1/states?page=1&row_num=11&sort_by=order&sort_order=desc
+Authorization: Bearer 102|AZr7rPRPhMdeKrDifrIw99IDKMdUovvQ6A8nM6Ly5a6b08b3
 Accept: application/json
 ###Test post states
 POST http://127.0.0.1:8000/api/v1/states
@@ -55,9 +55,9 @@ GET http://127.0.0.1:8000/api/v1/states/2
 Accept: application/json
 Authorization: Bearer 90|3OBp0BQauFsX4k547Sjtx8X7lYmc7XbkLdwdD7G8beca6603
 ###Test get offices
-GET http://127.0.0.1:8000/api/v1/offices?state_name=act
+GET http://127.0.0.1:8000/api/v1/offices?state_name=act&row_num=10&sort_by=state_id&sort_order=desc
 Accept: application/json
-Authorization: Bearer 92|f9CNWPwEnseagK9LS52EczfJOBMLMZ1Uc1bNieQTeadf5880
+Authorization: Bearer 102|AZr7rPRPhMdeKrDifrIw99IDKMdUovvQ6A8nM6Ly5a6b08b3
 
 ###Test post offices
 POST http://127.0.0.1:8000/api/v1/offices
@@ -97,7 +97,7 @@ Accept: application/json
 ###Test get users &sort_by=office_name&sort_order=desc
 GET http://127.0.0.1:8000/api/v1/users?page=1&sort_by=id&sort_order=desc&row_num=20&state_name=inac
 Accept: application/json
-Authorization: Bearer 92|f9CNWPwEnseagK9LS52EczfJOBMLMZ1Uc1bNieQTeadf5880
+Authorization: Bearer 102|AZr7rPRPhMdeKrDifrIw99IDKMdUovvQ6A8nM6Ly5a6b08b3
 ###Test post users
 POST http://127.0.0.1:8000/api/v1/users
 Content-Type: application/json
@@ -208,18 +208,18 @@ Accept: application/json
 }
 
 ###Test get permission
-GET http://127.0.0.1:8000/api/v1/permissions?page=3&sort_by=id&row_num=10&state_name=inact
+GET http://127.0.0.1:8000/api/v1/permissions?page=3&sort_by=id&row_num=10&state_name=ac
 Accept: application/json
-Authorization: Bearer 92|f9CNWPwEnseagK9LS52EczfJOBMLMZ1Uc1bNieQTeadf5880
+Authorization: Bearer 102|AZr7rPRPhMdeKrDifrIw99IDKMdUovvQ6A8nM6Ly5a6b08b3
 
 ###Test post permission
 POST http://127.0.0.1:8000/api/v1/permissions
 Accept: application/json
 Content-Type: application/json
-Authorization: Bearer 93|tmwObbwcblouXnmw3FfUFoaxViYLJTuZNTETPab5a94b85f6
+Authorization: Bearer 103|fYhkwQw1bFuGjYTwdfeEaQRBk8sV1oaqhA2AcrCB17af6cf6
 
 {
-    "name": "DELETE ITEM GROUPS"
+    "name": "DELETE DOCUMENTS",
 }
 ###Test show permission
 GET http://127.0.0.1:8000/api/v1/permissions/1
@@ -244,9 +244,9 @@ Authorization: Bearer 90|3OBp0BQauFsX4k547Sjtx8X7lYmc7XbkLdwdD7G8beca6603
     "name": "RegisTer states",
 }
 ###Test get roles
-GET http://127.0.0.1:8000/api/v1/roles?page=1&sort_by=id&sort_order=asc&state_name=inactivo
+GET http://127.0.0.1:8000/api/v1/roles?page=1&sort_by=name&sort_order=desc&state_name=act
 Accept: application/json
-Authorization: Bearer 92|f9CNWPwEnseagK9LS52EczfJOBMLMZ1Uc1bNieQTeadf5880
+Authorization: Bearer 102|AZr7rPRPhMdeKrDifrIw99IDKMdUovvQ6A8nM6Ly5a6b08b3
 ###Test post roles
 POST http://127.0.0.1:8000/api/v1/roles
 Content-Type: application/json
@@ -268,12 +268,13 @@ Authorization: Bearer 7|ORfkdK9zgDkoCHB7Zim7HqPGq5wA4PXrW6MC2Vx3c13a89ee
 PATCH http://127.0.0.1:8000/api/v1/roles/1
 Content-Type: application/json
 Accept: application/json
-Authorization: Bearer 96|7PflUwBuCnH5RGJDjflAM1uHato3oTD5lZPMkIqw3850426b
+Authorization: Bearer 103|fYhkwQw1bFuGjYTwdfeEaQRBk8sV1oaqhA2AcrCB17af6cf6
+
 #     "menus" : [1, 2]
 # }
 
 {
-    "permissions": [1, 2, 3, 4, 5, 6, 7, 8, 9, 11, 12, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30 ,31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90]
+    "permissions": [1, 2, 3, 4, 5, 6, 7, 8, 9, 11, 12, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30 ,31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110],
 }
 ###Test show roles
 GET http://127.0.0.1:8000/api/v1/roles/1
@@ -283,7 +284,7 @@ Authorization: Bearer 96|7PflUwBuCnH5RGJDjflAM1uHato3oTD5lZPMkIqw3850426b
 ###Test get employees
 GET http://127.0.0.1:8000/api/v1/employees?state_name=act
 Accept: application/json
-Authorization: Bearer 92|f9CNWPwEnseagK9LS52EczfJOBMLMZ1Uc1bNieQTeadf5880
+Authorization: Bearer 102|AZr7rPRPhMdeKrDifrIw99IDKMdUovvQ6A8nM6Ly5a6b08b3
 
 ###Test post employees
 POST http://127.0.0.1:8000/api/v1/employees
@@ -401,7 +402,7 @@ GET http://127.0.0.1:8000/api/v1/motives/3
 Accept: application/json
 Authorization: Bearer 91|uvEyLZBgVofv3j9yuPtDfMXoV4kG2vy1KTlHzXSPab01e345
 ###GET note types
-GET http://127.0.0.1:8000/api/v1/note_types?state_name=inact
+GET http://127.0.0.1:8000/api/v1/git?state_name=inact
 Accept: application/json
 Authorization: Bearer 92|f9CNWPwEnseagK9LS52EczfJOBMLMZ1Uc1bNieQTeadf5880
 ###POST note types
@@ -946,3 +947,214 @@ Content-Type: application/json
 GET http://127.0.0.1:8000/api/v1/item_groups/2
 Accept: application/json
 Authorization: Bearer 98|bDMunbTdJR0i82q9O35TcBWwEZcG722l9U3QNhb7e67256d0
+###GET FUNDING SOURCES
+GET http://127.0.0.1:8000/api/v1/funding_sources?row_num=5&state_name=ac&search=tg
+Accept: application/json
+Authorization: Bearer 101|zskb7DZt33PfMq8wsy6JLWgZgSs46YUDsy9QrT4bb6470ced
+###POST FUNDING SOURCES
+POST http://127.0.0.1:8000/api/v1/funding_sources
+Accept: application/json
+Authorization: Bearer 101|zskb7DZt33PfMq8wsy6JLWgZgSs46YUDsy9QrT4bb6470ced
+Content-Type: application/json
+
+{
+    "code" : "11",
+    "description" : "T.g.N. otrOS IngReSOS",
+    "abbreviation" : "Tgn-Ot",
+    "year": 2024,
+
+}
+###PUT FUNDING SOURCES
+PUT http://127.0.0.1:8000/api/v1/funding_sources/1
+Accept: application/json
+Authorization: Bearer 101|zskb7DZt33PfMq8wsy6JLWgZgSs46YUDsy9QrT4bb6470ced
+Content-Type: application/json
+
+{
+    "code" : "10",
+    "description" : "Tesoro General De La NacióN",
+    "abbreviation" : "Tgn",
+    "year": 2025,
+}
+###PATCH FUNDING SOURCES
+PATCH http://127.0.0.1:8000/api/v1/funding_sources/1
+Accept: application/json
+Authorization: Bearer 101|zskb7DZt33PfMq8wsy6JLWgZgSs46YUDsy9QrT4bb6470ced
+Content-Type: application/json
+
+{
+    "state_id":2,
+}
+###SHOW FUNDING SOURCES
+GET http://127.0.0.1:8000/api/v1/funding_sources/2
+Accept: application/json
+Authorization: Bearer 101|zskb7DZt33PfMq8wsy6JLWgZgSs46YUDsy9QrT4bb6470ced
+###GET SUMMARIES
+GET http://127.0.0.1:8000/api/v1/summaries?row_num=5&state_name=ac&acquisition_cost=.58
+Accept: application/json
+Authorization: Bearer 101|zskb7DZt33PfMq8wsy6JLWgZgSs46YUDsy9QrT4bb6470ced
+###POST SUMMARIES
+POST http://127.0.0.1:8000/api/v1/summaries
+Accept: application/json
+Authorization: Bearer 101|zskb7DZt33PfMq8wsy6JLWgZgSs46YUDsy9QrT4bb6470ced
+Content-Type: application/json
+
+{
+    "rubric" : "tierra Y TerRenos",
+    "acquisition_cost" : 9309041.58,
+    "accumulated_depreciation" : 0.0,
+    "asset_cost": -764.61,
+    "current_cost" : 9308276.97,
+    "annual_depreciation" : 0,
+    "current_depreciation" : 0.0,
+    "total_accumulated_depreciation": 245945.9,
+    "net_value": 9308276.97,
+
+}
+###PUT SUMMARIES
+PUT http://127.0.0.1:8000/api/v1/summaries/1
+Accept: application/json
+Authorization: Bearer 101|zskb7DZt33PfMq8wsy6JLWgZgSs46YUDsy9QrT4bb6470ced
+Content-Type: application/json
+
+{
+    "rubric" : "edIfiCios",
+    "acquisition_cost" : 24818028.59,
+    "accumulated_depreciation" : 0.0,
+    "asset_cost": -427484.14,
+    "current_cost" : 24390544.45,
+    "annual_depreciation" : 245945.9,
+    "current_depreciation" : 0.0,
+    "total_accumulated_depreciation": 245945.9,
+    "net_value": 24144598.56,
+}
+###PATCH SUMMARIES
+PATCH http://127.0.0.1:8000/api/v1/summaries/1
+Accept: application/json
+Authorization: Bearer 101|zskb7DZt33PfMq8wsy6JLWgZgSs46YUDsy9QrT4bb6470ced
+Content-Type: application/json
+
+{
+    "state_id":2,
+}
+###SHOW SUMMARIES
+GET http://127.0.0.1:8000/api/v1/summaries/1
+Accept: application/json
+Authorization: Bearer 101|zskb7DZt33PfMq8wsy6JLWgZgSs46YUDsy9QrT4bb6470ced
+###GET FUNDING ORGANIZATIONS
+GET http://127.0.0.1:8000/api/v1/funding_organizations?row_num=5&state_name=ac&code=111
+Accept: application/json
+Authorization: Bearer 102|AZr7rPRPhMdeKrDifrIw99IDKMdUovvQ6A8nM6Ly5a6b08b3
+###POST FUNDING ORGANIZATIONS
+POST http://127.0.0.1:8000/api/v1/funding_organizations
+Accept: application/json
+Authorization: Bearer 101|zskb7DZt33PfMq8wsy6JLWgZgSs46YUDsy9QrT4bb6470ced
+Content-Type: application/json
+
+{
+    "code" : "111",
+    "description" : "tEsoro general de la Nación",
+    "abbreviation" : "tGn",
+    "year": 2008,
+}
+###PUT FUNDING ORGANIZATIONS
+PUT http://127.0.0.1:8000/api/v1/funding_organizations/1
+Accept: application/json
+Authorization: Bearer 101|zskb7DZt33PfMq8wsy6JLWgZgSs46YUDsy9QrT4bb6470ced
+Content-Type: application/json
+
+{
+    "code" : "0",
+    "description" : "otros ORganIsmos FInanciadorEs",
+    "abbreviation" : "X",
+    "year": 2008,
+}
+###PATCH FUNDING ORGANIZATIONS
+PATCH http://127.0.0.1:8000/api/v1/funding_organizations/1
+Accept: application/json
+Authorization: Bearer 101|zskb7DZt33PfMq8wsy6JLWgZgSs46YUDsy9QrT4bb6470ced
+Content-Type: application/json
+
+{
+    "state_id":2,
+}
+###SHOW FUNDING ORGANIZATIONS
+GET http://127.0.0.1:8000/api/v1/funding_organizations/2
+Accept: application/json
+Authorization: Bearer 102|AZr7rPRPhMdeKrDifrIw99IDKMdUovvQ6A8nM6Ly5a6b08b3
+###GET REPORTS
+GET http://127.0.0.1:8000/api/v1/reports?row_num=5&state_name=ac
+Accept: application/json
+Authorization: Bearer 102|AZr7rPRPhMdeKrDifrIw99IDKMdUovvQ6A8nM6Ly5a6b08b3
+###POST REPORTS
+POST http://127.0.0.1:8000/api/v1/reports
+Accept: application/json
+Authorization: Bearer 102|AZr7rPRPhMdeKrDifrIw99IDKMdUovvQ6A8nM6Ly5a6b08b3
+Content-Type: application/json
+
+{
+    "description" : "tEst1",
+    "title" : "test1",
+
+}
+###PUT REPORTS
+PUT http://127.0.0.1:8000/api/v1/reports/1
+Accept: application/json
+Authorization: Bearer 102|AZr7rPRPhMdeKrDifrIw99IDKMdUovvQ6A8nM6Ly5a6b08b3
+Content-Type: application/json
+
+{
+    "description" : "tEst0",
+    "title" : "test0",
+}
+###PATCH REPORTS
+PATCH http://127.0.0.1:8000/api/v1/reports/1
+Accept: application/json
+Authorization: Bearer 102|AZr7rPRPhMdeKrDifrIw99IDKMdUovvQ6A8nM6Ly5a6b08b3
+Content-Type: application/json
+
+{
+    "state_id":2,
+}
+###SHOW REPORTS
+GET http://127.0.0.1:8000/api/v1/reports/2
+Accept: application/json
+Authorization: Bearer 102|AZr7rPRPhMdeKrDifrIw99IDKMdUovvQ6A8nM6Ly5a6b08b3
+###GET DOCUMENTS
+GET http://127.0.0.1:8000/api/v1/reports?row_num=5&state_name=ac
+Accept: application/json
+Authorization: Bearer 102|AZr7rPRPhMdeKrDifrIw99IDKMdUovvQ6A8nM6Ly5a6b08b3
+###POST DOCUMENTS
+POST http://127.0.0.1:8000/api/v1/reports
+Accept: application/json
+Authorization: Bearer 102|AZr7rPRPhMdeKrDifrIw99IDKMdUovvQ6A8nM6Ly5a6b08b3
+Content-Type: application/json
+
+{
+    "description" : "tEst1",
+    "title" : "test1",
+
+}
+###PUT DOCUMENTS
+PUT http://127.0.0.1:8000/api/v1/reports/1
+Accept: application/json
+Authorization: Bearer 102|AZr7rPRPhMdeKrDifrIw99IDKMdUovvQ6A8nM6Ly5a6b08b3
+Content-Type: application/json
+
+{
+    "description" : "tEst0",
+    "title" : "test0",
+}
+###PATCH DOCUMENTS
+PATCH http://127.0.0.1:8000/api/v1/reports/1
+Accept: application/json
+Authorization: Bearer 102|AZr7rPRPhMdeKrDifrIw99IDKMdUovvQ6A8nM6Ly5a6b08b3
+Content-Type: application/json
+
+{
+    "state_id":2,
+}
+###SHOW DOCUMENTS
+GET http://127.0.0.1:8000/api/v1/reports/2
+Accept: application/json
+Authorization: Bearer 102|AZr7rPRPhMdeKrDifrIw99IDKMdUovvQ6A8nM6Ly5a6b08b3
