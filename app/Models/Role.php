@@ -42,15 +42,16 @@ class Role extends SpatieRole implements Auditable
     public function scopeFilterByState($query, $state)
     {
         if (!is_null($state)) {
-            $query->where('state_id', $state);
+            $query->where('roles.state_id', $state);
         }
     }
 
     public function scopeFilterByName($query, $name){
         if (!is_null($name)) {
-            $query->where('name', 'LIKE', '%'.$name.'%');
+            $query->where('roles.name', 'LIKE', $name);
         }
     }
+
 
     public function scopeFilterByStateName($query, $stateName)
     {
@@ -66,7 +67,7 @@ class Role extends SpatieRole implements Auditable
     public function scopeFilterByDates($query, $start, $end)
     {
         if ($start && $end) {
-            $query->whereBetween('created_at', [$start, $end]);
+            $query->whereBetween('roles.created_at', [$start, $end]);
         }
     }
 }

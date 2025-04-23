@@ -39,7 +39,7 @@ class FundingSource extends Model implements Auditable
     public function scopeFilterByState($query, $state)
     {
         if (!is_null($state)) {
-            $query->where('state_id', $state);
+            $query->where('funding_sources.state_id', $state);
         }
     }
 
@@ -57,16 +57,31 @@ class FundingSource extends Model implements Auditable
     public function scopeFilterByYear($query, $year)
     {
         if (!is_null($year)) {
-            $query->where('year', $year);
+            $query->where('funding_sources.year', $year);
         }
     }
 
     public function scopeFilterByCode($query, $code)
     {
         if (!is_null($code)) {
-            $query->where('code', $code);
+            $query->where('funding_sources.code', $code);
         }
     }
 
-    
+    public function scopeFilterByStateName($query, $stateName)
+    {
+        if (!is_null($stateName)) {
+            $query->join('states', 'funding_sources.state_id', '=', 'states.id')
+                ->where('states.name', 'LIKE', "%{$stateName}%")
+                ->select('funding_sources.*');
+        }
+    }
+
+    public function scopeFilterByDates($query, $start, $end)
+    {
+        if ($start && $end) {
+            $query->whereBetween('funding_sources.created_at', [$start, $end]);
+        }
+    }
+
 }

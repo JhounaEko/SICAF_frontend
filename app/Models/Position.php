@@ -26,18 +26,19 @@ class Position extends Model implements Auditable
     public function setDescriptionAttribute($value) {
         $this->attributes['description'] = mb_strtoupper(trim($value));
     }
-    
-    public function scopeFilterByState($query, $state)
-    {
-        if (!is_null($state)) {
-            $query->where('state_id', $state);
-        }
-    }
-    
+
     public function scopeSort($query, $sortBy, $sortOrder = 'asc')
     {
         return $query->orderBy($sortBy, $sortOrder);
     }
+    
+    public function scopeFilterByState($query, $state)
+    {
+        if (!is_null($state)) {
+            $query->where('positions.state_id', $state);
+        }
+    }
+    
 
     public function scopeFilterByNameOrDescription($query, $input)
     {
@@ -62,7 +63,7 @@ class Position extends Model implements Auditable
     public function scopeFilterByDates($query, $start, $end)
     {
         if ($start && $end) {
-            $query->whereBetween('created_at', [$start, $end]);
+            $query->whereBetween('positions.created_at', [$start, $end]);
         }
     }
 }

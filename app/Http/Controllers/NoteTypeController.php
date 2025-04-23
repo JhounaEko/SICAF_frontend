@@ -18,7 +18,6 @@ class NoteTypeController extends Controller
     public static function middleware()
     {
         return [
-
             new Middleware('permission:VIEW NOTE TYPES', only: ['index', 'show']),
             new Middleware('permission:REGISTER NOTE TYPES', only: ['store']),
             new Middleware('permission:UPDATE NOTE TYPES', only: ['update'])

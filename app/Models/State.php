@@ -64,8 +64,8 @@ class State extends Model implements Auditable
         $search = mb_strtoupper(trim($input));
         if (!is_null($search)) {
             $query->where(function ($q) use ($search) {
-                $q->where('description', 'LIKE', "%{$search}%")
-                    ->orWhere('name', 'LIKE', "%{$search}%");
+                $q->where('states.description', 'LIKE', "%{$search}%")
+                    ->orWhere('states.name', 'LIKE', "%{$search}%");
             });
         }
     }
@@ -73,7 +73,7 @@ class State extends Model implements Auditable
     public function scopeFilterByDates($query, $start, $end)
     {
         if ($start && $end) {
-            $query->whereBetween('created_at', [$start, $end]);
+            $query->whereBetween('states.created_at', [$start, $end]);
         }
     }
 }
