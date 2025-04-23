@@ -8,6 +8,9 @@ use OwenIt\Auditing\Contracts\Auditable;
 class Correlative extends Model implements Auditable
 {
     use \OwenIt\Auditing\Auditable;
+
+    protected $table = "correlativo";
+    
     protected $fillable = [
         'description',
         'limit_date',
