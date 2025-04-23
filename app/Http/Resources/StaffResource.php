@@ -5,7 +5,7 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class EmployeeResource extends JsonResource
+class StaffResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -18,12 +18,23 @@ class EmployeeResource extends JsonResource
             'id' => $this->id,
             'first_name' => $this->first_name,
             'last_name' => $this->last_name,
+            'identity_card' => $this->identity_card,
+            'issued_by' => $this->issued_by,
             'phone_number' => $this->phone_number,
+            'other_phone_number' => $this->other_phone_number,
+            'office_phone_number' => $this->office_phone_number,
+            'email' => $this->email,
             'position' => $this->position,
             'office' => [
                 'name' => $this->office->name,
                 'initials' => $this->office->initials,
             ],
+            'place' => $this->whenLoaded('place', function () { // Usa whenLoaded si quieres que solo aparezca si la relación fue cargada (eager loaded)
+                 return [
+                     'name' => $this->place->description,
+                     'initials' => $this->place->abbreviation,
+                 ];
+             }, []),
             'state' => [
                 'name' => $this->state->name,
                 'code' => $this->state->code,

@@ -28,6 +28,8 @@ return new class extends Migration
             $table->foreignId('funding_organization_id')->nullable()->constrained('items.funding_organizations')->cascadeOnUpdate()->cascadeOnDelete();
             $table->foreignId('budget_rubric_id')->nullable()->constrained('items.budget_rubrics')->cascadeOnUpdate()->cascadeOnDelete();
             $table->foreignId('office_id')->nullable()->constrained('users.offices')->cascadeOnUpdate()->cascadeOnDelete();
+            $table->foreignId('place_id')->nullable()->constrained('users.places')->cascadeOnUpdate()->cascadeOnDelete();
+            
             $table->foreignId('person_id')->nullable()->constrained('users.persons')->cascadeOnUpdate()->cascadeOnDelete();
             $table->text('observations')->nullable();
             $table->date('purchase_date')->nullable();

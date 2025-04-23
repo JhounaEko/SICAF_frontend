@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('users.persons', function (Blueprint $table) {
+        Schema::create('users.staff', function (Blueprint $table) {
             $table->id();
             $table->string('first_name', 30);
             $table->string('last_name', 30);
@@ -23,6 +23,8 @@ return new class extends Migration
             $table->string('email')->nullable();
             $table->foreignId('position_id')->nullable()->constrained('users.positions')->cascadeOnUpdate()->cascadeOnDelete();
             $table->foreignId('office_id')->nullable()->constrained('users.offices')->cascadeOnUpdate()->cascadeOnDelete();
+            $table->foreignId('place_id')->nullable()->constrained('users.places')->cascadeOnUpdate()->cascadeOnDelete();
+            
             $table->foreignId('state_id')->default(1)->constrained('public.states')->cascadeOnUpdate()->cascadeOnDelete();
             $table->timestamps();
         });
@@ -33,6 +35,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('users.persons');
+        Schema::dropIfExists('users.staff');
     }
 };

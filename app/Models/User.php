@@ -33,6 +33,7 @@ class User extends Authenticatable implements Auditable
         // 'password_change_count',
         'email',
         'office_id',
+        'place_id',
         'state_id'
     ];
 
@@ -62,6 +63,11 @@ class User extends Authenticatable implements Auditable
     public function office()
     {
         return $this->belongsTo(Office::class, 'office_id');
+    }
+
+    public function place()
+    {
+        return $this->belongsTo(Office::class, 'place_id');
     }
 
     public function state()
@@ -135,6 +141,15 @@ class User extends Authenticatable implements Auditable
         if (!is_null($officeName)) {
             $query->join('offices', 'users.office_id', '=', 'offices.id')
                 ->where('offices.name', 'LIKE', "%{$officeName}%")
+                ->select('users.*');
+        }
+    }
+
+    public function scopeFilterByPlaceName($query, $placeName)
+    {
+        if (!is_null($placeName)) {
+            $query->join('places', 'users.place_id', '=', 'places.id')
+                ->where('places.name', 'LIKE', "%{$placeName}%")
                 ->select('users.*');
         }
     }

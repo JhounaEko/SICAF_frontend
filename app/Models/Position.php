@@ -26,6 +26,11 @@ class Position extends Model implements Auditable
     public function setDescriptionAttribute($value) {
         $this->attributes['description'] = mb_strtoupper(trim($value));
     }
+
+    public function scopeSort($query, $sortBy, $sortOrder = 'asc')
+    {
+        return $query->orderBy($sortBy, $sortOrder);
+    }
     
     public function scopeFilterByState($query, $state)
     {

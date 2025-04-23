@@ -95,9 +95,9 @@ GET http://127.0.0.1:8000/api/v1/offices/41
 Authorization: Bearer 90|3OBp0BQauFsX4k547Sjtx8X7lYmc7XbkLdwdD7G8beca6603
 Accept: application/json
 ###Test get users &sort_by=office_name&sort_order=desc
-GET http://127.0.0.1:8000/api/v1/users?page=1&sort_by=id&sort_order=desc&row_num=20&state_name=inac
+GET http://127.0.0.1:8000/api/v1/users?page=1&sort_by=id&sort_order=desc&row_num=20&office_name=AC
 Accept: application/json
-Authorization: Bearer 102|AZr7rPRPhMdeKrDifrIw99IDKMdUovvQ6A8nM6Ly5a6b08b3
+Authorization: Bearer 107|XhcIpln7Ejvth29CmvvSAUUUfdn6x0DVUorYxK7C9d2a9be3
 ###Test post users
 POST http://127.0.0.1:8000/api/v1/users
 Content-Type: application/json
@@ -184,7 +184,7 @@ Accept: application/json
 ###Test logout user
 POST http://127.0.0.1:8000/api/v1/logout
 Content-Type: application/json
-Authorization: Bearer 95|C8JlTPEDN42u6XpxjrOkbR2NwliuzJdPWotAr6VE8d5fc1d0
+Authorization: Bearer 106|wkrS6LMDJE2vNVpB9dRqgtxcL2vOi3ZRNPtXTggnb248e4a6
 # Authorization: Bearer 28|re2vU9qxuCEdSKHrbpmpTT41Yl2kXwzscKQVG2iW27938767
 Accept: application/json
 ###Test register users no authenticated
@@ -279,7 +279,7 @@ Authorization: Bearer 103|fYhkwQw1bFuGjYTwdfeEaQRBk8sV1oaqhA2AcrCB17af6cf6
 ###Test show roles
 GET http://127.0.0.1:8000/api/v1/roles/1
 Accept: application/json
-Authorization: Bearer 96|7PflUwBuCnH5RGJDjflAM1uHato3oTD5lZPMkIqw3850426b
+Authorization: Bearer 106|wkrS6LMDJE2vNVpB9dRqgtxcL2vOi3ZRNPtXTggnb248e4a6
 
 ###Test get employees
 GET http://127.0.0.1:8000/api/v1/employees?state_name=act
@@ -486,9 +486,9 @@ PATCH http://127.0.0.1:8000/api/v1/notifications/mark-all-as-read
 Accept: application/json
 Authorization: Bearer 92|f9CNWPwEnseagK9LS52EczfJOBMLMZ1Uc1bNieQTeadf5880
 ###GET POSITIONS
-GET http://127.0.0.1:8000/api/v1/positions?row_num=5&search=tecnico&state_name=act
+GET http://127.0.0.1:8000/api/v1/positions?row_num=36&search=&sort_by=name&sort_order=desc
 Accept: application/json
-Authorization: Bearer 92|f9CNWPwEnseagK9LS52EczfJOBMLMZ1Uc1bNieQTeadf5880
+Authorization: Bearer 105|e7PHeyUgC9uQ5TMGcw8JAg0YwErAjgPtZm9Hmwwceb796dae
 ###POST POSITIONS
 POST http://127.0.0.1:8000/api/v1/positions
 Accept: application/json
@@ -1121,40 +1121,164 @@ GET http://127.0.0.1:8000/api/v1/reports/2
 Accept: application/json
 Authorization: Bearer 102|AZr7rPRPhMdeKrDifrIw99IDKMdUovvQ6A8nM6Ly5a6b08b3
 ###GET DOCUMENTS
-GET http://127.0.0.1:8000/api/v1/reports?row_num=5&state_name=ac
+GET http://127.0.0.1:8000/api/v1/documents?row_num=5&state_name=ac&year=2004
 Accept: application/json
-Authorization: Bearer 102|AZr7rPRPhMdeKrDifrIw99IDKMdUovvQ6A8nM6Ly5a6b08b3
+Authorization: Bearer 104|i8IEfoMGOhtSk9rUSOWiJpzsMyi4qZAxH4CWiABP27d9f65c
 ###POST DOCUMENTS
-POST http://127.0.0.1:8000/api/v1/reports
+POST http://127.0.0.1:8000/api/v1/documents
 Accept: application/json
-Authorization: Bearer 102|AZr7rPRPhMdeKrDifrIw99IDKMdUovvQ6A8nM6Ly5a6b08b3
+Authorization: Bearer 103|fYhkwQw1bFuGjYTwdfeEaQRBk8sV1oaqhA2AcrCB17af6cf6
 Content-Type: application/json
 
 {
-    "description" : "tEst1",
-    "title" : "test1",
+    "item_id" : 20991,
+    "year" : 2004,
+    "original_value" : 140,
+    "date" : "2004-03-17",
+    "useful_months" : 120,
 
 }
 ###PUT DOCUMENTS
-PUT http://127.0.0.1:8000/api/v1/reports/1
+PUT http://127.0.0.1:8000/api/v1/documents/1
 Accept: application/json
-Authorization: Bearer 102|AZr7rPRPhMdeKrDifrIw99IDKMdUovvQ6A8nM6Ly5a6b08b3
+Authorization: Bearer 103|fYhkwQw1bFuGjYTwdfeEaQRBk8sV1oaqhA2AcrCB17af6cf6
 Content-Type: application/json
 
 {
-    "description" : "tEst0",
-    "title" : "test0",
+    "item_id" : 20990,
+    "year" : 2004,
+    "original_value" : 140,
+    "date" : "2004-03-17",
+    "useful_months" : 120,
 }
 ###PATCH DOCUMENTS
-PATCH http://127.0.0.1:8000/api/v1/reports/1
+PATCH http://127.0.0.1:8000/api/v1/documents/1
 Accept: application/json
-Authorization: Bearer 102|AZr7rPRPhMdeKrDifrIw99IDKMdUovvQ6A8nM6Ly5a6b08b3
+Authorization: Bearer 103|fYhkwQw1bFuGjYTwdfeEaQRBk8sV1oaqhA2AcrCB17af6cf6
 Content-Type: application/json
 
 {
     "state_id":2,
 }
 ###SHOW DOCUMENTS
-GET http://127.0.0.1:8000/api/v1/reports/2
+GET http://127.0.0.1:8000/api/v1/documents/2
 Accept: application/json
-Authorization: Bearer 102|AZr7rPRPhMdeKrDifrIw99IDKMdUovvQ6A8nM6Ly5a6b08b3
+Authorization: Bearer 104|i8IEfoMGOhtSk9rUSOWiJpzsMyi4qZAxH4CWiABP27d9f65c
+### 106|wkrS6LMDJE2vNVpB9dRqgtxcL2vOi3ZRNPtXTggnb248e4a6
+###GET PLACES
+GET http://127.0.0.1:8000/api/v1/places?row_num=5&code=-2
+Accept: application/json
+Authorization: Bearer 104|i8IEfoMGOhtSk9rUSOWiJpzsMyi4qZAxH4CWiABP27d9f65c
+###POST PLACES
+POST http://127.0.0.1:8000/api/v1/places
+Accept: application/json
+Authorization: Bearer 106|wkrS6LMDJE2vNVpB9dRqgtxcL2vOi3ZRNPtXTggnb248e4a6
+Content-Type: application/json
+
+{
+    "code": "D-2",
+    "description": "DISTRITO 2",
+    "abbreviation": "DIST-2"
+
+}
+###PUT PLACES
+PUT http://127.0.0.1:8000/api/v1/places/1
+Accept: application/json
+Authorization: Bearer 106|wkrS6LMDJE2vNVpB9dRqgtxcL2vOi3ZRNPtXTggnb248e4a6
+Content-Type: application/json
+
+{
+     "code": "D-1",
+    "description": "DISTRITO 1",
+    "abbreviation": "DIST-1",
+    "details": "Test",
+}
+###PATCH PLACES
+PATCH http://127.0.0.1:8000/api/v1/places/1
+Accept: application/json
+Authorization: Bearer 106|wkrS6LMDJE2vNVpB9dRqgtxcL2vOi3ZRNPtXTggnb248e4a6
+Content-Type: application/json
+
+{
+    "state_id":2
+}
+###SHOW PLACES
+GET http://127.0.0.1:8000/api/v1/places/2
+Accept: application/json
+Authorization: Bearer 106|wkrS6LMDJE2vNVpB9dRqgtxcL2vOi3ZRNPtXTggnb248e4a6
+###Test get staff &sort_by=office_name&sort_order=desc
+GET http://127.0.0.1:8000/api/v1/staff?page=1&sort_by=id&sort_order=desc&row_num=20&office_name=ac
+Accept: application/json
+Authorization: Bearer 107|XhcIpln7Ejvth29CmvvSAUUUfdn6x0DVUorYxK7C9d2a9be3
+###Test post staff
+POST http://127.0.0.1:8000/api/v1/staff
+Content-Type: application/json
+Accept: application/json
+Authorization: Bearer 107|XhcIpln7Ejvth29CmvvSAUUUfdn6x0DVUorYxK7C9d2a9be3
+
+{
+    "first_name": "Lucia Martina",
+    "last_name": "Angulo Llanque",
+    "phone_number": "61231132",
+    "identity_card": "1839212",
+    "issued_by": "PT",
+    "email": "LucyMart@hotmail.com",
+    "office_id": 126,
+    "position_id": 1,
+    "place_id": 1,
+}
+### TEST REGISTER PUBLIC STAFF
+POST http://127.0.0.1:8000/api/v1/register_personal
+Content-Type: application/json
+Accept: application/json
+Authorization: Bearer 17|XhcIpln7Ejvth29CmvvSAUUUfdn6x0DVUorYxK7C9d2a9be3
+
+{
+    "first_name": "Juan josé",
+    "last_name": "Angulo TOrres",
+    "phone_number": "61231132",
+    "identity_card": "1839212",
+    "issued_by": "LP",
+    "email": "JJtorres@hotmail.com",
+    "office_id": 126,
+    "position_id": 1,
+    "place_id": 1
+}
+###Test update staff
+PUT http://127.0.0.1:8000/api/v1/staff/1
+Content-Type: application/json
+Accept: application/json
+Authorization: Bearer 107|XhcIpln7Ejvth29CmvvSAUUUfdn6x0DVUorYxK7C9d2a9be3
+
+{
+    "first_name": "Lucia Martina",
+    "last_name": "Angulo Llanque",
+    "phone_number": "61231132",
+    "identity_card": "1839212",
+    "complement": "1A",
+    "issued_by": "PT",
+    "email": "LucyMart@hotmail.com",
+    "office_id": 126,
+    "position_id": 1,
+    "place_id": 1
+}
+###Test patch staff
+PATCH http://127.0.0.1:8000/api/v1/staff/1
+Content-Type: application/json
+Accept: application/json
+Authorization: Bearer 107|XhcIpln7Ejvth29CmvvSAUUUfdn6x0DVUorYxK7C9d2a9be3
+
+
+{
+    "identity_card": "1839212",
+    "complement": "1B"
+}
+
+
+# {
+#      "issued_by" : "LP"  
+# }
+###Test show staff
+GET http://127.0.0.1:8000/api/v1/staff/1
+Accept: application/json
+Authorization: Bearer 107|XhcIpln7Ejvth29CmvvSAUUUfdn6x0DVUorYxK7C9d2a9be3
