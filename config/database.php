@@ -98,11 +98,7 @@ return [
             'charset' => env('DB_CHARSET', 'utf8'),
             'prefix' => '',
             'prefix_indexes' => true,
-<<<<<<< HEAD
             'search_path' => ['public','users','items','accounting'],
-=======
-            'search_path' => ['public','accounting','items','users'],
->>>>>>> 9ba86a3afbf92d7b37b3fc89b2a3ca852a226ad5
             'sslmode' => 'prefer',
         ],
 

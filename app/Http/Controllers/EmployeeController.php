@@ -74,11 +74,7 @@ class EmployeeController extends Controller implements HasMiddleware
     public function show(Employee $employee)
     {
         try {
-<<<<<<< HEAD
             return ApiResponse::success('Empleado encontrado.', 200, EmployeeResource::make($employee));
-=======
-            return ApiResponse::success('Employee found.', 200, EmployeeResource::make($employee));
->>>>>>> 9ba86a3afbf92d7b37b3fc89b2a3ca852a226ad5
         } catch (\Exception $e) {
             return ApiResponse::error('Ocurrió un error inesperado.', 500, $e->getMessage());
         }

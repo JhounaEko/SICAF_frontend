@@ -69,6 +69,8 @@ class UserRequest extends FormRequest
             'issued_by.in' => 'El campo expedido debe ser uno de los siguientes: LP (LA PAZ), CH (CHUQUISACA), CB (COCHABAMBA), OR (ORURO), PT (POTOSÍ), TJ (TARIJA), SC (SANTA CRUZ), BE (BENI), PD (PANDO), S/E (SIN EXPEDIDO).',
             'password.regex' => 'El campo contraseña debe contener al menos una letra mayúscula, una letra minúscula, un número y un carácter especial (@$!%*?&).',
             'email.regex' => 'El campo correo electrónico debe ser válido.',
+            'email.unique' => 'El correo electrónico ingresado ya está registrado. Por favor, usa uno diferente.',
+            'username.unique' => 'El nombre de usuario ingresado ya está registrado. Por favor, usa uno diferente.',
         ];
         
     }
