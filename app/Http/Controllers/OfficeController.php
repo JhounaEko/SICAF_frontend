@@ -16,9 +16,9 @@ class OfficeController extends Controller implements HasMiddleware
     public static function middleware()
     {
         return [
-            new Middleware('permission:VER OFICINAS', only: ['index', 'show']),
-            new Middleware('permission:REGISTRAR OFICINAS', only: ['store']),
-            new Middleware('permission:ACTUALIZAR OFICINAS', only: ['update']),
+            new Middleware('permission:VIEW OFFICES', only: ['show']),
+            new Middleware('permission:REGISTER OFFICES', only: ['store']),
+            new Middleware('permission:UPDATE OFFICES', only: ['update']),
         ];
     }
 
@@ -45,12 +45,9 @@ class OfficeController extends Controller implements HasMiddleware
                 $query->with('childOffices');
             }
 
-            if ($request->input('row_num')) {
-                $offices = $query->paginate($request->input('row_num'));
-            } else {
-                $offices = $query->paginate(10);
-            }
-
+            $perPage = $request->input('row_num'); 
+            $offices = $query->paginate($perPage);
+            
             if ($offices->isEmpty()) {
                 return ApiResponse::error('No hay oficinas registradas.', 200);
             }

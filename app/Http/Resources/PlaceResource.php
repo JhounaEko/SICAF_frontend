@@ -5,16 +5,17 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class FundingSourceResource extends JsonResource
+class PlaceResource extends JsonResource
 {
+
     public function toArray(Request $request): array
     {
         return [
             'id' => $this->id,
-            'code' => $this->code,
             'description' => $this->description,
+            'code' => $this->code,
             'abbreviation' => $this->abbreviation,
-            'year' => $this->year,
+            'details' => $this->details,
             'state' => [
                 'name' => $this->state->name,
                 'code' => $this->state->code,

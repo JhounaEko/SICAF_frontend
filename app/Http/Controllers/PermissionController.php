@@ -17,9 +17,9 @@ class PermissionController extends Controller implements HasMiddleware
     public static function middleware()
     {
         return [
-            new Middleware('permission:VER PERMISOS', only: ['index', 'show']),
-            new Middleware('permission:REGISTRAR PERMISOS', only: ['store']),
-            new Middleware('permission:ACTUALIZAR PERMISOS', only: ['update']),
+            new Middleware('permission:VIEW PERMISSIONS', only: ['index', 'show']),
+            new Middleware('permission:REGISTER PERMISSIONS', only: ['store']),
+            new Middleware('permission:UPDATE PERMISSIONS', only: ['update']),
         ];
     }
 
@@ -28,15 +28,9 @@ class PermissionController extends Controller implements HasMiddleware
             $query = Permission::query();
             
             $query->filterByState($request->input('state'))
-<<<<<<< HEAD
-                  ->filterByName($request->input('search'))
-                  ->filterByDates($request->input('start_date'), $request->input('end_date'));
-=======
                 ->filterByName($request->input('search'))
                 ->filterByStateName($request->input('state_name'))
                 ->filterByDates($request->input('start_date'), $request->input('end_date'));
->>>>>>> 9ba86a3afbf92d7b37b3fc89b2a3ca852a226ad5
-            
             if ($request->filled('sort_by')) {
                 try {
                     $query->sort($request->input('sort_by'), $request->input('sort_order', 'asc'));

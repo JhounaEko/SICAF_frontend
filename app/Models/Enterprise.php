@@ -76,14 +76,14 @@ class Enterprise extends Model implements Auditable
     public function scopeFilterByState($query, $state)
     {
         if (!is_null($state)) {
-            $query->where('state_id', $state);
+            $query->where('enterprises.state_id', $state);
         }
     }
 
     public function scopeFilterByEnterpriseRubric($query, $enterprise_rubric)
     {
         if (!is_null($enterprise_rubric)) {
-            $query->where('enterprise_rubric_id', $enterprise_rubric);
+            $query->where('enterprises.enterprise_rubric_id', $enterprise_rubric);
         }
     }
 
@@ -110,21 +110,21 @@ class Enterprise extends Model implements Auditable
     public function scopeFilterByCountry($query, $country)
     {
         if (!is_null($country)) {
-            $query->where('country', 'LIKE', "%{$country}%");
+            $query->where('enterprises.country', 'LIKE', "%{$country}%");
         }
     }
 
     public function scopeFilterByPhoneNumber($query, $phone_number)
     {
         if (!is_null($phone_number)) {
-            $query->where('phone_number', 'LIKE', "%{$phone_number}%");
+            $query->where('enterprises.phone_number', 'LIKE', "%{$phone_number}%");
         }
     }
 
     public function scopeFilterByEmail($query, $email)
     {
         if (!is_null($email)) {
-            $query->where('email', 'LIKE', "%{$email}%");
+            $query->where('enterprises.email', 'LIKE', "%{$email}%");
         }
     }
 
@@ -151,7 +151,7 @@ class Enterprise extends Model implements Auditable
     public function scopeFilterByDates($query, $start, $end)
     {
         if ($start && $end) {
-            $query->whereBetween('created_at', [$start, $end]);
+            $query->whereBetween('enterprises.created_at', [$start, $end]);
         }
     }
 

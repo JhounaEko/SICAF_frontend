@@ -64,14 +64,14 @@ class ItemGroup extends Model implements Auditable
     public function scopeFilterByState($query, $state)
     {
         if (!is_null($state)) {
-            $query->where('state_id', $state);
+            $query->where('item_groups.state_id', $state);
         }
     }
 
     public function scopeFilterByBudgetRubric($query, $budget_rubric)
     {
         if (!is_null($budget_rubric)) {
-            $query->where('budget_rubric_id', $budget_rubric);
+            $query->where('item_groups.budget_rubric_id', $budget_rubric);
         }
     }
 
@@ -98,7 +98,7 @@ class ItemGroup extends Model implements Auditable
     {
         $search = mb_strtoupper(trim($alphanumeric_code));
         if (!is_null($search)) {
-            $query->where('alphanumeric_code', 'LIKE', "%{$search}%");
+            $query->where('item_groups.alphanumeric_code', 'LIKE', "%{$search}%");
         }
     }
 
@@ -106,7 +106,7 @@ class ItemGroup extends Model implements Auditable
     {
         $search = mb_strtoupper(trim($type));
         if (!is_null($search)) {
-            $query->where('type', 'LIKE', "%{$search}%");
+            $query->where('item_groups.type', 'LIKE', "%{$search}%");
         }
     }
 
@@ -136,7 +136,7 @@ class ItemGroup extends Model implements Auditable
     public function scopeFilterByDates($query, $start, $end)
     {
         if ($start && $end) {
-            $query->whereBetween('created_at', [$start, $end]);
+            $query->whereBetween('item_groups.created_at', [$start, $end]);
         }
     }
 }

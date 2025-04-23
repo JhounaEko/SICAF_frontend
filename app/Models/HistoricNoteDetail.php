@@ -32,21 +32,21 @@ class HistoricNoteDetail extends Model implements Auditable
     public function scopeFilterByState($query, $state)
     {
         if (!is_null($state)) {
-            $query->where('state_id', $state);
+            $query->where('historic_note_details.state_id', $state);
         }
     }
 
     public function scopeFilterByNote($query, $note)
     {
         if (!is_null($note)) {
-            $query->where('note_id', $note);
+            $query->where('historic_note_details.note_id', $note);
         }
     }
 
     public function scopeFilterByIncomeNote($query, $note)
     {
         if (!is_null($note)) {
-            $query->where('income_note_id', $note);
+            $query->where('historic_note_details.income_note_id', $note);
         }
     }
 
@@ -100,7 +100,7 @@ class HistoricNoteDetail extends Model implements Auditable
     public function scopeFilterByDates($query, $start, $end)
     {
         if ($start && $end) {
-            $query->whereBetween('created_at', [$start, $end]);
+            $query->whereBetween('historic_note_details.created_at', [$start, $end]);
         }
     }
 }

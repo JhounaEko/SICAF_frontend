@@ -19,9 +19,9 @@ class MenuController extends Controller
     public static function middleware()
     {
         return [
-            new Middleware('permission:VER MENÚS', only: ['index', 'show']),
-            new Middleware('permission:REGISTRAR MENÚS', only: ['store']),
-            new Middleware('permission:ACTUALIZAR MENÚS', only: ['update']),
+            new Middleware('permission:VIEW MENUS', only: ['index', 'show']),
+            new Middleware('permission:REGISTER MENUS', only: ['store']),
+            new Middleware('permission:UPDATE MENUS', only: ['update']),
         ];
     }
 
@@ -45,7 +45,7 @@ class MenuController extends Controller
 
             if ($request->boolean('include_hierarchy')) {
                 $menus = $query->whereNull('parent') // Filtra solo los menús de nivel superior
-                      ->with(['childMenus.childMenus', 'state']) // Carga la jerarquía y el estado
+                      ->with(['childMenus.childMenus', 'state']) // Carga la jerarquía (ajusta la profundidad según sea necesario) y el estado
                       ->paginate(10);
             } else {
                 $menus = $query->with('state')->paginate(10);

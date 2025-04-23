@@ -22,6 +22,7 @@ class NoteTypeController extends Controller
             new Middleware('permission:REGISTRAR TIPOS DE NOTA', only: ['store']),
             new Middleware('permission:ACTUALIZAR TIPOS DE NOTA', only: ['update'])
         ];
+    
     }
 
     public function index(FilterRequest $request)

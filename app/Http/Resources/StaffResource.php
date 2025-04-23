@@ -5,7 +5,7 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class UserResource extends JsonResource
+class StaffResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -18,33 +18,13 @@ class UserResource extends JsonResource
             'id' => $this->id,
             'first_name' => $this->first_name,
             'last_name' => $this->last_name,
-            'phone_number' => $this->phone_number,
             'identity_card' => $this->identity_card,
             'issued_by' => $this->issued_by,
-            'username' => $this->username,
+            'phone_number' => $this->phone_number,
+            'other_phone_number' => $this->other_phone_number,
+            'office_phone_number' => $this->office_phone_number,
             'email' => $this->email,
-            'roles' => $this->roles ? $this->roles->map(function ($role) {
-                return [
-                    'name' => $role->name,
-                    'id' => $role->id,
-                    'permissions' => $role->permissions->map(function ($permission) {
-                        return [
-                            'id' => $permission->id,
-                            'name' => $permission->name,
-                        ];
-                    }),
-                    'menus' => $role->menus ? $role->menus->map(function ($menu) { // Agrega esta verificación
-                        return [
-                            'id' => $menu->id,
-                            'label' => $menu->label,
-                            'route' => $menu->route,
-                            'icon' => $menu->icon,
-                            'level' => $menu->level,
-                            'parent' => $menu->parent,
-                        ];
-                    }) : [],
-                ];
-            }) : [],
+            'position' => $this->position,
             'office' => [
                 'name' => $this->office->name,
                 'initials' => $this->office->initials,

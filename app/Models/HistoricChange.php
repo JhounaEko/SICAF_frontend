@@ -27,21 +27,21 @@ class HistoricChange extends Model implements Auditable
     public function scopeFilterByState($query, $state)
     {
         if (!is_null($state)) {
-            $query->where('state_id', $state);
+            $query->where('historic_changes.state_id', $state);
         }
     }
 
     public function scopeFilterByUfv($query, $ufv)
     {
         if (!is_null($ufv)) {
-            $query->where('ufv', 'LIKE', $ufv);
+            $query->where('historic_changes.ufv', 'LIKE', $ufv);
         }
     }
 
     public function scopeFilterByDate($query, $date)
     {
         if (!is_null($date)) {
-            $query->where('date', 'LIKE', $date);
+            $query->where('historic_changes.date', 'LIKE', $date);
         }
     }
 
@@ -57,7 +57,7 @@ class HistoricChange extends Model implements Auditable
     public function scopeFilterByDates($query, $start, $end)
     {
         if ($start && $end) {
-            $query->whereBetween('created_at', [$start, $end]);
+            $query->whereBetween('historic_changes.created_at', [$start, $end]);
         }
     }
 }

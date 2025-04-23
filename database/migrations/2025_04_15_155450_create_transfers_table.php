@@ -16,8 +16,10 @@ return new class extends Migration
             $table->string('transfer_type', 15);
             $table->date('date');
             $table->foreignId('from_office_id')->nullable()->constrained('users.offices')->cascadeOnUpdate()->cascadeOnDelete();
+            $table->foreignId('from_place_id')->nullable()->constrained('users.places')->cascadeOnUpdate()->cascadeOnDelete();
             $table->foreignId('from_person_id')->nullable()->constrained('users.persons')->cascadeOnUpdate()->cascadeOnDelete();
             $table->foreignId('to_office_id')->nullable()->constrained('users.offices')->cascadeOnUpdate()->cascadeOnDelete();
+            $table->foreignId('to_place_id')->nullable()->constrained('users.places')->cascadeOnUpdate()->cascadeOnDelete();
             $table->foreignId('to_person_id')->nullable()->constrained('users.persons')->cascadeOnUpdate()->cascadeOnDelete();
             $table->integer('transfer_number')->nullable();
             $table->foreignId('state_id')->default(1)->constrained('public.states')->cascadeOnUpdate()->cascadeOnDelete();

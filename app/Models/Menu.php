@@ -59,14 +59,14 @@ class Menu extends Model implements Auditable
     public function scopeFilterByState($query, $state)
     {
         if (!is_null($state)) {
-            $query->where('state_id', $state);
+            $query->where('menus.state_id', $state);
         }
     }
 
     public function scopeFilterByIcon($query, $icon)
     {
         if (!is_null($icon)) {
-            $query->where('icon',  'LIKE', "%{$icon}%");
+            $query->where('menus.icon',  'LIKE', "%{$icon}%");
         }
     }
 
@@ -100,7 +100,7 @@ class Menu extends Model implements Auditable
     public function scopeFilterByDates($query, $start, $end)
     {
         if ($start && $end) {
-            $query->whereBetween('created_at', [$start, $end]);
+            $query->whereBetween('menus.created_at', [$start, $end]);
         }
     }
 }

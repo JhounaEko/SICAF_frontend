@@ -23,6 +23,8 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->foreignId('office_id')->nullable()->constrained('users.offices')->cascadeOnUpdate()->cascadeOnDelete();
+            $table->foreignId('place_id')->nullable()->constrained('users.places')->cascadeOnUpdate()->cascadeOnDelete();
+            
             $table->foreignId('state_id')->default(1)->constrained('public.states')->cascadeOnUpdate()->cascadeOnDelete();
             $table->unsignedInteger('password_change_count')->default(3);
             $table->rememberToken();

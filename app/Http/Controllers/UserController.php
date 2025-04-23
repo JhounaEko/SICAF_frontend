@@ -21,7 +21,6 @@ use Illuminate\Validation\ValidationException;
 class UserController extends Controller implements HasMiddleware
 {
     use AuthorizesRequests;
-
     public static function middleware()
     {
         return [
@@ -41,6 +40,8 @@ class UserController extends Controller implements HasMiddleware
                 ->filterByIssuedBy($request->input('issued_by'))
                 ->filterByName($request->input('search'))
                 ->filterByOfficeName($request->input('office_name'))
+                ->filterByPlaceName($request->input('place_name'))
+
                 ->filterByStateName($request->input('state_name'))
                 ->filterByOfficeInitials($request->input('office_initials'))
                 ->filterByDates($request->input('start_date'), $request->input('end_date'));

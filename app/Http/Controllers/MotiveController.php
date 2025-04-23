@@ -17,12 +17,11 @@ class MotiveController extends Controller implements HasMiddleware
     public static function middleware()
     {
         return [
-            new Middleware('permission:VER MOTIVOS', only: ['index', 'show']),
-            new Middleware('permission:REGISTRAR MOTIVOS', only: ['store']),
-            new Middleware('permission:ACTUALIZAR MOTIVOS', only: ['update'])
+            new Middleware('permission:VIEW MOTIVES', only: ['index', 'show']),
+            new Middleware('permission:REGISTER MOTIVES', only: ['store']),
+            new Middleware('permission:UPDATE MOTIVES', only: ['update'])
         ];
     }
-
     public function index(FilterRequest $request)
     {
         try {

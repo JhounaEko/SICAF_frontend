@@ -31,7 +31,7 @@ class EnterpriseRubric extends Model implements Auditable
     public function scopeFilterByState($query, $state)
     {
         if (!is_null($state)) {
-            $query->where('state_id', $state);
+            $query->where('enterprise_rubrics.state_id', $state);
         }
     }
 
@@ -56,7 +56,7 @@ class EnterpriseRubric extends Model implements Auditable
     public function scopeFilterByDates($query, $start, $end)
     {
         if ($start && $end) {
-            $query->whereBetween('created_at', [$start, $end]);
+            $query->whereBetween('enterprise_rubrics.created_at', [$start, $end]);
         }
     }
 }

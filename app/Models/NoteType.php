@@ -37,7 +37,7 @@ class NoteType extends Model implements Auditable
     public function scopeFilterByState($query, $state)
     {
         if (!is_null($state)) {
-            $query->where('state_id', $state);
+            $query->where('note_types.state_id', $state);
         }
     }
 
@@ -64,7 +64,7 @@ class NoteType extends Model implements Auditable
     public function scopeFilterByDates($query, $start, $end)
     {
         if ($start && $end) {
-            $query->whereBetween('created_at', [$start, $end]);
+            $query->whereBetween('note_types.created_at', [$start, $end]);
         }
     }
 

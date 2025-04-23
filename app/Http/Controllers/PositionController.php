@@ -17,26 +17,20 @@ class PositionController extends Controller implements HasMiddleware
     public static function middleware()
     {
         return [
-            new Middleware('permission:VER CARGOS', only: ['index', 'show']),
-            new Middleware('permission:REGISTRAR CARGOS', only: ['store']),
-            new Middleware('permission:ACTUALIZAR CARGOS', only: ['update']),
+            new Middleware('permission:VIEW POSITIONS', only: ['index', 'show']),
+            new Middleware('permission:REGISTER POSITIONS', only: ['store']),
+            new Middleware('permission:UPDATE POSITIONS', only: ['update']),
         ];
     }
-
     public function index(FilterRequest $request)
     {
         try {
             $query = Position::query();
 
             $query->filterByState($request->input('state'))
-<<<<<<< HEAD
-                  ->filterByNameOrDescription($request->input('search'))
-                  ->filterByDates($request->input('start_date'), $request->input('end_date'));
-=======
                 ->filterByNameOrDescription($request->input('search'))
                 ->filterByStateName($request->input('state_name'))
                 ->filterByDates($request->input('start_date'), $request->input('end_date'));
->>>>>>> 9ba86a3afbf92d7b37b3fc89b2a3ca852a226ad5
 
             if ($request->filled('sort_by')) {
                 try {

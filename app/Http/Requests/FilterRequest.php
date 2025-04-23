@@ -53,6 +53,9 @@ class FilterRequest extends FormRequest
             'username' => ['nullable', 'string', 'max:30'],
             'email' => ['nullable', 'string', 'email', 'regex:/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/'],
             'office_name' => ['nullable', 'string'],
+            'place_name' => ['nullable', 'string'],
+            'position_name' => ['nullable', 'string'],
+
             'state_name' => ['nullable', 'string'],
             'office_initials' => ['nullable', 'string', 'exists:offices,initials'],
             'office' => ['nullable', 'integer', 'exists:offices,id'],
@@ -94,6 +97,22 @@ class FilterRequest extends FormRequest
             'is_intangible' => ['nullable',  'boolean'],
             'useful_months' => ['nullable', 'integer'],
             'budget_rubric_id' => ['nullable', 'integer', 'exists:budget_rubrics,id'],
+            // Validaciones para funetes de financiamiento
+            'year' => ['nullable', 'integer', 'min:1900', 'max:'. (date('Y') + 10)],
+            // Validaciones resumenes
+            'acquisition_cost' => ['nullable', 'decimal:0,2'],
+            'accumulated_depreciation' => ['nullable', 'decimal:0,2'],
+            'asset_cost' => ['nullable', 'decimal:0,2'],
+            'current_cost' => ['nullable', 'decimal:0,2'],
+            'annual_depreciation' => ['nullable', 'decimal:0,2'],
+            'current_depreciation' => ['nullable', 'decimal:0,2'],
+            'total_accumulated_depreciation' => ['nullable', 'decimal:0,2'],
+            'net_value' => ['nullable', 'decimal:0,2'],
+            // Validaciones para organismos financiadores
+            'code' => ['nullable', 'string'],
+            // Validaciones para los documentos
+            'item' => ['nullable', 'integer'],
+            'original_value' => ['nullable', 'integer'],
         ];
     }
 
@@ -161,6 +180,24 @@ class FilterRequest extends FormRequest
         if ($this->has('email')) {
             $this->merge([
                 'email' => trim($this->input('email')),
+            ]);
+        }
+
+        if ($this->has('office_name')) {
+            $this->merge([
+                'office_name' => mb_strtoupper(trim($this->input('office_name'))),
+            ]);
+        }
+
+        if ($this->has('position_name')) {
+            $this->merge([
+                'position_name' => mb_strtoupper(trim($this->input('position_name'))),
+            ]);
+        }
+
+        if ($this->has('place_name')) {
+            $this->merge([
+                'place_name' => mb_strtoupper(trim($this->input('place_name'))),
             ]);
         }
     }
