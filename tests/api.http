@@ -1,6 +1,6 @@
 ###Test get states
 GET http://127.0.0.1:8000/api/v1/states?page=1&sort_by=id&row_num=5
-Authorization: Bearer 82|cSSZQgbDB24lKyOOTifwiBbJfMqh1cxBBsDcJvew6d9e324e
+Authorization: Bearer 92|r207hKOF8nHDkk4d7SNog4Tm41LHgvHAqhriAEfO9f5b8a9e
 Accept: application/json
 ###Test post states
 POST http://127.0.0.1:8000/api/v1/states
@@ -180,6 +180,8 @@ Accept: application/json
     "username": "ZRIVAS",
     "password": "Danger3@"
 }
+
+### 92|r207hKOF8nHDkk4d7SNog4Tm41LHgvHAqhriAEfO9f5b8a9e
 
 ###Test logout user
 POST http://127.0.0.1:8000/api/v1/logout

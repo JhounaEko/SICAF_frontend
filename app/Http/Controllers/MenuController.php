@@ -19,9 +19,9 @@ class MenuController extends Controller
     public static function middleware()
     {
         return [
-            new Middleware('permission:VIEW MENUS', only: ['index', 'show']),
-            new Middleware('permission:REGISTER MENUS', only: ['store']),
-            new Middleware('permission:UPDATE MENUS', only: ['update']),
+            new Middleware('permission:VER MENÚS', only: ['index', 'show']),
+            new Middleware('permission:REGISTRAR MENÚS', only: ['store']),
+            new Middleware('permission:ACTUALIZAR MENÚS', only: ['update']),
         ];
     }
 
@@ -38,36 +38,31 @@ class MenuController extends Controller
                 try {
                     $query->sort($request->input('sort_by'), $request->input('sort_order', 'asc'));
                 } catch (\Exception $e) {
-                    return ApiResponse::error('Error in sorting.', 400, $e->getMessage());
+                    return ApiResponse::error('Error al ordenar.', 400, $e->getMessage());
                 }
             }
 
             if ($request->boolean('include_hierarchy')) {
                 $menus = $query->whereNull('parent') // Filtra solo los menús de nivel superior
-                      ->with(['childMenus.childMenus', 'state']) // Carga la jerarquía (ajusta la profundidad según sea necesario) y el estado
+                      ->with(['childMenus.childMenus', 'state']) // Carga la jerarquía y el estado
                       ->paginate(10);
             } else {
                 $menus = $query->with('state')->paginate(10);
             }
 
-
-            if ($request->boolean('simple_view')) {
-                $collection = SimpleMenuResource::collection($menus);
-            } else {
-                $collection = MenuResource::collection($menus);
-            }
-
-
             if ($menus->isEmpty()) {
-                return ApiResponse::error("There're not registered menus.", 200);
+                return ApiResponse::error('No hay menús registrados.', 200);
             }
 
+            $collection = $request->boolean('simple_view')
+                ? SimpleMenuResource::collection($menus)
+                : MenuResource::collection($menus);
 
             $responseData = $collection->response()->getData(true);
 
-            return ApiResponse::success('Menus found.', 200, $responseData);
+            return ApiResponse::success('Menús encontrados.', 200, $responseData);
         } catch (\Exception $e) {
-            return ApiResponse::error('An unexpected error ocurred.', 500, $e->getMessage());
+            return ApiResponse::error('Ocurrió un error inesperado.', 500, $e->getMessage());
         }
     }
 
@@ -77,21 +72,21 @@ class MenuController extends Controller
             DB::beginTransaction();
             $menu = Menu::create($request->validated());
             DB::commit();
-            return ApiResponse::success('Menu registered successfully', 201, $menu);
+            return ApiResponse::success('Menú registrado exitosamente.', 201, $menu);
         } catch (\Exception $e) {
             DB::rollBack();
-            return ApiResponse::error('An error occurred while registering the menu.', 500, $e->getMessage());
+            return ApiResponse::error('Ocurrió un error al registrar el menú.', 500, $e->getMessage());
         }
     }
 
     public function show(Menu $menu)
     {
         try {
-            return ApiResponse::success('Menu found.', 200, MenuResource::make($menu));
+            return ApiResponse::success('Menú encontrado.', 200, MenuResource::make($menu));
         } catch (\Illuminate\Database\QueryException $e) {
-            return ApiResponse::error('Database error occurred.', 500, $e->getMessage());
+            return ApiResponse::error('Ocurrió un error en la base de datos.', 500, $e->getMessage());
         } catch (\Exception $e) {
-            return ApiResponse::error('An unexpected error occurred.', 500, $e->getMessage());
+            return ApiResponse::error('Ocurrió un error inesperado.', 500, $e->getMessage());
         }
     }
 
@@ -101,10 +96,10 @@ class MenuController extends Controller
             DB::beginTransaction();
             $menu->update($request->validated());
             DB::commit();
-            return ApiResponse::success('Menu updated succesfully.', 200, $menu);
+            return ApiResponse::success('Menú actualizado exitosamente.', 200, $menu);
         } catch (\Exception $e) {
             DB::rollBack();
-            return ApiResponse::error('An error occurred while updating the menu.', 500, $e->getMessage());
+            return ApiResponse::error('Ocurrió un error al actualizar el menú.', 500, $e->getMessage());
         }
     }
 }

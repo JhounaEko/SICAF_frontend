@@ -64,18 +64,18 @@ class FilterRequest extends FormRequest
     public function messages()
     {
         return [
-            'sort_order.in' => 'The sort_order field must be either ASC or DESC.',
-            'start_date.before_or_equal' => 'The start_date must be before or equal to the end_date.',
-            'end_date.after_or_equal' => 'The end_date must be after or equal to the start_date.',
-            'search.regex' => 'The search field only allows characters.',
-            'color.regex' => 'The color field must be hexadecimal values.',
-            'level.in' => 'The level field must be either 1, 2 or 3.',
-            'include_hierarchy.boolean' => 'The include hierarchy field must be 1 (true) or 0 (false).',
-            'row_num.integer' => 'The row_num must be an integer.',
-            'row_num.min' => 'The row_num must be at least 1.',
-            'model.model_exists' => 'The selected model does not exist.',
-
+            'sort_order.in' => 'El campo sort_order debe ser ASC o DESC.',
+            'start_date.before_or_equal' => 'La fecha de inicio debe ser anterior o igual a la fecha de fin.',
+            'end_date.after_or_equal' => 'La fecha de fin debe ser posterior o igual a la fecha de inicio.',
+            'search.regex' => 'El campo de búsqueda solo permite caracteres.',
+            'color.regex' => 'El campo color debe contener valores hexadecimales.',
+            'level.in' => 'El campo nivel debe ser 1, 2 o 3.',
+            'include_hierarchy.boolean' => 'El campo incluir jerarquía debe ser 1 (verdadero) o 0 (falso).',
+            'row_num.integer' => 'El campo row_num debe ser un número entero.',
+            'row_num.min' => 'El campo row_num debe ser al menos 1.',
+            'model.model_exists' => 'El modelo seleccionado no existe.',
         ];
+        
     }
 
     public function prepareForValidation()

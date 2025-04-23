@@ -18,21 +18,25 @@ class AuditController extends Controller
             new Middleware('permission:VIEW AUDIT ON MODULE', only: ['show']),
         ];
     }
+
     public function index(FilterRequest $request)
     {
         try {
             $query = Audit::query();
 
             if ($request->filled('model')) {
-                $modelName = 'App\\Models\\' . $request->input('model'); // Construye el nombre completo del modelo
+                $modelName = 'App\\Models\\' . $request->input('model');
                 $query->where('auditable_type', $modelName);
             }
+
             if ($request->filled('user')) {
                 $query->where('user_id', $request->input('user'));
             }
+
             if ($request->filled('event')) {
                 $query->where('event', $request->input('event'));
             }
+
             if ($request->filled('auditable_id')) {
                 $query->where('auditable_id', $request->input('auditable_id'));
             }
@@ -44,20 +48,19 @@ class AuditController extends Controller
             }
 
             $sortBy = $request->input('sort_by', 'created_at');
-            $sortOrder = $request->input('sort_order', 'desc'); // Por defecto descendente para ver los más recientes
+            $sortOrder = $request->input('sort_order', 'desc');
             $query->orderBy($sortBy, $sortOrder);
 
-            // Paginar
             $perPage = $request->input('row_num', 10);
             $audits = $query->paginate($perPage);
 
             if ($audits->isEmpty()) {
-                return ApiResponse::error("No audit records found.", 200);
+                return ApiResponse::error("No se encontraron registros de auditoría.", 200);
             }
 
-            return ApiResponse::success('Audits retrieved successfully.', 200, $audits);
+            return ApiResponse::success('Registros de auditoría recuperados correctamente.', 200, $audits);
         } catch (\Exception $e) {
-            return ApiResponse::error('An unexpected error ocurred.', 500, $e->getMessage());
+            return ApiResponse::error('Ocurrió un error inesperado.', 500, $e->getMessage());
         }
     }
 
@@ -67,14 +70,14 @@ class AuditController extends Controller
             $audit = Audit::findOrFail($id);
 
             if ($request->filled('model') && $audit->auditable_type !== $request->input('model')) {
-                return ApiResponse::error('Audit record not found for the specified model.', 404);
+                return ApiResponse::error('No se encontró el registro de auditoría para el modelo especificado.', 404);
             }
 
-            return ApiResponse::success('Audit record found.', 200, $audit);
+            return ApiResponse::success('Registro de auditoría encontrado.', 200, $audit);
         } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
-            return ApiResponse::error('The requested audit record was not found.', 404);
+            return ApiResponse::error('No se encontró el registro de auditoría solicitado.', 404);
         } catch (\Exception $e) {
-            return ApiResponse::error('An unexpected error occurred.', 500, $e->getMessage());
+            return ApiResponse::error('Ocurrió un error inesperado.', 500, $e->getMessage());
         }
     }
 }

@@ -42,9 +42,13 @@ class OfficeRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'name.regex' => 'The name field only allows characters and two digits',
-            'initials.regex' => 'The initials field only allows characters and two digits'
+            'name.regex' => 'El campo nombre solo permite letras y dos dígitos.',
+            'initials.regex' => 'El campo iniciales solo permite letras y dos dígitos.',
+        ];return [
+            'name.regex' => 'El campo nombre solo permite letras y dos dígitos.',
+            'initials.regex' => 'El campo iniciales solo permite letras y dos dígitos.',
         ];
+                
     }
 
     protected function prepareForValidation(): void

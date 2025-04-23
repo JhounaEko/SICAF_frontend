@@ -18,37 +18,41 @@ class NoteTypeController extends Controller
     public static function middleware()
     {
         return [
-            new Middleware('permission:VIEW NOTE_TYPES', only: ['index', 'show']),
-            new Middleware('permission:REGISTER NOTE_TYPES', only: ['store']),
-            new Middleware('permission:UPDATE NOTE_TYPES', only: ['update'])
+            new Middleware('permission:VER TIPOS DE NOTA', only: ['index', 'show']),
+            new Middleware('permission:REGISTRAR TIPOS DE NOTA', only: ['store']),
+            new Middleware('permission:ACTUALIZAR TIPOS DE NOTA', only: ['update'])
         ];
     }
+
     public function index(FilterRequest $request)
     {
         try {
             $query = NoteType::query();
             $query->filterByState($request->input('state'))
-                ->filterByNameOrDescription($request->input('search'))
-                ->filterByDates($request->input('start_date'), $request->input('end_date'));
+                  ->filterByNameOrDescription($request->input('search'))
+                  ->filterByDates($request->input('start_date'), $request->input('end_date'));
 
             if ($request->filled('sort_by')) {
                 try {
                     $query->sort($request->input('sort_by'), $request->input('sort_order', 'asc'));
                 } catch (\Exception $e) {
-                    return ApiResponse::error('Error in sorting.', 400, $e->getMessage());
+                    return ApiResponse::error('Error al ordenar.', 400, $e->getMessage());
                 }
             }
+
             $perPage = $request->input('row_num');
             $note_types = $query->paginate($perPage);
+
             if ($note_types->isEmpty()) {
-                return ApiResponse::error("There're not registered note types.", 200);
+                return ApiResponse::error('No hay tipos de nota registrados.', 200);
             }
+
             $collection = NoteTypeResource::collection($note_types);
             $responseData = $collection->response()->getData(true);
 
-            return ApiResponse::success('Note types found.', 200, $responseData);
+            return ApiResponse::success('Tipos de nota encontrados.', 200, $responseData);
         } catch (\Exception $e) {
-            return ApiResponse::error('An unexpected error ocurred.', 500, $e->getMessage());
+            return ApiResponse::error('Ocurrió un error inesperado.', 500, $e->getMessage());
         }
     }
 
@@ -58,19 +62,19 @@ class NoteTypeController extends Controller
             DB::beginTransaction();
             $note_type = NoteType::create($request->validated());
             DB::commit();
-            return ApiResponse::success('Note type created successfully.', 201, $note_type);
+            return ApiResponse::success('Tipo de nota registrado exitosamente.', 201, $note_type);
         } catch (\Exception $e) {
             DB::rollBack();
-            return ApiResponse::error('An error occurred while registering the note type.', 500, $e->getMessage());
+            return ApiResponse::error('Ocurrió un error al registrar el tipo de nota.', 500, $e->getMessage());
         }
     }
 
     public function show(NoteType $noteType)
     {
         try {
-            return ApiResponse::success('Note type found.', 201, NoteTypeResource::make($noteType));
+            return ApiResponse::success('Tipo de nota encontrado.', 200, NoteTypeResource::make($noteType));
         } catch (\Exception $e) {
-            return ApiResponse::error('An error unexpected ocurred.', 500, $e->getMessage());
+            return ApiResponse::error('Ocurrió un error inesperado.', 500, $e->getMessage());
         }
     }
 
@@ -80,10 +84,10 @@ class NoteTypeController extends Controller
             DB::beginTransaction();
             $noteType->update($request->validated());
             DB::commit();
-            return ApiResponse::success('Note type updated successfully.', 200, $noteType);
+            return ApiResponse::success('Tipo de nota actualizado exitosamente.', 200, $noteType);
         } catch (\Exception $e) {
             DB::rollBack();
-            return ApiResponse::error('An error occurred while updating the note type.', 500, $e->getMessage());
+            return ApiResponse::error('Ocurrió un error al actualizar el tipo de nota.', 500, $e->getMessage());
         }
     }
 }

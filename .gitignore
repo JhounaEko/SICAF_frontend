@@ -1,5 +1,8 @@
 /.phpunit.cache
+/node_modules.cache
 /node_modules
+/node_modules/.cache/default-development/9.pack
+/node_modules/.cache/default-development/14.pack
 /public/build
 /public/hot
 /public/storage
@@ -21,3 +24,5 @@ yarn-error.log
 /.nova
 /.vscode
 /.zed
+package.json
+package-lock.json

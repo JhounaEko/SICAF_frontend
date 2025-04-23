@@ -16,9 +16,9 @@ class OfficeController extends Controller implements HasMiddleware
     public static function middleware()
     {
         return [
-            new Middleware('permission:VIEW OFFICES', only: ['index', 'show']),
-            new Middleware('permission:REGISTER OFFICES', only: ['store']),
-            new Middleware('permission:UPDATE OFFICES', only: ['update']),
+            new Middleware('permission:VER OFICINAS', only: ['index', 'show']),
+            new Middleware('permission:REGISTRAR OFICINAS', only: ['store']),
+            new Middleware('permission:ACTUALIZAR OFICINAS', only: ['update']),
         ];
     }
 
@@ -28,77 +28,80 @@ class OfficeController extends Controller implements HasMiddleware
             $query = Office::query();
 
             $query->filterByState($request->input('state'))
-                ->filterByLevel($request->input('level'))
-                ->filterByParent($request->input('parent'))
-                ->filterByInitialsOrName($request->input('search'))
-                ->filterByDates($request->input('start_date'), $request->input('end_date'));
+                  ->filterByLevel($request->input('level'))
+                  ->filterByParent($request->input('parent'))
+                  ->filterByInitialsOrName($request->input('search'))
+                  ->filterByDates($request->input('start_date'), $request->input('end_date'));
 
             if ($request->filled('sort_by')) {
                 try {
                     $query->sort($request->input('sort_by'), $request->input('sort_order', 'asc'));
                 } catch (\Exception $e) {
-                    return ApiResponse::error('Error in sorting,', 400, $e->getMessage());
+                    return ApiResponse::error('Error al ordenar.', 400, $e->getMessage());
                 }
             }
 
             if ($request->boolean('include_hierarchy')) {
                 $query->with('childOffices');
             }
-    
+
             if ($request->input('row_num')) {
                 $offices = $query->paginate($request->input('row_num'));
             } else {
                 $offices = $query->paginate(10);
-            }          
+            }
 
             if ($offices->isEmpty()) {
-                return ApiResponse::error("There're not registered offices.", 200);
+                return ApiResponse::error('No hay oficinas registradas.', 200);
             }
-            
+
             $collection = OfficeResource::collection($offices);
             $responseData = $collection->response()->getData(true);
 
-            return ApiResponse::success('Offices found.', 200, $responseData);
+            return ApiResponse::success('Oficinas encontradas.', 200, $responseData);
         } catch (\Exception $e) {
-            return ApiResponse::error('An unexpected error ocurred', 500, $e->getMessage());
+            return ApiResponse::error('Ocurrió un error inesperado.', 500, $e->getMessage());
         }
     }
+
     public function store(OfficeRequest $request)
     {
         try {
             DB::beginTransaction();
             $office = Office::create($request->validated());
             DB::commit();
-            return ApiResponse::success('Office registered successfully.', 201, $office);
+            return ApiResponse::success('Oficina registrada exitosamente.', 201, $office);
         } catch (\Exception $e) {
             DB::rollBack();
-            return ApiResponse::error('An error occurred while registering the office.', 500, $e->getMessage());
+            return ApiResponse::error('Ocurrió un error al registrar la oficina.', 500, $e->getMessage());
         }
     }
+
     public function show(FilterRequest $request, $id)
     {
         try {
             if (!is_numeric($id)) {
-                return ApiResponse::error('Invalid ID format.', 400);
+                return ApiResponse::error('Formato de ID inválido.', 400);
             }
+
             $query = Office::query();
 
             if ($request->boolean('include_hierarchy')) {
                 $query->with(['childOffices']);
             }
-            $query->with('state');
 
+            $query->with('state');
             $office = $query->find($id);
 
             if (!$office) {
-                return ApiResponse::error('Office not found.', 200);
+                return ApiResponse::error('Oficina no encontrada.', 200);
             }
 
-            return ApiResponse::success('Office found', 200, OfficeResource::make($office));
+            return ApiResponse::success('Oficina encontrada.', 200, OfficeResource::make($office));
         } catch (\Illuminate\Database\QueryException $e) {
-            return ApiResponse::error('Database error occurred.', 500, $e->getMessage());
+            return ApiResponse::error('Ocurrió un error en la base de datos.', 500, $e->getMessage());
         } catch (\Exception $e) {
-            return ApiResponse::error('An unexpected error occurred.', 500, $e->getMessage());
+            return ApiResponse::error('Ocurrió un error inesperado.', 500, $e->getMessage());
         }
     }
 
@@ -108,10 +111,10 @@ class OfficeController extends Controller implements HasMiddleware
             DB::beginTransaction();
             $office->update($request->validated());
             DB::commit();
-            return ApiResponse::success('Office updated succesfully.', 200, $office);
+            return ApiResponse::success('Oficina actualizada exitosamente.', 200, $office);
         } catch (\Exception $e) {
             DB::rollBack();
-            return ApiResponse::error('An error occurred while updating the office.', 500, $e->getMessage());
+            return ApiResponse::error('Ocurrió un error al actualizar la oficina.', 500, $e->getMessage());
         }
     }
 }

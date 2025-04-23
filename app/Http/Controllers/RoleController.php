@@ -36,7 +36,7 @@ class RoleController extends Controller implements HasMiddleware
                 try {
                     $query->sort($request->input('sort_by'), $request->input('sort_order', 'asc'));
                 } catch (\Exception $e) {
-                    return ApiResponse::error('Error in sorting.', 400, $e->getMessage());
+                    return ApiResponse::error('Error al ordenar.', 400, $e->getMessage());
                 }
             }
             
@@ -44,15 +44,15 @@ class RoleController extends Controller implements HasMiddleware
             $roles = $query->paginate($perPage);
 
             if ($roles->isEmpty()) {
-                return ApiResponse::error("There're not registered roles.", 200);
+                return ApiResponse::error('No hay roles registrados.', 200);
             }
 
             $collection = RoleResource::collection($roles);
             $responseData = $collection->response()->getData(true);
 
-            return ApiResponse::success('Roles found.', 200, $responseData);
+            return ApiResponse::success('Roles encontrados.', 200, $responseData);
         } catch (\Exception $e) {
-            return ApiResponse::error('An unexpected error ocurred.', 500, $e->getMessage());
+            return ApiResponse::error('Ocurrió un error inesperado.', 500, $e->getMessage());
         }
     }
 
@@ -70,21 +70,21 @@ class RoleController extends Controller implements HasMiddleware
                 $role->menus()->sync($request->input('menus'));
             }
             DB::commit();
-            return ApiResponse::success('Role registered successfully', 201, $role->load(['permissions', 'menus']));
+            return ApiResponse::success('Rol registrado exitosamente.', 201, $role->load(['permissions', 'menus']));
         } catch (\Exception $e) {
             DB::rollBack();
-            return ApiResponse::error('An error occurred while registering the role.', 500, $e->getMessage());
+            return ApiResponse::error('Ocurrió un error al registrar el rol.', 500, $e->getMessage());
         }
     }
 
     public function show(Role $role)
     {
         try {
-            return ApiResponse::success('Role found.', 200, RoleResource::make($role));
+            return ApiResponse::success('Rol encontrado.', 200, RoleResource::make($role));
         } catch (\Illuminate\Database\QueryException $e) {
-            return ApiResponse::error('Database error occurred.', 500, $e->getMessage());
+            return ApiResponse::error('Ocurrió un error en la base de datos.', 500, $e->getMessage());
         } catch (\Exception $e) {
-            return ApiResponse::error('An unexpected error occurred.', 500, $e->getMessage());
+            return ApiResponse::error('Ocurrió un error inesperado.', 500, $e->getMessage());
         }
     }
 
@@ -102,10 +102,10 @@ class RoleController extends Controller implements HasMiddleware
                 $role->menus()->sync($request->input('menus'));
             }
             DB::commit();
-            return ApiResponse::success('Role updated succesfully.', 200, $role->load(['permissions', 'menus']));
+            return ApiResponse::success('Rol actualizado exitosamente.', 200, $role->load(['permissions', 'menus']));
         } catch (\Exception $e) {
             DB::rollBack();
-            return ApiResponse::error('An error occurred while updating the role.', 500, $e->getMessage());
+            return ApiResponse::error('Ocurrió un error al actualizar el rol.', 500, $e->getMessage());
         }
     }
 }

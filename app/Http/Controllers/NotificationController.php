@@ -12,9 +12,9 @@ class NotificationController extends Controller
         try {
             $user = $request->user();
             $notifications = $user->unreadNotifications;
-            return ApiResponse::success('Notifications found', 200, $notifications);
+            return ApiResponse::success('Notificaciones encontradas.', 200, $notifications);
         } catch (\Exception $e) {
-            return ApiResponse::error('An error unexpected ocurred.', 500, $e->getMessage());
+            return ApiResponse::error('Ocurrió un error inesperado.', 500, $e->getMessage());
         }
     }
 
@@ -24,12 +24,12 @@ class NotificationController extends Controller
             $user = $request->user();
             $notification = $user->notifications()->where('id', $notificationId)->first();
             if (!$notification) {
-                return ApiResponse::error('Notification not found', 404);
+                return ApiResponse::error('Notificación no encontrada.', 404);
             }
             $notification->markAsRead();
-            return ApiResponse::success('Notification marked as read.', 200, $notification);
+            return ApiResponse::success('Notificación marcada como leída.', 200, $notification);
         } catch (\Exception $e) {
-            return ApiResponse::error('An error unexpected ocurred.', 500, $e->getMessage());
+            return ApiResponse::error('Ocurrió un error inesperado.', 500, $e->getMessage());
         }
     }
 
@@ -38,9 +38,9 @@ class NotificationController extends Controller
         try {
             $user = $request->user();
             $user->unreadNotifications->markAsRead();
-            return ApiResponse::success('All notifications marked as read', 200);
+            return ApiResponse::success('Todas las notificaciones fueron marcadas como leídas.', 200);
         } catch (\Exception $e) {
-            return ApiResponse::error('An error unexpected ocurred.', 500, $e->getMessage());
+            return ApiResponse::error('Ocurrió un error inesperado.', 500, $e->getMessage());
         }
     }
 }
