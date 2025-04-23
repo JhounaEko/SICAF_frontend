@@ -31,12 +31,11 @@ class PermissionController extends Controller implements HasMiddleware
                 ->filterByName($request->input('search'))
                 ->filterByStateName($request->input('state_name'))
                 ->filterByDates($request->input('start_date'), $request->input('end_date'));
-            
             if ($request->filled('sort_by')) {
                 try {
                     $query->sort($request->input('sort_by'), $request->input('sort_order', 'asc'));
                 } catch (\Exception $e) {
-                    return ApiResponse::error('Error in sorting.', 400, $e->getMessage());
+                    return ApiResponse::error('Error al ordenar.', 400, $e->getMessage());
                 }
             }
             
@@ -44,16 +43,16 @@ class PermissionController extends Controller implements HasMiddleware
             $permissions = $query->paginate($perPage);
 
             if ($permissions->isEmpty()) {
-                return ApiResponse::error("There're not registered permissions.", 200);
+                return ApiResponse::error('No hay permisos registrados.', 200);
             }
 
             $collection = PermissionResource::collection($permissions);
             $responseData = $collection->response()->getData(true);
 
-            return ApiResponse::success('Permissions found.', 200, $responseData);
+            return ApiResponse::success('Permisos encontrados.', 200, $responseData);
 
         } catch (\Exception $e) {
-            return ApiResponse::error('An unexpected error ocurred.', 500, $e->getMessage());
+            return ApiResponse::error('Ocurrió un error inesperado.', 500, $e->getMessage());
         }
     }
 
@@ -62,20 +61,20 @@ class PermissionController extends Controller implements HasMiddleware
             DB::beginTransaction();
             $permission = Permission::create($request->validated());
             DB::commit();
-            return ApiResponse::success('Permission registered successfully', 201, $permission);
+            return ApiResponse::success('Permiso registrado exitosamente.', 201, $permission);
         } catch (\Exception $e) {
             DB::rollBack(); 
-            return ApiResponse::error('An error occurred while registering the permission.', 500, $e->getMessage());
+            return ApiResponse::error('Ocurrió un error al registrar el permiso.', 500, $e->getMessage());
         }
     }
     
     public function show(Permission $permission){
         try {
-            return ApiResponse::success('Permission found.', 200, PermissionResource::make($permission));
+            return ApiResponse::success('Permiso encontrado.', 200, PermissionResource::make($permission));
         } catch (\Illuminate\Database\QueryException $e) {
-            return ApiResponse::error('Database error occurred.', 500, $e->getMessage());
+            return ApiResponse::error('Ocurrió un error en la base de datos.', 500, $e->getMessage());
         } catch (\Exception $e) {
-            return ApiResponse::error('An unexpected error occurred.', 500, $e->getMessage());
+            return ApiResponse::error('Ocurrió un error inesperado.', 500, $e->getMessage());
         }
     }
 
@@ -84,12 +83,10 @@ class PermissionController extends Controller implements HasMiddleware
             DB::beginTransaction();
             $permission->update($request->validated());
             DB::commit();
-            return ApiResponse::success('Permission updated succesfully.', 200, $permission);
+            return ApiResponse::success('Permiso actualizado exitosamente.', 200, $permission);
         } catch (\Exception $e) {
             DB::rollBack();
-            return ApiResponse::error('An error occurred while updating the permission.', 500, $e->getMessage());
+            return ApiResponse::error('Ocurrió un error al actualizar el permiso.', 500, $e->getMessage());
         }
     }
-
-    
 }

@@ -1,6 +1,8 @@
 ###Test get states
 GET http://127.0.0.1:8000/api/v1/states?page=1&sort_by=id&row_num=5
-Authorization: Bearer 90|3OBp0BQauFsX4k547Sjtx8X7lYmc7XbkLdwdD7G8beca6603
+
+Authorization: Bearer 92|r207hKOF8nHDkk4d7SNog4Tm41LHgvHAqhriAEfO9f5b8a9e
+
 Accept: application/json
 ###Test post states
 POST http://127.0.0.1:8000/api/v1/states
@@ -181,6 +183,8 @@ Accept: application/json
     "username": "ZRIVAS",
     "password": "Danger3@"
 }
+
+### 92|r207hKOF8nHDkk4d7SNog4Tm41LHgvHAqhriAEfO9f5b8a9e
 
 ###Test logout user
 POST http://127.0.0.1:8000/api/v1/logout
@@ -475,10 +479,9 @@ Accept: application/json
 Authorization: Bearer 91|uvEyLZBgVofv3j9yuPtDfMXoV4kG2vy1KTlHzXSPab01e345
 ###View notifications
 
-/*** solo en casos 
+
 GET http://127.0.0.1:8000/api/v1/notifications
 Accept: application/json
-<<<<<<< HEAD
 Authorization: Bearer 82|cSSZQgbDB24lKyOOTifwiBbJfMqh1cxBBsDcJvew6d9e324e
 ###GET increase types
 
@@ -488,7 +491,6 @@ GET http://127.0.0.1:8000/api/v1/positions?row_num=5&search=tecnico
 Authorization: Bearer 92|f9CNWPwEnseagK9LS52EczfJOBMLMZ1Uc1bNieQTeadf5880
 ###Read a notification
 PATCH http://127.0.0.1:8000/api/v1/notifications/b544846e-fed0-4de8-8411-5f5458d7bfa2/mark-as-read
->>>>>>> TestCru
 Accept: application/json
 Authorization: Bearer 92|f9CNWPwEnseagK9LS52EczfJOBMLMZ1Uc1bNieQTeadf5880
 ###Read all notifications

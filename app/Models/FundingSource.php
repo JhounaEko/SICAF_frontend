@@ -69,5 +69,4 @@ class FundingSource extends Model implements Auditable
     }
 
     
-
 }

@@ -1,0 +1,83 @@
+[
+    {
+        "name": "REGISTER STATES"
+    },
+    {
+        "name": "UPDATE STATES"
+    },
+    {
+        "name": "VIEW STATES"
+    },
+    {
+        "name": "DELETE STATES"
+    },
+    {
+        "name": "REGISTER OFFICES"
+    },
+    {
+        "name": "UPDATE OFFICES"
+    },
+    {
+        "name": "VIEW OFFICES"
+    },
+    {
+        "name": "DELETE OFFICES"
+    },
+    {
+        "name": "CREATE USERS"
+    },
+    {
+        "name": "UPDATE OWN USER"
+    },
+    {
+        "name": "UPDATE ANY USER"
+    },
+    {
+        "name": "VIEW USERS"
+    },
+    {
+        "name": "VIEW OWN USER"
+    },
+    {
+        "name": "VIEW ANY USER"
+    },
+    {
+        "name": "DELETE USERS"
+    },
+    {
+        "name": "CREATE PERMISSIONS"
+    },
+    {
+        "name": "UPDATE PERMISSIONS"
+    },
+    {
+        "name": "VIEW PERMISSIONS"
+    },
+    {
+        "name": "DELETE PERMISSIONS"
+    },
+    {
+        "name": "CREATE ROLES"
+    },
+    {
+        "name": "UPDATE ROLES"
+    },
+    {
+        "name": "VIEW ROLES"
+    },
+    {
+        "name": "DELETE ROLES"
+    },
+    {
+        "name": "REGISTER EMPLOYEES"
+    },
+    {
+        "name": "UPDATE EMPLOYEES"
+    },
+    {
+        "name": "VIEW EMPLOYEES"
+    },
+    {
+        "name": "DELETE EMPLOYEES"
+    }
+]

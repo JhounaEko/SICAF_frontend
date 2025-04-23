@@ -34,6 +34,11 @@ class Position extends Model implements Auditable
         }
     }
     
+    public function scopeSort($query, $sortBy, $sortOrder = 'asc')
+    {
+        return $query->orderBy($sortBy, $sortOrder);
+    }
+
     public function scopeFilterByNameOrDescription($query, $input)
     {
         $search = mb_strtoupper(trim($input));

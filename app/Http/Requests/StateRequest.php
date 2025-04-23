@@ -42,7 +42,7 @@ class StateRequest extends FormRequest
 
     public function messages(): array {
         return [
-            'color.regex' => 'Enter hexadecimal values.'
-        ];
+            'color.regex' => 'Ingresa valores hexadecimales.',
+        ];        
     }
 }

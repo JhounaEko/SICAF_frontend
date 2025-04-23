@@ -99,6 +99,7 @@ return [
             'prefix' => '',
             'prefix_indexes' => true,
             'search_path' => ['public','accounting','items','users'],
+
             'sslmode' => 'prefer',
         ],
 

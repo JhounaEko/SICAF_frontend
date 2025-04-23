@@ -36,20 +36,23 @@ class PositionController extends Controller implements HasMiddleware
                 try {
                     $query->sort($request->input('sort_by'), $request->input('sort_order', 'asc'));
                 } catch (\Exception $e) {
-                    return ApiResponse::error('Error in sorting,', 400, $e->getMessage());
+                    return ApiResponse::error('Error al ordenar.', 400, $e->getMessage());
                 }
             }
+
             $perPage = $request->input('row_num');
             $positions = $query->paginate($perPage);
+
             if ($positions->isEmpty()) {
-                return ApiResponse::error("There're not registered positions.", 200);
+                return ApiResponse::error('No hay cargos registrados.', 200);
             }
+
             $collection = PositionResource::collection($positions);
             $responseData = $collection->response()->getData(true);
-            
-            return ApiResponse::success('Positions found.', 200, $responseData);
+
+            return ApiResponse::success('Cargos encontrados.', 200, $responseData);
         } catch (\Exception $e) {
-            return ApiResponse::error('An unexpected error ocurred.', 500, $e->getMessage());
+            return ApiResponse::error('Ocurrió un error inesperado.', 500, $e->getMessage());
         }
     }
 
@@ -59,33 +62,32 @@ class PositionController extends Controller implements HasMiddleware
             DB::beginTransaction();
             $position = Position::create($request->validated());
             DB::commit();
-            return ApiResponse::success('Position created sucessfully.', 201, $position);
+            return ApiResponse::success('Cargo creado exitosamente.', 201, $position);
         } catch (\Exception $e) {
             DB::rollBack();
-            return ApiResponse::error('An error occurred while registering the position.', 500, $e->getMessage());
+            return ApiResponse::error('Ocurrió un error al registrar el cargo.', 500, $e->getMessage());
         }
     }
-
 
     public function show(Position $position)
     {
         try {
-            return ApiResponse::success('Position found.', 200, PositionResource::make($position));
-        } catch(\Exception $e){
-            return ApiResponse::error('An error unexpected.', 500, $e->getMessage());
+            return ApiResponse::success('Cargo encontrado.', 200, PositionResource::make($position));
+        } catch (\Exception $e) {
+            return ApiResponse::error('Ocurrió un error inesperado.', 500, $e->getMessage());
         }
     }
 
-    public function update(PositionRequest $request, Position $position) {
+    public function update(PositionRequest $request, Position $position)
+    {
         try {
             DB::beginTransaction();
             $position->update($request->validated());
             DB::commit();
-            return ApiResponse::success('Position updated successfully.', 200, $position);
+            return ApiResponse::success('Cargo actualizado exitosamente.', 200, $position);
         } catch (\Exception $e) {
             DB::rollBack();
-            return ApiResponse::error('An error occurred while updating the position.', 500, $e->getMessage());
+            return ApiResponse::error('Ocurrió un error al actualizar el cargo.', 500, $e->getMessage());
         }
     }
-
 }

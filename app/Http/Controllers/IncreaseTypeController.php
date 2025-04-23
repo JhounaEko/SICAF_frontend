@@ -17,11 +17,13 @@ class IncreaseTypeController extends Controller implements HasMiddleware
     public static function middleware()
     {
         return [
+
             new Middleware('permission:VIEW INCREASE TYPES', only: ['index', 'show']),
             new Middleware('permission:REGISTER INCREASE TYPES', only: ['store']),
             new Middleware('permission:UPDATE INCREASE TYPES', only: ['update'])
         ];
     }
+
     public function index(FilterRequest $request)
     {
         try {
@@ -35,21 +37,23 @@ class IncreaseTypeController extends Controller implements HasMiddleware
                 try {
                     $query->sort($request->input('sort_by'), $request->input('sort_order', 'asc'));
                 } catch (\Exception $e) {
-                    return ApiResponse::error('Error in sorting.', 400, $e->getMessage());
+                    return ApiResponse::error('Error al ordenar.', 400, $e->getMessage());
                 }
             }
+
             $perPage = $request->input('row_num');
             $increaseType = $query->paginate($perPage);
+
             if ($increaseType->isEmpty()) {
-                return ApiResponse::error("There're not registered increase types.", 200);
+                return ApiResponse::error('No hay tipos de incremento registrados.', 200);
             }
 
             $collection = IncreaseTypeResource::collection($increaseType);
             $responseData = $collection->response()->getData(true);
 
-            return ApiResponse::success('Increase types found', 200, $responseData);
+            return ApiResponse::success('Tipos de incremento encontrados.', 200, $responseData);
         } catch (\Exception $e) {
-            return ApiResponse::error('An unexpected error ocurred.', 500, $e->getMessage());
+            return ApiResponse::error('Ocurrió un error inesperado.', 500, $e->getMessage());
         }
     }
 
@@ -59,19 +63,19 @@ class IncreaseTypeController extends Controller implements HasMiddleware
             DB::beginTransaction();
             $increaseType = IncreaseType::create($request->validated());
             DB::commit();
-            return ApiResponse::success('Increase type created succesfully.', 201, $increaseType);
+            return ApiResponse::success('Tipo de incremento registrado exitosamente.', 201, $increaseType);
         } catch (\Exception $e) {
             DB::rollBack();
-            return ApiResponse::error('An error occurred while registering the increase type.', 500, $e->getMessage());
+            return ApiResponse::error('Ocurrió un error al registrar el tipo de incremento.', 500, $e->getMessage());
         }
     }
 
     public function show(IncreaseType $increaseType)
     {
         try {
-            return ApiResponse::success('Increase type found.', 200, IncreaseTypeResource::make($increaseType));
+            return ApiResponse::success('Tipo de incremento encontrado.', 200, IncreaseTypeResource::make($increaseType));
         } catch (\Exception $e) {
-            return ApiResponse::error('An error unexpected.', 500, $e->getMessage());
+            return ApiResponse::error('Ocurrió un error inesperado.', 500, $e->getMessage());
         }
     }
 
@@ -81,9 +85,10 @@ class IncreaseTypeController extends Controller implements HasMiddleware
             DB::beginTransaction();
             $increaseType->update($request->validated());
             DB::commit();
-            return ApiResponse::success('Increase type updated successfully.', 200, $increaseType);
+            return ApiResponse::success('Tipo de incremento actualizado exitosamente.', 200, $increaseType);
         } catch (\Exception $e) {
-            return ApiResponse::error('An error occurred while updating the increase type.', 500, $e->getMessage());
+            DB::rollBack();
+            return ApiResponse::error('Ocurrió un error al actualizar el tipo de incremento.', 500, $e->getMessage());
         }
     }
 }

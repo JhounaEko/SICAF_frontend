@@ -61,6 +61,8 @@ class Role extends SpatieRole implements Auditable
         }
     }
 
+ 
+
     public function scopeFilterByDates($query, $start, $end)
     {
         if ($start && $end) {

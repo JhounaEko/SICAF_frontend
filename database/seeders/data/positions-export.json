@@ -1,0 +1,1870 @@
+[
+    {
+        "NAME": "INGENIERO",
+        "DESCRIPTION": "Profesional con conocimientos técnicos y científicos para diseñar, desarrollar y mantener sistemas..."
+    },
+    {
+        "NAME": "ENC. CONT. DE LETRAS",
+        "DESCRIPTION": "Encargado del control y gestión de la correspondencia y documentación."
+    },
+    {
+        "NAME": "RESPONSABLE RR.PP.",
+        "DESCRIPTION": "Persona a cargo de gestionar las relaciones públicas y la comunicación de la organización."
+    },
+    {
+        "NAME": "INSTRUCTOR",
+        "DESCRIPTION": "Persona que enseña o capacita a otros en un área específica."
+    },
+    {
+        "NAME": "RESP. EDUC. ALTERN.",
+        "DESCRIPTION": "Responsable de la educación alternativa, diseñando y gestionando programas educativos no..."
+    },
+    {
+        "NAME": "JEFE LICITACIONES",
+        "DESCRIPTION": "Responsable de la gestión y supervisión de los procesos de licitación."
+    },
+    {
+        "NAME": "OF. MENOR",
+        "DESCRIPTION": "Personal de apoyo que realiza tareas administrativas básicas y de mensajería."
+    },
+    {
+        "NAME": "ALCALDESA",
+        "DESCRIPTION": "Máxima autoridad del gobierno municipal."
+    },
+    {
+        "NAME": "FISCALIZADORA",
+        "DESCRIPTION": "Persona encargada de supervisar y verificar el cumplimiento de normativas y procesos."
+    },
+    {
+        "NAME": "VALIDADOR",
+        "DESCRIPTION": "Persona que verifica y aprueba la exactitud o cumplimiento de algo."
+    },
+    {
+        "NAME": "OPERADORA",
+        "DESCRIPTION": "Persona que maneja o utiliza una máquina o equipo."
+    },
+    {
+        "NAME": "AUXILIAR SECRETARIA",
+        "DESCRIPTION": "Personal de apoyo administrativo que asiste a la secretaria en sus funciones."
+    },
+    {
+        "NAME": "ADM. GENERAL",
+        "DESCRIPTION": "Responsable de la administración general de la organización."
+    },
+    {
+        "NAME": "AUDITOR INTERNO",
+        "DESCRIPTION": "Profesional encargado de revisar y evaluar los procesos internos de la organización."
+    },
+    {
+        "NAME": "OFIC. MENOR D.U.M.A.",
+        "DESCRIPTION": "Personal de apoyo administrativo que trabaja en la Dirección de Urbanismo y Medio..."
+    },
+    {
+        "NAME": "DIRECTORA (MAÑANA)",
+        "DESCRIPTION": "Persona a cargo de la dirección de la institución en el turno de la mañana."
+    },
+    {
+        "NAME": "SONIDISTA",
+        "DESCRIPTION": "Técnico encargado del sonido en eventos o producciones audiovisuales."
+    },
+    {
+        "NAME": "MAESTRO ALBAÑIL",
+        "DESCRIPTION": "Trabajador experto en construcción con ladrillos, piedras y otros materiales."
+    },
+    {
+        "NAME": "VIVERISTA",
+        "DESCRIPTION": "Persona que trabaja en un vivero, cultivando y cuidando plantas."
+    },
+    {
+        "NAME": "ADM. URBANA",
+        "DESCRIPTION": "Responsable de la administración de temas relacionados con el desarrollo urbano."
+    },
+    {
+        "NAME": "ALARIFE",
+        "DESCRIPTION": "Persona que realiza mediciones y traza planos en obras de construcción."
+    },
+    {
+        "NAME": "INVENTARIADOR",
+        "DESCRIPTION": "Persona encargada de realizar inventarios de bienes o materiales."
+    },
+    {
+        "NAME": "H. CONCEJAL",
+        "DESCRIPTION": "Miembro del Concejo Municipal."
+    },
+    {
+        "NAME": "RESPONSABLE DE ARQUI",
+        "DESCRIPTION": "Responsable del área de arquitectura."
+    },
+    {
+        "NAME": "CAMAROGRAFO",
+        "DESCRIPTION": "Persona que opera una cámara de video o cine."
+    },
+    {
+        "NAME": "OBRERO",
+        "DESCRIPTION": "Trabajador manual en diversas áreas."
+    },
+    {
+        "NAME": "RESP. CONTRATACIONES",
+        "DESCRIPTION": "Responsable de la gestión de procesos de contratación."
+    },
+    {
+        "NAME": "AUDITOR",
+        "DESCRIPTION": "Profesional encargado de realizar auditorías."
+    },
+    {
+        "NAME": "SUB DIRECTORA",
+        "DESCRIPTION": "Persona que asiste a la directora y puede reemplazarla en su ausencia."
+    },
+    {
+        "NAME": "ASESOR JURIDICO",
+        "DESCRIPTION": "Profesional del derecho que brinda asesoramiento legal."
+    },
+    {
+        "NAME": "TECNICO ADMINISTRATIVO",
+        "DESCRIPTION": "Personal con conocimientos técnicos que realiza tareas administrativas."
+    },
+    {
+        "NAME": "SERVICIOS",
+        "DESCRIPTION": "Personal encargado de brindar diversos servicios dentro de la organización."
+    },
+    {
+        "NAME": "RESP. SEGURIDAD",
+        "DESCRIPTION": "Responsable de la seguridad de la organización o área específica."
+    },
+    {
+        "NAME": "ADM. DE CEMENTERIO",
+        "DESCRIPTION": "Persona encargada de la administración del cementerio."
+    },
+    {
+        "NAME": "FISCALIZADOR",
+        "DESCRIPTION": "Persona encargada de supervisar y verificar el cumplimiento de normativas y procesos."
+    },
+    {
+        "NAME": "H. ALCALDE",
+        "DESCRIPTION": "Máxima autoridad del gobierno municipal."
+    },
+    {
+        "NAME": "AUXILIAR DE OFICINA",
+        "DESCRIPTION": "Personal de apoyo que realiza tareas administrativas básicas en una oficina."
+    },
+    {
+        "NAME": "AUDITORA",
+        "DESCRIPTION": "Profesional encargada de realizar auditorías."
+    },
+    {
+        "NAME": "RESPONSABLE I.M.T.",
+        "DESCRIPTION": "Responsable del Instituto Municipal de Tránsito."
+    },
+    {
+        "NAME": "DIRECTOR DE DEPORTES",
+        "DESCRIPTION": "Persona a cargo de la dirección de las actividades deportivas."
+    },
+    {
+        "NAME": "TEC. BANCO DE DATOS",
+        "DESCRIPTION": "Técnico encargado de la gestión y mantenimiento del banco de datos."
+    },
+    {
+        "NAME": "JEFE UNIDAD",
+        "DESCRIPTION": "Persona a cargo de la dirección de una unidad o departamento."
+    },
+    {
+        "NAME": "GRAFICADOR",
+        "DESCRIPTION": "Persona que crea gráficos o diseños visuales."
+    },
+    {
+        "NAME": "PRESIDENTE FEDEPAF",
+        "DESCRIPTION": "Presidente de la Federación Departamental de Padres de Familia."
+    },
+    {
+        "NAME": "RESP.ED.AREA NO FO.",
+        "DESCRIPTION": "Responsable de la educación en áreas no formales."
+    },
+    {
+        "NAME": "TECNICO ACT. ECON.",
+        "DESCRIPTION": "Técnico especializado en actividades económicas."
+    },
+    {
+        "NAME": "COORDINADORA A.I.",
+        "DESCRIPTION": "Coordinadora de Asuntos Internos."
+    },
+    {
+        "NAME": "AUX. ADMINISTRATIVO",
+        "DESCRIPTION": "Personal de apoyo administrativo."
+    },
+    {
+        "NAME": "ABOGADO",
+        "DESCRIPTION": "Profesional del derecho."
+    },
+    {
+        "NAME": "TECNICO TRIBUTARIO",
+        "DESCRIPTION": "Técnico especializado en temas tributarios."
+    },
+    {
+        "NAME": "RESP.ALF.INFORMATICA",
+        "DESCRIPTION": "Responsable de alfabetización informática."
+    },
+    {
+        "NAME": "AUX. OFICINA",
+        "DESCRIPTION": "Personal de apoyo que realiza tareas administrativas básicas en una oficina."
+    },
+    {
+        "NAME": "TECNICO INVENTARIADOR",
+        "DESCRIPTION": "Técnico encargado de realizar inventarios."
+    },
+    {
+        "NAME": "ARCHIVISTA",
+        "DESCRIPTION": "Persona encargada de la gestión y organización del archivo."
+    },
+    {
+        "NAME": "DIRECTOR T. NOCHE",
+        "DESCRIPTION": "Persona a cargo de la dirección de la institución en el turno de la noche."
+    },
+    {
+        "NAME": "SUBALCALDE",
+        "DESCRIPTION": "Autoridad que representa al alcalde en una determinada zona o distrito."
+    },
+    {
+        "NAME": "SUB-ALCALDE",
+        "DESCRIPTION": "Autoridad que representa al alcalde en una determinada zona o distrito."
+    },
+    {
+        "NAME": "PORTERO",
+        "DESCRIPTION": "Persona encargada de la vigilancia y control de acceso en un edificio."
+    },
+    {
+        "NAME": "OP. REGISTRO",
+        "DESCRIPTION": "Operador encargado del registro de información."
+    },
+    {
+        "NAME": "DIRECCION DEL MUSEO",
+        "DESCRIPTION": "Persona a cargo de la dirección del museo."
+    },
+    {
+        "NAME": "AUX. RECEPCIONISTA",
+        "DESCRIPTION": "Personal de apoyo en la recepción."
+    },
+    {
+        "NAME": "RESP. DE KARDEX",
+        "DESCRIPTION": "Responsable del sistema de registro y control de documentos (kardex)."
+    },
+    {
+        "NAME": "CONSULTOR DE LINEA",
+        "DESCRIPTION": "Experto que brinda asesoramiento especializado en un área específica."
+    },
+    {
+        "NAME": "DIRECTOR TARDE",
+        "DESCRIPTION": "Persona a cargo de la dirección de la institución en el turno de la tarde."
+    },
+    {
+        "NAME": "OCDECO",
+        "DESCRIPTION": "Oficina de Defensa del Consumidor."
+    },
+    {
+        "NAME": "ADMINISTRATIVO",
+        "DESCRIPTION": "Personal que realiza tareas de administración."
+    },
+    {
+        "NAME": "TECNICO OPERADOR",
+        "DESCRIPTION": "Técnico encargado de operar equipos o sistemas."
+    },
+    {
+        "NAME": "OFICIAL MENOR",
+        "DESCRIPTION": "Personal de apoyo que realiza tareas administrativas básicas y de mensajería."
+    },
+    {
+        "NAME": "TECNICO SICOES",
+        "DESCRIPTION": "Técnico encargado del Sistema de Contrataciones Estatales."
+    },
+    {
+        "NAME": "OFTALMOLOGO",
+        "DESCRIPTION": "Médico especialista en el cuidado de los ojos y la visión."
+    },
+    {
+        "NAME": "CHOFER",
+        "DESCRIPTION": "Persona que conduce un vehículo."
+    },
+    {
+        "NAME": "JEFA DE UNIDAD",
+        "DESCRIPTION": "Persona a cargo de la dirección de una unidad o departamento."
+    },
+    {
+        "NAME": "SUB ALCALDE",
+        "DESCRIPTION": "Autoridad que representa al alcalde en una determinada zona o distrito."
+    },
+    {
+        "NAME": "OF. MENOR ADM. FIN.",
+        "DESCRIPTION": "Personal de apoyo administrativo en el área financiera."
+    },
+    {
+        "NAME": "OFICIAL",
+        "DESCRIPTION": "Persona que desempeña un cargo con autoridad."
+    },
+    {
+        "NAME": "DIRECTOR",
+        "DESCRIPTION": "Persona a cargo de la dirección de una institución o área."
+    },
+    {
+        "NAME": "JEFE DE SISTEMAS",
+        "DESCRIPTION": "Responsable de la gestión y mantenimiento de los sistemas informáticos."
+    },
+    {
+        "NAME": "ADM. DE PROGRAMA",
+        "DESCRIPTION": "Responsable de la administración de un programa específico."
+    },
+    {
+        "NAME": "RESP. CARGOS Y DESC.",
+        "DESCRIPTION": "Responsable de la gestión de cargos y descuentos salariales."
+    },
+    {
+        "NAME": "GENDARME",
+        "DESCRIPTION": "Miembro de la fuerza de seguridad."
+    },
+    {
+        "NAME": "TECNICO II",
+        "DESCRIPTION": "Técnico con un nivel de experiencia o especialización."
+    },
+    {
+        "NAME": "SEGURIDAD",
+        "DESCRIPTION": "Personal encargado de la protección y vigilancia."
+    },
+    {
+        "NAME": "AYUDANTE PINTOR",
+        "DESCRIPTION": "Persona que asiste al pintor en sus tareas."
+    },
+    {
+        "NAME": "RESP. PUBLICIDAD",
+        "DESCRIPTION": "Responsable del área de publicidad."
+    },
+    {
+        "NAME": "CARPINTERO",
+        "DESCRIPTION": "Trabajador que construye o repara objetos de madera."
+    },
+    {
+        "NAME": "LICENCIADA",
+        "DESCRIPTION": "Persona que posee un título de licenciatura."
+    },
+    {
+        "NAME": "RESP. INF. ESCOLAR",
+        "DESCRIPTION": "Responsable de la información relacionada con el ámbito escolar."
+    },
+    {
+        "NAME": "DIRECTORA",
+        "DESCRIPTION": "Persona a cargo de la dirección de una institución o área."
+    },
+    {
+        "NAME": "AUXILIAR ADMINISTRATIVO",
+        "DESCRIPTION": "Personal de apoyo administrativo."
+    },
+    {
+        "NAME": "PROCURADORA",
+        "DESCRIPTION": "Abogada que representa los intereses de una institución."
+    },
+    {
+        "NAME": "TRABAJADORA SOCIAL",
+        "DESCRIPTION": "Profesional que trabaja en la asistencia y bienestar social."
+    },
+    {
+        "NAME": "ABOGADA",
+        "DESCRIPTION": "Profesional del derecho."
+    },
+    {
+        "NAME": "TEC. ALFABETIZACION",
+        "DESCRIPTION": "Técnico especializado en programas de alfabetización."
+    },
+    {
+        "NAME": "LIMPIEZA PORTERO",
+        "DESCRIPTION": "Personal encargado de la limpieza y la portería."
+    },
+    {
+        "NAME": "TECNICO ADM.",
+        "DESCRIPTION": "Técnico administrativo."
+    },
+    {
+        "NAME": "COORDINADOR DE MEDIOS",
+        "DESCRIPTION": "Persona encargada de coordinar las actividades relacionadas con los medios..."
+    },
+    {
+        "NAME": "ELECTRISISTA",
+        "DESCRIPTION": "Trabajador especializado en instalaciones y reparaciones eléctricas."
+    },
+    {
+        "NAME": "RESP. EJECUTORA",
+        "DESCRIPTION": "Responsable de la ejecución de proyectos o actividades."
+    },
+    {
+        "NAME": "DIRECTORA (TARDE)",
+        "DESCRIPTION": "Persona a cargo de la dirección de la institución en el turno de la tarde."
+    },
+    {
+        "NAME": "DIRECTOR (MAÑANA)",
+        "DESCRIPTION": "Persona a cargo de la dirección de la institución en el turno de la mañana."
+    },
+    {
+        "NAME": "RESP. PROYECTOS",
+        "DESCRIPTION": "Responsable de la gestión de proyectos."
+    },
+    {
+        "NAME": "RESPONSABLE ARQ.",
+        "DESCRIPTION": "Responsable del área de arquitectura."
+    },
+    {
+        "NAME": "AYUDANTE",
+        "DESCRIPTION": "Persona que asiste en diversas tareas."
+    },
+    {
+        "NAME": "TECNICO OPC",
+        "DESCRIPTION": "Técnico operador de planta o centro de cómputo."
+    },
+    {
+        "NAME": "TECNICO AMBIENTAL",
+        "DESCRIPTION": "Técnico especializado en temas ambientales."
+    },
+    {
+        "NAME": "RESPONS. DE SISTEMA",
+        "DESCRIPTION": "Responsable de la gestión y mantenimiento de sistemas."
+    },
+    {
+        "NAME": "MENSAJERO",
+        "DESCRIPTION": "Persona encargada de llevar mensajes o documentos."
+    },
+    {
+        "NAME": "OPERADOR",
+        "DESCRIPTION": "Persona que maneja o utiliza una máquina o equipo."
+    },
+    {
+        "NAME": "EVALUADORA",
+        "DESCRIPTION": "Persona que realiza evaluaciones."
+    },
+    {
+        "NAME": "VERIFICADOR",
+        "DESCRIPTION": "Persona que verifica la exactitud o cumplimiento de algo."
+    },
+    {
+        "NAME": "ENCARGADO",
+        "DESCRIPTION": "Persona a cargo de una tarea o área específica."
+    },
+    {
+        "NAME": "FACILITADOR",
+        "DESCRIPTION": "Persona que guía o facilita un proceso o actividad."
+    },
+    {
+        "NAME": "COCINERA",
+        "DESCRIPTION": "Persona que cocina."
+    },
+    {
+        "NAME": "BACTERIOLOGO",
+        "DESCRIPTION": "Científico que estudia las bacterias."
+    },
+    {
+        "NAME": "TECNICO GENERAL",
+        "DESCRIPTION": "Técnico con conocimientos amplios en diversas áreas."
+    },
+    {
+        "NAME": "MECANICO",
+        "DESCRIPTION": "Trabajador especializado en la reparación y mantenimiento de máquinas."
+    },
+    {
+        "NAME": "TECNICO URB.",
+        "DESCRIPTION": "Técnico especializado en temas urbanos."
+    },
+    {
+        "NAME": "TOPOGRAFO",
+        "DESCRIPTION": "Profesional que realiza levantamientos topográficos."
+    },
+    {
+        "NAME": "TRAMOYISTA",
+        "DESCRIPTION": "Persona encargada de la maquinaria y los decorados en un escenario."
+    },
+    {
+        "NAME": "ADMINISTRATIVO I",
+        "DESCRIPTION": "Personal administrativo de nivel inicial."
+    },
+    {
+        "NAME": "TECNICO SISTEMAS",
+        "DESCRIPTION": "Técnico especializado en sistemas informáticos."
+    },
+    {
+        "NAME": "ENCARGADO POA",
+        "DESCRIPTION": "Persona a cargo del Plan Operativo Anual."
+    },
+    {
+        "NAME": "LIMPIESA PORTERO",
+        "DESCRIPTION": "Personal encargado de la limpieza y la portería."
+    },
+    {
+        "NAME": "DEFENSOR DEL CONSUMIDOR",
+        "DESCRIPTION": "Persona que protege los derechos de los consumidores."
+    },
+    {
+        "NAME": "SECRETARIO DE PRENSA",
+        "DESCRIPTION": "Persona encargada de la comunicación con los medios de prensa."
+    },
+    {
+        "NAME": "PROMOTOR",
+        "DESCRIPTION": "Persona que promueve o impulsa algo."
+    },
+    {
+        "NAME": "BIBLIOTECARIO",
+        "DESCRIPTION": "Profesional encargado de la gestión de una biblioteca."
+    },
+    {
+        "NAME": "RESPONSABLE ARCHIVO",
+        "DESCRIPTION": "Persona encargada de la gestión y organización del archivo."
+    },
+    {
+        "NAME": "ASISTENTE",
+        "DESCRIPTION": "Persona que brinda apoyo en diversas tareas."
+    },
+    {
+        "NAME": "ARQUITECTO",
+        "DESCRIPTION": "Profesional que diseña y planifica edificios y espacios urbanos."
+    },
+    {
+        "NAME": "JEFE DE UNIDAD",
+        "DESCRIPTION": "Persona a cargo de la dirección de una unidad o departamento."
+    },
+    {
+        "NAME": "AUXILIAR AYNIS",
+        "DESCRIPTION": "Auxiliar del programa AYNIS (apoyo a la niñez y la adolescencia)."
+    },
+    {
+        "NAME": "O.M.A.F",
+        "DESCRIPTION": "Oficial Mayor Administrativo Financiero."
+    },
+    {
+        "NAME": "SUPERVISORA",
+        "DESCRIPTION": "Persona encargada de supervisar actividades o personal."
+    },
+    {
+        "NAME": "BIBLIOTECARIA",
+        "DESCRIPTION": "Profesional encargada de la gestión de una biblioteca."
+    },
+    {
+        "NAME": "PORTERA",
+        "DESCRIPTION": "Persona encargada de la vigilancia y control de acceso en un edificio."
+    },
+    {
+        "NAME": "DIRECTORA-TARDE",
+        "DESCRIPTION": "Persona a cargo de la dirección de la institución en el turno de la tarde."
+    },
+    {
+        "NAME": "OF. MENOR ADMIN.",
+        "DESCRIPTION": "Personal de apoyo administrativo."
+    },
+    {
+        "NAME": "SECRETARIA AUX.",
+        "DESCRIPTION": "Personal de apoyo administrativo que asiste a la secretaria."
+    },
+    {
+        "NAME": "CAJERO",
+        "DESCRIPTION": "Persona encargada de manejar la caja y las transacciones de dinero."
+    },
+    {
+        "NAME": "OPERADORA ACT. ECONO",
+        "DESCRIPTION": "Operadora de actividades económicas."
+    },
+    {
+        "NAME": "TECNICO PROYECTISTA",
+        "DESCRIPTION": "Técnico encargado de la elaboración de proyectos."
+    },
+    {
+        "NAME": "OPERADOR I.P.B.I.",
+        "DESCRIPTION": "Operador del Instituto de la Pequeña y Mediana Industria."
+    },
+    {
+        "NAME": "TECNICO",
+        "DESCRIPTION": "Persona con conocimientos técnicos en un área específica."
+    },
+    {
+        "NAME": "PINTOR PUBLICISTA",
+        "DESCRIPTION": "Persona que realiza trabajos de pintura con fines publicitarios."
+    },
+    {
+        "NAME": "DIRECTOR-MAÑANA",
+        "DESCRIPTION": "Persona a cargo de la dirección de la institución en el turno de la mañana."
+    },
+    {
+        "NAME": "PRESIDENTE",
+        "DESCRIPTION": "Persona que preside una organización o institución."
+    },
+    {
+        "NAME": "PROF. DE MUSICA",
+        "DESCRIPTION": "Profesor de música."
+    },
+    {
+        "NAME": "ANALISTA",
+        "DESCRIPTION": "Persona que analiza datos o información."
+    },
+    {
+        "NAME": "COORDINADOR DE ESCOLARIDAD",
+        "DESCRIPTION": "Persona encargada de coordinar temas relacionados con la escolaridad."
+    },
+    {
+        "NAME": "RESPONSABLE",
+        "DESCRIPTION": "Persona a cargo de una tarea o área específica."
+    },
+    {
+        "NAME": "PROTOCOLIZADOR",
+        "DESCRIPTION": "Persona encargada de seguir el protocolo en eventos o actos."
+    },
+    {
+        "NAME": "TECNICO EDUCACION",
+        "DESCRIPTION": "Técnico especializado en temas de educación."
+    },
+    {
+        "NAME": "TECNICO III",
+        "DESCRIPTION": "Técnico con un nivel avanzado de experiencia o especialización."
+    },
+    {
+        "NAME": "OPERADORA ACT. ECON.",
+        "DESCRIPTION": "Operadora de actividades económicas."
+    },
+    {
+        "NAME": "RESP. INSCRIP. DD.RR",
+        "DESCRIPTION": "Responsable de inscripciones en Derechos Reales."
+    },
+    {
+        "NAME": "ARQUITECTA",
+        "DESCRIPTION": "Profesional que diseña y planifica edificios y espacios urbanos."
+    },
+    {
+        "NAME": "SUB-ALCALDESA",
+        "DESCRIPTION": "Autoridad que representa a la alcaldesa en una determinada zona o distrito."
+    },
+    {
+        "NAME": "OFICIAL MAYOR",
+        "DESCRIPTION": "Alto funcionario administrativo."
+    },
+    {
+        "NAME": "H.CONCEJAL",
+        "DESCRIPTION": "Miembro del Concejo Municipal."
+    },
+    {
+        "NAME": "ASESORA LEGAL",
+        "DESCRIPTION": "Profesional del derecho que brinda asesoramiento legal."
+    },
+    {
+        "NAME": "STRIA. CONTROL URB.",
+        "DESCRIPTION": "Secretaría de Control Urbano."
+    },
+    {
+        "NAME": "OPERADOR REGISTRO",
+        "DESCRIPTION": "Operador encargado del registro de información."
+    },
+    {
+        "NAME": "LIMPIEZA",
+        "DESCRIPTION": "Personal encargado de la limpieza."
+    },
+    {
+        "NAME": "ARTISTA",
+        "DESCRIPTION": "Persona dedicada a las artes."
+    },
+    {
+        "NAME": "AUXILIAR DE DIRECCION",
+        "DESCRIPTION": "Personal de apoyo que asiste a la dirección."
+    },
+    {
+        "NAME": "DIRECTORA-MAÑANA",
+        "DESCRIPTION": "Persona a cargo de la dirección de la institución en el turno de la mañana."
+    },
+    {
+        "NAME": "ASIST. ADM. Y FINANCIERO",
+        "DESCRIPTION": "Asistente administrativo y financiero."
+    },
+    {
+        "NAME": "DIRECTORA T. NOCHE",
+        "DESCRIPTION": "Persona a cargo de la dirección de la institución en el turno de la noche."
+    },
+    {
+        "NAME": "TECNICO OCDECO",
+        "DESCRIPTION": "Técnico de la Oficina de Defensa del Consumidor."
+    },
+    {
+        "NAME": "OF. MENOR CULTUR",
+        "DESCRIPTION": "Personal de apoyo administrativo en el área de cultura."
+    },
+    {
+        "NAME": "FISCAL DE OBRAS",
+        "DESCRIPTION": "Persona encargada de fiscalizar obras."
+    },
+    {
+        "NAME": "RESP. DE LIMITES",
+        "DESCRIPTION": "Responsable de la gestión de límites territoriales."
+    },
+    {
+        "NAME": "PROF. ARTE",
+        "DESCRIPTION": "Profesor de arte."
+    },
+    {
+        "NAME": "ASESOR CIVIL",
+        "DESCRIPTION": "Profesional que brinda asesoramiento en temas civiles."
+    },
+    {
+        "NAME": "CONCEJAL",
+        "DESCRIPTION": "Miembro del Concejo Municipal."
+    },
+    {
+        "NAME": "RESP PROYECTO",
+        "DESCRIPTION": "Responsable de proyecto."
+    },
+    {
+        "NAME": "TECNICO CONTABLE",
+        "DESCRIPTION": "Técnico especializado en contabilidad."
+    },
+    {
+        "NAME": "RESP. INSUM./SUMIN.",
+        "DESCRIPTION": "Responsable de insumos y suministros."
+    },
+    {
+        "NAME": "ADM. INF. Y SERVICIO",
+        "DESCRIPTION": "Administrador de infraestructura y servicios."
+    },
+    {
+        "NAME": "SECRETARIA AUXILIAR",
+        "DESCRIPTION": "Personal de apoyo administrativo que asiste a la secretaria."
+    },
+    {
+        "NAME": "DIRECTOR - MAÑANA",
+        "DESCRIPTION": "Persona a cargo de la dirección de la institución en el turno de la mañana."
+    },
+    {
+        "NAME": "OFICIAL MENOR ADM.",
+        "DESCRIPTION": "Personal de apoyo administrativo."
+    },
+    {
+        "NAME": "RESP. INFR. URBANA",
+        "DESCRIPTION": "Responsable de infraestructura urbana."
+    },
+    {
+        "NAME": "SUPERVISOR DE OBRAS",
+        "DESCRIPTION": "Persona encargada de supervisar obras."
+    },
+    {
+        "NAME": "DIRECTORA - MAÑANA",
+        "DESCRIPTION": "Persona a cargo de la dirección de la institución en el turno de la mañana."
+    },
+    {
+        "NAME": "RESP DE TEATRO",
+        "DESCRIPTION": "Responsable del teatro."
+    },
+    {
+        "NAME": "RESP. SEGURO BASICO",
+        "DESCRIPTION": "Responsable del seguro básico."
+    },
+    {
+        "NAME": "TEC. TRIBUTARIO",
+        "DESCRIPTION": "Técnico especializado en temas tributarios."
+    },
+    {
+        "NAME": "RESPONSABLE DE EMDA",
+        "DESCRIPTION": "Responsable de la Empresa Municipal de Aseo."
+    },
+    {
+        "NAME": "RESPONSABLE INFORMAT",
+        "DESCRIPTION": "Responsable de informática."
+    },
+    {
+        "NAME": "SECRETARIA I",
+        "DESCRIPTION": "Secretaria de nivel inicial."
+    },
+    {
+        "NAME": "ODONTOLOGA",
+        "DESCRIPTION": "Médico especialista en el cuidado de la salud bucal."
+    },
+    {
+        "NAME": "RESPONSABLE PROYECTO",
+        "DESCRIPTION": "Persona a cargo de la gestión de un proyecto."
+    },
+    {
+        "NAME": "SUP. MANT. DE AREAS",
+        "DESCRIPTION": "Supervisor de mantenimiento de áreas."
+    },
+    {
+        "NAME": "TECNICO TOPOGRAFO",
+        "DESCRIPTION": "Técnico especializado en topografía."
+    },
+    {
+        "NAME": "RECTOR",
+        "DESCRIPTION": "Máxima autoridad académica de una institución educativa superior."
+    },
+    {
+        "NAME": "PUNTILLERO",
+        "DESCRIPTION": "Persona encargada de llevar el control de asistencia o materiales."
+    },
+    {
+        "NAME": "DIRECTOR (TARDE)",
+        "DESCRIPTION": "Persona a cargo de la dirección de la institución en el turno de la tarde."
+    },
+    {
+        "NAME": "ADM. TEATRO MUNICIPAL",
+        "DESCRIPTION": "Administrador del Teatro Municipal."
+    },
+    {
+        "NAME": "RESPONSABLE DE LAB.",
+        "DESCRIPTION": "Responsable del laboratorio."
+    },
+    {
+        "NAME": "PROF. DE ARTES",
+        "DESCRIPTION": "Profesor de artes."
+    },
+    {
+        "NAME": "RESP.DE M/DE BARRIO",
+        "DESCRIPTION": "Responsable de mantenimiento de barrio."
+    },
+    {
+        "NAME": "BOLETERO (A)",
+        "DESCRIPTION": "Persona que vende boletos."
+    },
+    {
+        "NAME": "COORDINADOR",
+        "DESCRIPTION": "Persona encargada de coordinar actividades o equipos."
+    },
+    {
+        "NAME": "DIRECTOR (MAÑANA)",
+        "DESCRIPTION": "Persona a cargo de la dirección de la institución en el turno de la mañana."
+    },
+    {
+        "NAME": "RESPONSABLE DE REGISTRO",
+        "DESCRIPTION": "Persona encargada de la gestión de registros."
+    },
+    {
+        "NAME": "LABORATORISTA",
+        "DESCRIPTION": "Persona que trabaja en un laboratorio."
+    },
+    {
+        "NAME": "CODIFICADOR",
+        "DESCRIPTION": "Persona que codifica información."
+    },
+    {
+        "NAME": "AYUDANTE ALBAÑIL",
+        "DESCRIPTION": "Persona que asiste al albañil en sus tareas."
+    },
+    {
+        "NAME": "ADMINISTRADOR DE CAJA",
+        "DESCRIPTION": "Persona encargada de la administración de la caja."
+    },
+    {
+        "NAME": "ASESOR II",
+        "DESCRIPTION": "Asesor con un nivel de experiencia."
+    },
+    {
+        "NAME": "LIQUIDADORA",
+        "DESCRIPTION": "Persona encargada de realizar liquidaciones."
+    },
+    {
+        "NAME": "DIRECTOR-TARDE",
+        "DESCRIPTION": "Persona a cargo de la dirección de la institución en el turno de la tarde."
+    },
+    {
+        "NAME": "TECNICO VERIFICADOR",
+        "DESCRIPTION": "Técnico encargado de realizar verificaciones."
+    },
+    {
+        "NAME": "DIRECTORA T. MAÑANA",
+        "DESCRIPTION": "Persona a cargo de la dirección de la institución en el turno de la mañana."
+    },
+    {
+        "NAME": "OFICIAL M.ADMI.FINAN",
+        "DESCRIPTION": "Oficial Mayor Administrativo Financiero."
+    },
+    {
+        "NAME": "RESP. DERECHO PROPIE",
+        "DESCRIPTION": "Responsable de derecho propietario."
+    },
+    {
+        "NAME": "COORDINADORA",
+        "DESCRIPTION": "Persona encargada de coordinar actividades o equipos."
+    },
+    {
+        "NAME": "AUD. FISCALIZADOR",
+        "DESCRIPTION": "Auditor fiscalizador."
+    },
+    {
+        "NAME": "DOCENTE",
+        "DESCRIPTION": "Persona que se dedica a la enseñanza."
+    },
+    {
+        "NAME": "TECNICO",
+        "DESCRIPTION": "Persona con conocimientos técnicos en un área específica."
+    },
+    {
+        "NAME": "TELEFONISTA",
+        "DESCRIPTION": "Persona que opera una central telefónica."
+    },
+    {
+        "NAME": "PROFESIONAL",
+        "DESCRIPTION": "Persona que ejerce una profesión."
+    },
+    {
+        "NAME": "INVENTARIADOR",
+        "DESCRIPTION": "Persona encargada de realizar inventarios."
+    },
+    {
+        "NAME": "RESP. SUM. E INSUMOS",
+        "DESCRIPTION": "Responsable de suministros e insumos."
+    },
+    {
+        "NAME": "ELECTRICISTA",
+        "DESCRIPTION": "Trabajador especializado en instalaciones y reparaciones eléctricas."
+    },
+    {
+        "NAME": "ADM. INF. Y SERVICIOS",
+        "DESCRIPTION": "Administrador de infraestructura y servicios."
+    },
+    {
+        "NAME": "TECNICO EN SISTEMAS",
+        "DESCRIPTION": "Técnico especializado en sistemas informáticos."
+    },
+    {
+        "NAME": "RESPONSABLE DE TEATR",
+        "DESCRIPTION": "Responsable del teatro."
+    },
+    {
+        "NAME": "AUXILIAR",
+        "DESCRIPTION": "Persona que brinda apoyo en diversas tareas."
+    },
+    {
+        "NAME": "LIMPIEZA/PORTERA",
+        "DESCRIPTION": "Personal encargado de la limpieza y la portería."
+    },
+    {
+        "NAME": "ASISTENTE JURIDICO",
+        "DESCRIPTION": "Persona que asiste en temas jurídicos."
+    },
+    {
+        "NAME": "ACTUARIO",
+        "DESCRIPTION": "Funcionario judicial que da fe de las actuaciones judiciales."
+    },
+    {
+        "NAME": "PROMOTORA",
+        "DESCRIPTION": "Persona que promueve o impulsa algo."
+    },
+    {
+        "NAME": "PROFESORA",
+        "DESCRIPTION": "Persona que se dedica a la enseñanza."
+    },
+    {
+        "NAME": "REDACTORA",
+        "DESCRIPTION": "Persona que redacta textos."
+    },
+    {
+        "NAME": "PERSONAL DE APOYO",
+        "DESCRIPTION": "Personal que brinda apoyo en diversas áreas."
+    },
+    {
+        "NAME": "RESP. OBRAS MENORES",
+        "DESCRIPTION": "Responsable de obras menores."
+    },
+    {
+        "NAME": "RESP. DE EDU. NO FOR",
+        "DESCRIPTION": "Responsable de educación no formal."
+    },
+    {
+        "NAME": "RESP. PROTOCOLO",
+        "DESCRIPTION": "Responsable de protocolo."
+    },
+    {
+        "NAME": "JEFE DE SERVICIO",
+        "DESCRIPTION": "Persona a cargo de la dirección de un servicio."
+    },
+    {
+        "NAME": "CONSULTOR",
+        "DESCRIPTION": "Experto que brinda asesoramiento especializado."
+    },
+    {
+        "NAME": "COTIZADOR",
+        "DESCRIPTION": "Persona que realiza cotizaciones."
+    },
+    {
+        "NAME": "ASESOR I",
+        "DESCRIPTION": "Asesor de nivel inicial."
+    },
+    {
+        "NAME": "RESP. DE CONTROL",
+        "DESCRIPTION": "Responsable de control."
+    },
+    {
+        "NAME": "RESP COMPRAS MENORES",
+        "DESCRIPTION": "Responsable de compras menores."
+    },
+    {
+        "NAME": "OP.\u00a0\u00a0I.S.P.I.",
+        "DESCRIPTION": "Operador del Instituto Superior de la Policía."
+    },
+    {
+        "NAME": "ASESOR LEGAL",
+        "DESCRIPTION": "Profesional del derecho que brinda asesoramiento legal."
+    },
+    {
+        "NAME": "AUXILIAR TECNICO",
+        "DESCRIPTION": "Personal de apoyo técnico."
+    },
+    {
+        "NAME": "DIRECTORA DE OBRAS",
+        "DESCRIPTION": "Persona a cargo de la dirección de obras."
+    },
+    {
+        "NAME": "SERETARIA GENERAL",
+        "DESCRIPTION": "Máxima autoridad administrativa después del titular."
+    },
+    {
+        "NAME": "TEC. CONTROLADOR",
+        "DESCRIPTION": "Técnico controlador."
+    },
+    {
+        "NAME": "DIRECTOR T. M. Y T.",
+        "DESCRIPTION": "Persona a cargo de la dirección de la institución en los turnos mañana y tarde."
+    },
+    {
+        "NAME": "RESP. ARCHIVO GRAL.",
+        "DESCRIPTION": "Responsable del archivo general."
+    },
+    {
+        "NAME": "JEFATURA",
+        "DESCRIPTION": "Cargo de jefe."
+    },
+    {
+        "NAME": "ANALISTA ZONA SUR",
+        "DESCRIPTION": "Analista para la zona sur."
+    },
+    {
+        "NAME": "TECNICO PREDIAL",
+        "DESCRIPTION": "Técnico especializado en temas prediales."
+    },
+    {
+        "NAME": "UTILERO",
+        "DESCRIPTION": "Persona encargada de los útiles y herramientas."
+    },
+    {
+        "NAME": "ENC.ACTAS Y ARCHIVO",
+        "DESCRIPTION": "Encargado de actas y archivo."
+    },
+    {
+        "NAME": "MANT. DEL TEATRO",
+        "DESCRIPTION": "Personal encargado del mantenimiento del teatro."
+    },
+    {
+        "NAME": "ALBAÑIL",
+        "DESCRIPTION": "Trabajador experto en construcción con ladrillos, piedras y otros materiales."
+    },
+    {
+        "NAME": "ENC. CAJA",
+        "DESCRIPTION": "Persona a cargo de la caja."
+    },
+    {
+        "NAME": "RESP. SISTEMAS",
+        "DESCRIPTION": "Responsable de sistemas."
+    },
+    {
+        "NAME": "OFIC. MENOR D.H.C.",
+        "DESCRIPTION": "Personal de apoyo administrativo en la Dirección de Higiene y Control."
+    },
+    {
+        "NAME": "CONTADOR",
+        "DESCRIPTION": "Profesional encargado de la contabilidad."
+    },
+    {
+        "NAME": "OF. MENOR ADM FINAN.",
+        "DESCRIPTION": "Personal de apoyo administrativo en el área financiera."
+    },
+    {
+        "NAME": "RESP. DESAY. ESCOLAR",
+        "DESCRIPTION": "Responsable del programa de desayuno escolar."
+    },
+    {
+        "NAME": "TEC. ADMINISTRATIVO",
+        "DESCRIPTION": "Técnico administrativo."
+    },
+    {
+        "NAME": "SUPERVISOR DE OBRA",
+        "DESCRIPTION": "Persona encargada de supervisar obras."
+    },
+    {
+        "NAME": "PSICOLOGO CESIM",
+        "DESCRIPTION": "Psicólogo del Centro de Servicios Integrales Municipales."
+    },
+    {
+        "NAME": "SUPERVISOR VIVEROS",
+        "DESCRIPTION": "Persona encargada de la supervisión de viveros."
+    },
+    {
+        "NAME": "ENCARGADA",
+        "DESCRIPTION": "Persona a cargo de una tarea o área específica."
+    },
+    {
+        "NAME": "RESP. PROGRAMACION",
+        "DESCRIPTION": "Responsable de programación."
+    },
+    {
+        "NAME": "SUPERVISOR",
+        "DESCRIPTION": "Persona encargada de supervisar actividades o personal."
+    },
+    {
+        "NAME": "JEFE MUSEOS Y BIBLI.",
+        "DESCRIPTION": "Persona a cargo de la dirección de museos y bibliotecas."
+    },
+    {
+        "NAME": "COORD. BONO ESPERANZA",
+        "DESCRIPTION": "Coordinador del Bono Esperanza."
+    },
+    {
+        "NAME": "TEC. PREDIAL",
+        "DESCRIPTION": "Técnico especializado en temas prediales."
+    },
+    {
+        "NAME": "ASESOR",
+        "DESCRIPTION": "Persona que brinda asesoramiento."
+    },
+    {
+        "NAME": "NOTIFICADOR",
+        "DESCRIPTION": "Persona encargada de realizar notificaciones."
+    },
+    {
+        "NAME": "DIRECCION",
+        "DESCRIPTION": "Cargo de director."
+    },
+    {
+        "NAME": "RECEPCIONISTA",
+        "DESCRIPTION": "Persona encargada de recibir y atender al público."
+    },
+    {
+        "NAME": "PROYECTISTA",
+        "DESCRIPTION": "Persona que elabora proyectos."
+    },
+    {
+        "NAME": "INSPECTOR",
+        "DESCRIPTION": "Persona encargada de realizar inspecciones."
+    },
+    {
+        "NAME": "RESP. DANZA Y MUSICA",
+        "DESCRIPTION": "Responsable de danza y música."
+    },
+    {
+        "NAME": "ASESORA",
+        "DESCRIPTION": "Persona que brinda asesoramiento."
+    },
+    {
+        "NAME": "CAJERA",
+        "DESCRIPTION": "Persona encargada de manejar la caja y las transacciones de dinero."
+    },
+    {
+        "NAME": "JEFE U/DE ALMACENES",
+        "DESCRIPTION": "Persona a cargo de la unidad de almacenes."
+    },
+    {
+        "NAME": "RECAUDADORA",
+        "DESCRIPTION": "Persona encargada de realizar recaudaciones."
+    },
+    {
+        "NAME": "DIRCTOR",
+        "DESCRIPTION": "Persona a cargo de la dirección."
+    },
+    {
+        "NAME": "TECNICO SERVICIOS",
+        "DESCRIPTION": "Técnico de servicios."
+    },
+    {
+        "NAME": "ANALISTA PRESUPUESTARIO",
+        "DESCRIPTION": "Profesional que analiza y elabora presupuestos."
+    },
+    {
+        "NAME": "SECRETARIO GENERAL",
+        "DESCRIPTION": "Máxima autoridad administrativa después del titular."
+    },
+    {
+        "NAME": "PROCURADOR",
+        "DESCRIPTION": "Abogado que representa los intereses de una institución."
+    },
+    {
+        "NAME": "VETERINARIO",
+        "DESCRIPTION": "Médico especialista en la salud animal."
+    },
+    {
+        "NAME": "PROMOTORA CESIM",
+        "DESCRIPTION": "Promotora del Centro de Servicios Integrales Municipales."
+    },
+    {
+        "NAME": "CONTROL DE PERSONAL",
+        "DESCRIPTION": "Persona encargada del control del personal."
+    },
+    {
+        "NAME": "PRESIDENTA",
+        "DESCRIPTION": "Persona que preside una organización o institución."
+    },
+    {
+        "NAME": "OF MENOR ADM-FINAN",
+        "DESCRIPTION": "Personal de apoyo administrativo financiero."
+    },
+    {
+        "NAME": "RECEOCIONISTA",
+        "DESCRIPTION": "Persona encargada de recibir y atender al público."
+    },
+    {
+        "NAME": "TEC. URBANO",
+        "DESCRIPTION": "Técnico especializado en temas urbanos."
+    },
+    {
+        "NAME": "LICENCIADO",
+        "DESCRIPTION": "Persona que posee un título de licenciatura."
+    },
+    {
+        "NAME": "RESPONSABLE SUMA 911",
+        "DESCRIPTION": "Responsable del Sistema Único de Manejo de Emergencias."
+    },
+    {
+        "NAME": "MEDICO",
+        "DESCRIPTION": "Profesional de la salud."
+    },
+    {
+        "NAME": "INVENTARIADORA",
+        "DESCRIPTION": "Persona encargada de realizar inventarios."
+    },
+    {
+        "NAME": "COMUNICADOR SOCIAL",
+        "DESCRIPTION": "Profesional de la comunicación."
+    },
+    {
+        "NAME": "OFIC. MENOR ADM. FIN",
+        "DESCRIPTION": "Personal de apoyo administrativo en el área financiera."
+    },
+    {
+        "NAME": "OFICIAL M. ADM. FIN.",
+        "DESCRIPTION": "Oficial Mayor Administrativo Financiero."
+    },
+    {
+        "NAME": "OPERADOR I.M.T.",
+        "DESCRIPTION": "Operador del Instituto Municipal de Tránsito."
+    },
+    {
+        "NAME": "ASISTENTE CULTURAL",
+        "DESCRIPTION": "Persona que asiste en actividades culturales."
+    },
+    {
+        "NAME": "CONTROL DE RECAUDACIONES",
+        "DESCRIPTION": "Persona encargada del control de las recaudaciones."
+    },
+    {
+        "NAME": "TECNICO JURIDICO",
+        "DESCRIPTION": "Técnico especializado en temas jurídicos."
+    },
+    {
+        "NAME": "TECNICO I",
+        "DESCRIPTION": "Técnico de nivel inicial."
+    },
+    {
+        "NAME": "ADM. URBANO",
+        "DESCRIPTION": "Administrador urbano."
+    },
+    {
+        "NAME": "ANALISTA CONTABLE",
+        "DESCRIPTION": "Profesional que analiza temas contables."
+    },
+    {
+        "NAME": "PROCESADOR",
+        "DESCRIPTION": "Persona que procesa información o datos."
+    },
+    {
+        "NAME": "ADM. DISTRITAL",
+        "DESCRIPTION": "Administrador distrital."
+    },
+    {
+        "NAME": "ADMINISTRADOR URBANO",
+        "DESCRIPTION": "Persona encargada de la administración urbana."
+    },
+    {
+        "NAME": "DOCTOR",
+        "DESCRIPTION": "Profesional con título de doctorado."
+    },
+    {
+        "NAME": "SECRETARIO",
+        "DESCRIPTION": "Persona que asiste en tareas administrativas y de gestión."
+    },
+    {
+        "NAME": "RESP. RED CORRUPCION",
+        "DESCRIPTION": "Responsable de la red de lucha contra la corrupción."
+    },
+    {
+        "NAME": "DIRECTOR - TARDE",
+        "DESCRIPTION": "Persona a cargo de la dirección de la institución en el turno de la tarde."
+    },
+    {
+        "NAME": "SECRETARIA",
+        "DESCRIPTION": "Personal de apoyo administrativo."
+    },
+    {
+        "NAME": "ENC. DE CORRESPONDENCIA",
+        "DESCRIPTION": "Persona encargada de la correspondencia."
+    },
+    {
+        "NAME": "LIQUIDADOR",
+        "DESCRIPTION": "Persona encargada de realizar liquidaciones."
+    },
+    {
+        "NAME": "ALCALDE",
+        "DESCRIPTION": "Máxima autoridad del gobierno municipal."
+    },
+    {
+        "NAME": "DIRECTOR",
+        "DESCRIPTION": "Persona a cargo de la dirección de una institución o área."
+    },
+    {
+        "NAME": "RESP. SISIN",
+        "DESCRIPTION": "Responsable del Sistema de Información sobre Seguridad Integral."
+    },
+    {
+        "NAME": "RESPONSABLE TECNICO",
+        "DESCRIPTION": "Persona a cargo de aspectos técnicos."
+    },
+    {
+        "NAME": "DIRECTOR(A) PRIMARIA (M)",
+        "DESCRIPTION": "Persona a cargo de la dirección de la escuela primaria en el turno de la mañana."
+    },
+    {
+        "NAME": "DIRECTOR(A) PRIMARIA (T)",
+        "DESCRIPTION": "Persona a cargo de la dirección de la escuela primaria en el turno de la tarde."
+    },
+    {
+        "NAME": "DIRECTOR(A) SECUNDARIA (M)",
+        "DESCRIPTION": "Persona a cargo de la dirección de la escuela secundaria en el turno de la mañana."
+    },
+    {
+        "NAME": "DIRECTOR(A) SECUNDARIA (T)",
+        "DESCRIPTION": "Persona a cargo de la dirección de la escuela secundaria en el turno de la tarde."
+    },
+    {
+        "NAME": "GERENTE",
+        "DESCRIPTION": "Persona a cargo de la gestión de una empresa o área."
+    },
+    {
+        "NAME": "SUB DIRECTOR ADMINISTRATIVO FINANCIERO",
+        "DESCRIPTION": "Persona que asiste al director en temas administrativos y financieros."
+    },
+    {
+        "NAME": "RESPONSABLE DE ALMACEN (UAF)",
+        "DESCRIPTION": "Persona a cargo del almacén de la Unidad Administrativa Financiera."
+    },
+    {
+        "NAME": "TRACTORISTA",
+        "DESCRIPTION": "Persona que opera un tractor."
+    },
+    {
+        "NAME": "JEFE DE OPERATIVO DE OBRAS",
+        "DESCRIPTION": "Persona a cargo del operativo de obras."
+    },
+    {
+        "NAME": "RESPONSABLE DE EQUIPAMIENTO",
+        "DESCRIPTION": "Persona a cargo del equipamiento."
+    },
+    {
+        "NAME": "ODONTOLOGO",
+        "DESCRIPTION": "Médico especialista en el cuidado de la salud bucal."
+    },
+    {
+        "NAME": "RESP. SICOES",
+        "DESCRIPTION": "Responsable del Sistema de Contrataciones Estatales."
+    },
+    {
+        "NAME": "ENFERMERO",
+        "DESCRIPTION": "Profesional de la salud que brinda cuidados de enfermería."
+    },
+    {
+        "NAME": "TECNICO ANALISTA",
+        "DESCRIPTION": "Técnico que realiza análisis."
+    },
+    {
+        "NAME": "ENFERMERA",
+        "DESCRIPTION": "Profesional de la salud que brinda cuidados de enfermería."
+    },
+    {
+        "NAME": "TECNICO LEGAL",
+        "DESCRIPTION": "Técnico especializado en temas legales."
+    },
+    {
+        "NAME": "RESP. PARQUE AUTOMOTOR UAF",
+        "DESCRIPTION": "Responsable del parque automotor de la Unidad Administrativa Financiera."
+    },
+    {
+        "NAME": "LABORAL I",
+        "DESCRIPTION": "Trabajador de nivel inicial."
+    },
+    {
+        "NAME": "ADMINISTRADOR",
+        "DESCRIPTION": "Persona a cargo de la administración."
+    },
+    {
+        "NAME": "RESPONSABLE DE BAJAS",
+        "DESCRIPTION": "Persona encargada de la gestión de bajas de personal o activos."
+    },
+    {
+        "NAME": "LABORAL II",
+        "DESCRIPTION": "Trabajador con un nivel de experiencia."
+    },
+    {
+        "NAME": "PSICOLOGA",
+        "DESCRIPTION": "Profesional de la salud mental."
+    },
+    {
+        "NAME": "RESP. SEGURO Y DERECHO PROP.",
+        "DESCRIPTION": "Responsable de seguros y derecho propietario."
+    },
+    {
+        "NAME": "PSICOLOGO",
+        "DESCRIPTION": "Profesional de la salud mental."
+    },
+    {
+        "NAME": "DIRECTORA a.i.",
+        "DESCRIPTION": "Directora interina."
+    },
+    {
+        "NAME": "SUB-DIRECTOR",
+        "DESCRIPTION": "Persona que asiste al director y puede reemplazarlo en su ausencia."
+    },
+    {
+        "NAME": "INTENDENTE MUNICIPAL",
+        "DESCRIPTION": "Máxima autoridad administrativa del municipio."
+    },
+    {
+        "NAME": "NIÑERA",
+        "DESCRIPTION": "Persona que cuida niños."
+    },
+    {
+        "NAME": "SUB-INTENDENTE",
+        "DESCRIPTION": "Persona que asiste al intendente municipal."
+    },
+    {
+        "NAME": "EDUCADORA",
+        "DESCRIPTION": "Persona que se dedica a la educación."
+    },
+    {
+        "NAME": "SECRETARIO MUNICIPAL",
+        "DESCRIPTION": "Funcionario encargado de la secretaría del municipio."
+    },
+    {
+        "NAME": "GUARDIA VIAL",
+        "DESCRIPTION": "Persona encargada de la seguridad vial."
+    },
+    {
+        "NAME": "GEOGRAFO",
+        "DESCRIPTION": "Profesional que estudia la geografía."
+    },
+    {
+        "NAME": "GESTOR",
+        "DESCRIPTION": "Persona que realiza gestiones."
+    },
+    {
+        "NAME": "FARMACEUTICA(O)",
+        "DESCRIPTION": "Profesional de la farmacia."
+    },
+    {
+        "NAME": "GUARDIA MUNICIPAL",
+        "DESCRIPTION": "Miembro de la fuerza de seguridad municipal."
+    },
+    {
+        "NAME": "MUSICO",
+        "DESCRIPTION": "Persona que se dedica a la música."
+    },
+    {
+        "NAME": "RESPONSABLE DE IMAGEN COORPORATIVA",
+        "DESCRIPTION": "Persona a cargo de la imagen corporativa."
+    },
+    {
+        "NAME": "AGENTE",
+        "DESCRIPTION": "Persona que actúa en representación de otra."
+    },
+    {
+        "NAME": "ADMINISTRADORA",
+        "DESCRIPTION": "Persona a cargo de la administración."
+    },
+    {
+        "NAME": "JEFE DE PROYECTOS",
+        "DESCRIPTION": "Persona a cargo de la gestión de proyectos."
+    },
+    {
+        "NAME": "RESP. DNNA 24 HORAS",
+        "DESCRIPTION": "Responsable de la Defensoría de la Niñez y Adolescencia las 24 horas."
+    },
+    {
+        "NAME": "BRIGADISTA",
+        "DESCRIPTION": "Miembro de una brigada de emergencia."
+    },
+    {
+        "NAME": "CONTROL Y REGISTRO DE CHEQUES",
+        "DESCRIPTION": "Persona encargada del control y registro de cheques."
+    },
+    {
+        "NAME": "RADIOLOGO",
+        "DESCRIPTION": "Médico especialista en radiología."
+    },
+    {
+        "NAME": "RESPONSABLE DE FARMACIA",
+        "DESCRIPTION": "Persona a cargo de la farmacia."
+    },
+    {
+        "NAME": "PAYASO",
+        "DESCRIPTION": "Artista que entretiene al público, especialmente a los niños."
+    },
+    {
+        "NAME": "RESPONSABLE DE AREA",
+        "DESCRIPTION": "Persona a cargo de un área específica."
+    },
+    {
+        "NAME": "DIRECTOR ENCARGADO",
+        "DESCRIPTION": "Persona a cargo de la dirección de forma temporal."
+    },
+    {
+        "NAME": "ASISTENTE A",
+        "DESCRIPTION": "Asistente de nivel inicial."
+    },
+    {
+        "NAME": "ASISTENTE GENERAL",
+        "DESCRIPTION": "Persona que brinda asistencia en diversas tareas."
+    },
+    {
+        "NAME": "DIRECTORA",
+        "DESCRIPTION": "Persona a cargo de la dirección de una institución o área."
+    },
+    {
+        "NAME": "SICOES",
+        "DESCRIPTION": "Sistema de Contrataciones Estatales."
+    },
+    {
+        "NAME": "JEFE DE UNIDAD DE DESARROLLO HUMANO",
+        "DESCRIPTION": "Persona a cargo de la unidad de desarrollo humano."
+    },
+    {
+        "NAME": "APOYO ADMINISTRATIVO",
+        "DESCRIPTION": "Personal que brinda apoyo en tareas administrativas."
+    },
+    {
+        "NAME": "ENCARGADA CIUDAD CULTURAL",
+        "DESCRIPTION": "Persona a cargo de la Ciudad Cultural."
+    },
+    {
+        "NAME": "ESPECIALISTA VIAL",
+        "DESCRIPTION": "Profesional especializado en temas viales."
+    },
+    {
+        "NAME": "ESPECIALISTA LEGAL",
+        "DESCRIPTION": "Profesional del derecho con especialización."
+    },
+    {
+        "NAME": "ESPECIALISTA SOCIAL",
+        "DESCRIPTION": "Profesional especializado en temas sociales."
+    },
+    {
+        "NAME": "TRABAJADOR SOCIAL",
+        "DESCRIPTION": "Profesional que trabaja en la asistencia y bienestar social."
+    },
+    {
+        "NAME": "DIRECTORA DE TALENTO HUMANANO",
+        "DESCRIPTION": "Persona a cargo de la dirección de talento humano."
+    },
+    {
+        "NAME": "ENFERMERA AUXILIAR",
+        "DESCRIPTION": "Personal de enfermería que asiste al enfermero principal."
+    },
+    {
+        "NAME": "TECNICO ESPECIALIZADO",
+        "DESCRIPTION": "Técnico con conocimientos especializados en un área."
+    },
+    {
+        "NAME": "SUB CONTADOR",
+        "DESCRIPTION": "Persona que asiste al contador."
+    },
+    {
+        "NAME": "PROFESIONAL C",
+        "DESCRIPTION": "Profesional de nivel avanzado."
+    },
+    {
+        "NAME": "CONTRAMAESTRO",
+        "DESCRIPTION": "Persona que asiste al maestro en una obra."
+    },
+    {
+        "NAME": "ALMACENERO",
+        "DESCRIPTION": "Persona encargada del almacén."
+    },
+    {
+        "NAME": "PERIODISTA",
+        "DESCRIPTION": "Profesional de la comunicación que trabaja en medios informativos."
+    },
+    {
+        "NAME": "APOYO FINANCIERO",
+        "DESCRIPTION": "Personal que brinda apoyo en temas financieros."
+    },
+    {
+        "NAME": "RECAUDADOR",
+        "DESCRIPTION": "Persona encargada de realizar recaudaciones."
+    },
+    {
+        "NAME": "APOYO TECNICO",
+        "DESCRIPTION": "Personal que brinda apoyo técnico."
+    },
+    {
+        "NAME": "JEFE DE UNIDAD a.i.",
+        "DESCRIPTION": "Persona a cargo de la dirección de una unidad de forma interina."
+    },
+    {
+        "NAME": "AUTORIDAD SUMARIANTE",
+        "DESCRIPTION": "Persona encargada de llevar a cabo sumarios administrativos."
+    },
+    {
+        "NAME": "ANFITRION(A)",
+        "DESCRIPTION": "Persona que recibe y atiende a los invitados."
+    },
+    {
+        "NAME": "FISCAL",
+        "DESCRIPTION": "Abogado que representa al Ministerio Público."
+    },
+    {
+        "NAME": "FISCAL AMBIENTAL",
+        "DESCRIPTION": "Abogado que representa al Ministerio Público en temas ambientales."
+    },
+    {
+        "NAME": "CENTRALIZADOR DE OTROS INGRESOS",
+        "DESCRIPTION": "Persona encargada de centralizar otros ingresos."
+    },
+    {
+        "NAME": "GASTRONOMO",
+        "DESCRIPTION": "Profesional de la gastronomía."
+    },
+    {
+        "NAME": "FISIOTERAPEUTA",
+        "DESCRIPTION": "Profesional de la salud que realiza fisioterapia."
+    },
+    {
+        "NAME": "LOCUTOR",
+        "DESCRIPTION": "Persona que habla en radio o televisión."
+    },
+    {
+        "NAME": "ANESTESIOLOGO",
+        "DESCRIPTION": "Médico especialista en anestesiología."
+    },
+    {
+        "NAME": "PROFESIONAL A",
+        "DESCRIPTION": "Profesional de nivel inicial."
+    },
+    {
+        "NAME": "JEFE DE UNIDAD B",
+        "DESCRIPTION": "Persona a cargo de la dirección de una unidad con un nivel de..."
+    },
+    {
+        "NAME": "DISEÑADOR GRAFICO",
+        "DESCRIPTION": "Profesional que crea diseños visuales."
+    },
+    {
+        "NAME": "CONSEJERO (A)",
+        "DESCRIPTION": "Persona que brinda consejos."
+    },
+    {
+        "NAME": "ASESOR GENERAL",
+        "DESCRIPTION": "Persona que brinda asesoramiento general."
+    },
+    {
+        "NAME": "MANIPULADORA",
+        "DESCRIPTION": "Persona que manipula equipos o materiales."
+    },
+    {
+        "NAME": "JEFE DE GABINETE",
+        "DESCRIPTION": "Persona a cargo de la dirección del gabinete."
+    },
+    {
+        "NAME": "RESP. FINANCIERO",
+        "DESCRIPTION": "Responsable del área financiera."
+    },
+    {
+        "NAME": "COMUNICADORA",
+        "DESCRIPTION": "Profesional de la comunicación."
+    },
+    {
+        "NAME": "ELECTROMEDICO",
+        "DESCRIPTION": "Técnico especializado en equipos médicos."
+    },
+    {
+        "NAME": "PEDIATRA",
+        "DESCRIPTION": "Médico especialista en niños."
+    },
+    {
+        "NAME": "DIRECTOR a.i.",
+        "DESCRIPTION": "Director interino."
+    },
+    {
+        "NAME": "OFICIAL DE DILIGENCIAS",
+        "DESCRIPTION": "Funcionario encargado de realizar diligencias judiciales."
+    },
+    {
+        "NAME": "COCINERO",
+        "DESCRIPTION": "Persona que cocina."
+    },
+    {
+        "NAME": "FOTOGRAFO",
+        "DESCRIPTION": "Profesional de la fotografía."
+    },
+    {
+        "NAME": "PEDAGOGA",
+        "DESCRIPTION": "Profesional de la pedagogía."
+    },
+    {
+        "NAME": "ASISTENTE ADMINISTRATIVO",
+        "DESCRIPTION": "Personal de apoyo administrativo."
+    },
+    {
+        "NAME": "EDUCADOR",
+        "DESCRIPTION": "Persona que se dedica a la educación."
+    },
+    {
+        "NAME": "COMUNICADOR",
+        "DESCRIPTION": "Profesional de la comunicación."
+    },
+    {
+        "NAME": "ENTRENADORA",
+        "DESCRIPTION": "Persona que entrena a otros."
+    },
+    {
+        "NAME": "ENTRENADOR",
+        "DESCRIPTION": "Persona que entrena a otros."
+    },
+    {
+        "NAME": "POSTPRODUCTOR",
+        "DESCRIPTION": "Persona encargada de la postproducción audiovisual."
+    },
+    {
+        "NAME": "MONITORISTA",
+        "DESCRIPTION": "Persona que realiza monitoreo."
+    },
+    {
+        "NAME": "CAPACITADORA",
+        "DESCRIPTION": "Persona que imparte capacitación."
+    },
+    {
+        "NAME": "ASESOR FINANCIERO",
+        "DESCRIPTION": "Profesional que brinda asesoramiento financiero."
+    },
+    {
+        "NAME": "PROTOCOLO",
+        "DESCRIPTION": "Persona encargada de temas de protocolo."
+    },
+    {
+        "NAME": "GINECOLOGO",
+        "DESCRIPTION": "Médico especialista en el sistema reproductor femenino."
+    },
+    {
+        "NAME": "DIGITALIZADOR",
+        "DESCRIPTION": "Persona que digitaliza documentos o información."
+    },
+    {
+        "NAME": "ASISTENTE B",
+        "DESCRIPTION": "Asistente con un nivel de experiencia."
+    },
+    {
+        "NAME": "ASISTENTE D",
+        "DESCRIPTION": "Asistente con un nivel avanzado de experiencia."
+    },
+    {
+        "NAME": "CONTADORA",
+        "DESCRIPTION": "Profesional encargada de la contabilidad."
+    },
+    {
+        "NAME": "CONTROL URBANO",
+        "DESCRIPTION": "Personal encargado del control urbano."
+    },
+    {
+        "NAME": "REVISORA",
+        "DESCRIPTION": "Persona que realiza revisiones."
+    },
+    {
+        "NAME": "TECNICO DE SEGUIMIENTO",
+        "DESCRIPTION": "Técnico encargado del seguimiento."
+    },
+    {
+        "NAME": "EVALUADOR",
+        "DESCRIPTION": "Persona que realiza evaluaciones."
+    },
+    {
+        "NAME": "DIRECTORA a.i.",
+        "DESCRIPTION": "Directora interina."
+    },
+    {
+        "NAME": "OPERADOR DE MAQUINARIA",
+        "DESCRIPTION": "Persona que opera maquinaria."
+    },
+    {
+        "NAME": "SUB DIRECTORA-ADM FINANCIERA",
+        "DESCRIPTION": "Persona que asiste a la directora en temas administrativos y financieros."
+    },
+    {
+        "NAME": "ESPECIALISTA FINACIERO",
+        "DESCRIPTION": "Profesional especializado en finanzas."
+    },
+    {
+        "NAME": "NUTRICIONISTA",
+        "DESCRIPTION": "Profesional de la salud especializado en nutrición."
+    },
+    {
+        "NAME": "CONTROL DE CALIDAD",
+        "DESCRIPTION": "Persona encargada del control de calidad."
+    },
+    {
+        "NAME": "TECNICO REGULADOR",
+        "DESCRIPTION": "Técnico regulador."
+    },
+    {
+        "NAME": "DESPACHADOR",
+        "DESCRIPTION": "Persona encargada de despachar."
+    },
+    {
+        "NAME": "ASISTENTE C",
+        "DESCRIPTION": "Asistente con un nivel intermedio de experiencia."
+    },
+    {
+        "NAME": "RESIDENTE DE OBRA",
+        "DESCRIPTION": "Profesional a cargo de la supervisión en una obra."
+    },
+    {
+        "NAME": "AGRONOMO",
+        "DESCRIPTION": "Profesional de la agronomía."
+    },
+    {
+        "NAME": "RESIDENTE",
+        "DESCRIPTION": "Persona que reside en un lugar específico."
+    },
+    {
+        "NAME": "TECNICO ESPECIALIZADO",
+        "DESCRIPTION": "Técnico con conocimientos especializados en un área."
+    },
+    {
+        "NAME": "ENC. LAVANDERIA",
+        "DESCRIPTION": "Persona a cargo de la lavandería."
+    },
+    {
+        "NAME": "ESTADISTICO",
+        "DESCRIPTION": "Profesional que trabaja con estadísticas."
+    },
+    {
+        "NAME": "SOLDADOR",
+        "DESCRIPTION": "Trabajador especializado en soldadura."
+    },
+    {
+        "NAME": "RESP. DE ADMISION",
+        "DESCRIPTION": "Responsable de admisión."
+    },
+    {
+        "NAME": "RESP. AREA MANTENIMIENTO PARQUE AUTOMOTOR",
+        "DESCRIPTION": "Responsable del área de mantenimiento del parque automotor."
+    },
+    {
+        "NAME": "BIOQUIMICA",
+        "DESCRIPTION": "Científica que estudia los procesos químicos de los seres vivos."
+    },
+    {
+        "NAME": "SUMARIANTE",
+        "DESCRIPTION": "Persona encargada de llevar a cabo sumarios."
+    },
+    {
+        "NAME": "INTERPRETE",
+        "DESCRIPTION": "Persona que traduce de un idioma a otro de forma oral."
+    },
+    {
+        "NAME": "ESPECIALISTA",
+        "DESCRIPTION": "Profesional con conocimientos profundos en un área específica."
+    }
+]

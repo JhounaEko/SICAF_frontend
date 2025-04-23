@@ -38,22 +38,23 @@ class EmployeeController extends Controller implements HasMiddleware
                 try {
                     $query->sort($request->input('sort_by'), $request->input('sort_order', 'asc'));
                 } catch (\Exception $e) {
-                    return ApiResponse::error('Error in sorting', 400, $e->getMessage());
+                    return ApiResponse::error('Error al ordenar.', 400, $e->getMessage());
                 }
             }
+
             $perPage = $request->input('row_num');
             $employees = $query->paginate($perPage);
 
             if ($employees->isEmpty()) {
-                return ApiResponse::error("There're not registered employees.", 200);
+                return ApiResponse::error('No hay empleados registrados.', 200);
             }
 
             $collection = EmployeeResource::collection($employees);
             $responseData = $collection->response()->getData(true);
 
-            return ApiResponse::success('Employees found.', 200, $responseData);
+            return ApiResponse::success('Empleados encontrados.', 200, $responseData);
         } catch (\Exception $e) {
-            return ApiResponse::error('An error unexpected ocurred.', 500, $e->getMessage());
+            return ApiResponse::error('Ocurrió un error inesperado.', 500, $e->getMessage());
         }
     }
 
@@ -63,19 +64,20 @@ class EmployeeController extends Controller implements HasMiddleware
             DB::beginTransaction();
             $employee = Employee::create($request->validated());
             DB::commit();
-            return ApiResponse::success('Employee registered successfully.', 201, $employee);
+            return ApiResponse::success('Empleado registrado exitosamente.', 201, $employee);
         } catch (\Exception $e) {
             DB::rollBack();
-            return ApiResponse::error('An error occurred while registering the employee.', 500, $e->getMessage());
+            return ApiResponse::error('Ocurrió un error al registrar al empleado.', 500, $e->getMessage());
         }
     }
 
     public function show(Employee $employee)
     {
         try {
-            return ApiResponse::success('Employee found.', 200, EmployeeResource::make($employee));
+            return ApiResponse::success('Empleado encontrado.', 200, EmployeeResource::make($employee));
         } catch (\Exception $e) {
-            return ApiResponse::error('An error unexpected ocurred.', 500, $e->getMessage());
+            return ApiResponse::error('Ocurrió un error inesperado.', 500, $e->getMessage());
+
         }
     }
 
@@ -85,10 +87,10 @@ class EmployeeController extends Controller implements HasMiddleware
             DB::beginTransaction();
             $employee->update($request->validated());
             DB::commit();
-            return ApiResponse::success('Employee updated succesfully.', 200, $employee);
+            return ApiResponse::success('Empleado actualizado exitosamente.', 200, $employee);
         } catch (\Exception $e) {
             DB::rollBack();
-            return ApiResponse::error('An error unexpected ocurred.', 500, $e->getMessage());
+            return ApiResponse::error('Ocurrió un error inesperado.', 500, $e->getMessage());
         }
     }
 }

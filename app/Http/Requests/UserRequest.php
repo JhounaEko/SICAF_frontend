@@ -61,16 +61,16 @@ class UserRequest extends FormRequest
     public function messages()
     {
         return [
-            'first_name.regex' => 'The first_name field must be letters, spaces, apostrophes, or hyphens.',
-            'last_name.regex' => 'The last_name field must be letters, spaces, apostrophes, or hyphens.',
-            'phone_number.regex' => 'The phone number field must be valid (starts with 6 or 7 and is 8 digits)',
-            'identity_card.regex' => 'The identity_card field only allows digits.',
-            'complement.regex' => 'The complement field only allows 1 or 2 digits and 1 character.',
-            'issued_by.in' => 'The issued_by field must be one of the following: LP (LA PAZ), CH (CHUQUISACA), CB (COCHABAMBA), OR (ORURO), PT (POTOSI), TJ (TARIJA), SC (SANTA CRUZ), BE (BENI), PD (PANDO), S/E (SIN EXPEDIDO).',
-            'password.regex' => 'The password field must be contain at least one uppercase letter, one lowercase letter, one number, and one special character (@$!%*?&).',
-            'email.regex' => 'The email field must be valid.',
-
+            'first_name.regex' => 'El campo nombre solo debe contener letras, espacios, apóstrofes o guiones.',
+            'last_name.regex' => 'El campo apellido solo debe contener letras, espacios, apóstrofes o guiones.',
+            'phone_number.regex' => 'El campo número de teléfono debe ser válido (comienza con 6 o 7 y tiene 8 dígitos).',
+            'identity_card.regex' => 'El campo carnet de identidad solo permite dígitos.',
+            'complement.regex' => 'El campo complemento solo permite 1 o 2 dígitos y 1 carácter.',
+            'issued_by.in' => 'El campo expedido debe ser uno de los siguientes: LP (LA PAZ), CH (CHUQUISACA), CB (COCHABAMBA), OR (ORURO), PT (POTOSÍ), TJ (TARIJA), SC (SANTA CRUZ), BE (BENI), PD (PANDO), S/E (SIN EXPEDIDO).',
+            'password.regex' => 'El campo contraseña debe contener al menos una letra mayúscula, una letra minúscula, un número y un carácter especial (@$!%*?&).',
+            'email.regex' => 'El campo correo electrónico debe ser válido.',
         ];
+        
     }
     
     protected function prepareForValidation()
