@@ -32,6 +32,7 @@ class MenuController extends Controller
 
             $query->filterByState($request->input('state'))
                 ->filterByLabelOrRoute($request->input('search'))
+                ->filterByStateName($request->input('state_name'))
                 ->filterByDates($request->input('start_date'), $request->input('end_date'));
 
             if ($request->filled('sort_by')) {

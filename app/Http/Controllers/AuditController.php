@@ -8,6 +8,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controllers\Middleware;
 use OwenIt\Auditing\Models\Audit;
+use Illuminate\Support\Str;
 
 class AuditController extends Controller
 {
@@ -25,7 +26,13 @@ class AuditController extends Controller
             $query = Audit::query();
 
             if ($request->filled('model')) {
+<<<<<<< HEAD
                 $modelName = 'App\\Models\\' . $request->input('model');
+=======
+                $modelInput = strtolower($request->input('model'));
+                $modelName = 'App\\Models\\' . trim(Str::studly(($modelInput)));
+                // var_dump($modelName);
+>>>>>>> 9ba86a3afbf92d7b37b3fc89b2a3ca852a226ad5
                 $query->where('auditable_type', $modelName);
             }
 

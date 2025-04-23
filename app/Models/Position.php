@@ -34,17 +34,31 @@ class Position extends Model implements Auditable
         }
     }
     
+    public function scopeSort($query, $sortBy, $sortOrder = 'asc')
+    {
+        return $query->orderBy($sortBy, $sortOrder);
+    }
+
     public function scopeFilterByNameOrDescription($query, $input)
     {
         $search = mb_strtoupper(trim($input));
         if (!is_null($search)) {
             $query->where(function ($q) use ($search) {
-                $q->where('name', 'LIKE', "%{$search}%")
-                    ->orWhere('description', 'LIKE', "%{$search}%");
+                $q->where('positions.name', 'LIKE', "%{$search}%")
+                    ->orWhere('positions.description', 'LIKE', "%{$search}%");
             });
         }
     }
-    
+
+    public function scopeFilterByStateName($query, $stateName)
+    {
+        if (!is_null($stateName)) {
+            $query->join('states', 'positions.state_id', '=', 'states.id')
+                  ->where('states.name', 'LIKE', "%{$stateName}%")
+                  ->select('positions.*');
+        }
+    }
+
     public function scopeFilterByDates($query, $start, $end)
     {
         if ($start && $end) {

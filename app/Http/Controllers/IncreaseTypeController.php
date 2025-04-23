@@ -17,9 +17,15 @@ class IncreaseTypeController extends Controller implements HasMiddleware
     public static function middleware()
     {
         return [
+<<<<<<< HEAD
             new Middleware('permission:VER TIPOS DE INCREMENTO', only: ['index', 'show']),
             new Middleware('permission:REGISTRAR TIPOS DE INCREMENTO', only: ['store']),
             new Middleware('permission:ACTUALIZAR TIPOS DE INCREMENTO', only: ['update'])
+=======
+            new Middleware('permission:VIEW INCREASE TYPES', only: ['index', 'show']),
+            new Middleware('permission:REGISTER INCREASE TYPES', only: ['store']),
+            new Middleware('permission:UPDATE INCREASE TYPES', only: ['update'])
+>>>>>>> 9ba86a3afbf92d7b37b3fc89b2a3ca852a226ad5
         ];
     }
 
@@ -29,6 +35,7 @@ class IncreaseTypeController extends Controller implements HasMiddleware
             $query = IncreaseType::query();
             $query->filterByState($request->input('state'))
                 ->filterByNameOrDescription($request->input('search'))
+                ->filterByStateName($request->input('state_name'))
                 ->filterByDates($request->input('start_date'), $request->input('end_date'));
 
             if ($request->filled('sort_by')) {
