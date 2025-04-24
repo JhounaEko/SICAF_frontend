@@ -45,16 +45,16 @@ class UserResource extends JsonResource
                     }) : [],
                 ];
             }) : [],
-            'office' => [
-                'name' => $this->office->name,
+            'office'       => $this->office ? [
+                'id'       => $this->office->id,
+                'name'     => $this->office->name,
                 'initials' => $this->office->initials,
-            ],
-            'place' => $this->whenLoaded('place', function () { // Usa whenLoaded si quieres que solo aparezca si la relación fue cargada (eager loaded)
-                 return [
-                     'name' => $this->place->description,
-                     'initials' => $this->place->abbreviation,
-                 ];
-             }, []),
+            ] : [],
+            'place'            => $this->place ? [
+                'id'           => $this->place->id,
+                'description'         => $this->place->description,
+                'abbreviation' => $this->place->abbreviation,
+            ] : [],
             'state' => [
                 'name' => $this->state->name,
                 'code' => $this->state->code,

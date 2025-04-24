@@ -34,8 +34,7 @@ class UserRequest extends FormRequest
                 'password' => ['sometimes', 'string', 'min:8', 'confirmed'],
                 'password_change_count' => ['sometimes', 'integer'],
                 'email' => ['sometimes', 'string', 'email', 'regex:/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/', Rule::unique('users', 'email')->ignore($this->user)],
-                'office_id' => ['sometimes', 'integer', 'exists:offices,id'],
-                'place_id' => ['sometimes', 'integer', 'exists:places,id'],
+                'office_location_id' => ['sometimes', 'integer', 'exists:office_locations,id'],
                 
                 'state_id' => ['sometimes', 'integer', 'exists:states,id'],
                 'roles' => ['sometimes', 'array'],
@@ -53,8 +52,7 @@ class UserRequest extends FormRequest
             'password' => ['required', 'string', 'min:8', 'confirmed'],
             'password_change_count' => ['nullable', 'integer'],
             'email' => ['required', 'string', 'email', 'regex:/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/', Rule::unique('users', 'email')->ignore($this->user)],
-            'office_id' => ['required', 'integer', 'exists:offices,id'],
-            'place_id' => ['required', 'integer', 'exists:places,id'],
+            'office_location_id' => ['required', 'integer', 'exists:office_locations,id'],
             
             'state_id' => ['nullable', 'integer', 'exists:states,id'],
             'roles' => ['sometimes', 'array'],

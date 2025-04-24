@@ -5,18 +5,23 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class PlateResource extends JsonResource
+class OfficeLocationResource extends JsonResource
 {
+
     public function toArray(Request $request): array
     {
         return [
             'id' => $this->id,
-            'description' => $this->description,
-            'serie' => $this->serie,
-            'item' => $this->item ? [
-                'name' => $this->item->description,
-                'id' => $this->item->id,
+            'office' => $this->office ? [
+                'name' => $this->office->name,
+                'id' => $this->office->id,
             ] : [],
+            'place' => $this->place ? [
+                'description' => $this->place->description,
+                'code' => $this->place->code,
+            ] : [],
+            'latitude' => $this->latitude,
+            'longitude' => $this->longitude,
             'state' => [
                 'name' => $this->state->name,
                 'code' => $this->state->code,

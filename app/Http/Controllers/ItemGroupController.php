@@ -93,7 +93,7 @@ class ItemGroupController extends Controller implements HasMiddleware
             return ApiResponse::success('Item group updated succesfully.', 200, $itemGroup);
         } catch (\Exception $e) {
             DB::rollBack();
-            return ApiResponse::error('An error unexpected ocurred.', 500, $e->getMessage());
+            return ApiResponse::error('An error occurred while updating the item group.', 500, $e->getMessage());
         }
     }
 }

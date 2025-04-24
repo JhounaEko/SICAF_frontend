@@ -95,9 +95,9 @@ GET http://127.0.0.1:8000/api/v1/offices/41
 Authorization: Bearer 90|3OBp0BQauFsX4k547Sjtx8X7lYmc7XbkLdwdD7G8beca6603
 Accept: application/json
 ###Test get users &sort_by=office_name&sort_order=desc
-GET http://127.0.0.1:8000/api/v1/users?page=1&sort_by=id&sort_order=desc&row_num=20&office_name=AC
+GET http://127.0.0.1:8000/api/v1/users?page=1&sort_by=place_name&sort_order=asc&row_num=50
 Accept: application/json
-Authorization: Bearer 107|XhcIpln7Ejvth29CmvvSAUUUfdn6x0DVUorYxK7C9d2a9be3
+Authorization: Bearer 115|mdovb47kc8OVSSCwO4NQSkXho4wMJL1WA9GC7pBuafb779d6
 ###Test post users
 POST http://127.0.0.1:8000/api/v1/users
 Content-Type: application/json
@@ -144,14 +144,14 @@ Authorization: Bearer 90|3OBp0BQauFsX4k547Sjtx8X7lYmc7XbkLdwdD7G8beca6603
     "office_id": 126,
 }
 ###Test patch users
-PATCH http://127.0.0.1:8000/api/v1/users/1
+PATCH http://127.0.0.1:8000/api/v1/users/3
 Content-Type: application/json
 Accept: application/json
-Authorization: Bearer 90|3OBp0BQauFsX4k547Sjtx8X7lYmc7XbkLdwdD7G8beca6603
+Authorization: Bearer 112|72rnmrDYRG1uN1eX1lvU7p2YUFlm5xlfnUAhko78e1290522
 
 
 {
-     "password_change_count" : 1
+     "state_id" : 2
 }
 
 
@@ -177,14 +177,14 @@ Content-Type: application/json
 Accept: application/json
 
 {
-    "username": "ZRIVAS",
+    "username": "zrivas",
     "password": "Danger3@"
 }
 
 ###Test logout user
 POST http://127.0.0.1:8000/api/v1/logout
 Content-Type: application/json
-Authorization: Bearer 106|wkrS6LMDJE2vNVpB9dRqgtxcL2vOi3ZRNPtXTggnb248e4a6
+Authorization: Bearer 114|7CyiPIG3hVljifx82uY0h8D8ficEiu95rn0TLzudbdf3d1df
 # Authorization: Bearer 28|re2vU9qxuCEdSKHrbpmpTT41Yl2kXwzscKQVG2iW27938767
 Accept: application/json
 ###Test register users no authenticated
@@ -216,10 +216,10 @@ Authorization: Bearer 102|AZr7rPRPhMdeKrDifrIw99IDKMdUovvQ6A8nM6Ly5a6b08b3
 POST http://127.0.0.1:8000/api/v1/permissions
 Accept: application/json
 Content-Type: application/json
-Authorization: Bearer 103|fYhkwQw1bFuGjYTwdfeEaQRBk8sV1oaqhA2AcrCB17af6cf6
+Authorization: Bearer 114|7CyiPIG3hVljifx82uY0h8D8ficEiu95rn0TLzudbdf3d1df
 
 {
-    "name": "DELETE DOCUMENTS",
+    "name": "delete places",
 }
 ###Test show permission
 GET http://127.0.0.1:8000/api/v1/permissions/1
@@ -268,19 +268,19 @@ Authorization: Bearer 7|ORfkdK9zgDkoCHB7Zim7HqPGq5wA4PXrW6MC2Vx3c13a89ee
 PATCH http://127.0.0.1:8000/api/v1/roles/1
 Content-Type: application/json
 Accept: application/json
-Authorization: Bearer 103|fYhkwQw1bFuGjYTwdfeEaQRBk8sV1oaqhA2AcrCB17af6cf6
+Authorization: Bearer 115|mdovb47kc8OVSSCwO4NQSkXho4wMJL1WA9GC7pBuafb779d6
 
-#     "menus" : [1, 2]
+# { 
+#     "permissions" : [7, 3, 10, 13]
 # }
 
 {
-    "permissions": [1, 2, 3, 4, 5, 6, 7, 8, 9, 11, 12, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30 ,31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110],
+    "permissions": [1, 2, 3, 4, 5, 6, 7, 8, 9, 11, 12, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30 ,31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123, 124, 125, 126],
 }
 ###Test show roles
 GET http://127.0.0.1:8000/api/v1/roles/1
 Accept: application/json
-Authorization: Bearer 106|wkrS6LMDJE2vNVpB9dRqgtxcL2vOi3ZRNPtXTggnb248e4a6
-
+Authorization: Bearer 114|7CyiPIG3hVljifx82uY0h8D8ficEiu95rn0TLzudbdf3d1df
 ###Test get employees
 GET http://127.0.0.1:8000/api/v1/employees?state_name=act
 Accept: application/json
@@ -486,9 +486,9 @@ PATCH http://127.0.0.1:8000/api/v1/notifications/mark-all-as-read
 Accept: application/json
 Authorization: Bearer 92|f9CNWPwEnseagK9LS52EczfJOBMLMZ1Uc1bNieQTeadf5880
 ###GET POSITIONS
-GET http://127.0.0.1:8000/api/v1/positions?row_num=36&search=&sort_by=name&sort_order=desc
+GET http://127.0.0.1:8000/api/v1/positions?sort_by=id&sort_order=asc
 Accept: application/json
-Authorization: Bearer 105|e7PHeyUgC9uQ5TMGcw8JAg0YwErAjgPtZm9Hmwwceb796dae
+Authorization: Bearer 115|mdovb47kc8OVSSCwO4NQSkXho4wMJL1WA9GC7pBuafb779d6
 ###POST POSITIONS
 POST http://127.0.0.1:8000/api/v1/positions
 Accept: application/json
@@ -1168,17 +1168,17 @@ Authorization: Bearer 104|i8IEfoMGOhtSk9rUSOWiJpzsMyi4qZAxH4CWiABP27d9f65c
 ###GET PLACES
 GET http://127.0.0.1:8000/api/v1/places?row_num=5&code=-2
 Accept: application/json
-Authorization: Bearer 104|i8IEfoMGOhtSk9rUSOWiJpzsMyi4qZAxH4CWiABP27d9f65c
+Authorization: Bearer 115|mdovb47kc8OVSSCwO4NQSkXho4wMJL1WA9GC7pBuafb779d6
 ###POST PLACES
 POST http://127.0.0.1:8000/api/v1/places
 Accept: application/json
-Authorization: Bearer 106|wkrS6LMDJE2vNVpB9dRqgtxcL2vOi3ZRNPtXTggnb248e4a6
+Authorization: Bearer 115|mdovb47kc8OVSSCwO4NQSkXho4wMJL1WA9GC7pBuafb779d6
 Content-Type: application/json
 
 {
-    "code": "D-2",
-    "description": "DISTRITO 2",
-    "abbreviation": "DIST-2"
+    "code": "JUPB",
+    "description": "JACH'A UTA PLANTA BAJA",
+    "abbreviation": "DIST-4",
 
 }
 ###PUT PLACES
@@ -1200,16 +1200,16 @@ Authorization: Bearer 106|wkrS6LMDJE2vNVpB9dRqgtxcL2vOi3ZRNPtXTggnb248e4a6
 Content-Type: application/json
 
 {
-    "state_id":2
+    "state_id":2,
 }
 ###SHOW PLACES
 GET http://127.0.0.1:8000/api/v1/places/2
 Accept: application/json
 Authorization: Bearer 106|wkrS6LMDJE2vNVpB9dRqgtxcL2vOi3ZRNPtXTggnb248e4a6
 ###Test get staff &sort_by=office_name&sort_order=desc
-GET http://127.0.0.1:8000/api/v1/staff?page=1&sort_by=id&sort_order=desc&row_num=20&office_name=ac
+GET http://127.0.0.1:8000/api/v1/staff?page=1&sort_by=first_name&sort_order=asc&row_num=2
 Accept: application/json
-Authorization: Bearer 107|XhcIpln7Ejvth29CmvvSAUUUfdn6x0DVUorYxK7C9d2a9be3
+Authorization: Bearer 109|KSm8Io0iCZhJrQlWR5fAOdZgDgYBzP3Qtr0LVmmH9d7386f3
 ###Test post staff
 POST http://127.0.0.1:8000/api/v1/staff
 Content-Type: application/json
@@ -1282,3 +1282,134 @@ Authorization: Bearer 107|XhcIpln7Ejvth29CmvvSAUUUfdn6x0DVUorYxK7C9d2a9be3
 GET http://127.0.0.1:8000/api/v1/staff/1
 Accept: application/json
 Authorization: Bearer 107|XhcIpln7Ejvth29CmvvSAUUUfdn6x0DVUorYxK7C9d2a9be3
+###Test get PLATES
+GET http://127.0.0.1:8000/api/v1/plates?page=1&sort_by=serie&sort_order=desc&row_num=2&
+Accept: application/json
+Authorization: Bearer 110|ochiFBZbVOeVqszc03RqVQVoOagOV401vUx5CWZrf184963d
+###Test post PLATES
+POST http://127.0.0.1:8000/api/v1/plates
+Content-Type: application/json
+Accept: application/json
+Authorization: Bearer 110|ochiFBZbVOeVqszc03RqVQVoOagOV401vUx5CWZrf184963d
+
+{
+   
+    "description": " 060747714 2 CABINA PLOMO  PLACA:1642SGG MARCA MAZDA MOD B2600 4X4 SERIE/CH:MMZ-UNY06260414150",
+    "serie": "PLACA 1642-SGG",
+
+}
+
+###Test update PLATES
+PUT http://127.0.0.1:8000/api/v1/plates/1
+Content-Type: application/json
+Accept: application/json
+Authorization: Bearer 110|ochiFBZbVOeVqszc03RqVQVoOagOV401vUx5CWZrf184963d
+
+{
+    "description": " MOTOR 14B-1730740 C/BLANCO D/VIAJE 26 PERSONAS MARCA TOYOTA MOD BB42L-BRMRS SERIE/JTGFY418702003211 PLACA 1340 YIP",
+    "serie": "PLACA 1340-YIP",
+}
+###Test patch PLATES
+PATCH http://127.0.0.1:8000/api/v1/plates/1
+Content-Type: application/json
+Accept: application/json
+Authorization: Bearer 110|ochiFBZbVOeVqszc03RqVQVoOagOV401vUx5CWZrf184963d
+
+
+{
+   "state_id" : 2
+}
+
+###Test show PLATES
+GET http://127.0.0.1:8000/api/v1/plates/1
+Accept: application/json
+Authorization: Bearer 110|ochiFBZbVOeVqszc03RqVQVoOagOV401vUx5CWZrf184963d
+###Test get INCOME NOTES
+GET http://127.0.0.1:8000/api/v1/income_notes?page=1&sort_by=note&sort_order=desc&row_num=2
+Accept: application/json
+Authorization: Bearer 113|WjvGWLOY2B5k9nV1LgsQNHNOBSsEkLuWSJ3S8jTt544c2767
+###Test post INCOME NOTES
+POST http://127.0.0.1:8000/api/v1/income_notes
+Content-Type: application/json
+Accept: application/json
+Authorization: Bearer 113|WjvGWLOY2B5k9nV1LgsQNHNOBSsEkLuWSJ3S8jTt544c2767
+
+{
+    "note" : "11157",
+    "payment_receipt": "1935/08",
+    "expense_receipt": "1129/08",
+    "voucher_number": "3769/08",
+    "dfm_amount": "7430",
+    "dfm_date" : "2008-01-01",
+
+}
+
+###Test update INCOME NOTES
+PUT http://127.0.0.1:8000/api/v1/income_notes/1
+Content-Type: application/json
+Accept: application/json
+Authorization: Bearer 113|WjvGWLOY2B5k9nV1LgsQNHNOBSsEkLuWSJ3S8jTt544c2767
+
+{
+    "note" : "11157",
+    "payment_receipt": "1935/08",
+    "expense_receipt": "1129/08",
+    "voucher_number": "3769/08",
+    "dfm_amount": "7430",
+    "dfm_date" : "2008-01-01",
+}
+###Test patch INCOME NOTES
+PATCH http://127.0.0.1:8000/api/v1/income_notes/1
+Content-Type: application/json
+Accept: application/json
+Authorization: Bearer 113|WjvGWLOY2B5k9nV1LgsQNHNOBSsEkLuWSJ3S8jTt544c2767
+
+
+{
+   "state_id" : 2
+}
+
+###Test show INCOME NOTES
+GET http://127.0.0.1:8000/api/v1/income_notes/1
+Accept: application/json
+Authorization: Bearer 113|WjvGWLOY2B5k9nV1LgsQNHNOBSsEkLuWSJ3S8jTt544c2767
+###Test get OFFICE LOCATIONS
+GET http://127.0.0.1:8000/api/v1/office_locations?page=1&sort_by=office_id&sort_order=asc&row_num=2&place_name=2
+Accept: application/json
+###Test post OFFICE LOCATIONS
+POST http://127.0.0.1:8000/api/v1/office_locations
+Content-Type: application/json
+Accept: application/json
+Authorization: Bearer 115|mdovb47kc8OVSSCwO4NQSkXho4wMJL1WA9GC7pBuafb779d6
+
+{
+    "office_id" : 126,
+    "place_id": 3
+
+}
+
+###Test update OFFICE LOCATIONS
+PUT http://127.0.0.1:8000/api/v1/office_locations/1
+Content-Type: application/json
+Accept: application/json
+Authorization: Bearer 114|7CyiPIG3hVljifx82uY0h8D8ficEiu95rn0TLzudbdf3d1df
+
+{
+   "office_id" :  2,
+    "place_id": 1,
+}
+###Test patch OFFICE LOCATIONS
+PATCH http://127.0.0.1:8000/api/v1/office_locations/1
+Content-Type: application/json
+Accept: application/json
+Authorization: Bearer 114|7CyiPIG3hVljifx82uY0h8D8ficEiu95rn0TLzudbdf3d1df
+
+
+{
+   "state_id" : 2,
+}
+
+###Test show OFFICE LOCATIONS
+GET http://127.0.0.1:8000/api/v1/office_locations/3
+Accept: application/json
+Authorization: Bearer 115|mdovb47kc8OVSSCwO4NQSkXho4wMJL1WA9GC7pBuafb779d6

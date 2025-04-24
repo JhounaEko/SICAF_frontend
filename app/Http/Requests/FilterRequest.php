@@ -37,7 +37,7 @@ class FilterRequest extends FormRequest
             'event' => ['nullable', 'string', 'max:255', 'in:CREATED,UPDATED'], // Puedes refinar esta validación si tienes un conjunto limitado de eventos
             'auditable_id' => ['nullable', 'integer', 'min:1'],
             // Validaciones para filstros de estados
-            'code' => ['nullable', 'string', 'max:10'],
+            'code' => ['nullable', 'string', 'max:50'],
             'color' => ['nullable', 'string', 'regex:/^#([0-9A-Fa-f]{3}){1,2}$/'],
             'order' => ['nullable', 'int', 'min:0'],
             // Validaciones para filtros de oficinas
@@ -53,12 +53,15 @@ class FilterRequest extends FormRequest
             'username' => ['nullable', 'string', 'max:30'],
             'email' => ['nullable', 'string', 'email', 'regex:/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/'],
             'office_name' => ['nullable', 'string'],
+            'office_location_name' => ['nullable', 'string'],
             'place_name' => ['nullable', 'string'],
             'position_name' => ['nullable', 'string'],
-
+            'item_name' => ['nullable', 'string'],
             'state_name' => ['nullable', 'string'],
             'office_initials' => ['nullable', 'string', 'exists:offices,initials'],
             'office' => ['nullable', 'integer', 'exists:offices,id'],
+            'office_location' => ['nullable', 'integer', 'exists:office_locations,id'],
+
             // Validacion para menus
             'simple_view' => ['nullable', 'boolean'],
             // Validaciones para tipos de cambio
@@ -68,7 +71,7 @@ class FilterRequest extends FormRequest
             // Validaciones para el correlativo
             'value_number' => ['nullable', 'integer', 'min:0'],
             // Validaciones para el detalle historico de las notas
-            'note' => ['nullable', 'integer'],
+            'note' => ['nullable', 'string'],
             'income_note' => ['nullable', 'integer'],
             'payment_voucher' => ['nullable', 'string'],
             'expense_voucher' => ['nullable', 'string'],
@@ -111,8 +114,15 @@ class FilterRequest extends FormRequest
             // Validaciones para organismos financiadores
             'code' => ['nullable', 'string'],
             // Validaciones para los documentos
-            'item' => ['nullable', 'integer'],
+            'item' => ['nullable', 'integer', 'exists:items,id'],
             'original_value' => ['nullable', 'integer'],
+            // Validaciones para notas de ingreso
+            'payment_receipt' => ['nullable', 'string'],
+            'expense_receipt' => ['nullable', 'string'],
+            'voucher_number' => ['nullable', 'string'],
+            'dfm_amount' => ['nullable', 'decimal:0,2'],
+            // Validaciones para locaciones de oficinas
+            'coordinates' => ['nullable', 'numeric', 'between:-90,90'],
         ];
     }
 
@@ -198,6 +208,12 @@ class FilterRequest extends FormRequest
         if ($this->has('place_name')) {
             $this->merge([
                 'place_name' => mb_strtoupper(trim($this->input('place_name'))),
+            ]);
+        }
+
+        if ($this->has('item_name')) {
+            $this->merge([
+                'item_name' => mb_strtoupper(trim($this->input('item_name'))),
             ]);
         }
     }
