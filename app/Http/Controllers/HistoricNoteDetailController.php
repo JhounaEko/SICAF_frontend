@@ -27,9 +27,9 @@ class HistoricNoteDetailController extends Controller implements HasMiddleware
     {
         try {
             $query = HistoricNoteDetail::query();
-            $query->filterByState($request->input('state'))
-                ->filterByNote($request->input('note'))
-                ->filterByIncomeNote($request->input('income_note'))
+            $query->filterByState($request->input('state_id'))
+                ->filterByNote($request->input('note_id'))
+                ->filterByIncomeNote($request->input('income_note_id'))
                 ->filterByPaymentVoucher($request->input('payment_voucher'))
                 ->filterByExpenseVoucher($request->input('expense_voucher'))
                 ->filterByVoucher($request->input('voucher'))

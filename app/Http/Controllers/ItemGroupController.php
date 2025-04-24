@@ -27,8 +27,8 @@ class ItemGroupController extends Controller implements HasMiddleware
     {
         try {
             $query = ItemGroup::query();
-            $query->filterByState($request->input('state'))
-                ->filterByBudgetRubric($request->input('budget_rubric'))
+            $query->filterByState($request->input('state_id'))
+                ->filterByBudgetRubric($request->input('budget_rubric_id'))
                 ->filterByDescriptionsOrMaterial($request->input('search'))
                 ->filterByItemGroupType($request->input('item_group_type'))
                 ->filterByAlphanumericCode($request->input('alphanumeric_code'))

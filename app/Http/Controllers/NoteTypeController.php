@@ -29,7 +29,7 @@ class NoteTypeController extends Controller
     {
         try {
             $query = NoteType::query();
-            $query->filterByState($request->input('state'))
+            $query->filterByState($request->input('state_id'))
                   ->filterByNameOrDescription($request->input('search'))
                   ->filterByDates($request->input('start_date'), $request->input('end_date'));
 

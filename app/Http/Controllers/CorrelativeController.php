@@ -27,7 +27,7 @@ class CorrelativeController extends Controller implements HasMiddleware
     {
         try {
             $query = Correlative::query();
-            $query->filterByState($request->input('state'))
+            $query->filterByState($request->input('state_id'))
                 ->filterByDescription($request->input('search'))
                 ->filterByLimitDate($request->input('date'))
                 ->filterByCurrentNumber($request->input('value_number'))

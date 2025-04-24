@@ -27,7 +27,7 @@ class HistoricChangeController extends Controller implements HasMiddleware
     {
         try {
             $query = HistoricChange::query();
-            $query->filterByState($request->input('state'))
+            $query->filterByState($request->input('state_id'))
                 ->filterByUfv($request->input('ufv'))
                 ->filterByDate($request->input('date'))
                 ->filterByStateName($request->input('state_name'))

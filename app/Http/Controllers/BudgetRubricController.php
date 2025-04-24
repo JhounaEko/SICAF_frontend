@@ -27,7 +27,7 @@ class BudgetRubricController extends Controller implements HasMiddleware
     {
         try {
             $query = BudgetRubric::query();
-            $query->filterByState($request->input('state'))
+            $query->filterByState($request->input('state_id'))
                 ->filterByDescription($request->input('search'))
                 ->filterByRubric($request->input('rubric'))
                 ->filterByLifespan($request->input('lifespan'))

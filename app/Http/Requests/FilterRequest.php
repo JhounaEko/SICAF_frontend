@@ -26,14 +26,14 @@ class FilterRequest extends FormRequest
             // Validaciones generales para los filtros
             'sort_by' => ['nullable', 'string', Rule::in($sortableColumns)],
             'sort_order' => ['nullable', 'string', 'in:ASC,DESC'],
-            'state' => ['nullable', 'integer', 'exists:states,id'],
+            'state_id' => ['nullable', 'integer', 'exists:states,id'],
             'start_date' => ['nullable', 'date', 'before_or_equal:end_date'],
             'end_date' => ['nullable', 'date', 'after_or_equal:start_date'],
             'search' => ['nullable', 'string', 'max:255', 'regex:/^[a-zA-ZÁÉÍÓÚÑáéíóúñ\s\-,.]+$/'],
             'row_num' => ['nullable', 'integer', 'min:1'],
             // Validaciones para los filtros de auditoria
             'model' => ['nullable', 'string', 'max:255', 'model_exists'], // Puedes refinar esta validación si conoces los posibles modelos
-            'user' => ['nullable', 'integer', 'exists:users,id'], // Asumiendo que 'users' es tu tabla de usuarios y 'id' la columna primaria
+            'user_id' => ['nullable', 'integer', 'exists:users,id'], // Asumiendo que 'users' es tu tabla de usuarios y 'id' la columna primaria
             'event' => ['nullable', 'string', 'max:255', 'in:CREATED,UPDATED'], // Puedes refinar esta validación si tienes un conjunto limitado de eventos
             'auditable_id' => ['nullable', 'integer', 'min:1'],
             // Validaciones para filstros de estados
@@ -58,7 +58,7 @@ class FilterRequest extends FormRequest
 
             'state_name' => ['nullable', 'string'],
             'office_initials' => ['nullable', 'string', 'exists:offices,initials'],
-            'office' => ['nullable', 'integer', 'exists:offices,id'],
+            'office_id' => ['nullable', 'integer', 'exists:offices,id'],
             // Validacion para menus
             'simple_view' => ['nullable', 'boolean'],
             // Validaciones para tipos de cambio
@@ -82,7 +82,7 @@ class FilterRequest extends FormRequest
             'ce' => ['nullable', 'integer'],
             'cc' => ['nullable', 'integer'],
             // Validaciones para empresas
-            'enterprise_rubric' => ['nullable', 'integer', 'exists:enterprise_rubrics,id'],
+            'enterprise_rubric_id' => ['nullable', 'integer', 'exists:enterprise_rubrics,id'],
             'branch_name' => ['nullable', 'string'],
             'country' => ['nullable', 'string'],
             'representative' => ['nullable', 'string'],

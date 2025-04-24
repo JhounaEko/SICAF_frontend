@@ -27,7 +27,7 @@ class FundingSourceController extends Controller implements HasMiddleware
     {
         try {
             $query = FundingSource::query();
-            $query->filterByState($request->input('state'))
+            $query->filterByState($request->input('state_id'))
                 ->filterByDescriptionsOrAbbreviation($request->input('search'))
                 ->filterByYear($request->input('year'))
                 ->filterByCode($request->input('number'))

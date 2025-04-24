@@ -27,8 +27,8 @@ class DocumentController extends Controller
     {
         try {
             $query = Document::query();
-            $query->filterByState($request->input('state'))
-                ->filterByItem($request->input('item'))
+            $query->filterByState($request->input('state_id'))
+                ->filterByItem($request->input('item_id'))
                 ->filterByYear($request->input('year'))
                 ->filterByOriginalValue($request->input('original_value'))
                 ->filterByDate($request->input('date'))

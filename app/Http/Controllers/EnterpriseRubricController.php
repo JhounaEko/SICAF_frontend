@@ -27,7 +27,7 @@ class EnterpriseRubricController extends Controller implements HasMiddleware
     {
         try {
             $query = EnterpriseRubric::query();
-            $query->filterByState($request->input('state'))
+            $query->filterByState($request->input('state_id'))
                 ->filterByDescription($request->input('search'))
                 ->filterByStateName($request->input('state_name'))
                 ->filterByDates($request->input('start_date'), $request->input('end_date'));

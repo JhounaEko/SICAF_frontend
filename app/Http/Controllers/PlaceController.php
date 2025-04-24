@@ -27,7 +27,7 @@ class PlaceController extends Controller
         try {
             $query = Place::query();
 
-            $query->filterByState($request->input('state'))
+            $query->filterByState($request->input('state_id'))
                 ->filterByAbbreviationOrDescriptionOrDetails($request->input('search'))
                 ->filterByCode($request->input('code'))
                 ->filterByStateName($request->input('state_name'))

@@ -32,8 +32,8 @@ class UserController extends Controller implements HasMiddleware
     {
         try {
             $query = User::query();
-            $query->filterByState($request->input('state'))
-                ->filterByOffice($request->input('office'))
+            $query->filterByState($request->input('state_id'))
+                ->filterByOffice($request->input('office_id'))
                 ->filterByUsername($request->input('username'))
                 ->filterByEmail($request->input('email'))
                 ->filterByIdentityCard($request->input('identity_card'))
@@ -101,7 +101,7 @@ class UserController extends Controller implements HasMiddleware
 
     public function update(UserRequest $request, User $user, UserService $service)
     {
-        $this->authorize('view', $user);
+        $this->authorize('update', $user);
         try {
             $data = $request->validated();
             $updatedUser = $service->updateUser($user, $data);
