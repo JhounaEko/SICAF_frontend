@@ -39,8 +39,9 @@ class Permission extends SpatiePermission implements Auditable
     }
 
     public function scopeFilterByName($query, $name){
-        if (!is_null($name)) {
-            $query->where('permissions.name', 'LIKE', $name);
+        $search = mb_strtoupper(trim($name));
+        if (!is_null($search)) {
+            $query->where('permissions.name', 'LIKE',"%{$search}%");
         }
     }
 

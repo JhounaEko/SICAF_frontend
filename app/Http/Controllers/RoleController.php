@@ -28,7 +28,7 @@ class RoleController extends Controller implements HasMiddleware
         try {
             $query = Role::query();
 
-            $query->filterByState($request->input('state'))
+            $query->filterByState($request->input('state_id'))
                 ->filterByName($request->input('search'))
                 ->filterByStateName($request->input('state_name'))
                 ->filterByDates($request->input('start_date'), $request->input('end_date'));

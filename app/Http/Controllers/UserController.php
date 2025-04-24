@@ -101,7 +101,7 @@ class UserController extends Controller implements HasMiddleware
 
     public function update(UserRequest $request, User $user, UserService $service)
     {
-        $this->authorize('view', $user);
+        $this->authorize('update', $user);
         try {
             $data = $request->validated();
             $updatedUser = $service->updateUser($user, $data);
