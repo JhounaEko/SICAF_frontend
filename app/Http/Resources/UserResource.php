@@ -49,12 +49,16 @@ class UserResource extends JsonResource
                 'name' => $this->office->name,
                 'initials' => $this->office->initials,
             ],
-            'place' => $this->whenLoaded('place', function () { // Usa whenLoaded si quieres que solo aparezca si la relación fue cargada (eager loaded)
-                 return [
-                     'name' => $this->place->description,
-                     'initials' => $this->place->abbreviation,
-                 ];
-             }, []),
+            'place' => $this->place ? [
+                'name' => $this->place->description,
+                'initials' => $this->place->abbreviation,
+            ] : [],
+            // 'place' => $this->whenLoaded('place', function () { // Usa whenLoaded si quieres que solo aparezca si la relación fue cargada (eager loaded)
+            //      return [
+            //          'name' => $this->place->description,
+            //          'initials' => $this->place->abbreviation,
+            //      ];
+            //  }, []),
             'state' => [
                 'name' => $this->state->name,
                 'code' => $this->state->code,
