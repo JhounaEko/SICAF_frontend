@@ -36,7 +36,7 @@ class EnterpriseRubricController extends Controller implements HasMiddleware
                 try {
                     $query->sort($request->input('sort_by'), $request->input('sort_order', 'asc'));
                 } catch (\Exception $e) {
-                    return ApiResponse::error('Error in sorting', 400, $e->getMessage());
+                    return ApiResponse::error('Error al ordenar', 400, $e->getMessage());
                 }
             }
 
@@ -44,15 +44,15 @@ class EnterpriseRubricController extends Controller implements HasMiddleware
             $enterprise_rubrics = $query->paginate($perPage);
 
             if ($enterprise_rubrics->isEmpty()) {
-                return ApiResponse::error("There're not registered enterprise rubrics.", 200);
+                return ApiResponse::error('No existen rúbricas empresariales registradas.', 200);
             }
 
             $collection = EnterpriseRubricResource::collection($enterprise_rubrics);
             $responseData = $collection->response()->getData(true);
 
-            return ApiResponse::success('Enterprise rubrics found.', 200, $responseData);
+            return ApiResponse::success('Rúbricas empresariales encontradas.', 200, $responseData);
         } catch (\Exception $e) {
-            return ApiResponse::error('An error unexpected ocurred.', 500, $e->getMessage());
+            return ApiResponse::error('Ocurrió un error inesperado.', 500, $e->getMessage());
         }
     }
 
@@ -62,19 +62,19 @@ class EnterpriseRubricController extends Controller implements HasMiddleware
             DB::beginTransaction();
             $enterprise_rubric = EnterpriseRubric::create($request->validated());
             DB::commit();
-            return ApiResponse::success('Enterprise rubric registered successfully.', 201, $enterprise_rubric);
+            return ApiResponse::success('Rúbrica empresarial registrada exitosamente.', 201, $enterprise_rubric);
         } catch (\Exception $e) {
             DB::rollBack();
-            return ApiResponse::error('An error occurred while registering the enterprise rubric.', 500, $e->getMessage());
+            return ApiResponse::error('Se produjo un error al registrar la rúbrica de la empresa.', 500, $e->getMessage());
         }
     }
 
     public function show(EnterpriseRubric $enterpriseRubric)
     {
         try {
-            return ApiResponse::success('Enterprise rubric found.', 200, EnterpriseRubricResource::make($enterpriseRubric));
+            return ApiResponse::success('Rúbrica empresarial encontrada.', 200, EnterpriseRubricResource::make($enterpriseRubric));
         } catch (\Exception $e) {
-            return ApiResponse::error('An error unexpected ocurred.', 500, $e->getMessage());
+            return ApiResponse::error('Ocurrió un error inesperado.', 500, $e->getMessage());
         }
     }
 
@@ -84,10 +84,10 @@ class EnterpriseRubricController extends Controller implements HasMiddleware
             DB::beginTransaction();
             $enterpriseRubric->update($request->validated());
             DB::commit();
-            return ApiResponse::success('Enterprise rubric updated succesfully.', 200, $enterpriseRubric);
+            return ApiResponse::success('Rúbrica empresarial actualizada exitosamente.', 200, $enterpriseRubric);
         } catch (\Exception $e) {
             DB::rollBack();
-            return ApiResponse::error('An error unexpected ocurred.', 500, $e->getMessage());
+            return ApiResponse::error('Se produjo un error al actualizar la rúbrica de la empresa.', 500, $e->getMessage());
         }
     }
 }

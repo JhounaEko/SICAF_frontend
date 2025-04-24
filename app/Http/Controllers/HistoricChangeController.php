@@ -37,7 +37,7 @@ class HistoricChangeController extends Controller implements HasMiddleware
                 try {
                     $query->sort($request->input('sort_by'), $request->input('sort_order', 'asc'));
                 } catch (\Exception $e) {
-                    return ApiResponse::error('Error in sorting', 400, $e->getMessage());
+                    return ApiResponse::error('Error al ordenar', 400, $e->getMessage());
                 }
             }
 
@@ -45,15 +45,15 @@ class HistoricChangeController extends Controller implements HasMiddleware
             $changes = $query->paginate($perPage);
 
             if ($changes->isEmpty()) {
-                return ApiResponse::error("There're not registered changes.", 200);
+                return ApiResponse::error('No hay cambios registrados', 200);
             }
 
             $collection = HistoricChangeResource::collection($changes);
             $responseData = $collection->response()->getData(true);
 
-            return ApiResponse::success('Changes found.', 200, $responseData);
+            return ApiResponse::success('Cambios encontrados.', 200, $responseData);
         } catch (\Exception $e) {
-            return ApiResponse::error('An error unexpected ocurred.', 500, $e->getMessage());
+            return ApiResponse::error('Ocurrió un error inesperado.', 500, $e->getMessage());
         }
     }
 
@@ -63,10 +63,10 @@ class HistoricChangeController extends Controller implements HasMiddleware
             DB::beginTransaction();
             $change = HistoricChange::create($request->validated());
             DB::commit();
-            return ApiResponse::success('Change registered successfully.', 201, $change);
+            return ApiResponse::success('Cambio registrado exitosamente.', 201, $change);
         } catch (\Exception $e) {
             DB::rollBack();
-            return ApiResponse::error('An error occurred while registering the change.', 500, $e->getMessage());
+            return ApiResponse::error('Se produjo un error al registrar el cambio.', 500, $e->getMessage());
         }
     }
 
@@ -74,9 +74,9 @@ class HistoricChangeController extends Controller implements HasMiddleware
     public function show(HistoricChange $historicChange)
     {
         try {
-            return ApiResponse::success('Change found.', 200, HistoricChangeResource::make($historicChange));
+            return ApiResponse::success('Cambio encontrado.', 200, HistoricChangeResource::make($historicChange));
         } catch (\Exception $e) {
-            return ApiResponse::error('An error unexpected ocurred.', 500, $e->getMessage());
+            return ApiResponse::error('Ocurrió un error inesperado.', 500, $e->getMessage());
         }
     }
 
@@ -87,10 +87,10 @@ class HistoricChangeController extends Controller implements HasMiddleware
             DB::beginTransaction();
             $historicChange->update($request->validated());
             DB::commit();
-            return ApiResponse::success('Change updated succesfully.', 200, $historicChange);
+            return ApiResponse::success('Cambio actualizado exitosamente.', 200, $historicChange);
         } catch (\Exception $e) {
             DB::rollBack();
-            return ApiResponse::error('An error unexpected ocurred.', 500, $e->getMessage());
+            return ApiResponse::error('Se produjo un error al actualizar el cambio.', 500, $e->getMessage());
         }
     }
 

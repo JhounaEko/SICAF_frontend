@@ -13,14 +13,10 @@ class NotificationController extends Controller
         try {
             $user = $request->user();
             $notifications = $user->unreadNotifications;
-<<<<<<< HEAD
-            return ApiResponse::success('Notificaciones encontradas.', 200, $notifications);
-=======
             if ($notifications->isEmpty()) {
-                return ApiResponse::success('No unread notifications found.', 200, $notifications);
+                return ApiResponse::success('No se encontraron notificaciones sin leer.', 200, $notifications);
             }
-            return ApiResponse::success('Unread notifications found', 200, $notifications);
->>>>>>> 9ba86a3afbf92d7b37b3fc89b2a3ca852a226ad5
+            return ApiResponse::success('Se encontraron notificaciones sin leer.', 200, $notifications);
         } catch (\Exception $e) {
             return ApiResponse::error('Ocurrió un error inesperado.', 500, $e->getMessage());
         }

@@ -25,7 +25,7 @@ class PasswordChangedNotification extends Notification
 
     public function toDatabase($notifiable) {
         return [
-            'message' => "User {$this->userWhoChangedPassword->first_name} {$this->userWhoChangedPassword->last_name} has changed his password.",
+            'message' => "El usuario {$this->userWhoChangedPassword->first_name} {$this->userWhoChangedPassword->last_name} actualizó su contraseña.",
             'user_id' => $this->userWhoChangedPassword->id
         ];  
     }

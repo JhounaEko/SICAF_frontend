@@ -46,16 +46,16 @@ class ReportController extends Controller implements HasMiddleware
             }
 
             $perPage = $request->input('row_num');
-            $employees = $query->paginate($perPage);
+            $reports = $query->paginate($perPage);
 
             if ($reports->isEmpty()) {
-                return ApiResponse::error("There're not registered reports.", 200);
+                return ApiResponse::error('No hay reportes registrados.', 200);
             }
 
             $collection = ReportResource::collection($reports);
             $responseData = $collection->response()->getData(true);
 
-            return ApiResponse::success('Reports found.', 200, $responseData);
+            return ApiResponse::success('Reportes encontrados.', 200, $responseData);
         } catch (\Exception $e) {
             return ApiResponse::error('Ocurrió un error inesperado.', 500, $e->getMessage());
         }
@@ -68,10 +68,10 @@ class ReportController extends Controller implements HasMiddleware
             $report = Report::create($request->validated());
             DB::commit();
 
-            return ApiResponse::success('Report registered successfully.', 201, $report);
+            return ApiResponse::success('Reporte registrado exitosamente.', 201, $report);
         } catch (\Exception $e) {
             DB::rollBack();
-            return ApiResponse::error('An error occurred while registering the report.', 500, $e->getMessage());
+            return ApiResponse::error('Ocurrió un error al registrar el reporte.', 500, $e->getMessage());
         }
     }
 
@@ -79,7 +79,7 @@ class ReportController extends Controller implements HasMiddleware
     public function show(Report $report)
     {
         try {
-            return ApiResponse::success('Report found.', 200, ReportResource::make($report));
+            return ApiResponse::success('Reporte encontrado.', 200, ReportResource::make($report));
         } catch (\Exception $e) {
             return ApiResponse::error('Ocurrió un error inesperado.', 500, $e->getMessage());
 
@@ -92,10 +92,10 @@ class ReportController extends Controller implements HasMiddleware
             DB::beginTransaction();
             $report->update($request->validated());
             DB::commit();
-            return ApiResponse::success('Report updated succesfully.', 200, $report);
+            return ApiResponse::success('Reporte actualizado exitosamente.', 200, $report);
         } catch (\Exception $e) {
             DB::rollBack();
-            return ApiResponse::error('Ocurrió un error inesperado.', 500, $e->getMessage());
+            return ApiResponse::error('Ocurrió un error al actualizar el reporte.', 500, $e->getMessage());
         }
     }
 }

@@ -62,7 +62,7 @@ class PositionController extends Controller implements HasMiddleware
             DB::beginTransaction();
             $position = Position::create($request->validated());
             DB::commit();
-            return ApiResponse::success('Cargo creado exitosamente.', 201, $position);
+            return ApiResponse::success('Cargo registrado exitosamente.', 201, $position);
         } catch (\Exception $e) {
             DB::rollBack();
             return ApiResponse::error('Ocurrió un error al registrar el cargo.', 500, $e->getMessage());

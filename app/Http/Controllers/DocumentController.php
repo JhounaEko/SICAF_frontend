@@ -40,7 +40,7 @@ class DocumentController extends Controller
                 try {
                     $query->sort($request->input('sort_by'), $request->input('sort_order', 'asc'));
                 } catch (\Exception $e) {
-                    return ApiResponse::error('Error in sorting', 400, $e->getMessage());
+                    return ApiResponse::error('Error al ordenar.', 400, $e->getMessage());
                 }
             }
 
@@ -48,15 +48,15 @@ class DocumentController extends Controller
             $documents = $query->paginate($perPage);
 
             if ($documents->isEmpty()) {
-                return ApiResponse::error("There're not registered documents.", 200);
+                return ApiResponse::error('No hay documentos registrados.', 200);
             }
 
             $collection = DocumentResource::collection($documents);
             $responseData = $collection->response()->getData(true);
 
-            return ApiResponse::success('Documents found.', 200, $responseData);
+            return ApiResponse::success('Documentos encontrados.', 200, $responseData);
         } catch (\Exception $e) {
-            return ApiResponse::error('An error unexpected ocurred.', 500, $e->getMessage());
+            return ApiResponse::error('Ocurrió un error inesperado.', 500, $e->getMessage());
         }
     }
 
@@ -66,10 +66,10 @@ class DocumentController extends Controller
             DB::beginTransaction();
             $document = Document::create($request->validated());
             DB::commit();
-            return ApiResponse::success('Document registered successfully.', 201, $document);
+            return ApiResponse::success('Documento registrado exitosamente.', 201, $document);
         } catch (\Exception $e) {
             DB::rollBack();
-            return ApiResponse::error('An error occurred while registering the document.', 500, $e->getMessage());
+            return ApiResponse::error('Se produjo un error al registrar el documento.', 500, $e->getMessage());
         }
     }
 
@@ -77,9 +77,9 @@ class DocumentController extends Controller
     public function show(Document $document)
     {
         try {
-            return ApiResponse::success('Document found.', 200, DocumentResource::make($document));
+            return ApiResponse::success('Documento encontrado.', 200, DocumentResource::make($document));
         } catch (\Exception $e) {
-            return ApiResponse::error('An error unexpected ocurred.', 500, $e->getMessage());
+            return ApiResponse::error('Ocurrió un error inesperado.', 500, $e->getMessage());
         }
     }
 
@@ -89,10 +89,10 @@ class DocumentController extends Controller
             DB::beginTransaction();
             $document->update($request->validated());
             DB::commit();
-            return ApiResponse::success('Document updated succesfully.', 200, $document);
+            return ApiResponse::success('Documento actualizado exitosamente.', 200, $document);
         } catch (\Exception $e) {
             DB::rollBack();
-            return ApiResponse::error('An error unexpected ocurred.', 500, $e->getMessage());
+            return ApiResponse::error('Se produjo un error al actualizar el documento.', 500, $e->getMessage());
         }
     }
 

@@ -39,7 +39,7 @@ class HistoricRegController extends Controller implements HasMiddleware
                 try {
                     $query->sort($request->input('sort_by'), $request->input('sort_order', 'asc'));
                 } catch (\Exception $e) {
-                    return ApiResponse::error('Error in sorting', 400, $e->getMessage());
+                    return ApiResponse::error('Error al ordenar', 400, $e->getMessage());
                 }
             }
 
@@ -47,15 +47,15 @@ class HistoricRegController extends Controller implements HasMiddleware
             $regs = $query->paginate($perPage);
 
             if ($regs->isEmpty()) {
-                return ApiResponse::error("There're not registered regs.", 200);
+                return ApiResponse::error('No hay regs registrados.', 200);
             }
 
             $collection = HistoricRegResource::collection($regs);
             $responseData = $collection->response()->getData(true);
 
-            return ApiResponse::success('Regs found.', 200, $responseData);
+            return ApiResponse::success('Regs encontrados.', 200, $responseData);
         } catch (\Exception $e) {
-            return ApiResponse::error('An error unexpected ocurred.', 500, $e->getMessage());
+            return ApiResponse::error('Ocurrió un error inesperado.', 500, $e->getMessage());
         }
     }
     public function store(HistoricRegRequest $request)
@@ -64,19 +64,19 @@ class HistoricRegController extends Controller implements HasMiddleware
             DB::beginTransaction();
             $reg = HistoricReg::create($request->validated());
             DB::commit();
-            return ApiResponse::success('Reg registered successfully.', 201, $reg);
+            return ApiResponse::success('Reg registrado exitosamente.', 201, $reg);
         } catch (\Exception $e) {
             DB::rollBack();
-            return ApiResponse::error('An error occurred while registering the reg.', 500, $e->getMessage());
+            return ApiResponse::error('Se produjo un error al registrar el reg.', 500, $e->getMessage());
         }
     }
 
     public function show(HistoricReg $historicReg)
     {
         try {
-            return ApiResponse::success('Reg found.', 200, HistoricRegResource::make($historicReg));
+            return ApiResponse::success('Reg encontrado.', 200, HistoricRegResource::make($historicReg));
         } catch (\Exception $e) {
-            return ApiResponse::error('An error unexpected ocurred.', 500, $e->getMessage());
+            return ApiResponse::error('Ocurrió un error inesperado.', 500, $e->getMessage());
         }
     }
 
@@ -86,10 +86,10 @@ class HistoricRegController extends Controller implements HasMiddleware
             DB::beginTransaction();
             $historicReg->update($request->validated());
             DB::commit();
-            return ApiResponse::success('Reg updated succesfully.', 200, $historicReg);
+            return ApiResponse::success('Reg actualizado exitosamente.', 200, $historicReg);
         } catch (\Exception $e) {
             DB::rollBack();
-            return ApiResponse::error('An error unexpected ocurred.', 500, $e->getMessage());
+            return ApiResponse::error('Se produjo un error al actualizar el reg.', 500, $e->getMessage());
         }
     }
 }

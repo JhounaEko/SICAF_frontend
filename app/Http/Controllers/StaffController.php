@@ -48,7 +48,7 @@ class StaffController extends Controller implements HasMiddleware
                 try {
                     $query->sort($request->input('sort_by'), $request->input('sort_order', 'asc'));
                 } catch (\Exception $e) {
-                    return ApiResponse::error('Error in sorting', 400, $e->getMessage());
+                    return ApiResponse::error('Error al ordenar', 400, $e->getMessage());
                 }
             }
 
@@ -56,15 +56,15 @@ class StaffController extends Controller implements HasMiddleware
             $staff = $query->paginate($perPage);
 
             if ($staff->isEmpty()) {
-                return ApiResponse::error("There're not registered staff.", 200);
+                return ApiResponse::error('No hay personal registrado.', 200);
             }
 
             $collection = StaffResource::collection($staff);
             $responseData = $collection->response()->getData(true);
 
-            return ApiResponse::success('Staff found', 200, $responseData);
+            return ApiResponse::success('Personal encontrado', 200, $responseData);
         } catch (\Exception $e) {
-            return ApiResponse::error('An error unexpected ocurred.', 500, $e->getMessage());
+            return ApiResponse::error('Ocurrió un error inesperado.', 500, $e->getMessage());
         }
     }
 
@@ -72,23 +72,23 @@ class StaffController extends Controller implements HasMiddleware
     {
         try {
             if (auth()->check() && (!auth()->user()->can('REGISTER STAFF'))) {
-                return ApiResponse::error('This action is unauthorized.', 403);
+                return ApiResponse::error('Esta acción no está autorizada.', 403);
             }
             $data = $request->validated();
             $staff = $service->createStaff($data);
-            return ApiResponse::success('Staff registered successfully.', 201, $staff);
+            return ApiResponse::success('Personal registrado exitosamente.', 201, $staff);
         } catch (\Exception $e) {
             DB::rollBack();
-            return ApiResponse::error('An error occurred while registering the staff.', 500, $e->getMessage());
+            return ApiResponse::error('Ocurrió un error al registrar el personal.', 500, $e->getMessage());
         }
     }
 
     public function show(Staff $staff)
     {
         try {
-            return ApiResponse::success('Staff found.', 200, StaffResource::make($staff));
+            return ApiResponse::success('Personal encontrado.', 200, StaffResource::make($staff));
         } catch (\Exception $e) {
-            return ApiResponse::error('An error unexpected ocurred.', 500, $e->getMessage());
+            return ApiResponse::error('Ocurrió un error inesperado.', 500, $e->getMessage());
         }
     }
 
@@ -97,11 +97,11 @@ class StaffController extends Controller implements HasMiddleware
         try {
             $data = $request->validated();
             $updatedStaff = $service->updateStaff($staff, $data);
-            return ApiResponse::success('Staff updated succesfully.', 200, $updatedStaff);
+            return ApiResponse::success('Personal actualizado exitosamente.', 200, $updatedStaff);
         } catch (\Illuminate\Database\UniqueConstraintViolationException $e) {
-            return ApiResponse::error('The Identity Card provided is already in use.', 422); // Código de estado 422 (Unprocessable Entity) es apropiado para errores de validación
+            return ApiResponse::error('El carnet de identidad proporcionado ya está en uso.', 422); // Código de estado 422 (Unprocessable Entity) es apropiado para errores de validación
         } catch (\Exception $e) {
-            return ApiResponse::error('An error occurred while updating the user.', 500, $e->getMessage());
+            return ApiResponse::error('Ocurrió un error al actualizar el personal.', 500, $e->getMessage());
         }
     }
 }

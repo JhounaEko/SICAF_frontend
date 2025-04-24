@@ -42,7 +42,7 @@ class HistoricNoteDetailController extends Controller implements HasMiddleware
                 try {
                     $query->sort($request->input('sort_by'), $request->input('sort_order', 'asc'));
                 } catch (\Exception $e) {
-                    return ApiResponse::error('Error in sorting', 400, $e->getMessage());
+                    return ApiResponse::error('Error al ordenar', 400, $e->getMessage());
                 }
             }
 
@@ -50,15 +50,15 @@ class HistoricNoteDetailController extends Controller implements HasMiddleware
             $note_details = $query->paginate($perPage);
 
             if ($note_details->isEmpty()) {
-                return ApiResponse::error("There're not registered note details.", 200);
+                return ApiResponse::error('No hay detalles de notas registrados.', 200);
             }
 
             $collection = HistoricNoteDetailResource::collection($note_details);
             $responseData = $collection->response()->getData(true);
 
-            return ApiResponse::success('Note details found.', 200, $responseData);
+            return ApiResponse::success('Detalles de notas encontrados.', 200, $responseData);
         } catch (\Exception $e) {
-            return ApiResponse::error('An error unexpected ocurred.', 500, $e->getMessage());
+            return ApiResponse::error('Ocurrió un error inesperado.', 500, $e->getMessage());
         }
     }
 
@@ -68,19 +68,19 @@ class HistoricNoteDetailController extends Controller implements HasMiddleware
             DB::beginTransaction();
             $note_detail = HistoricNoteDetail::create($request->validated());
             DB::commit();
-            return ApiResponse::success('Note detail registered successfully.', 201, $note_detail);
+            return ApiResponse::success('Detalle de nota registrado exitosamente.', 201, $note_detail);
         } catch (\Exception $e) {
             DB::rollBack();
-            return ApiResponse::error('An error occurred while registering the note detail.', 500, $e->getMessage());
+            return ApiResponse::error('Se produjo un error al registrar el detalle de la nota.', 500, $e->getMessage());
         }
     }
 
     public function show(HistoricNoteDetail $historicNoteDetail)
     {
         try {
-            return ApiResponse::success('Note detail found.', 200, HistoricNoteDetailResource::make($historicNoteDetail));
+            return ApiResponse::success('Detalle de nota encontrado.', 200, HistoricNoteDetailResource::make($historicNoteDetail));
         } catch (\Exception $e) {
-            return ApiResponse::error('An error unexpected ocurred.', 500, $e->getMessage());
+            return ApiResponse::error('Ocurrió un error inesperado.', 500, $e->getMessage());
         }
     }
 
@@ -90,10 +90,10 @@ class HistoricNoteDetailController extends Controller implements HasMiddleware
             DB::beginTransaction();
             $historicNoteDetail->update($request->validated());
             DB::commit();
-            return ApiResponse::success('Note detail updated succesfully.', 200, $historicNoteDetail);
+            return ApiResponse::success('Detalle de nota actualizado exitosamente.', 200, $historicNoteDetail);
         } catch (\Exception $e) {
             DB::rollBack();
-            return ApiResponse::error('An error unexpected ocurred.', 500, $e->getMessage());
+            return ApiResponse::error('Se produjo un error al actualizar el detalle de la nota.', 500, $e->getMessage());
         }
     }
 

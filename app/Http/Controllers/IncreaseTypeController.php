@@ -17,9 +17,9 @@ class IncreaseTypeController extends Controller implements HasMiddleware
     public static function middleware()
     {
         return [
-            new Middleware('permission:VER TIPOS DE INCREMENTO', only: ['index', 'show']),
-            new Middleware('permission:REGISTRAR TIPOS DE INCREMENTO', only: ['store']),
-            new Middleware('permission:ACTUALIZAR TIPOS DE INCREMENTO', only: ['update'])
+            new Middleware('permission:VIEW INCREASE TYPES', only: ['index', 'show']),
+            new Middleware('permission:REGISTER INCREASE TYPES', only: ['store']),
+            new Middleware('permission:UPDATE INCREASE TYPES', only: ['update'])
         ];
     }
 

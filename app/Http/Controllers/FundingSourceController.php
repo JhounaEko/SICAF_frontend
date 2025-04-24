@@ -38,7 +38,7 @@ class FundingSourceController extends Controller implements HasMiddleware
                 try {
                     $query->sort($request->input('sort_by'), $request->input('sort_order', 'asc'));
                 } catch (\Exception $e) {
-                    return ApiResponse::error('Error in sorting', 400, $e->getMessage());
+                    return ApiResponse::error('Error al ordenar.', 400, $e->getMessage());
                 }
             }
 
@@ -46,15 +46,15 @@ class FundingSourceController extends Controller implements HasMiddleware
             $funding_sources = $query->paginate($perPage);
 
             if ($funding_sources->isEmpty()) {
-                return ApiResponse::error("There're not registered funding sources.", 200);
+                return ApiResponse::error('No hay fuentes de financiamiento registradas', 200);
             }
 
             $collection = FundingSourceResource::collection($funding_sources);
             $responseData = $collection->response()->getData(true);
 
-            return ApiResponse::success('Funding sources found.', 200, $responseData);
+            return ApiResponse::success('Fuentes de financiamiento encontradas.', 200, $responseData);
         } catch (\Exception $e) {
-            return ApiResponse::error('An error unexpected ocurred.', 500, $e->getMessage());
+            return ApiResponse::error('Ocurrió un error inesperado.', 500, $e->getMessage());
         }
     }
 
@@ -64,10 +64,10 @@ class FundingSourceController extends Controller implements HasMiddleware
             DB::beginTransaction();
             $funding_source = FundingSource::create($request->validated());
             DB::commit();
-            return ApiResponse::success('Funding source registered successfully.', 201, $funding_source);
+            return ApiResponse::success('Fuente de financiamiento registrada exitosamente.', 201, $funding_source);
         } catch (\Exception $e) {
             DB::rollBack();
-            return ApiResponse::error('An error occurred while registering the funding source.', 500, $e->getMessage());
+            return ApiResponse::error('Se produjo un error al registrar la fuente de financiamiento.', 500, $e->getMessage());
         }
     }
 
@@ -75,9 +75,9 @@ class FundingSourceController extends Controller implements HasMiddleware
     public function show(FundingSource $fundingSource)
     {
         try {
-            return ApiResponse::success('Funding source found.', 200, FundingSourceResource::make($fundingSource));
+            return ApiResponse::success('Fuente de financiamiento encontrada.', 200, FundingSourceResource::make($fundingSource));
         } catch (\Exception $e) {
-            return ApiResponse::error('An error unexpected ocurred.', 500, $e->getMessage());
+            return ApiResponse::error('Ocurrió un error inesperado.', 500, $e->getMessage());
         }
     }
 
@@ -87,10 +87,10 @@ class FundingSourceController extends Controller implements HasMiddleware
             DB::beginTransaction();
             $fundingSource->update($request->validated());
             DB::commit();
-            return ApiResponse::success('Funding source updated succesfully.', 200, $fundingSource);
+            return ApiResponse::success('Fuente de financiamiento actualizada exitosamente.', 200, $fundingSource);
         } catch (\Exception $e) {
             DB::rollBack();
-            return ApiResponse::error('An error unexpected ocurred.', 500, $e->getMessage());
+            return ApiResponse::error('Se produjo un error al actualizar la fuente de financiamiento.', 500, $e->getMessage());
         }
     }
 }

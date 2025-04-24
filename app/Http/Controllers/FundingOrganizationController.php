@@ -38,7 +38,7 @@ class FundingOrganizationController extends Controller implements HasMiddleware
                 try {
                     $query->sort($request->input('sort_by'), $request->input('sort_order', 'asc'));
                 } catch (\Exception $e) {
-                    return ApiResponse::error('Error in sorting', 400, $e->getMessage());
+                    return ApiResponse::error('Error al ordenar', 400, $e->getMessage());
                 }
             }
 
@@ -46,15 +46,15 @@ class FundingOrganizationController extends Controller implements HasMiddleware
             $funding_organizations = $query->paginate($perPage);
 
             if ($funding_organizations->isEmpty()) {
-                return ApiResponse::error("There're not registered funding organizations.", 200);
+                return ApiResponse::error('No hay organismos financiadores registrados.', 200);
             }
 
             $collection = FundingOrganizationResource::collection($funding_organizations);
             $responseData = $collection->response()->getData(true);
 
-            return ApiResponse::success('Funding organizations found.', 200, $responseData);
+            return ApiResponse::success('Organismos financiadores encontrados.', 200, $responseData);
         } catch (\Exception $e) {
-            return ApiResponse::error('An error unexpected ocurred.', 500, $e->getMessage());
+            return ApiResponse::error('Ocurrió un error inesperado.', 500, $e->getMessage());
         }
     }
 
@@ -64,10 +64,10 @@ class FundingOrganizationController extends Controller implements HasMiddleware
             DB::beginTransaction();
             $funding_organization = FundingOrganization::create($request->validated());
             DB::commit();
-            return ApiResponse::success('Funding organization registered successfully.', 201, $funding_organization);
+            return ApiResponse::success('Organismo financiador registrado exitosamente.', 201, $funding_organization);
         } catch (\Exception $e) {
             DB::rollBack();
-            return ApiResponse::error('An error occurred while registering the funding organization.', 500, $e->getMessage());
+            return ApiResponse::error('Se produjo un error al registrar el organismo financiador.', 500, $e->getMessage());
         }
     }
 
@@ -75,9 +75,9 @@ class FundingOrganizationController extends Controller implements HasMiddleware
     public function show(FundingOrganization $fundingOrganization)
     {
         try {
-            return ApiResponse::success('Funding organization found.', 200, FundingOrganizationResource::make($fundingOrganization));
+            return ApiResponse::success('Organismo financiador encontrado.', 200, FundingOrganizationResource::make($fundingOrganization));
         } catch (\Exception $e) {
-            return ApiResponse::error('An error unexpected ocurred.', 500, $e->getMessage());
+            return ApiResponse::error('Ocurrió un error inesperado.', 500, $e->getMessage());
         }
     }
 
@@ -87,10 +87,10 @@ class FundingOrganizationController extends Controller implements HasMiddleware
             DB::beginTransaction();
             $fundingOrganization->update($request->validated());
             DB::commit();
-            return ApiResponse::success('Funding organization updated succesfully.', 200, $fundingOrganization);
+            return ApiResponse::success('Organismo financiador actualizado exitosamente.', 200, $fundingOrganization);
         } catch (\Exception $e) {
             DB::rollBack();
-            return ApiResponse::error('An error unexpected ocurred.', 500, $e->getMessage());
+            return ApiResponse::error('Se produjo un error al actualizar el organismo financiador.', 500, $e->getMessage());
         }
     }
 }

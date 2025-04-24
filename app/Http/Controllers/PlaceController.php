@@ -37,7 +37,7 @@ class PlaceController extends Controller
                 try {
                     $query->sort($request->input('sort_by'), $request->input('sort_order', 'asc'));
                 } catch (\Exception $e) {
-                    return ApiResponse::error('Error in sorting,', 400, $e->getMessage());
+                    return ApiResponse::error('Error al ordenar,', 400, $e->getMessage());
                 }
             }
     
@@ -45,15 +45,15 @@ class PlaceController extends Controller
             $places = $query->paginate($perPage);
 
             if ($places->isEmpty()) {
-                return ApiResponse::error("There're not registered places.", 200);
+                return ApiResponse::error('No hay lugares registrados.', 200);
             }
             
             $collection = PlaceResource::collection($places);
             $responseData = $collection->response()->getData(true);
 
-            return ApiResponse::success('Places found.', 200, $responseData);
+            return ApiResponse::success('Lugares encontrados.', 200, $responseData);
         } catch (\Exception $e) {
-            return ApiResponse::error('An unexpected error ocurred', 500, $e->getMessage());
+            return ApiResponse::error('Ocurrió un error inesperado.', 500, $e->getMessage());
         }
     }
 
@@ -63,21 +63,21 @@ class PlaceController extends Controller
             DB::beginTransaction();
             $place = Place::create($request->validated());
             DB::commit();
-            return ApiResponse::success('Place registered successfully.', 201, $place);
+            return ApiResponse::success('Lugar registrado exitosamente.', 201, $place);
         } catch (\Exception $e) {
             DB::rollBack();
-            return ApiResponse::error('An error occurred while registering the place.', 500, $e->getMessage());
+            return ApiResponse::error('Ocurrió un error al registrar el lugar.', 500, $e->getMessage());
         }
     }
 
     public function show(Place $place)
     {
         try {
-            return ApiResponse::success('Place found.', 200, PlaceResource::make($place));
+            return ApiResponse::success('Lugar encontrado.', 200, PlaceResource::make($place));
         } catch (\Illuminate\Database\QueryException $e) {
-            return ApiResponse::error('Database error occurred.', 500, $e->getMessage());
+            return ApiResponse::error('Se produjo un error en la base de datos.', 500, $e->getMessage());
         } catch (\Exception $e) {
-            return ApiResponse::error('An unexpected error occurred.', 500, $e->getMessage());
+            return ApiResponse::error('Ocurrió un error inesperado.', 500, $e->getMessage());
         }
     }
 
@@ -87,10 +87,10 @@ class PlaceController extends Controller
             DB::beginTransaction();
             $place->update($request->validated());
             DB::commit();
-            return ApiResponse::success('Place updated succesfully.', 200, $place);
+            return ApiResponse::success('Lugar actualizado exitosamente.', 200, $place);
         } catch (\Exception $e) {
             DB::rollBack();
-            return ApiResponse::error('An error unexpected ocurred.', 500, $e->getMessage());
+            return ApiResponse::error('Ocurrió un error al actualizar el lugar.', 500, $e->getMessage());
         }
     }
 

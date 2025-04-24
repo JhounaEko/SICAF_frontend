@@ -37,7 +37,7 @@ class HistoricExchangeRateController extends Controller implements HasMiddleware
                 try {
                     $query->sort($request->input('sort_by'), $request->input('sort_order', 'asc'));
                 } catch (\Exception $e) {
-                    return ApiResponse::error('Error in sorting', 400, $e->getMessage());
+                    return ApiResponse::error('Error al ordenar', 400, $e->getMessage());
                 }
             }
 
@@ -45,15 +45,15 @@ class HistoricExchangeRateController extends Controller implements HasMiddleware
             $exchange_rates = $query->paginate($perPage);
 
             if ($exchange_rates->isEmpty()) {
-                return ApiResponse::error("There're not registered exchange rates.", 200);
+                return ApiResponse::error('No hay tipos de cambio registrados.', 200);
             }
 
             $collection = HistoricExchangeRateResource::collection($exchange_rates);
             $responseData = $collection->response()->getData(true);
 
-            return ApiResponse::success('Exchange rates found.', 200, $responseData);
+            return ApiResponse::success('Tipos de cambio encontrados.', 200, $responseData);
         } catch (\Exception $e) {
-            return ApiResponse::error('An error unexpected ocurred.', 500, $e->getMessage());
+            return ApiResponse::error('Ocurrió un error inesperado.', 500, $e->getMessage());
         }
     }
 
@@ -63,19 +63,19 @@ class HistoricExchangeRateController extends Controller implements HasMiddleware
             DB::beginTransaction();
             $exchange_rate = HistoricExchangeRate::create($request->validated());
             DB::commit();
-            return ApiResponse::success('Exchange rate registered successfully.', 201, $exchange_rate);
+            return ApiResponse::success('Tipo de cambio registrado exitosamente.', 201, $exchange_rate);
         } catch (\Exception $e) {
             DB::rollBack();
-            return ApiResponse::error('An error occurred while registering the exchange rate.', 500, $e->getMessage());
+            return ApiResponse::error('Se produjo un error al registrar el tipo de cambio.', 500, $e->getMessage());
         }
     }
 
     public function show(HistoricExchangeRate $historicExchangeRate)
     {
         try {
-            return ApiResponse::success('Exchange rate found.', 200, HistoricExchangeRateResource::make($historicExchangeRate));
+            return ApiResponse::success('Tipo de cambio encontrado.', 200, HistoricExchangeRateResource::make($historicExchangeRate));
         } catch (\Exception $e) {
-            return ApiResponse::error('An error unexpected ocurred.', 500, $e->getMessage());
+            return ApiResponse::error('Ocurrió un error inesperado.', 500, $e->getMessage());
         }
     }
 
@@ -85,10 +85,10 @@ class HistoricExchangeRateController extends Controller implements HasMiddleware
             DB::beginTransaction();
             $historicExchangeRate->update($request->validated());
             DB::commit();
-            return ApiResponse::success('Exchange rate updated succesfully.', 200, $historicExchangeRate);
+            return ApiResponse::success('Tipo de cambio actualizado exitosamente.', 200, $historicExchangeRate);
         } catch (\Exception $e) {
             DB::rollBack();
-            return ApiResponse::error('An error unexpected ocurred.', 500, $e->getMessage());
+            return ApiResponse::error('Se produjo un error al actualizar el tipo de cambio.', 500, $e->getMessage());
         }
     }
 }

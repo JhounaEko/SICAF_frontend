@@ -15,8 +15,6 @@ class AuthController extends Controller
         $request->validate([
             'username' => ['required', 'string', 'max:30'],
             'password' => ['required', 'string', 'min:8']
-        ], [
-            'password.regex' => 'La contraseña debe contener al menos una letra minúscula, una mayúscula, un número y un carácter especial.'
         ]);
 
         $user = User::where('username', mb_strtoupper(trim($request->username)))->first();

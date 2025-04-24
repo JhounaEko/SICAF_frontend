@@ -42,7 +42,7 @@ class ItemGroupController extends Controller implements HasMiddleware
                 try {
                     $query->sort($request->input('sort_by'), $request->input('sort_order', 'asc'));
                 } catch (\Exception $e) {
-                    return ApiResponse::error('Error in sorting', 400, $e->getMessage());
+                    return ApiResponse::error('Error al ordenar.', 400, $e->getMessage());
                 }
             }
 
@@ -50,15 +50,15 @@ class ItemGroupController extends Controller implements HasMiddleware
             $item_groups = $query->paginate($perPage);
 
             if ($item_groups->isEmpty()) {
-                return ApiResponse::error("There're not registered item groups.", 200);
+                return ApiResponse::error('No hay grupos de artículos registrados.', 200);
             }
 
             $collection = ItemGroupResource::collection($item_groups);
             $responseData = $collection->response()->getData(true);
 
-            return ApiResponse::success('Item groups found.', 200, $responseData);
+            return ApiResponse::success('Grupos de artículos encontrados.', 200, $responseData);
         } catch (\Exception $e) {
-            return ApiResponse::error('An error unexpected ocurred.', 500, $e->getMessage());
+            return ApiResponse::error('Ocurrió un error inesperado.', 500, $e->getMessage());
         }
     }
 
@@ -68,19 +68,19 @@ class ItemGroupController extends Controller implements HasMiddleware
             DB::beginTransaction();
             $item_group = ItemGroup::create($request->validated());
             DB::commit();
-            return ApiResponse::success('Item group registered successfully.', 201, $item_group);
+            return ApiResponse::success('Grupo de artículo registrado exitosamente.', 201, $item_group);
         } catch (\Exception $e) {
             DB::rollBack();
-            return ApiResponse::error('An error occurred while registering the item group.', 500, $e->getMessage());
+            return ApiResponse::error('Se produjo un error al registrar el grupo de artículo.', 500, $e->getMessage());
         }
     }
 
     public function show(ItemGroup $itemGroup)
     {
         try {
-            return ApiResponse::success('Item group found.', 200, ItemGroupResource::make($itemGroup));
+            return ApiResponse::success('Grupo de artículo encontrado.', 200, ItemGroupResource::make($itemGroup));
         } catch (\Exception $e) {
-            return ApiResponse::error('An error unexpected ocurred.', 500, $e->getMessage());
+            return ApiResponse::error('Ocurrió un error inesperado.', 500, $e->getMessage());
         }
     }
 
@@ -90,10 +90,10 @@ class ItemGroupController extends Controller implements HasMiddleware
             DB::beginTransaction();
             $itemGroup->update($request->validated());
             DB::commit();
-            return ApiResponse::success('Item group updated succesfully.', 200, $itemGroup);
+            return ApiResponse::success('Grupo de artículo actualizado exitosamente.', 200, $itemGroup);
         } catch (\Exception $e) {
             DB::rollBack();
-            return ApiResponse::error('An error unexpected ocurred.', 500, $e->getMessage());
+            return ApiResponse::error('Se produjo un error al actualizar el grupo de artículo.', 500, $e->getMessage());
         }
     }
 }

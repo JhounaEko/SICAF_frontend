@@ -39,7 +39,7 @@ class BudgetRubricController extends Controller implements HasMiddleware
                 try {
                     $query->sort($request->input('sort_by'), $request->input('sort_order', 'asc'));
                 } catch (\Exception $e) {
-                    return ApiResponse::error('Error in sorting', 400, $e->getMessage());
+                    return ApiResponse::error('Error al ordenar.', 400, $e->getMessage());
                 }
             }
 
@@ -47,15 +47,15 @@ class BudgetRubricController extends Controller implements HasMiddleware
             $budget_rubrics = $query->paginate($perPage);
 
             if ($budget_rubrics->isEmpty()) {
-                return ApiResponse::error("There're not registered budget rubrics.", 200);
+                return ApiResponse::error('No existen registros sobre rúbricas presupuestarias.', 200);
             }
 
             $collection = BudgetRubricResource::collection($budget_rubrics);
             $responseData = $collection->response()->getData(true);
 
-            return ApiResponse::success('Budget rubrics found.', 200, $responseData);
+            return ApiResponse::success('Se encontraron las rúbricas de presupuesto.', 200, $responseData);
         } catch (\Exception $e) {
-            return ApiResponse::error('An error unexpected ocurred.', 500, $e->getMessage());
+            return ApiResponse::error('Ocurrió un error inesperado.', 500, $e->getMessage());
         }
     }
 
@@ -65,19 +65,19 @@ class BudgetRubricController extends Controller implements HasMiddleware
             DB::beginTransaction();
             $budget_rubric = BudgetRubric::create($request->validated());
             DB::commit();
-            return ApiResponse::success('Budget rubric registered successfully.', 201, $budget_rubric);
+            return ApiResponse::success('Rúbrica de presupuesto registrada exitosamente.', 201, $budget_rubric);
         } catch (\Exception $e) {
             DB::rollBack();
-            return ApiResponse::error('An error occurred while registering the budget rubric.', 500, $e->getMessage());
+            return ApiResponse::error('Se produjo un error al registrar la rúbrica de presupuesto.', 500, $e->getMessage());
         }
     }
 
     public function show(BudgetRubric $budgetRubric)
     {
         try {
-            return ApiResponse::success('Budget rubric found.', 200, BudgetRubricResource::make($budgetRubric));
+            return ApiResponse::success('Rúbrica de presupuesto encontrada.', 200, BudgetRubricResource::make($budgetRubric));
         } catch (\Exception $e) {
-            return ApiResponse::error('An error unexpected ocurred.', 500, $e->getMessage());
+            return ApiResponse::error('Ocurrió un error inesperado.', 500, $e->getMessage());
         }
     }
 
@@ -87,10 +87,10 @@ class BudgetRubricController extends Controller implements HasMiddleware
             DB::beginTransaction();
             $budgetRubric->update($request->validated());
             DB::commit();
-            return ApiResponse::success('Budget rubric updated succesfully.', 200, $budgetRubric);
+            return ApiResponse::success('Rúbrica de presupuesto actualizada con éxito.', 200, $budgetRubric);
         } catch (\Exception $e) {
             DB::rollBack();
-            return ApiResponse::error('An error unexpected ocurred.', 500, $e->getMessage());
+            return ApiResponse::error('Se produjo un error al actualizar la rúbrica de presupuesto.', 500, $e->getMessage());
         }
     }
 }

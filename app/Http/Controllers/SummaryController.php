@@ -44,7 +44,7 @@ class SummaryController extends Controller implements HasMiddleware
                 try {
                     $query->sort($request->input('sort_by'), $request->input('sort_order', 'asc'));
                 } catch (\Exception $e) {
-                    return ApiResponse::error('Error in sorting', 400, $e->getMessage());
+                    return ApiResponse::error('Error al ordenar', 400, $e->getMessage());
                 }
             }
 
@@ -52,15 +52,15 @@ class SummaryController extends Controller implements HasMiddleware
             $summaries = $query->paginate($perPage);
 
             if ($summaries->isEmpty()) {
-                return ApiResponse::error("There're not registered summaries.", 200);
+                return ApiResponse::error('No hay resumenes registrados.', 200);
             }
 
             $collection = SummaryResource::collection($summaries);
             $responseData = $collection->response()->getData(true);
 
-            return ApiResponse::success('Summaries found.', 200, $responseData);
+            return ApiResponse::success('Resumenes encontrados.', 200, $responseData);
         } catch (\Exception $e) {
-            return ApiResponse::error('An error unexpected ocurred.', 500, $e->getMessage());
+            return ApiResponse::error('Ocurrió un error inesperado.', 500, $e->getMessage());
         }
     }
 
@@ -70,19 +70,19 @@ class SummaryController extends Controller implements HasMiddleware
             DB::beginTransaction();
             $item_group = Summary::create($request->validated());
             DB::commit();
-            return ApiResponse::success('Summary registered successfully.', 201, $item_group);
+            return ApiResponse::success('Resumen registrado exitosamente.', 201, $item_group);
         } catch (\Exception $e) {
             DB::rollBack();
-            return ApiResponse::error('An error occurred while registering the summary.', 500, $e->getMessage());
+            return ApiResponse::error('Se produjo un error al registrar el resumen.', 500, $e->getMessage());
         }
     }
 
     public function show(Summary $summary)
     {
         try {
-            return ApiResponse::success('Summary found.', 200, SummaryResource::make($summary));
+            return ApiResponse::success('Resumen encontrado.', 200, SummaryResource::make($summary));
         } catch (\Exception $e) {
-            return ApiResponse::error('An error unexpected ocurred.', 500, $e->getMessage());
+            return ApiResponse::error('Ocurrió un error inesperado.', 500, $e->getMessage());
         }
     }
 
@@ -92,10 +92,10 @@ class SummaryController extends Controller implements HasMiddleware
             DB::beginTransaction();
             $summary->update($request->validated());
             DB::commit();
-            return ApiResponse::success('Summary updated succesfully.', 200, $summary);
+            return ApiResponse::success('Resumen actualizado exitosamente.', 200, $summary);
         } catch (\Exception $e) {
             DB::rollBack();
-            return ApiResponse::error('An error unexpected ocurred.', 500, $e->getMessage());
+            return ApiResponse::error('Se produjo un error al actualizar el resumen.', 500, $e->getMessage());
         }
     }
 }

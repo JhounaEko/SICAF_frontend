@@ -42,7 +42,7 @@ class EnterpriseController extends Controller implements HasMiddleware
                 try {
                     $query->sort($request->input('sort_by'), $request->input('sort_order', 'asc'));
                 } catch (\Exception $e) {
-                    return ApiResponse::error('Error in sorting', 400, $e->getMessage());
+                    return ApiResponse::error('Error al ordenar.', 400, $e->getMessage());
                 }
             }
 
@@ -50,15 +50,15 @@ class EnterpriseController extends Controller implements HasMiddleware
             $enterprises = $query->paginate($perPage);
 
             if ($enterprises->isEmpty()) {
-                return ApiResponse::error("There're not registered enterprises.", 200);
+                return ApiResponse::error('No se encontraron empresas registradas.', 200);
             }
 
             $collection = EnterpriseResource::collection($enterprises);
             $responseData = $collection->response()->getData(true);
 
-            return ApiResponse::success('Enterprises found.', 200, $responseData);
+            return ApiResponse::success('Empresas encontradas.', 200, $responseData);
         } catch (\Exception $e) {
-            return ApiResponse::error('An error unexpected ocurred.', 500, $e->getMessage());
+            return ApiResponse::error('Ocurrió un error inesperado.', 500, $e->getMessage());
         }
     }
 
@@ -68,19 +68,19 @@ class EnterpriseController extends Controller implements HasMiddleware
             DB::beginTransaction();
             $enterprise = Enterprise::create($request->validated());
             DB::commit();
-            return ApiResponse::success('Enterprise registered successfully.', 201, $enterprise);
+            return ApiResponse::success('Empresa registrada exitosamente.', 201, $enterprise);
         } catch (\Exception $e) {
             DB::rollBack();
-            return ApiResponse::error('An error occurred while registering the enterprise.', 500, $e->getMessage());
+            return ApiResponse::error('Se produjo un error al registrar la empresa.', 500, $e->getMessage());
         }
     }
 
     public function show(Enterprise $enterprise)
     {
         try {
-            return ApiResponse::success('Enterprise found.', 200, EnterpriseResource::make($enterprise));
+            return ApiResponse::success('Empresa encontrada.', 200, EnterpriseResource::make($enterprise));
         } catch (\Exception $e) {
-            return ApiResponse::error('An error unexpected ocurred.', 500, $e->getMessage());
+            return ApiResponse::error('Ocurrió un error inesperado.', 500, $e->getMessage());
         }
     }
 
@@ -90,10 +90,10 @@ class EnterpriseController extends Controller implements HasMiddleware
             DB::beginTransaction();
             $enterprise->update($request->validated());
             DB::commit();
-            return ApiResponse::success('Enterprise updated succesfully.', 200, $enterprise);
+            return ApiResponse::success('Empresa actualizada exitosamente.', 200, $enterprise);
         } catch (\Exception $e) {
             DB::rollBack();
-            return ApiResponse::error('An error unexpected ocurred.', 500, $e->getMessage());
+            return ApiResponse::error('Se produjo un error al actualizar la empresa.', 500, $e->getMessage());
         }
     }
 }

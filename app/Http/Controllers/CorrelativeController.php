@@ -38,7 +38,7 @@ class CorrelativeController extends Controller implements HasMiddleware
                 try {
                     $query->sort($request->input('sort_by'), $request->input('sort_order', 'asc'));
                 } catch (\Exception $e) {
-                    return ApiResponse::error('Error in sorting', 400, $e->getMessage());
+                    return ApiResponse::error('Error al ordenar.', 400, $e->getMessage());
                 }
             }
 
@@ -46,15 +46,15 @@ class CorrelativeController extends Controller implements HasMiddleware
             $correlatives = $query->paginate($perPage);
 
             if ($correlatives->isEmpty()) {
-                return ApiResponse::error("There're not registered correlatives.", 200);
+                return ApiResponse::error('No hay correlativos registrados.', 200);
             }
 
             $collection = CorrelativeResource::collection($correlatives);
             $responseData = $collection->response()->getData(true);
 
-            return ApiResponse::success('Correlatives found.', 200, $responseData);
+            return ApiResponse::success('Se encontraron los correlativos.', 200, $responseData);
         } catch (\Exception $e) {
-            return ApiResponse::error('An error unexpected ocurred.', 500, $e->getMessage());
+            return ApiResponse::error('Ocurrió un error inesperado.', 500, $e->getMessage());
         }
     }
 
@@ -64,19 +64,19 @@ class CorrelativeController extends Controller implements HasMiddleware
             DB::beginTransaction();
             $correlative = Correlative::create($request->validated());
             DB::commit();
-            return ApiResponse::success('Correlative registered successfully.', 201, $correlative);
+            return ApiResponse::success('Correlativo registrado exitosamente.', 201, $correlative);
         } catch (\Exception $e) {
             DB::rollBack();
-            return ApiResponse::error('An error occurred while registering the correlative.', 500, $e->getMessage());
+            return ApiResponse::error('Se produjo un error al registrar el correlativo.', 500, $e->getMessage());
         }
     }
 
     public function show(Correlative $correlative)
     {
         try {
-            return ApiResponse::success('Correlative found.', 200, CorrelativeResource::make($correlative));
+            return ApiResponse::success('Correlativa encontrado.', 200, CorrelativeResource::make($correlative));
         } catch (\Exception $e) {
-            return ApiResponse::error('An error unexpected ocurred.', 500, $e->getMessage());
+            return ApiResponse::error('Ocurrió un error inesperado.', 500, $e->getMessage());
         }
     }
 
@@ -86,10 +86,10 @@ class CorrelativeController extends Controller implements HasMiddleware
             DB::beginTransaction();
             $correlative->update($request->validated());
             DB::commit();
-            return ApiResponse::success('Correlative updated succesfully.', 200, $correlative);
+            return ApiResponse::success('Correlativo actualizado con éxito.', 200, $correlative);
         } catch (\Exception $e) {
             DB::rollBack();
-            return ApiResponse::error('An error unexpected ocurred.', 500, $e->getMessage());
+            return ApiResponse::error('Se produjo un error al actualizar el correlativo.', 500, $e->getMessage());
         }
     }
 }
