@@ -97,7 +97,7 @@ Accept: application/json
 ###Test get users &sort_by=office_name&sort_order=desc
 GET http://127.0.0.1:8000/api/v1/users?page=1&sort_by=place_name&sort_order=asc&row_num=50
 Accept: application/json
-Authorization: Bearer 115|mdovb47kc8OVSSCwO4NQSkXho4wMJL1WA9GC7pBuafb779d6
+Authorization: Bearer 116|frHEzOu2H56iKcHEKgWC4PpOwhyovoYPr2CQwA3V915b8674
 ###Test post users
 POST http://127.0.0.1:8000/api/v1/users
 Content-Type: application/json
@@ -1207,14 +1207,14 @@ GET http://127.0.0.1:8000/api/v1/places/2
 Accept: application/json
 Authorization: Bearer 106|wkrS6LMDJE2vNVpB9dRqgtxcL2vOi3ZRNPtXTggnb248e4a6
 ###Test get staff &sort_by=office_name&sort_order=desc
-GET http://127.0.0.1:8000/api/v1/staff?page=1&sort_by=first_name&sort_order=asc&row_num=2
+GET http://127.0.0.1:8000/api/v1/staff?page=1&sort_by=first_name&sort_order=asc&row_num=4&state=1
 Accept: application/json
-Authorization: Bearer 109|KSm8Io0iCZhJrQlWR5fAOdZgDgYBzP3Qtr0LVmmH9d7386f3
+Authorization: Bearer 117|JpdHQtxPabwQWUooyR6FQWhygI4Eki8uqyAeejQ77243f6b5
 ###Test post staff
 POST http://127.0.0.1:8000/api/v1/staff
 Content-Type: application/json
 Accept: application/json
-Authorization: Bearer 107|XhcIpln7Ejvth29CmvvSAUUUfdn6x0DVUorYxK7C9d2a9be3
+Authorization: Bearer 117|JpdHQtxPabwQWUooyR6FQWhygI4Eki8uqyAeejQ77243f6b5
 
 {
     "first_name": "Lucia Martina",
@@ -1223,26 +1223,25 @@ Authorization: Bearer 107|XhcIpln7Ejvth29CmvvSAUUUfdn6x0DVUorYxK7C9d2a9be3
     "identity_card": "1839212",
     "issued_by": "PT",
     "email": "LucyMart@hotmail.com",
-    "office_id": 126,
-    "position_id": 1,
-    "place_id": 1,
+    "office_location_id": 2,
+    "position_id": 1
 }
 ### TEST REGISTER PUBLIC STAFF
 POST http://127.0.0.1:8000/api/v1/register_personal
 Content-Type: application/json
 Accept: application/json
-Authorization: Bearer 17|XhcIpln7Ejvth29CmvvSAUUUfdn6x0DVUorYxK7C9d2a9be3
+Authorization: Bearer 7|JpdHQtxPabwQWUooyR6FQWhygI4Eki8uqyAeejQ77243f6b5
 
 {
-    "first_name": "Juan josé",
+    "first_name": "José ",
     "last_name": "Angulo TOrres",
     "phone_number": "61231132",
-    "identity_card": "1839212",
+    "identity_card": "3912031",
+    "complement" : "1A",
     "issued_by": "LP",
-    "email": "JJtorres@hotmail.com",
-    "office_id": 126,
+    "email": "JJtorrez@hotmail.com",
+    "office_location_id": 3,
     "position_id": 1,
-    "place_id": 1
 }
 ###Test update staff
 PUT http://127.0.0.1:8000/api/v1/staff/1
@@ -1263,15 +1262,14 @@ Authorization: Bearer 107|XhcIpln7Ejvth29CmvvSAUUUfdn6x0DVUorYxK7C9d2a9be3
     "place_id": 1
 }
 ###Test patch staff
-PATCH http://127.0.0.1:8000/api/v1/staff/1
+PATCH http://127.0.0.1:8000/api/v1/staff/4
 Content-Type: application/json
 Accept: application/json
-Authorization: Bearer 107|XhcIpln7Ejvth29CmvvSAUUUfdn6x0DVUorYxK7C9d2a9be3
+Authorization: Bearer 117|JpdHQtxPabwQWUooyR6FQWhygI4Eki8uqyAeejQ77243f6b5
 
 
 {
-    "identity_card": "1839212",
-    "complement": "1B"
+    "state_id": 2,
 }
 
 
@@ -1374,7 +1372,7 @@ GET http://127.0.0.1:8000/api/v1/income_notes/1
 Accept: application/json
 Authorization: Bearer 113|WjvGWLOY2B5k9nV1LgsQNHNOBSsEkLuWSJ3S8jTt544c2767
 ###Test get OFFICE LOCATIONS
-GET http://127.0.0.1:8000/api/v1/office_locations?page=1&sort_by=office_id&sort_order=asc&row_num=2&place_name=2
+GET http://127.0.0.1:8000/api/v1/office_locations?page=1&sort_by=id&sort_order=asc&row_num=5
 Accept: application/json
 ###Test post OFFICE LOCATIONS
 POST http://127.0.0.1:8000/api/v1/office_locations
@@ -1412,4 +1410,4 @@ Authorization: Bearer 114|7CyiPIG3hVljifx82uY0h8D8ficEiu95rn0TLzudbdf3d1df
 ###Test show OFFICE LOCATIONS
 GET http://127.0.0.1:8000/api/v1/office_locations/3
 Accept: application/json
-Authorization: Bearer 115|mdovb47kc8OVSSCwO4NQSkXho4wMJL1WA9GC7pBuafb779d6
+Authorization: Bearer 117|JpdHQtxPabwQWUooyR6FQWhygI4Eki8uqyAeejQ77243f6b5

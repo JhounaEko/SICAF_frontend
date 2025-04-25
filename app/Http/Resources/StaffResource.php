@@ -24,7 +24,10 @@ class StaffResource extends JsonResource
             'other_phone_number' => $this->other_phone_number,
             'office_phone_number' => $this->office_phone_number,
             'email' => $this->email,
-            'position' => $this->position,
+            'position' => [
+                'name' => $this->position->name,
+                'id' => $this->position->id,
+            ],
             'office' => [
                 'name' => $this->office->name,
                 'initials' => $this->office->initials,

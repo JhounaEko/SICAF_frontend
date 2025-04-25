@@ -29,9 +29,12 @@ class StaffController extends Controller implements HasMiddleware
     public function index(FilterRequest $request)
     {
         try {
-            $query = Staff::query();
+            $query = Staff::with([
+                'office','place','state'
+              ]);
             $query->filterByState($request->input('state'))
                 ->filterByOffice($request->input('office'))
+                ->filterByPlace($request->input('place'))
                 ->filterByEmail($request->input('email'))
                 ->filterByIdentityCard($request->input('identity_card'))
                 ->filterByIssuedBy($request->input('issued_by'))
@@ -77,6 +80,9 @@ class StaffController extends Controller implements HasMiddleware
             $data = $request->validated();
             $staff = $service->createStaff($data);
             return ApiResponse::success('Staff registered successfully.', 201, $staff);
+        } catch (\Illuminate\Database\UniqueConstraintViolationException $e) {
+            DB::rollBack();
+            return ApiResponse::error('The Identity Card provided is already in use.', 422); // Código de estado 422 (Unprocessable Entity) es apropiado para errores de validación
         } catch (\Exception $e) {
             DB::rollBack();
             return ApiResponse::error('An error occurred while registering the staff.', 500, $e->getMessage());

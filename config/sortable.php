@@ -66,8 +66,10 @@ return [
             'other_phone_number',
             'office_phone_number',
             'place_id',
+            'place_name',
             'position_id',
-            'office_id',
+            'office_',
+            'office_name',
             'state_id',
             'created_at',
             'updated_at'

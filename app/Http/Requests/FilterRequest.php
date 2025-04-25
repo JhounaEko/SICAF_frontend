@@ -60,6 +60,7 @@ class FilterRequest extends FormRequest
             'state_name' => ['nullable', 'string'],
             'office_initials' => ['nullable', 'string', 'exists:offices,initials'],
             'office' => ['nullable', 'integer', 'exists:offices,id'],
+            'place' => ['nullable', 'integer', 'exists:places,id'],
             'office_location' => ['nullable', 'integer', 'exists:office_locations,id'],
 
             // Validacion para menus

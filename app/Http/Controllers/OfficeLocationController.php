@@ -31,7 +31,7 @@ class OfficeLocationController extends Controller implements HasMiddleware
             $query->filterByState($request->input('state'))
                 ->filterByOffice($request->input('office'))
                 ->filterByPlace($request->input('place'))
-                ->filterByCoordinates($request->input('coordinates'))
+                // ->filterByCoordinates($request->input('coordinates'))
                 ->filterByOfficeName($request->input('office_name'))
                 ->filterByPlaceName($request->input('place_name'))
                 ->filterByStateName($request->input('state_name'))

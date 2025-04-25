@@ -32,10 +32,9 @@ class StaffRequest extends FormRequest
                 'identity_card' => ['sometimes', 'string', 'min:6', 'max:8', 'regex:/^[1-9]\d*$/'],
                 'complement' => ['nullable', 'string', 'max:3', 'regex:/^\d{1,2}[A-Za-z]$/'],
                 'issued_by' => ['sometimes', 'string', 'in:LP,CH,CB,OR,PT,TJ,SC,BE,PD,S/E'],
-                'email' => ['sometimes', 'string', 'email', 'regex:/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/', Rule::unique('users', 'email')->ignore($this->user)],
+                'email' => ['sometimes', 'string', 'email', 'regex:/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/', Rule::unique('staff', 'email')->ignore($this->user)],
                 'position_id' => ['sometimes', 'exists:positions,id'],
-                'office_id' => ['sometimes', 'integer', 'exists:offices,id'],
-                'place_id' => ['sometimes', 'integer', 'exists:places,id'],
+                'office_location_id' => ['sometimes', 'integer', 'exists:office_locations,id'],
                 
                 'state_id' => ['sometimes', 'integer', 'exists:states,id'],
             ];
@@ -49,10 +48,9 @@ class StaffRequest extends FormRequest
             'identity_card' => ['required', 'string', 'min:6', 'max:8', 'regex:/^[1-9]\d*$/'],
             'complement' => ['nullable', 'string', 'max:3', 'regex:/^\d{1,2}[A-Za-z]$/'],
             'issued_by' => ['required', 'string', 'in:LP,CH,CB,OR,PT,TJ,SC,BE,PD,S/E'],
-            'email' => ['required', 'string', 'email', 'regex:/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/', Rule::unique('users', 'email')->ignore($this->user)],
+            'email' => ['required', 'string', 'email', 'regex:/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/', Rule::unique('staff', 'email')->ignore($this->user)],
             'position_id' => ['required', 'exists:positions,id'],
-            'office_id' => ['required', 'integer', 'exists:offices,id'],
-            'place_id' => ['required', 'integer', 'exists:places,id'],
+            'office_location_id' => ['required', 'integer', 'exists:office_locations,id'],
             
             'state_id' => ['nullable', 'integer', 'exists:states,id'],
         ];
