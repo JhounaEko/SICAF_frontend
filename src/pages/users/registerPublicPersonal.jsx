@@ -4,7 +4,7 @@ import { ReactNotifications, Store } from 'react-notifications-component';
 import { get, useForm, } from 'react-hook-form';
 import axios from 'axios';
 import Swal from 'sweetalert2';
-function RegisterPublicUser() {
+function RegisterPublicPersonal() {
   
     const { register, handleSubmit, reset, setValue, formState: { errors },getValues} = useForm(
             {
@@ -130,8 +130,9 @@ function RegisterPublicUser() {
       </div>
       <div className="register-container">
         <div className="register-header mb-25px h1">
-          <div className="mb-1">Crear Cuenta</div>
-          <small className="d-block fs-15px lh-16">Ingrese sus datos para acceder a un cuenta</small>
+          <div className="mb-1">Registrarme como personal</div>
+          <div className="mb-1" style={{fontSize:'18px'}}></div>
+          {/* <small className="d-block fs-15px lh-16">Ingrese sus datos para acceder a un cuenta</small> */}
         </div>
         <div className="register-content">
           <form onSubmit={handleSubmit(onSubmit)} className="fs-13px" id="myFormUsersPublic">
@@ -333,7 +334,7 @@ function RegisterPublicUser() {
                             message: "La contraseña debe tener al menos 8 caracteres",
                         },																				
                     })} 	
-                      />
+                />
                     <i
 						className={`fas ${showPasswordConfirmar ? 'fa-eye-slash fa-1_5x' : 'fa-eye fa-1_5x'}`}
 						onClick={togglePasswordVisibilityConfirmar}  
@@ -366,4 +367,4 @@ function RegisterPublicUser() {
   );
 }
 
-export default RegisterPublicUser;
+export default RegisterPublicPersonal;

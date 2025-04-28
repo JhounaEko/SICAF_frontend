@@ -1,10 +1,8 @@
 import React, {useState, useEffect} from 'react';
 import DataTable from 'react-data-table-component';
-import Button from 'react-bootstrap/Button';
 import Swal from 'sweetalert2';
 import { modelUseListTable, modelChangeStatus}  from './../modelPermisos.jsx';
 import { ReactNotifications } from 'react-notifications-component';
-import {addNotification} from './../../../components/alert/alert.jsx';
 import CompModalCreateUpdate from './ModalCreateUpdate.jsx';
 
 const TableList = (getDataRefresch) => {
@@ -46,12 +44,6 @@ const TableList = (getDataRefresch) => {
               timer: 3000,
               confirmButtonColor: "#3085d6",
             });
-        } else {
-            if(dataReturn.error.code === "ERR_NETWORK"){			
-                addNotification('info', 'Problema inesperado', 'Revice su conexion', 'top-right',8000, "fas fa-exclamation-circle" ,null)  			
-            } else {				
-                addNotification('danger', 'Server', " "+dataReturn.error.message, 'top-right',8000, "fas fa-exclamation-circle" ,null)	      
-            }                                                                                                                   
         }
     }
 
@@ -112,11 +104,11 @@ const TableList = (getDataRefresch) => {
             cell:  (row) =>(
                 (row.state.name === "ACTIVO") ? (<div className="btn-flex">
                     <i className="fas fa-toggle-on fa-2x" style = {{color: "#276BAA"}} onClick={ ()=> changeStatus(row.state.name, row.id)} ></i>
-                    <p className="form-check-label mb-2 ms-1" style={{color: 'green', fontSize: '13px' }}>ACTIVO</p>
+                    <p className="mb-2 ms-1" style={{color: 'green', fontSize: '13px' }}>ACTIVO</p>
                 </div>):
                 (<div className="btn-flex">
                     <i className="fas fa-toggle-off fa-2x" onClick={ ()=> changeStatus(row.state.name, row.id)} ></i>
-                    <p className="form-check-label mb-2 ms-1" style={{color: 'red', fontSize: '13px' }}>INACTIVO</p>
+                    <p className="mb-2 ms-1" style={{color: 'red', fontSize: '13px' }}>INACTIVO</p>
                 </div>)
             ),
             width: '120px',
@@ -142,7 +134,7 @@ const TableList = (getDataRefresch) => {
     useEffect( ()=>{         
         const peticionList = async () =>{
             setProgressData(true);
-            const returnData = await useListTable(getPag, getSort.column, getSort.order, getCountRows, getDataRefresch.getDataSearh);
+            const returnData = await useListTable(getPag, getSort.column, getSort.order, getCountRows, getDataRefresch.getParameterSearh, getDataRefresch.getDataSearh);
             if (returnData.status) {
                 try {
                     setDataTables(returnData.response.data.results.data);

@@ -34,7 +34,7 @@ const HeaderNavbar = ({functionRefreschDataTable, searchData}) => {
             <button className="btn btn-primary btn-flex" onClick={openModal}><i className="fas fa-briefcase fa-1_5x"></i> Agregar nueva oficina</button>
         </div>
         <div className="col-sm">   
-            <Form.Group as={Row} className="" controlId="">
+            <Form.Group as={Row} className="" controlId="searchOffice">
                 <Form.Label column sm="2">Buscar:</Form.Label>
                 <Col sm="8">
                     <Form.Control 

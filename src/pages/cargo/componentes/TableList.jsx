@@ -1,6 +1,5 @@
 import React, {useState, useEffect} from 'react';
 import DataTable from 'react-data-table-component';
-import Button from 'react-bootstrap/Button';
 import Swal from 'sweetalert2';
 import { modelUseListTable, modelChangeStatus}  from './../modelCargo.jsx';
 import { ReactNotifications } from 'react-notifications-component';
@@ -161,10 +160,17 @@ const TableList = (getDataRefresch) => {
                     setDataTables([])
                     setNumRow(0);
                 }                 
-            } else {
+            } else {                
                 setRowTotal(0);
                 setDataTables([])
                 setNumRow(0);
+                try {
+                    if (returnData.message == "Unauthenticated."){
+                        console.log("data");
+                    }
+                } catch (error) {                    
+                }
+                
             }
             setProgressData(false);
         }        

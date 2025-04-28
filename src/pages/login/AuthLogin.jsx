@@ -46,6 +46,9 @@ export const useCloseSesion = () => {
                 navigate('/');               
             }).catch( error => {
                 console.log(error);
+				Cookies.remove(process.env.REACT_APP_COOKIES_NAME_TOKEN); 
+                Cookies.remove(process.env.REACT_APP_COOKIES_NAME_DATA);                
+                navigate('/');   
             });			
         }
 

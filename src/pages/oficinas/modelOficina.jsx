@@ -1,6 +1,7 @@
 import CryptoJS from 'crypto-js'; 
 import axios from 'axios';
 import Cookies from 'js-cookie';
+import {addNotification} from './../../components/alert/alert.jsx';
 
 export const modelUseCreate = () => {
 
@@ -27,17 +28,26 @@ export const modelUseCreate = () => {
             );
             returnResponse.status = true;
             return returnResponse;
-        } catch (error) {
-            returnResponse.status = false;
-            if (error.code == "ERR_BAD_REQUEST") {
-                returnResponse.title = "Aviso";
-                returnResponse.message =  error.response.data.message;
-            } else {
-                returnResponse.title = "Problema inesperado";
-                returnResponse.message =  "Revice su conexion";
-            }
+        } catch (error) {   
             console.log(error);
-            return returnResponse;
+            returnResponse.status =false;
+            try {
+                if(error.response.status === 403){                    
+                    addNotification('info', 'Aviso', "No tiene permisos para registrar oficinas", 'top-right',8000, "fas fa-exclamation-circle" ,null)	                          
+                    return returnResponse;
+                } else{
+                    if (error.code == "ERR_BAD_REQUEST") {
+                        addNotification('info', 'aviso', error.response.data.message, 'top-right',8000, "fas fa-exclamation-circle" ,null)	                          
+                        return returnResponse;
+                    } else {
+                        addNotification('danger', 'Problema inesperado', "Revice su conexion", 'top-right',8000, "fas fa-exclamation-circle" ,null)	                          
+                        return returnResponse;
+                    }
+                }
+            } catch(error){
+                addNotification('danger', 'Problema inesperado', "Revice su conexion", 'top-right',8000, "fas fa-exclamation-circle" ,null)	                          
+                return returnResponse;    
+            }   
         }  
     }
     return useCreate;
@@ -73,15 +83,36 @@ export const modelUseListSelect = () =>{
                     },
                 }
             );
-
+            
             returnResponse.status = true;
             returnResponse.response = response;
             return returnResponse;
 
-        } catch (error) {
-            returnResponse.title = "Problema inesperado";
-            returnResponse.message = "Revice su conexion";
-            return returnResponse;
+        } catch (error) {               
+            console.log(error);
+            returnResponse.status =false;
+            try {
+                if(error.response.status === 403){                    
+                    addNotification('info', 'Aviso', "No tiene permisos para listar oficinas", 'top-right',15000, "fas fa-exclamation-circle" ,null)	                                              
+                } else{
+                    if (error.code == "ERR_BAD_REQUEST") {
+                        if (error.response.data.message === "Unauthenticated."){                          
+                            console.log("sesion close");                         
+                            Cookies.remove(process.env.REACT_APP_COOKIES_NAME_TOKEN); 
+                            Cookies.remove(process.env.REACT_APP_COOKIES_NAME_DATA);                
+                            returnResponse.message = "Unauthenticated.";                              
+                        } else {
+                            addNotification('info', 'Aviso', error.response.data.message, 'top-right',8000, "fas fa-exclamation-circle" ,null)	                                                              
+                        } 
+                    } else {
+                        addNotification('danger', 'Problema inesperado', "Revice su conexion", 'top-right',8000, "fas fa-exclamation-circle" ,null)	                                                  
+                    }
+                }
+                return returnResponse;
+            } catch(error){
+                addNotification('danger', 'Problema inesperado', "Revice su conexion", 'top-right',8000, "fas fa-exclamation-circle" ,null)	                          
+                return returnResponse;    
+            }       
         }
     } 
     return useListSelect;  
@@ -122,9 +153,19 @@ export const modelUseListTable = () =>{
             return returnResponse;
         } catch (error) {
             console.log(error);
-            returnResponse.title = "Problema inesperado";
-            returnResponse.message = "Revice su conexion";
-            return returnResponse;
+            returnResponse.status =false;
+            try {
+                if(error.response.status === 403){                    
+                    addNotification('info', 'Aviso', "No tiene permisos para la listar oficinas", 'top-right',8000, "fas fa-exclamation-circle" ,null)	                          
+                    return returnResponse;
+                } else{
+                    addNotification('danger', 'Problema inesperado', "Revice su conexion", 'top-right',8000, "fas fa-exclamation-circle" ,null)	                          
+                    return returnResponse;    
+                }
+            } catch(error){
+                addNotification('danger', 'Problema inesperado', "Revice su conexion", 'top-right',8000, "fas fa-exclamation-circle" ,null)	                          
+                return returnResponse;    
+            }                                   
         }      
     }
     return useListTable;
@@ -157,9 +198,24 @@ export const modelChangeStatus = () =>{
             return returnResponse;
        } catch (error) {
             console.log(error);
-            returnResponse.status=false;
-            returnResponse.error = error;
-            return returnResponse;     
+            returnResponse.status=false;            
+            try {
+                if(error.response.status === 403){                    
+                    addNotification('info', 'Aviso', "No tiene permisos para modificar datos", 'top-right',15000, "fas fa-exclamation-circle" ,null)	                          
+                    return returnResponse;
+                } else{
+                    if (error.code == "ERR_BAD_REQUEST") {
+                        addNotification('info', 'aviso', error.response.data.message, 'top-right',8000, "fas fa-exclamation-circle" ,null)	                          
+                        return returnResponse;
+                    } else {
+                        addNotification('danger', 'Problema inesperado', "Revice su conexion", 'top-right',8000, "fas fa-exclamation-circle" ,null)	                          
+                        return returnResponse;
+                    }
+                }
+            } catch(error){
+                addNotification('danger', 'Problema inesperado', "Revice su conexion", 'top-right',8000, "fas fa-exclamation-circle" ,null)	                          
+                return returnResponse;    
+            }    
        }        
     }
     return useChangeStatus;

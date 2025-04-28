@@ -10,7 +10,7 @@ import {addNotification} from './../../../components/alert/alert.jsx';
 const CompModalCreateUpdate = ({StatusModal,CloseModal,title, dataCurrentRow,functionRefreschDataTable}) => {
 
     const useCreate = modelUseCreate();
-     const useChangeDataRow  = modelChageDataRow (); 
+    const useChangeDataRow  = modelChageDataRow (); 
     const idRef = useRef(dataCurrentRow.id);
     const { register,handleSubmit, reset, setValue,formState: { errors }} = useForm(); 
         
@@ -29,9 +29,7 @@ const CompModalCreateUpdate = ({StatusModal,CloseModal,title, dataCurrentRow,fun
                         timer: 3000,
                         confirmButtonColor: "#3085d6",
                     });
-                } else {
-                    addNotification('info', result.title, result.message, 'top-right',8000, "fas fa-exclamation-circle" ,null)  			
-                }  
+                } 
             /** Se utiliza para modificar datos permiso, cuando se pulsa en el boton guardar */
             } else {
                 const result = await useChangeDataRow(dataForm);

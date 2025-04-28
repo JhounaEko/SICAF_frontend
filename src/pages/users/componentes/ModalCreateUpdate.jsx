@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef} from 'react';
-import { ReactNotifications, Store } from 'react-notifications-component';
+import { ReactNotifications } from 'react-notifications-component';
 import Modal from 'react-bootstrap/Modal';
 import Swal from 'sweetalert2';
 import AsyncSelect from 'react-select/async';
@@ -8,38 +8,30 @@ import {useForm} from 'react-hook-form';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import CryptoJS from 'crypto-js'; 
-
+import { validacionesFirstName, validacionesLastName, validacionesCI } from './../../../components/validaciones/validaciones.jsx';
+import {addNotification} from './../../../components/alert/alert.jsx';
+import {modelUseCreate , modelChageDataRow}  from './../modelUsuarios.jsx';
+import {  useNavigate  } from 'react-router-dom';
+import {modelUseListRol} from './../../roles/modelRoles.jsx';
+import {modelUseListSelect} from './../../oficinas/modelOficina.jsx';
 
 const CompModalCreateUpdate = ( {StatusModal, title, CloseModal, updateTableData, data, statusUpdate=false }) => {
 
-    const [stateButton, setStateButton] = useState(false);
-    const [getData, setData] = useState(data);
+	/** use method globales  */
+	const useChangeDataRow  = modelChageDataRow (); 
+	const useCreate = modelUseCreate ();
+	const navigation = useNavigate ();
+	const useListRol = modelUseListRol();
+	const useListSelect = modelUseListSelect();
+	/** Complementos modal */
+    const [stateButton, setStateButton] = useState(false); 
 	const idRef = useRef(data.id);
-    function addNotification(notificationType, notificationTitle, notificationMessage, notificationPosition, duration, icon,notificationContent) {									
-        Store.addNotification({
-            title: notificationTitle,
-            message: (					
-                <div>				
-                  <i className={icon} style={{ fontSize: '25px', marginRight: '10px' }}></i> {notificationMessage}
-                </div>
-              ),
-            type: notificationType,
-            insert: "top",
-            container: notificationPosition,
-            animationIn: ["animated", "fadeIn"],
-            animationOut: ["animated", "fadeOut"],
-            dismiss: {
-                duration: 8000,			
-            },
-            content: notificationContent
-        });
-    }
 
-	const sessionTokenSicaf = Cookies.get(process.env.REACT_APP_COOKIES_NAME_TOKEN); 
-	const decryptedToken = CryptoJS.AES.decrypt(sessionTokenSicaf, process.env.REACT_APP_API_KEY).toString(CryptoJS.enc.Utf8); 				         
+	// const sessionTokenSicaf = Cookies.get(process.env.REACT_APP_COOKIES_NAME_TOKEN); 
+	// const decryptedToken = CryptoJS.AES.decrypt(sessionTokenSicaf, process.env.REACT_APP_API_KEY).toString(CryptoJS.enc.Utf8); 				         	
 	
-    const { register, handleSubmit, unregister, reset, setValue,formState: { errors },getValues} = useForm(); 
-   	
+	/** ========================================== Complementos formulario =============================== */
+    const { register, handleSubmit, unregister, reset, setValue,formState: { errors },getValues} = useForm();    	
     const onSubmit = async (dataTable) =>{ 					
 		if (getSelectOficce){
 			setSelectOficceStatus(false)	
@@ -51,87 +43,135 @@ const CompModalCreateUpdate = ( {StatusModal, title, CloseModal, updateTableData
 					if (dataTable.id == 0 || dataTable.id == "") {
 						delete dataTable.id;
 						dataTable.office_id = getSelectOficce.id
-						axios({
-							method: "POST",
-							url: process.env.REACT_APP_API_URL+'/api/v1/users',
-							data: dataTable,						
-							headers: {
-								'Content-Type': 'application/json',   
-								'Authorization': 'Bearer '+decryptedToken,  
-							}						
-						}).then( response => {										
-							const arrayIdRoles = getSelectRoles.map((elemento) => (elemento.id));	
-							axios({
-								method: "PATCH",
-								url: process.env.REACT_APP_API_URL+'/api/v1/users/'+response.data.results.id,
-								data: {
-									roles : arrayIdRoles
-								},						
-								headers: {
-									'Content-Type': 'application/json',   
-									'Authorization': 'Bearer '+decryptedToken,  
-								}						
-							}).then( response => {
-								reserForm();
-								updateTableData();						
+						const arrayIdRoles = getSelectRoles.map((elemento) => (elemento.id));
+						dataTable.roles = arrayIdRoles;
+						dataTable.place_id = 1;
+						const returnData = await useCreate(dataTable);
+						
+						if(returnData.status){	
+							reserForm();
+							updateTableData();															
+							Swal.fire({
+								title: "Registro exitoso",
+								icon: "success",
+								draggable: true,
+								timer: 3000,
+								confirmButtonColor: "#3085d6",
+							});															
+						} else {
+							if (returnData.message == "Unauthenticated."){
 								Swal.fire({
-									title: "Registro exitoso",
+									title: "Sesion finalizada",
 									icon: "success",
 									draggable: true,
 									timer: 3000,
 									confirmButtonColor: "#3085d6",
-								});	
-							}).catch(error => {
-								console.log(error);
-								if (error.code == "ERR_BAD_REQUEST") {
-									addNotification('info', 'Aviso', error.response.data.message, 'top-right',8000, "fas fa-exclamation-circle" ,null)  			
-								} else {
-									addNotification('info', 'Problema inesperado', 'Revice su conexion', 'top-right',8000, "fas fa-exclamation-circle" ,null)  			
-								}               	
-							}).finally( () =>{
+								});
+								navigation('/');
+							}
+						}
+						setStateButton(false);
+						// axios({
+						// 	method: "POST",
+						// 	url: process.env.REACT_APP_API_URL+'/api/v1/users',
+						// 	data: dataTable,						
+						// 	headers: {
+						// 		'Content-Type': 'application/json',   
+						// 		'Authorization': 'Bearer '+decryptedToken,  
+						// 	}						
+						// }).then( response => {										
+						// 	const arrayIdRoles = getSelectRoles.map((elemento) => (elemento.id));	
+						// 	axios({
+						// 		method: "PATCH",
+						// 		url: process.env.REACT_APP_API_URL+'/api/v1/users/'+response.data.results.id,
+						// 		data: {
+						// 			roles : arrayIdRoles
+						// 		},						
+						// 		headers: {
+						// 			'Content-Type': 'application/json',   
+						// 			'Authorization': 'Bearer '+decryptedToken,  
+						// 		}						
+						// 	}).then( response => {
+						// 		reserForm();
+						// 		updateTableData();						
+						// 		Swal.fire({
+						// 			title: "Registro exitoso",
+						// 			icon: "success",
+						// 			draggable: true,
+						// 			timer: 3000,
+						// 			confirmButtonColor: "#3085d6",
+						// 		});	
+						// 	}).catch(error => {
+						// 		console.log(error);
+						// 		if (error.code == "ERR_BAD_REQUEST") {
+						// 			addNotification('info', 'Aviso', error.response.data.message, 'top-right',8000, "fas fa-exclamation-circle" ,null)  			
+						// 		} else {
+						// 			addNotification('info', 'Problema inesperado', 'Revice su conexion', 'top-right',8000, "fas fa-exclamation-circle" ,null)  			
+						// 		}               	
+						// 	}).finally( () =>{
 
-							});							
-						}).catch (error => {
-							console.log(error);
-							if (error.code == "ERR_BAD_REQUEST") {
-								addNotification('info', 'Aviso', error.response.data.message, 'top-right',8000, "fas fa-exclamation-circle" ,null)  			
-							} else {
-								addNotification('info', 'Problema inesperado', 'Revice su conexion', 'top-right',8000, "fas fa-exclamation-circle" ,null)  			
-							}               
-						}).finally( () =>{
-							setStateButton(false);
-						}); 
+						// 	});							
+						// }).catch (error => {
+						// 	console.log(error);
+						// 	try {
+						// 		if(error.response.status === 403){                    
+						// 			addNotification('info', 'Aviso', "No tiene permisos para cambiar datos", 'top-right',8000, "fas fa-exclamation-circle" ,null)	                          									
+						// 		} else{
+						// 			if (error.code == "ERR_BAD_REQUEST") {
+						// 				addNotification('info', 'aviso', error.response.data.message, 'top-right',8000, "fas fa-exclamation-circle" ,null)	                          										
+						// 			} else {
+						// 				addNotification('danger', 'Problema inesperado', "Revice su conexion", 'top-right',8000, "fas fa-exclamation-circle" ,null)	                          										
+						// 			}
+						// 		}
+						// 	} catch(error){
+						// 		addNotification('danger', 'Problema inesperado', "Revice su conexion", 'top-right',8000, "fas fa-exclamation-circle" ,null)	                          								    
+						// 	}              
+						// }).finally( () =>{
+						// 	setStateButton(false);
+						// }); 
 					} else {						
-						dataTable.roles = getSelectRoles.map((elemento) => (elemento.id));						
-						axios({
-							method: "PATCH",
-							url: process.env.REACT_APP_API_URL+'/api/v1/users/'+dataTable.id,
-							data: dataTable,						
-							headers: {
-								'Content-Type': 'application/json',   
-								'Authorization': 'Bearer '+decryptedToken,  
-							}						
-						}).then( response => {
-								reserForm();
-								updateTableData();						
-								Swal.fire({
-									title: "Actualización de datos existoso",
-									icon: "success",
-									draggable: true,
-									timer: 3000,
-									confirmButtonColor: "#3085d6",
-								});	
-						}).catch(error => {
-							console.log(error);
-							if (error.code == "ERR_BAD_REQUEST") {
-								addNotification('info', 'Aviso', error.response.data.message, 'top-right',8000, "fas fa-exclamation-circle" ,null)  			
-							} else {
-								addNotification('info', 'Problema inesperado', 'Revice su conexion', 'top-right',8000, "fas fa-exclamation-circle" ,null)  			
-							}               	
-						}).finally( () =>{
-							setStateButton(false);
-						});
-
+						dataTable.roles = getSelectRoles.map((elemento) => (elemento.id));		
+						const result = await useChangeDataRow(dataTable);	
+						if (result.status){
+							reserForm();
+							updateTableData();		
+							Swal.fire({
+								title: "Datos actualizado correctamente",
+								icon: "success",
+								draggable: true,
+								timer: 3000,
+								confirmButtonColor: "#3085d6",
+							});
+						}		
+						// axios({
+						// 	method: "PATCH",
+						// 	url: process.env.REACT_APP_API_URL+'/api/v1/users/'+dataTable.id,
+						// 	data: dataTable,						
+						// 	headers: {
+						// 		'Content-Type': 'application/json',   
+						// 		'Authorization': 'Bearer '+decryptedToken,  
+						// 	}						
+						// }).then( response => {
+						// 		reserForm();
+						// 		updateTableData();						
+						// 		Swal.fire({
+						// 			title: "Actualización de datos existoso",
+						// 			icon: "success",
+						// 			draggable: true,
+						// 			timer: 3000,
+						// 			confirmButtonColor: "#3085d6",
+						// 		});	
+						// }).catch(error => {
+						// 	console.log(error);
+						// 	if (error.code == "ERR_BAD_REQUEST") {
+						// 		addNotification('info', 'Aviso', error.response.data.message, 'top-right',8000, "fas fa-exclamation-circle" ,null)  			
+						// 	} else {
+						// 		addNotification('info', 'Problema inesperado', 'Revice su conexion', 'top-right',8000, "fas fa-exclamation-circle" ,null)  			
+						// 	}               	
+						// }).finally( () =>{
+						// 	setStateButton(false);
+						// });
+						setStateButton(false);
 					}									
 				} else {
 					addNotification('warning', 'Verificar las contraseñas', 'Las contraseñas no coincide', 'top-right',8000, "fas fa-exclamation-circle" ,null)  			
@@ -167,40 +207,55 @@ const CompModalCreateUpdate = ( {StatusModal, title, CloseModal, updateTableData
 	);
 	const [getSelectOficceStatus, setSelectOficceStatus] = useState(false);
 	const [defaultOptionsOffice, setDefaultOptionsOffice] = useState([]);
-	
+
 	const peticionOficce = async (search, pageNumber) =>{
 		try{
 			setIsLoadingOffice(true);
-			const response = await axios.get(process.env.REACT_APP_API_URL+'/api/v1/offices', {
-				params: {
-				state_id: 1,
-				search: search,
-				page: pageNumber,
-				sort_by: 'id',
-				sort_order: 'desc',
-				},
-				headers: {
-				Accept: 'application/json',
-				Authorization: 'Bearer '+decryptedToken,
-				},
-			});					
+			const returnData = await useListSelect(search,pageNumber);
+			// const response = await axios.get(process.env.REACT_APP_API_URL+'/api/v1/offices', {
+			// 	params: {
+			// 	state_id: 1,
+			// 	search: search,
+			// 	page: pageNumber,
+			// 	sort_by: 'id',
+			// 	sort_order: 'desc',
+			// 	},
+			// 	headers: {
+			// 	Accept: 'application/json',
+			// 	Authorization: 'Bearer '+decryptedToken,
+			// 	},
+			// });					
 			/** Se verifica que la pagina actual sea menor a la ultima pagina */				
-			if ( response.data.results.meta.current_page < response.data.results.meta.last_page ) {
-				hasMoreOffice.current = true;
-			}	else {
-				hasMoreOffice.current = false;
-			}	
-			if (response.data.results.data){
-				return response.data.results.data;
-			} else {
+			if (returnData.status){
+				if ( returnData.response.data.results.meta.current_page < returnData.response.data.results.meta.last_page ) {
+					hasMoreOffice.current = true;
+				}	else {
+					hasMoreOffice.current = false;
+				}	
+				if (returnData.response.data.results.data){
+					return returnData.response.data.results.data;
+				} else {
+					return [];
+				}	
+			} else {				
+				if (returnData.message == "Unauthenticated." ){
+					Swal.fire({
+						title: "Sesion finalizada",
+						icon: "success",
+						draggable: true,
+						timer: 3000,
+						confirmButtonColor: "#3085d6",
+					});
+					navigation('/');
+				}
 				return [];
-			}																					
+			}																		
 		} catch (error) {
 			console.log(error)	
 			return [];
 		} finally {
 			setIsLoadingOffice(false);
-		  }
+		}
 	}
 
 	/** Buscador de select office, se ejecuta una petición */
@@ -214,11 +269,13 @@ const CompModalCreateUpdate = ( {StatusModal, title, CloseModal, updateTableData
 	/** Permite cargar los primeros datos de la pagina 1 (datos oficina) */
 	useEffect(() => {  
 		const fetchPeticion = async () => {
-			const response = await peticionOficce ("",1);
-			setDefaultOptionsOffice(response);
+			if (StatusModal){
+				const response = await peticionOficce ("",1);
+				setDefaultOptionsOffice(response);
+			}
 		}
 		fetchPeticion();		
-	}, []);
+	}, [StatusModal]);
 
 	/** Controla el scroll del select office */
 	const handleMenuScrollToBottom = async () => {		
@@ -246,31 +303,45 @@ const CompModalCreateUpdate = ( {StatusModal, title, CloseModal, updateTableData
 
 	const peticionRoles = async (search, pageNumber) =>{
 		try{
-			setIsLoadingRoles(true);
-			const response = await axios.get(process.env.REACT_APP_API_URL+'/api/v1/roles', {
-				params: {
-				state_id: 1,
-				search: search,
-				page: pageNumber,
-				sort_by: 'id',
-				sort_order: 'desc',
-				},
-				headers: {
-					Accept: 'application/json',
-					Authorization: 'Bearer '+decryptedToken,
-				},
-			});		
+			setIsLoadingRoles(true);	
+			const returnData = await useListRol(pageNumber,/**getCountRows = */ 10, search);		
+			// const response = await axios.get(process.env.REACT_APP_API_URL+'/api/v1/roles', {
+			// 	params: {
+			// 	state_id: 1,
+			// 	search: search,
+			// 	page: pageNumber,
+			// 	sort_by: 'id',
+			// 	sort_order: 'desc',
+			// 	},
+			// 	headers: {
+			// 		Accept: 'application/json',
+			// 		Authorization: 'Bearer '+decryptedToken,
+			// 	},
+			// });		
 			try {
 				/** Se verifica que la pagina actual sea menor a la ultima pagina */
-				if ( response.data.results.meta.current_page < response.data.results.meta.last_page ) {
-					hasMoreRoles.current = true;
-				}	else {
-					hasMoreRoles.current = false;
-				}	
-				return response.data.results.data;
+				if (returnData.status) {
+					if ( returnData.response.data.results.meta.current_page < returnData.response.data.results.meta.last_page ) {
+						hasMoreRoles.current = true;
+					}	else {
+						hasMoreRoles.current = false;
+					}	
+					return returnData.response.data.results.data;
+				} else{
+					if (returnData.message == "Unauthenticated."){
+						Swal.fire({
+							title: "Sesion finalizada",
+							icon: "success",
+							draggable: true,
+							timer: 3000,
+							confirmButtonColor: "#3085d6",
+						});
+						navigation('/');
+					}					
+				}
 			} catch (error) {	
-				console.log(error);						
-				return [];							
+				console.log(error);	
+				return [];													
 			}	
 			
 
@@ -308,12 +379,15 @@ const CompModalCreateUpdate = ( {StatusModal, title, CloseModal, updateTableData
 
 	/** Permite cargar los primeros datos de la pagina 1 (datos roles) */
 	useEffect(() => {  
+		
 		const fetchPeticion = async () => {
-			const response = await peticionRoles ("",1);			
-			setDefaultOptionsRoles(response);
-		}
+			if (StatusModal){
+				const response = await peticionRoles ("",1);			
+				setDefaultOptionsRoles(response);
+			}			
+		}		
 		fetchPeticion();		
-	}, []);
+	}, [StatusModal]);
 
 
 	function separarValor(valor) {
@@ -363,6 +437,32 @@ const CompModalCreateUpdate = ( {StatusModal, title, CloseModal, updateTableData
 	const [showPasswordConfirmar, setShowPasswordConfirmar] = useState(false); 
 	const togglePasswordVisibilityConfirmar = () => { setShowPasswordConfirmar(!showPasswordConfirmar); };
 
+
+	const generarUserPassword = () =>{	
+		const nombre = getValues('first_name')
+		if (!nombre) return addNotification('info', 'Campo nombre', validacionesFirstName.required, 'top-right', 8000, 'fas fa-exclamation-circle', null);
+		if (!validacionesFirstName.pattern.value.test(nombre)) return addNotification('info', 'Campo nombre', validacionesFirstName.pattern.message, 'top-right', 8000, 'fas fa-exclamation-circle', null);
+		if (nombre.length > validacionesFirstName.maxLength.value) return addNotification('info', 'Campo nombre', validacionesFirstName.maxLength.message, 'top-right', 8000, 'fas fa-exclamation-circle', null);
+
+		const last_name = getValues('last_name')
+		if (!last_name) return addNotification('info', 'Campo apellido', validacionesFirstName.required, 'top-right', 8000, 'fas fa-exclamation-circle', null);
+		if (!validacionesFirstName.pattern.value.test(last_name)) return addNotification('info', 'Campo apellido', validacionesFirstName.pattern.message, 'top-right', 8000, 'fas fa-exclamation-circle', null);
+		if (last_name.length > validacionesFirstName.maxLength.value) return addNotification('info', 'Campo apellido', validacionesFirstName.maxLength.message, 'top-right', 8000, 'fas fa-exclamation-circle', null);
+
+		const ci = getValues('identity_card');
+		if (!ci) return addNotification('info','Campo C.I.', validacionesCI.required, 'top-right', 8000, 'fas fa-exclamation-circle', null);
+		if (ci.length < validacionesCI.minLength.value) return addNotification('info', 'Campo C.I.', validacionesCI.minLength.message, 'top-right', 8000, 'fas fa-exclamation-circle', null);
+		if (ci.length > validacionesCI.maxLength.value) return addNotification('info', 'Campo C.I.', validacionesCI.maxLength.message, 'top-right', 8000, 'fas fa-exclamation-circle', null);
+		if (!validacionesCI.pattern.value.test(ci)) return addNotification('info', 'Campo C.I.', validacionesCI.pattern.message, 'top-right', 8000, 'fas fa-exclamation-circle', null);
+
+		const apellido = (last_name.trim()).split(' ');			
+		setValue('password_confirmation', ci);
+		setValue('password', ci);
+		setValue('username',nombre.trim()+"."+apellido[0]);
+	}
+
+	 
+
     return (<>
         <ReactNotifications/>
         <Modal show={StatusModal} onHide={reserForm} scrollable={true} backdrop="static" keyboard={false}>
@@ -388,17 +488,7 @@ const CompModalCreateUpdate = ( {StatusModal, title, CloseModal, updateTableData
 										type="text" 															
 										id="first_name" 
 										placeholder="nombre"
-										{...register("first_name", {
-												required: "El nombre es obligatorio",
-												pattern: {
-													value: /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s'-]+$/u,
-													message: "El nombre solo puede contener letras, tildes, espacios, y los caracteres ' y -",
-												},
-												maxLength: {
-												value: 30,
-												message: "El nombre no puede tener más de 30 caracteres",
-												},
-										})} 
+										{...register("first_name",validacionesFirstName )} 
 									/>
 									{errors.first_name && <div className='mb-0 mt-2 fs-12px' style={{ color: 'red' }}>{String(errors.first_name.message)}</div>}
 								</div>
@@ -406,20 +496,9 @@ const CompModalCreateUpdate = ( {StatusModal, title, CloseModal, updateTableData
 								<label className="required form-label" htmlFor="last_name">Apellido (s)</label>
 								<input className="form-control" 
 									type="text" 							
-									id="last_name" 
-								//	defaultValue={data.last_name}	
+									id="last_name" 					
 									placeholder="apellidos"
-									{...register("last_name", {
-											required: "El campo es obligatorio",
-											pattern: {
-												value: /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s'-]+$/u,
-												message: "El nombre solo puede contener letras, tildes, espacios, y los caracteres ' y -",
-											},
-											maxLength: {
-												value: 30,
-												message: "El nombre no puede tener más de 30 caracteres",
-											},
-									})}  
+									{...register("last_name", validacionesLastName)}  
 								/>
 								{errors.last_name && <div className='mb-0 mt-2 fs-12px' style={{ color: 'red' }}>{String(errors.last_name.message)}</div>}
 								</div>
@@ -432,23 +511,8 @@ const CompModalCreateUpdate = ( {StatusModal, title, CloseModal, updateTableData
 									<input type="text" 
 										className="form-control fs-13px" 
 										id="identity_card"
-										//defaultValue={ (data.identity_card)? separarValor(data.identity_card): ""}	
 										placeholder="celula de identidad"
-										{...register("identity_card", {
-										required: "Campo obligatoria",
-										minLength: {
-											value: 6,
-											message: "Min. 6 carac.",
-										},
-										maxLength: {
-											value: 8,
-											message: "Max. 8 carac.",
-										},
-										pattern: {
-											value: /^[1-9]\d*$/,
-											message: "Formato no válido",
-										},
-										})}
+										{...register("identity_card", validacionesCI)}
 									/>
 									{errors.identity_card && <div className='mb-0 mt-2 fs-12px' style={{ color: 'red' }}>{String(errors.identity_card.message)}</div>}
 								</div>
@@ -486,6 +550,9 @@ const CompModalCreateUpdate = ( {StatusModal, title, CloseModal, updateTableData
 								</div>
 							</div>
 						</div>
+						{  (!(errors.first_name || errors.last_name || errors.identity_card || !(data.id == 0 || data.id == "")))? 
+							(<button type='button' className= "btn btn-sm btn-primary p-1 px-2 mb-3 rounded-4" onClick={ () => generarUserPassword()}>Generar usuario y contraseña</button>): null
+						}
 						<div className="mb-3">
 								<label className="required form-label" htmlFor="phone_number"> <i className='fas fa-mobile'></i>&nbsp; Celular</label>
 								<input className="form-control"
@@ -511,7 +578,6 @@ const CompModalCreateUpdate = ( {StatusModal, title, CloseModal, updateTableData
 							<label className="required form-label" htmlFor="username"> <i className="fas fa-user"></i> &nbsp; Usuario</label>
 							<input className="form-control" 
 									type="text"	
-									//defaultValue={data.username}								
 									id="username" 
 									placeholder="usuario"
 									{...register("username", {
@@ -538,10 +604,6 @@ const CompModalCreateUpdate = ( {StatusModal, title, CloseModal, updateTableData
 												value: 8,
 												message: "La contraseña debe tener al menos 8 caracteres",
 												},
-												pattern: {
-												value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
-												message: "La contraseña debe contener al menos una letra mayúscula, una minúscula, un número y un carácter especial",
-												},									
 											})} 
 											disabled={false}
 										/>
@@ -594,8 +656,7 @@ const CompModalCreateUpdate = ( {StatusModal, title, CloseModal, updateTableData
 							<label className="required form-label" htmlFor="email"> <i className='fas fa-at'></i> &nbsp; Correo</label>
 							<input className="form-control" 
 								type="text" 							
-								id="email"
-							//	defaultValue={data.email} 
+								id="email"						
 								placeholder="correo"
 								{...register("email", {
 									required: "El correo electrónico es obligatorio",

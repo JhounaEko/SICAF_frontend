@@ -109,11 +109,11 @@ const TablaList  = (getStatusCRUD)=>{
 			cell: (row) => (  
                 (row.state.name === "ACTIVO") ? (<div className="btn-flex">
                     <i className="fas fa-toggle-on fa-2x" style = {{color: "#276BAA"}} onClick={ ()=> changeStatus(row.state.name, row.id)} ></i>
-                    <p className="form-check-label mb-2 ms-1" style={{color: 'green', fontSize: '13px' }}>ACTIVO</p>
+                    <p className="mb-2 ms-1" style={{color: 'green', fontSize: '13px' }}>ACTIVO</p>
                 </div>):
                 (<div className="btn-flex">
                     <i className="fas fa-toggle-off fa-2x" onClick={ ()=> changeStatus(row.state.name, row.id)} ></i>
-                    <p className="form-check-label mb-2 ms-1" style={{color: 'red', fontSize: '13px' }}>INACTIVO</p>
+                    <p className="mb-2 ms-1" style={{color: 'red', fontSize: '13px' }}>INACTIVO</p>
                 </div>)     			          
 			),	
 		  },	

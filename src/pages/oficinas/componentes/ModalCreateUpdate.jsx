@@ -47,9 +47,7 @@ const CompModalCreateUpdate = ({StatusModal,CloseModal,title, dataCurrentRow,fun
                         timer: 3000,
                         confirmButtonColor: "#3085d6",
                     });
-                } else {
-                    addNotification('info', result.title, result.message, 'top-right',8000, "fas fa-exclamation-circle" ,null)  			
-                }  
+                } 
             /** Se utiliza para modificar datos oficina, cuando se pulsa en el boton guardar */
             } else {
                 const result = await useChangeDataRow(dataForm);
@@ -97,7 +95,6 @@ const CompModalCreateUpdate = ({StatusModal,CloseModal,title, dataCurrentRow,fun
             setIsLoadingOffice(false);
             return dataReturn.response.data.results.data;            
         } else {
-			addNotification('info', dataReturn.title, dataReturn.message, 'top-right',8000, "fas fa-exclamation-circle" ,null)  			
             setIsLoadingOffice(false);
             return [];
         }        
@@ -131,12 +128,14 @@ const CompModalCreateUpdate = ({StatusModal,CloseModal,title, dataCurrentRow,fun
     }    
 
     useEffect(() => {  
-        const fetchPeticion = async () => {
-            const response = await peticionOfficeSelect ("",1);
-            setDefaultOptionsOffice(response);
-        }
-        fetchPeticion();		
-    }, []);
+        if (StatusModal){
+            const fetchPeticion = async () => {
+                const response = await peticionOfficeSelect ("",1);
+                setDefaultOptionsOffice(response);
+            }
+            fetchPeticion();	
+        }       	
+    }, [StatusModal]);
 
     if (dataCurrentRow.id !== 0 && idRef.current != dataCurrentRow.id){
         idRef.current = dataCurrentRow.id;

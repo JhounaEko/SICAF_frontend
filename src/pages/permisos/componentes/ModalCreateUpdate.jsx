@@ -32,9 +32,7 @@ const CompModalCreateUpdate = ({StatusModal,CloseModal,title, dataCurrentRow,fun
                         timer: 3000,
                         confirmButtonColor: "#3085d6",
                     });
-                } else {
-                    addNotification('info', result.title, result.message, 'top-right',8000, "fas fa-exclamation-circle" ,null)  			
-                }  
+                }
             /** Se utiliza para modificar datos oficina, cuando se pulsa en el boton guardar */
             } else {
                 const result = await useChangeDataRow(dataForm);

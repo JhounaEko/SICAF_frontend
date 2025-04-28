@@ -1,45 +1,31 @@
 import React, {useState, useEffect} from 'react';
-import { ReactNotifications, Store } from 'react-notifications-component';
-import axios from 'axios';
+import { ReactNotifications } from 'react-notifications-component';
 import DataTable from 'react-data-table-component';
 import Button from 'react-bootstrap/Button';
-import Cookies from 'js-cookie';
-import CryptoJS from 'crypto-js';
 import Swal from 'sweetalert2';
 import {useForm, } from 'react-hook-form';
 import ModalCreateUpdate from './ModalCreateUpdate.jsx'
 import Modal from 'react-bootstrap/Modal';
+import {addNotification} from './../../../components/alert/alert.jsx';
+import { modelUseListTable, modelChangeStatus, modelEnableChangePassword, modelChageDataRow}  from './../modelUsuarios.jsx';
+import {  useNavigate  } from 'react-router-dom';
+
 const TableList = (getStatusCRUD) => {
-
-    function addNotification(notificationType, notificationTitle, notificationMessage, notificationPosition, duration, icon,notificationContent) {									
-		Store.addNotification({
-					title: notificationTitle,
-					message: (					
-						<div>				
-						  <i className={icon} style={{ fontSize: '25px', marginRight: '10px' }}></i> {notificationMessage}
-						</div>
-					  ),
-					type: notificationType,
-					insert: "top",
-					container: notificationPosition,
-					animationIn: ["animated", "fadeIn"],
-					animationOut: ["animated", "fadeOut"],
-					dismiss: {
-						duration: 8000,			
-					},
-					content: notificationContent
-		});
-	}
-
+    
+    const useListTable =  modelUseListTable(); 
+    const useChangeStatus =  modelChangeStatus(); 
+    const useEnableChangePassword = modelEnableChangePassword();
+    const useChangeDataRow = modelChageDataRow();
+    const navigation = useNavigate ();
+    
     /** Modal */
-         const [modal, setModal] = useState(false);
-         const [getData, setData] = useState({
-            id: 0,           
-         });
-         const closeModal = () => {
-             setModal(false); 
-         };
-     
+    const [modal, setModal] = useState(false);
+    const [getData, setData] = useState({
+       id: 0,           
+    });
+    const closeModal = () => {
+        setModal(false); 
+    };     
 
     /** DataTable */      
     const [getStatusUpdate,setStatusUpdate] = useState(false); 
@@ -53,9 +39,7 @@ const TableList = (getStatusCRUD) => {
     const [getProgressData,setProgressData] = useState(false)
     const [getCountRows,setCountRows] = useState(10);
     const [getSort,setSort] = useState({column: 'id', order: 'desc' });  
-
-	const sessionTokenSicaf = Cookies.get(process.env.REACT_APP_COOKIES_NAME_TOKEN); 
-	const decryptedToken = CryptoJS.AES.decrypt(sessionTokenSicaf, process.env.REACT_APP_API_KEY).toString(CryptoJS.enc.Utf8); 				         
+    const [getRefreschDataTable,setRefreschDataTable] = useState(false);     
 
 	const onChangeRow = (data)=>{  
         setData(data);       
@@ -72,35 +56,30 @@ const TableList = (getStatusCRUD) => {
             cancelButtonColor: "#d33",
             cancelButtonText: "Cancelar",
             confirmButtonText: "Si cambiar"
-          }).then((result) => {
+          }).then( async (result) => {
             if (result.isConfirmed) {
-                axios.patch( `${process.env.REACT_APP_API_URL}/api/v1/users/${idRow}`,
-                    {
-                       "state_id": (statusRow === "INACTIVO")? 1 : 2 
-                    } ,{
-                    headers: {
-                    'Content-Type': 'application/json',    
-                    'Authorization': "Bearer "+decryptedToken,  
-                }}).then( response => {	        
-                    setStatusUpdate(!getStatusUpdate);                
+                const dataReturn = await useChangeStatus(statusRow, idRow);
+                if (dataReturn.status) {                    
                     Swal.fire({
-                        title: "Se establecio el cambio de estado correctamente",
-                        text: "",
-                        icon: "success",
-                        draggable: true,
-                        timer: 3000,
-                        confirmButtonColor: "#3085d6",
-                      });
-                }).catch(error => {    				 
-                    if(error.code === "ERR_NETWORK"){			
-                        addNotification('info', 'Problema inesperado', 'Revice su conexion', 'top-right',8000, "fas fa-exclamation-circle" ,null)  			
-                    } else {				
-                        addNotification('danger', 'Server', " "+error.message, 'top-right',8000, "fas fa-exclamation-circle" ,null)	
-                        console.log(error)
+                      title: "Se establecio el cambio de estado correctamente",
+                      text: "",
+                      icon: "success",
+                      draggable: true,
+                      timer: 3000,
+                      confirmButtonColor: "#3085d6",
+                    });
+                } else {
+                    if (dataReturn.message == "Unauthenticated."){
+                        Swal.fire({
+                            title: "Sesion finalizada",
+                            icon: "success",
+                            draggable: true,
+                            timer: 3000,
+                            confirmButtonColor: "#3085d6",
+                        });                  
+                        navigation('/');
                     }
-                    console.log(error)                                                                                                                 
-                }).finally(() => {                   			
-                });
+                }                          
             }
           });
     }
@@ -166,11 +145,11 @@ const TableList = (getStatusCRUD) => {
 		  cell:  (row) =>(
 			(row.state.name === "ACTIVO") ? (<div className="btn-flex">
 				<i className="fas fa-toggle-on fa-2x" id={`id_check${row.id}`} style = {{color: "#276BAA"}} onClick={ ()=> changeStatus(row.state.name, row.id)} ></i>
-				<label className="form-check-label mx-1" style={{color: 'green', fontSize: '13px' }} htmlFor={`id_check${row.id}`} >ACTIVO</label>
+				<p className="mx-1" style={{color: 'green', fontSize: '13px' }} htmlFor={`id_check${row.id}`} >ACTIVO</p>
 			</div>):
 			(<div className="btn-flex">
 				<i className="fas fa-toggle-off fa-2x" id={`id_check${row.id}`} onClick={ ()=> changeStatus(row.state.name, row.id)} ></i>
-				<label className="form-check-label mx-1" style={{color: 'red', fontSize: '13px' }} htmlFor={`id_check${row.id}`} >INACTIVO</label>
+				<p className="mx-1" style={{color: 'red', fontSize: '13px' }} htmlFor={`id_check${row.id}`} >INACTIVO</p>
 			</div>)
 		  ),
 		  width: '120px',		
@@ -204,8 +183,8 @@ const TableList = (getStatusCRUD) => {
                         </span>
                     </a>
                     <div className="dropdown-menu dropdown-menu-end me-1">
-                        <a className="dropdown-item" onClick={() => enableChangePassword(row.id, row.first_name+" "+row.last_name)}>Habilitar cambio de contraseña</a>
-                        <a className="dropdown-item d-flex align-items-center" onClick={() => changePassword(row.id, row.first_name+" "+row.last_name)}>Cambiar contraseña</a>       
+                        <a className="dropdown-item" onClick={() => enableChangePassword(row.id, row.first_name+" "+row.last_name)}> <i className="fas fa-unlock-alt"></i>&nbsp; Habilitar cambio de contraseña</a>
+                        <a className="dropdown-item d-flex align-items-center" onClick={() => changePassword(row.id, row.first_name+" "+row.last_name)}> <i className="fas fa-cash-register"></i> &nbsp; Cambiar contraseña</a>       
                     </div>
                 </div>				
 			</>
@@ -230,16 +209,10 @@ const TableList = (getStatusCRUD) => {
             cancelButtonColor: "#d33",
             cancelButtonText: "Cancelar",
             confirmButtonText: "Habilitar"
-          }).then((result) => {
+          }).then( async (result) => {
             if (result.isConfirmed) {
-                axios.patch( `${process.env.REACT_APP_API_URL}/api/v1/users/${idRow}/reset-password-change-limit`,{},
-                    {
-                        headers: {
-                            'Content-Type': 'application/json',    
-                            'Authorization': 'Bearer '+decryptedToken,  
-                        }
-                    }
-                ).then( response => {	                                        
+                const returnData = await useEnableChangePassword(idRow);
+                if (returnData.status) {
                     Swal.fire({
                         title: "Se habilito el cambio de contraseña",
                         text: "",
@@ -247,16 +220,19 @@ const TableList = (getStatusCRUD) => {
                         draggable: true,
                         timer: 3000,
                         confirmButtonColor: "#3085d6",
-                      });
-                }).catch(error => {    				 
-                    if(error.code === "ERR_NETWORK"){			
-                        addNotification('info', 'Problema inesperado', 'Revice su conexion', 'top-right',8000, "fas fa-exclamation-circle" ,null)  			
-                    } else {				
-                        addNotification('danger', 'Server', " "+error.message, 'top-right',8000, "fas fa-exclamation-circle" ,null)	                     
+                    });
+                } else {
+                    if (returnData.message == "Unauthenticated."){
+                        Swal.fire({
+                            title: "Sesion finalizada",
+                            icon: "success",
+                            draggable: true,
+                            timer: 3000,
+                            confirmButtonColor: "#3085d6",
+                        });                  
+                        navigation('/'); 
                     }
-                    console.log(error)                                                                                                                 
-                }).finally(() => {                   			
-                });
+                }          
             }
           });
     }
@@ -265,34 +241,43 @@ const TableList = (getStatusCRUD) => {
         setSort({column: columnTable.selectorKey, order: direction });        
      };
 
+   
+
     useEffect( ()=>{	
-        setProgressData(true)	
-        axios.get( `${process.env.REACT_APP_API_URL}/api/v1/users?page=${getPag}&sort_by=${getSort.column}&sort_order=${getSort.order}&row_num=${getCountRows}&${getStatusCRUD.getParameterSearh}=${getStatusCRUD.getDataSearh}`,{
-            headers: {
-            'Content-Type': 'application/json',   
-            'Authorization': "Bearer "+decryptedToken,         
-        }}).then( response => {	
-            if (response.data.results){
-                setRowTotal(response.data.results.meta.total);
-                setDataTables(response.data.results.data)
-                setNumRow(response.data.results.meta.from);	
-            }  else    {
+        const peticionList = async () =>{
+            setProgressData(true);
+            const returnData = await useListTable(getPag, getSort.column, getSort.order, getCountRows, getStatusCRUD.getParameterSearh, getStatusCRUD.getDataSearh);
+            if (returnData.status) {
+                    try {
+                        setDataTables(returnData.response.data.results.data);
+                        setRowTotal(returnData.response.data.results.meta.total);
+                        setNumRow(returnData.response.data.results.meta.from);	
+                    } catch (error) {
+                        setRowTotal(0);
+                        setDataTables([])
+                        setNumRow(0);
+                    }                 
+            } else {
+                
+                if (returnData.message=="Unauthenticated."){  
+                    Swal.fire({
+                        title: "Sesion finalizada",
+                        icon: "success",
+                        draggable: true,
+                        timer: 3000,
+                        confirmButtonColor: "#3085d6",
+                    });                  
+                    navigation('/');                    
+                }
+
                 setRowTotal(0);
                 setDataTables([])
                 setNumRow(0);
-            }        			
-        }).catch(error => {    				 
-         if(error.code === "ERR_NETWORK"){			
-            addNotification('info', 'Problema inesperado', 'Revice su conexion', 'top-right',8000, "fas fa-exclamation-circle" ,null)  			
-         } else {				
-            addNotification('danger', 'Server', " "+error.message, 'top-right',8000, "fas fa-exclamation-circle" ,null)	
-            console.log(error)
+            }
+            setProgressData(false);	
         }
-                                                                                                                 
-        }).finally(() => {
-            setProgressData(false);				
-        });	
-    },[getPag,getCountRows,getSort,getStatusCRUD.getStatusCRUD,getStatusCRUD.getDataSearh,getStatusUpdate]);
+        peticionList();
+    },[getPag,getCountRows,getRefreschDataTable,getSort,getStatusCRUD.getStatusCRUD,getStatusCRUD.getDataSearh,getStatusUpdate]);
 
     /** Form change password */
     const { register, handleSubmit, unregister, reset, setValue,formState: { errors },getValues} = useForm(); 
@@ -312,36 +297,31 @@ const TableList = (getStatusCRUD) => {
     const togglePasswordVisibilityConfirmar = () => { setShowPasswordConfirmar(!showPasswordConfirmar); };
     
 
-    const onSubmitFormChangePassword = (dataFormChangePassword) =>{        
+    const onSubmitFormChangePassword = async (dataFormChangePassword) =>{        
         if (dataFormChangePassword.password == dataFormChangePassword.password_confirmation) {
             setStateButtonChangePassword(true);
-            axios({
-                method: "PATCH",
-                url: process.env.REACT_APP_API_URL+'/api/v1/users/'+dataFormChangePassword.id,
-                data: dataFormChangePassword,						
-                headers: {
-                    'Content-Type': 'application/json',   
-                    'Authorization': 'Bearer '+decryptedToken,  
-                }						
-            }).then( response => {
-                    reserFormChangePasswordForm();                  					
+            const returnData = await useChangeDataRow(dataFormChangePassword);
+            if(returnData.status){
+                Swal.fire({
+                    title: "Acualización de datos existoso",
+                    icon: "success",
+                    draggable: true,
+                    timer: 3000,
+                    confirmButtonColor: "#3085d6",
+                });
+            } else {
+                if(returnData.message == "Unauthenticated."){
                     Swal.fire({
-                        title: "Acualización de datos existoso",
+                        title: "Sesion finalizada",
                         icon: "success",
                         draggable: true,
                         timer: 3000,
                         confirmButtonColor: "#3085d6",
-                    });	
-            }).catch(error => {
-                console.log(error);
-                if (error.code == "ERR_BAD_REQUEST") {
-                    addNotification('info', 'Aviso', error.response.data.message, 'top-right',8000, "fas fa-exclamation-circle" ,null)  			
-                } else {
-                    addNotification('info', 'Problema inesperado', 'Revice su conexion', 'top-right',8000, "fas fa-exclamation-circle" ,null)  			
-                }               	
-            }).finally( () =>{
-                setStateButtonChangePassword(false);
-            });
+                    });
+                    navigation('/');
+                }
+            }
+            setStateButtonChangePassword(false);         
         } else {
             addNotification('warning', 'Verificar las contraseñas', 'Las contraseñas no coincide', 'top-right',8000, "fas fa-exclamation-circle" ,null)  			
         }      

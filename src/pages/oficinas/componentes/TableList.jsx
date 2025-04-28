@@ -46,13 +46,7 @@ const TableList = (getDataRefresch) => {
               timer: 3000,
               confirmButtonColor: "#3085d6",
             });
-        } else {
-            if(dataReturn.error.code === "ERR_NETWORK"){			
-                addNotification('info', 'Problema inesperado', 'Revice su conexion', 'top-right',8000, "fas fa-exclamation-circle" ,null)  			
-            } else {				
-                addNotification('danger', 'Server', " "+dataReturn.error.message, 'top-right',8000, "fas fa-exclamation-circle" ,null)	      
-            }                                                                                                                   
-        }
+        } 
     }
 
     const onChangeRow = (data) =>{

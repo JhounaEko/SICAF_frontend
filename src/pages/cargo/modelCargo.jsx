@@ -1,6 +1,8 @@
 import CryptoJS from 'crypto-js'; 
 import axios from 'axios';
 import Cookies from 'js-cookie';
+import {addNotification} from './../../components/alert/alert.jsx';
+import {  useNavigate  } from 'react-router-dom';
 
 export const modelUseCreate = () => {
 
@@ -28,16 +30,32 @@ export const modelUseCreate = () => {
             returnResponse.status = true;
             return returnResponse;
         } catch (error) {
-            returnResponse.status = false;
-            if (error.code == "ERR_BAD_REQUEST") {
-                returnResponse.title = "Aviso";
-                returnResponse.message =  error.response.data.message;
-            } else {
-                returnResponse.title = "Problema inesperado";
-                returnResponse.message =  "Revice su conexion";
-            }
             console.log(error);
-            return returnResponse;
+            returnResponse.status = false;
+            try {
+                if(error.response.status === 403){                    
+                    addNotification('info', 'Aviso', "No tiene permisos para registrar cargos", 'top-right',8000, "fas fa-exclamation-circle" ,null)	                          
+                    return returnResponse;
+                } else{
+                    if (error.code == "ERR_BAD_REQUEST") {
+                        if (error.response.data.message === "Unauthenticated."){
+                            const navigate = useNavigate();
+                            Cookies.remove(process.env.REACT_APP_COOKIES_NAME_TOKEN); 
+                            Cookies.remove(process.env.REACT_APP_COOKIES_NAME_DATA);                
+                            navigate('/');   
+                        } else {
+                            addNotification('info', 'Aviso', error.response.data.message, 'top-right',8000, "fas fa-exclamation-circle" ,null)	                          
+                            return returnResponse;        
+                        }
+                    } else {
+                        addNotification('danger', 'Problema inesperado', "Revice su conexion", 'top-right',8000, "fas fa-exclamation-circle" ,null)	                          
+                        return returnResponse;    
+                    }
+                }
+            } catch(error){
+                addNotification('danger', 'Problema inesperado', "Revice su conexion", 'top-right',8000, "fas fa-exclamation-circle" ,null)	                          
+                return returnResponse;    
+            }               
         }  
     }
     return useCreate;
@@ -72,8 +90,23 @@ export const modelChangeStatus = () =>{
        } catch (error) {
             console.log(error);
             returnResponse.status=false;
-            returnResponse.error = error;
-            return returnResponse;     
+            try {
+                if(error.response.status === 403){                    
+                    addNotification('info', 'Aviso', "No tiene permisos para cambiar estados", 'top-right',8000, "fas fa-exclamation-circle" ,null)	                          
+                    return returnResponse;
+                } else{
+                    if (error.code == "ERR_BAD_REQUEST") {
+                        addNotification('info', 'aviso', error.response.data.message, 'top-right',8000, "fas fa-exclamation-circle" ,null)	                          
+                        return returnResponse;
+                    } else {
+                        addNotification('danger', 'Problema inesperado', "Revice su conexion", 'top-right',8000, "fas fa-exclamation-circle" ,null)	                          
+                        return returnResponse;
+                    }
+                }
+            } catch(error){
+                addNotification('danger', 'Problema inesperado', "Revice su conexion", 'top-right',8000, "fas fa-exclamation-circle" ,null)	                          
+                return returnResponse;    
+            }      
        }        
     }
     return useChangeStatus;
@@ -99,8 +132,8 @@ export const modelUseListTable = () =>{
                         state_id: 1,
                         search: getSearh,
                         page: getPag,
-                        // sort_by: getSortColumn,
-                        // sort_order: getOrder,
+                        sort_by: getSortColumn,
+                        sort_order: getOrder,
                         row_num: getCountRows
                     },
                     headers: {
@@ -114,9 +147,35 @@ export const modelUseListTable = () =>{
             return returnResponse;
         } catch (error) {
             console.log(error);
-            returnResponse.title = "Problema inesperado";
-            returnResponse.message = "Revice su conexion";
-            return returnResponse;
+            returnResponse.status =false;
+            try {
+                if(error.response.status === 403){                    
+                    addNotification('info', 'Aviso', "No tiene permisos para ver los cargos", 'top-right',8000, "fas fa-exclamation-circle" ,null)	                          
+                    return returnResponse;
+                } else{
+                    if (error.code == "ERR_BAD_REQUEST") {
+                        if (error.response.data.message == "Unauthenticated."){
+                            returnResponse.message = "Unauthenticated."
+                            addNotification('info', 'Aviso', "test", 'top-right',8000, "fas fa-exclamation-circle" ,null)	                          
+                            return returnResponse;        
+                            // const navigate = useNavigate();
+                            // Cookies.remove(process.env.REACT_APP_COOKIES_NAME_TOKEN); 
+                            // Cookies.remove(process.env.REACT_APP_COOKIES_NAME_DATA);                
+                            // navigate('/');   
+                        } else {
+                            addNotification('info', 'Aviso', error.response.data.message, 'top-right',8000, "fas fa-exclamation-circle" ,null)	                          
+                            return returnResponse;        
+                        }
+                    } else {
+                        addNotification('danger', 'Problema inesperado', "Revice su conexion", 'top-right',8000, "fas fa-exclamation-circle" ,null)	                          
+                        return returnResponse;
+                    }
+                }
+            } catch(error){
+                console.log(error);
+                addNotification('danger', 'Problemsssa inesperado', "Revice su conexion", 'top-right',8000, "fas fa-exclamation-circle" ,null)	                          
+                return returnResponse;    
+            }  
         }      
     }
     return useListTable;
@@ -149,15 +208,30 @@ export const modelChageDataRow = () =>{
         } catch (error) {
             console.log(error);
             returnResponse.status = false; 
-            returnResponse.error = error; 
-            if (error.code == "ERR_BAD_REQUEST") {
-                returnResponse.title = "Aviso";
-                returnResponse.message =  error.response.data.message;
-            } else {
-                returnResponse.title = "Problema inesperado";
-                returnResponse.message =  "Revice su conexion";
-            }
-            return returnResponse;
+            try {
+                if(error.response.status === 403){                    
+                    addNotification('info', 'Aviso', "No tiene permisos para cambiar datos", 'top-right',8000, "fas fa-exclamation-circle" ,null)	                          
+                    return returnResponse;
+                } else{
+                    if (error.code == "ERR_BAD_REQUEST") {
+                        if (error.response.data.message === "Unauthenticated."){
+                            const navigate = useNavigate();
+                            Cookies.remove(process.env.REACT_APP_COOKIES_NAME_TOKEN); 
+                            Cookies.remove(process.env.REACT_APP_COOKIES_NAME_DATA);                
+                            navigate('/');   
+                        } else {
+                            addNotification('info', 'Aviso', error.response.data.message, 'top-right',8000, "fas fa-exclamation-circle" ,null)	                          
+                            return returnResponse;        
+                        }
+                    } else {
+                        addNotification('danger', 'Problema inesperado', "Revice su conexion", 'top-right',8000, "fas fa-exclamation-circle" ,null)	                          
+                        return returnResponse;
+                    }
+                }
+            } catch(error){
+                addNotification('danger', 'Problema inesperado', "Revice su conexion", 'top-right',8000, "fas fa-exclamation-circle" ,null)	                          
+                return returnResponse;    
+            } 
         }            
     }
     return useChangeDataRow;  

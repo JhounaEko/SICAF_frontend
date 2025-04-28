@@ -1,7 +1,7 @@
 import CryptoJS from 'crypto-js'; 
 import axios from 'axios';
 import Cookies from 'js-cookie';
-
+import {addNotification} from './../../components/alert/alert.jsx';
 export const modelUseCreate = () => {
 
     const useCreate = async (dataForm) => {
@@ -28,16 +28,26 @@ export const modelUseCreate = () => {
             returnResponse.status = true;
             return returnResponse;
         } catch (error) {
+            console.log(error);            
             returnResponse.status = false;
-            if (error.code == "ERR_BAD_REQUEST") {
-                returnResponse.title = "Aviso";
-                returnResponse.message =  error.response.data.message;
-            } else {
-                returnResponse.title = "Problema inesperado";
-                returnResponse.message =  "Revice su conexion";
-            }
-            console.log(error);
-            return returnResponse;
+
+            try {
+                if(error.response.status === 403){                    
+                    addNotification('info', 'Aviso', "No tiene permisos para registrar permisos", 'top-right',8000, "fas fa-exclamation-circle" ,null)	                          
+                    return returnResponse;
+                } else{
+                    if (error.code == "ERR_BAD_REQUEST") {
+                        addNotification('info', 'aviso', error.response.data.message, 'top-right',8000, "fas fa-exclamation-circle" ,null)	                          
+                        return returnResponse;
+                    } else {
+                        addNotification('danger', 'Problema inesperado', "Revice su conexion", 'top-right',8000, "fas fa-exclamation-circle" ,null)	                          
+                        return returnResponse;
+                    }
+                }
+            } catch(error){
+                addNotification('danger', 'Problema inesperado', "Revice su conexion", 'top-right',8000, "fas fa-exclamation-circle" ,null)	                          
+                return returnResponse;    
+            }            
         }  
     }
     return useCreate;
@@ -72,8 +82,23 @@ export const modelChangeStatus = () =>{
        } catch (error) {
             console.log(error);
             returnResponse.status=false;
-            returnResponse.error = error;
-            return returnResponse;     
+            try {
+                if(error.response.status === 403){                    
+                    addNotification('info', 'Aviso', "No tiene permisos para cambiar el estado", 'top-right',8000, "fas fa-exclamation-circle" ,null)	                          
+                    return returnResponse;
+                } else{
+                    if (error.code == "ERR_BAD_REQUEST") {
+                        addNotification('info', 'aviso', error.response.data.message, 'top-right',8000, "fas fa-exclamation-circle" ,null)	                          
+                        return returnResponse;
+                    } else {
+                        addNotification('danger', 'Problema inesperado', "Revice su conexion", 'top-right',8000, "fas fa-exclamation-circle" ,null)	                          
+                        return returnResponse;
+                    }
+                }
+            } catch(error){
+                addNotification('danger', 'Problema inesperado', "Revice su conexion", 'top-right',8000, "fas fa-exclamation-circle" ,null)	                          
+                return returnResponse;    
+            }  
        }        
     }
     return useChangeStatus;
@@ -114,9 +139,19 @@ export const modelUseListTable = () =>{
             return returnResponse;
         } catch (error) {
             console.log(error);
-            returnResponse.title = "Problema inesperado";
-            returnResponse.message = "Revice su conexion";
-            return returnResponse;
+            returnResponse.status =false;
+            try {
+                if(error.response.status === 403){                    
+                    addNotification('info', 'Aviso', "No tiene permisos para la listar los permisos", 'top-right',8000, "fas fa-exclamation-circle" ,null)	                          
+                    return returnResponse;
+                } else{
+                    addNotification('danger', 'Problema inesperado', "Revice su conexion", 'top-right',8000, "fas fa-exclamation-circle" ,null)	                          
+                    return returnResponse;    
+                }
+            } catch(error){
+                addNotification('danger', 'Problema inesperado', "Revice su conexion", 'top-right',8000, "fas fa-exclamation-circle" ,null)	                          
+                return returnResponse;    
+            }            
         }      
     }
     return useListTable;

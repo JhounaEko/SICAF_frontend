@@ -121,8 +121,12 @@ const Login = () => {
 				<div className="mb-20px">
 					<button type="submit" className="btn btn-theme d-block w-100 h-45px btn-lg" disabled={botonSubmitDisabled}> {botonSubmitDisabled? (<span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"/>) : (<i className="fas fa-sign-in-alt fa-1_5x"></i>)}  &nbsp; Ingresar</button>
 				</div>
+				<hr />
 				<div className="text-gray-500">
-					No tengo una cuenta  <Link to="/registrar">Registrarme</Link> .			
+					<Link to="/user">Registrarme administrativo de sistema sicaf</Link>		
+				</div>
+				<div className="text-gray-500 my-3">
+					<Link to="/personal">Registrarme personal de G.A.M.E.A</Link> 			
 				</div>
 				</form>
 			</div>

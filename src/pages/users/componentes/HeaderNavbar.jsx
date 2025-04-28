@@ -49,7 +49,7 @@ const HeaderNavbar = ({updateTableData, searchData, searchDataParameter}) => {
             <button className="btn btn-primary btn-flex" onClick={openModal}><i className="fas fa-user fa-1_5x"></i> Agregar nuevo usuario</button>
         </div>
         <div className="col-sm">
-            <Form.Group as={Row} className="" controlId="">
+            <Form.Group as={Row} className="" controlId="searchDataUser">
                 {(parameterSearchDataCreate == "data_crate")? (
                     <>
                     <Form.Label column sm="4">Fecha inicio:</Form.Label>
