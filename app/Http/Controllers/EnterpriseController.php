@@ -27,8 +27,8 @@ class EnterpriseController extends Controller implements HasMiddleware
     {
         try {
             $query = Enterprise::query();
-            $query->filterByState($request->input('state'))
-                ->filterByEnterpriseRubric($request->input('enterprise_rubric'))
+            $query->filterByState($request->input('state_id'))
+                ->filterByEnterpriseRubric($request->input('enterprise_rubric_id'))
                 ->filterByNameOrInitialsOrAddress($request->input('search'))
                 ->filterByBranchName($request->input('branch_name'))
                 ->filterByCountry($request->input('country'))

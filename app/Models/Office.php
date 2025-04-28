@@ -100,8 +100,17 @@ class Office extends Model implements Auditable
     {
         if (!is_null($stateName)) {
             $query->join('states', 'offices.state_id', '=', 'states.id')
-                  ->where('states.name', 'LIKE', "%{$stateName}%")
-                  ->select('offices.*');
+                ->where('states.name', 'LIKE', "%{$stateName}%")
+                ->select('offices.*');
+        }
+    }
+
+    public function scopeFilterByParentName($query, $name)
+    {
+        if ($name) {
+            $query->whereHas('parent', function ($q) use ($name) {
+                $q->where('name', 'ILIKE', "%{$name}%");
+            });
         }
     }
 

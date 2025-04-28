@@ -26,7 +26,7 @@ class MotiveController extends Controller implements HasMiddleware
     {
         try {
             $query = Motive::query();
-            $query->filterByState($request->input('state'))
+            $query->filterByState($request->input('state_id'))
                   ->filterByNameOrDescription($request->input('search'))
                   ->filterByDates($request->input('start_date'), $request->input('end_date'));
 

@@ -30,8 +30,8 @@ class StaffController extends Controller implements HasMiddleware
     {
         try {
             $query = Staff::query();
-            $query->filterByState($request->input('state'))
-                ->filterByOffice($request->input('office'))
+            $query->filterByState($request->input('state_id'))
+                ->filterByOffice($request->input('office_id'))
                 ->filterByEmail($request->input('email'))
                 ->filterByIdentityCard($request->input('identity_card'))
                 ->filterByIssuedBy($request->input('issued_by'))

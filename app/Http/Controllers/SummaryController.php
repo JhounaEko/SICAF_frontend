@@ -27,7 +27,7 @@ class SummaryController extends Controller implements HasMiddleware
     {
         try {
             $query = Summary::query();
-            $query->filterByState($request->input('state'))
+            $query->filterByState($request->input('state_id'))
                 ->filterByRubric($request->input('search'))
                 ->filterByAcquisitionCost($request->input('acquisition_cost'))
                 ->filterByAccumulatedDepreciation($request->input('accumulated_depreciation'))

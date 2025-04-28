@@ -27,7 +27,7 @@ class HistoricRegController extends Controller implements HasMiddleware
     {
         try {
             $query = HistoricReg::query();
-            $query->filterByState($request->input('state'))
+            $query->filterByState($request->input('state_id'))
                 ->filterByNi($request->input('ni'))
                 ->filterByCp($request->input('cp'))
                 ->filterByCe($request->input('ce'))

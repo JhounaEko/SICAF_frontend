@@ -32,8 +32,7 @@ class User extends Authenticatable implements Auditable
         'password',
         // 'password_change_count',
         'email',
-        'office_id',
-        'place_id',
+        'office_location_id',
         'state_id'
     ];
 
@@ -60,14 +59,33 @@ class User extends Authenticatable implements Auditable
         ];
     }
 
+    public function officeLocation()
+    {
+        return $this->belongsTo(OfficeLocation::class, 'office_location_id');
+    }
+
     public function office()
     {
-        return $this->belongsTo(Office::class, 'office_id');
+        return $this->hasOneThrough(
+            Office::class,         // Modelo final
+            OfficeLocation::class, // Modelo intermedio
+            'id',                  // FK en office_locations → aquí coincide con office_location_id de users
+            'id',                  // PK en offices
+            'office_location_id',  // FK en users
+            'office_id'            // FK en office_locations
+        );
     }
 
     public function place()
     {
-        return $this->belongsTo(Office::class, 'place_id');
+        return $this->hasOneThrough(
+            Place::class,
+            OfficeLocation::class,
+            'id',
+            'id',
+            'office_location_id',
+            'place_id'
+        );
     }
 
     public function state()
@@ -113,12 +131,23 @@ class User extends Authenticatable implements Auditable
     public function scopeSort($query, $sortBy, $sortOrder = 'asc')
     {
         if (in_array($sortBy, ['office_name', 'office_initials'])) {
-            $officeField = ($sortBy === 'office_name') ? 'name' : 'initials';
-            return $query->join('offices', 'users.office_id', '=', 'offices.id')
+            $officeField = $sortBy === 'office_name' ? 'name' : 'initials';
+    
+            return $query
+                ->join('office_locations', 'users.office_location_id', '=', 'office_locations.id')
+                ->join('offices', 'office_locations.office_id', '=', 'offices.id')
                 ->orderBy("offices.{$officeField}", $sortOrder)
                 ->select('users.*');
         }
-
+    
+        if (in_array($sortBy, ['place_name'])) {
+            return $query
+                ->join('office_locations', 'users.office_location_id', '=', 'office_locations.id')
+                ->join('places', 'office_locations.place_id', '=', 'places.id')
+                ->orderBy("places.description", $sortOrder)
+                ->select('users.*');
+        }
+    
         return $query->orderBy($sortBy, $sortOrder);
     }
 
@@ -138,10 +167,10 @@ class User extends Authenticatable implements Auditable
 
     public function scopeFilterByOfficeName($query, $officeName)
     {
-        if (!is_null($officeName)) {
-            $query->join('offices', 'users.office_id', '=', 'offices.id')
-                ->where('offices.name', 'LIKE', "%{$officeName}%")
-                ->select('users.*');
+        if ($officeName) {
+            $query->whereHas('officeLocation.office', function ($q) use ($officeName) {
+                $q->where('name', 'ILIKE', "%{$officeName}%");
+            });
         }
     }
     
@@ -156,21 +185,25 @@ class User extends Authenticatable implements Auditable
 
     public function scopeFilterByPlaceName($query, $placeName)
     {
-        if (!is_null($placeName)) {
-            $query->join('places', 'users.place_id', '=', 'places.id')
-                ->where('places.name', 'LIKE', "%{$placeName}%")
-                ->select('users.*');
+        if ($placeName) {
+            $query->whereHas('officeLocation.place', function ($q) use ($placeName) {
+                $q->where('description', 'ILIKE', "%{$placeName}%");
+            });
         }
     }
+    
+
     
 
     public function scopeFilterByOfficeInitials($query, $officeInitials)
     {
         if (!is_null($officeInitials)) {
-            $query->join('offices', 'users.office_id', '=', 'offices.id')
-                ->where('offices.initials', 'LIKE', "%{$officeInitials}%")
-                ->select('users.*');
+            $query->whereHas('officeLocation.office', function ($q) use ($officeInitials) {
+                $search = mb_strtoupper(trim($officeInitials));
+                $q->where('initials', 'LIKE', "%{$search}%");
+            });
         }
+        return $query;
     }
 
     public function scopeFilterByName($query, $input)

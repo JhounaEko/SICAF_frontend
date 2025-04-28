@@ -12,12 +12,12 @@ use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Facades\DB;
 
-class PlaceController extends Controller
+class PlaceController extends Controller implements HasMiddleware
 {
     public static function middleware()
     {
         return [
-            new Middleware('permission:VIEW PLACES', only: ['show']),
+            new Middleware('permission:VIEW PLACES', only: ['index', 'show']),
             new Middleware('permission:REGISTER PLACES', only: ['store']),
             new Middleware('permission:UPDATE PLACES', only: ['update']),
         ];
@@ -27,7 +27,7 @@ class PlaceController extends Controller
         try {
             $query = Place::query();
 
-            $query->filterByState($request->input('state'))
+            $query->filterByState($request->input('state_id'))
                 ->filterByAbbreviationOrDescriptionOrDetails($request->input('search'))
                 ->filterByCode($request->input('code'))
                 ->filterByStateName($request->input('state_name'))

@@ -45,9 +45,11 @@ class UserResource extends JsonResource
                     }) : [],
                 ];
             }) : [],
-            'office' => [
-                'name' => $this->office->name,
+            'office'       => $this->office ? [
+                'id'       => $this->office->id,
+                'name'     => $this->office->name,
                 'initials' => $this->office->initials,
+<<<<<<< HEAD
             ],
             'place' => $this->place ? [
                 'name' => $this->place->description,
@@ -59,6 +61,14 @@ class UserResource extends JsonResource
             //          'initials' => $this->place->abbreviation,
             //      ];
             //  }, []),
+=======
+            ] : [],
+            'place'            => $this->place ? [
+                'id'           => $this->place->id,
+                'description'         => $this->place->description,
+                'abbreviation' => $this->place->abbreviation,
+            ] : [],
+>>>>>>> c0edfbddffe3215d0d0eaaec425bd440f367ec58
             'state' => [
                 'name' => $this->state->name,
                 'code' => $this->state->code,

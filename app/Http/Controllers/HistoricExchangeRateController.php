@@ -26,7 +26,7 @@ class HistoricExchangeRateController extends Controller implements HasMiddleware
     {
         try {
             $query = HistoricExchangeRate::query();
-            $query->filterByState($request->input('state'))
+            $query->filterByState($request->input('state_id'))
                 ->filterByUfv($request->input('ufv'))
                 ->filterByExchangeRate($request->input('exchange_rate'))
                 ->filterByExchangeRateDate($request->input('date'))

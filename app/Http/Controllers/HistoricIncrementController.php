@@ -27,8 +27,8 @@ class HistoricIncrementController extends Controller implements HasMiddleware
     {
         try {
             $query = HistoricIncrement::query();
-            $query->filterByState($request->input('state'))
-                ->filterByItem($request->input('item'))
+            $query->filterByState($request->input('state_id'))
+                ->filterByItem($request->input('item_id'))
                 ->filterByDate($request->input('date'))
                 ->filterByDescription($request->input('search'))
                 ->filterByIsActive($request->input('is_active'))

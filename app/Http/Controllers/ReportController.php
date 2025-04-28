@@ -29,10 +29,8 @@ class ReportController extends Controller implements HasMiddleware
     {
         try {
             $query = Report::query();
-            $query->filterByState($request->input('state'))
-                ->filterByOffice($request->input('office'))
-                ->filterByPosition($request->input('position'))
-                ->filterByName($request->input('search'))
+            $query->filterByState($request->input('state_id'))
+                
                 ->filterByDescriptionsOrTitle($request->input('search'))
                 ->filterByStateName($request->input('state_name'))
                 ->filterByDates($request->input('start_date'), $request->input('end_date'));

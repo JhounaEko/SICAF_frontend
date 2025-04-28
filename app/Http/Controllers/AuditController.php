@@ -28,7 +28,7 @@ class AuditController extends Controller
                 $modelName = 'App\\Models\\' . $request->input('model');
                 $query->where('auditable_type', $modelName);
             }
-            if ($request->filled('user')) {
+            if ($request->filled('user_id')) {
                 $query->where('user_id', $request->input('user'));
             }
             if ($request->filled('event')) {

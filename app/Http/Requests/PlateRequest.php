@@ -11,18 +11,25 @@ class PlateRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
-     */
     public function rules(): array
     {
+        if ($this->method() === 'PATCH') {
+            return [
+                'item_id' => ['sometimes', 'integer', 'exists:items,id'],
+                'description' => ['sometimes', 'string'],
+                'serie' => ['sometimes', 'string'],
+                'state_id' => ['nullable', 'integer', 'exists:states,id'],
+            ];
+        }
         return [
-            //
+
+            'item_id' => ['nullable', 'integer', 'exists:items,id'],
+            'description' => ['required', 'string'],
+            'serie' => ['required', 'string'],
+            'state_id' => ['nullable', 'integer', 'exists:states,id'],
         ];
     }
 }

@@ -7,13 +7,23 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 class PlateResource extends JsonResource
 {
-    /**
-     * Transform the resource into an array.
-     *
-     * @return array<string, mixed>
-     */
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
+        return [
+            'id' => $this->id,
+            'description' => $this->description,
+            'serie' => $this->serie,
+            'item' => $this->item ? [
+                'name' => $this->item->description,
+                'id' => $this->item->id,
+            ] : [],
+            'state' => [
+                'name' => $this->state->name,
+                'code' => $this->state->code,
+                'color' => $this->state->color
+            ],
+            'created_at' => $this->created_at->format('d-m-Y h:m'),
+            'updated_at' => $this->updated_at->format('d-m-Y h:m')
+        ];
     }
 }
