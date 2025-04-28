@@ -24,17 +24,18 @@ class StaffResource extends JsonResource
             'other_phone_number' => $this->other_phone_number,
             'office_phone_number' => $this->office_phone_number,
             'email' => $this->email,
-            'position' => $this->position,
+            'position' => [
+                'name' => $this->position->name,
+                'id' => $this->position->id,
+            ],
             'office' => [
                 'name' => $this->office->name,
                 'initials' => $this->office->initials,
             ],
-            'place' => $this->whenLoaded('place', function () { // Usa whenLoaded si quieres que solo aparezca si la relación fue cargada (eager loaded)
-                 return [
-                     'name' => $this->place->description,
-                     'initials' => $this->place->abbreviation,
-                 ];
-             }, []),
+            'place' => $this->place ? [
+                'name' => $this->place->description,
+                'initials' => $this->place->abbreviation,
+            ] : [],
             'state' => [
                 'name' => $this->state->name,
                 'code' => $this->state->code,

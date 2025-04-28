@@ -16,7 +16,7 @@ class OfficeController extends Controller implements HasMiddleware
     public static function middleware()
     {
         return [
-            new Middleware('permission:VIEW OFFICES', only: ['show']),
+            new Middleware('permission:VIEW OFFICES', only: ['index', 'show']),
             new Middleware('permission:REGISTER OFFICES', only: ['store']),
             new Middleware('permission:UPDATE OFFICES', only: ['update']),
         ];
@@ -25,13 +25,13 @@ class OfficeController extends Controller implements HasMiddleware
     public function index(FilterRequest $request)
     {
         try {
-            $query = Office::query();
-
-            $query->filterByState($request->input('state_id'))
-                  ->filterByLevel($request->input('level'))
-                  ->filterByParent($request->input('parent'))
-                  ->filterByInitialsOrName($request->input('search'))
-                  ->filterByDates($request->input('start_date'), $request->input('end_date'));
+            $query = Office::with(['state', 'parent']);
+            $query->filterByState($request->input('state'))
+                ->filterByLevel($request->input('level'))
+                ->filterByParent($request->input('parent'))
+                ->filterByInitialsOrName($request->input('search'))
+                ->filterByStateName($request->input('state_name'))
+                ->filterByDates($request->input('start_date'), $request->input('end_date'));
 
             if ($request->filled('sort_by')) {
                 try {

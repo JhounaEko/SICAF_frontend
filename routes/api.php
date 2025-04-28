@@ -15,6 +15,7 @@ use App\Http\Controllers\HistoricExchangeRateController;
 use App\Http\Controllers\HistoricIncrementController;
 use App\Http\Controllers\HistoricNoteDetailController;
 use App\Http\Controllers\HistoricRegController;
+use App\Http\Controllers\IncomeNoteController;
 use App\Http\Controllers\IncreaseTypeController;
 use App\Http\Controllers\ItemGroupController;
 use App\Http\Controllers\MenuController;
@@ -22,8 +23,10 @@ use App\Http\Controllers\MotiveController;
 use App\Http\Controllers\NoteTypeController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\OfficeController;
+use App\Http\Controllers\OfficeLocationController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\PlaceController;
+use App\Http\Controllers\PlateController;
 use App\Http\Controllers\PositionController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\RoleController;
@@ -34,6 +37,7 @@ use App\Http\Middleware\SetSortableColumns;
 use App\Models\Correlative;
 use App\Models\FundingOrganization;
 use App\Models\HistoricNoteDetail;
+use App\Models\OfficeLocation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -46,12 +50,12 @@ Route::prefix('v1')->group(function () {
     Route::post('register_personal', [StaffController::class, 'store']);
 
     Route::post('login', [AuthController::class, 'login']);
-    Route::get('offices', [OfficeController::class, 'index'])->name('v1.offices.index')->middleware(SetSortableColumns::class);
-    Route::get('places', [PlaceController::class, 'index'])->name('v1.places.index')->middleware(SetSortableColumns::class);
+    Route::get('office_locations', [OfficeLocationController::class, 'index'])->name('v1.office_locations.index')->middleware(SetSortableColumns::class);
     
     Route::middleware(['auth:sanctum'])->group(function () {
         Route::middleware([SetSortableColumns::class])->group(function () {
             Route::get('states', [StateController::class, 'index'])->name('v1.states.index');
+            Route::get('offices', [OfficeController::class, 'index'])->name('v1.offices.index');
             Route::get('users', [UserController::class, 'index'])->name('v1.users.index');
             Route::get('permissions', [PermissionController::class, 'index'])->name('v1.permissions.index');
             Route::get('roles', [RoleController::class, 'index'])->name('v1.roles.index');
@@ -84,7 +88,11 @@ Route::prefix('v1')->group(function () {
             Route::get('funding_organizations', [FundingOrganizationController::class, 'index'])->name('v1.funding_organizations.index');
             Route::get('reports', [ReportController::class, 'index'])->name('v1.reports.index');
             Route::get('documents', [DocumentController::class, 'index'])->name('v1.documents.index');
+            Route::get('places', [PlaceController::class, 'index'])->name('v1.places.index');
         
+            Route::get('plates', [PlateController::class, 'index'])->name('v1.plates.index');
+            Route::get('income_notes', [IncomeNoteController::class, 'index'])->name('v1.income_notes.index');
+
         });
         Route::apiResource('states', StateController::class)->except('index');
         Route::apiResource('offices', OfficeController::class)->except('index');
@@ -119,6 +127,10 @@ Route::prefix('v1')->group(function () {
         Route::apiResource('reports', ReportController::class)->except('index');
         Route::apiResource('documents', DocumentController::class)->except('index');
         Route::apiResource('places', PlaceController::class)->except('index');
+        Route::apiResource('plates', PlateController::class)->except('index');
+        Route::apiResource('income_notes', IncomeNoteController::class)->except('index');
+        Route::apiResource('office_locations', OfficeLocationController::class)->except('index');
+
 
         Route::post('logout', [AuthController::class, 'logout']);
     });

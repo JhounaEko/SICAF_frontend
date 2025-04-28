@@ -31,9 +31,12 @@ class UserController extends Controller implements HasMiddleware
     public function index(FilterRequest $request)
     {
         try {
-            $query = User::query();
-            $query->filterByState($request->input('state_id'))
-                ->filterByOffice($request->input('office_id'))
+            $query = User::with([
+                'office','place','state',
+                'roles.permissions'
+              ]);
+            $query->filterByState($request->input('state'))
+                ->filterByOffice($request->input('office'))
                 ->filterByUsername($request->input('username'))
                 ->filterByEmail($request->input('email'))
                 ->filterByIdentityCard($request->input('identity_card'))

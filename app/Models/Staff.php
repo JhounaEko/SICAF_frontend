@@ -22,24 +22,47 @@ class Staff extends Model implements Auditable
         'other_phone_number',
         'email',
         'position_id',
-        'office_id',
-        'place_id',
+        'office_location_id',
         'state_id'
     ];
 
+    public function officeLocation()
+    {
+        return $this->belongsTo(OfficeLocation::class, 'office_location_id');
+    }
+
     public function office()
     {
-        return $this->belongsTo(Office::class, 'office_id');
+        return $this->hasOneThrough(
+            Office::class,         // Modelo final
+            OfficeLocation::class, // Modelo intermedio
+            'id',                  // FK en office_locations → aquí coincide con office_location_id de users
+            'id',                  // PK en offices
+            'office_location_id',  // FK en users
+            'office_id'            // FK en office_locations
+        );
     }
 
     public function place()
     {
-        return $this->belongsTo(Place::class, 'place_id');
+        return $this->hasOneThrough(
+            Place::class,
+            OfficeLocation::class,
+            'id',
+            'id',
+            'office_location_id',
+            'place_id'
+        );
     }
 
     public function state()
     {
         return $this->belongsTo(State::class, 'state_id');
+    }
+
+    public function position()
+    {
+        return $this->belongsTo(Position::class, 'position_id');
     }
 
     public function setFirstNameAttribute($value)
@@ -74,6 +97,24 @@ class Staff extends Model implements Auditable
 
     public function scopeSort($query, $sortBy, $sortOrder = 'asc')
     {
+        if (in_array($sortBy, ['office_name', 'office_initials'])) {
+            $officeField = $sortBy === 'office_name' ? 'name' : 'initials';
+
+            return $query
+                ->join('office_locations', 'staff.office_location_id', '=', 'office_locations.id')
+                ->join('offices', 'office_locations.office_id', '=', 'offices.id')
+                ->orderBy("offices.{$officeField}", $sortOrder)
+                ->select('staff.*');
+        }
+
+        if (in_array($sortBy, ['place_name'])) {
+            return $query
+                ->join('office_locations', 'staff.office_location_id', '=', 'office_locations.id')
+                ->join('places', 'office_locations.place_id', '=', 'places.id')
+                ->orderBy("places.description", $sortOrder)
+                ->select('staff.*');
+        }
+
         return $query->orderBy($sortBy, $sortOrder);
     }
 
@@ -87,15 +128,21 @@ class Staff extends Model implements Auditable
     public function scopeFilterByOffice($query, $office)
     {
         if (!is_null($office)) {
-            $query->where('office_id', $office);
+            $query->join('office_locations', 'staff.office_location_id', '=', 'office_locations.id')
+                ->where('office_locations.office_id', $office)
+                ->select('staff.*');
         }
+        return $query;
     }
 
-    public function scopeFilterByPlace($query, $office)
+    public function scopeFilterByPlace($query, $place)
     {
-        if (!is_null($office)) {
-            $query->where('place_id', $office);
+        if (!is_null($place)) {
+            $query->join('office_locations', 'staff.office_location_id', '=', 'office_locations.id')
+                ->where('office_locations.place_id', $place)
+                ->select('staff.*');
         }
+        return $query;
     }
 
     public function scopeFilterByPosition($query, $office)
@@ -119,28 +166,32 @@ class Staff extends Model implements Auditable
 
     public function scopeFilterByOfficeName($query, $officeName)
     {
-        if (!is_null($officeName)) {
-            $query->join('offices', 'staff.office_id', '=', 'offices.id')
-                ->where('offices.name', 'LIKE', "%{$officeName}%")
-                ->select('staff.*');
+        if ($officeName) {
+            $query->whereHas('officeLocation.office', function ($q) use ($officeName) {
+                $q->where('name', 'ILIKE', "%{$officeName}%");
+            });
         }
     }
+
+
 
     public function scopeFilterByOfficeInitials($query, $officeInitials)
     {
         if (!is_null($officeInitials)) {
-            $query->join('offices', 'staff.office_id', '=', 'offices.id')
-                ->where('offices.initials', 'LIKE', "%{$officeInitials}%")
-                ->select('staff.*');
+            $query->whereHas('officeLocation.office', function ($q) use ($officeInitials) {
+                $search = mb_strtoupper(trim($officeInitials));
+                $q->where('initials', 'LIKE', "%{$search}%");
+            });
         }
+        return $query;
     }
 
     public function scopeFilterByPlaceName($query, $placeName)
     {
-        if (!is_null($placeName)) {
-            $query->join('places', 'staff.place_id', '=', 'places.id')
-                ->where('places.description', 'LIKE', "%{$placeName}%")
-                ->select('staff.*');
+        if ($placeName) {
+            $query->whereHas('officeLocation.place', function ($q) use ($placeName) {
+                $q->where('description', 'ILIKE', "%{$placeName}%");
+            });
         }
     }
 
@@ -152,13 +203,15 @@ class Staff extends Model implements Auditable
                 ->select('staff.*');
         }
     }
-    
+
     public function scopeFilterByStateName($query, $stateName)
     {
-        if (!is_null($stateName)) {
-            $query->join('states', 'staff.state_id', '=', 'states.id')
-                  ->where('states.name', 'LIKE', "%{$stateName}%")
-                  ->select('staff.*');
+        if ($stateName) {
+            $query->whereHas(
+                'state',
+                fn($q) =>
+                $q->where('name', 'ILIKE', "%{$stateName}%")
+            );
         }
     }
 
