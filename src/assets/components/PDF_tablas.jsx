@@ -5,8 +5,11 @@ import {
   Page,
   Text,
   View,
-  StyleSheet
+  StyleSheet, 
+  Image,
 } from '@react-pdf/renderer';
+import headerLogo from "../../assets/img/header.png";
+import footerLogo from "../../assets/img/footer.png";
 
 // Estilos para la tabla y texto
 const styles = StyleSheet.create({
@@ -54,6 +57,12 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
 });
+
+const Header = () => (
+  <View style={styles.headerBox} fixed>
+    <Image style={styles.headerImage} src={headerLogo} />
+  </View>
+);
 
 const PDF = ({ estados }) => (
   <Document>

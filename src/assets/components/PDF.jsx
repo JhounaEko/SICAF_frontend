@@ -1,4 +1,3 @@
-import { PageBreak } from '@react-pdf/renderer';
 import React from "react";
 import {
   Document,
@@ -154,23 +153,23 @@ const Header = () => (
     <Image style={styles.headerImage} src={headerLogo} />
   </View>
 );
-const PageNumber = () => (
-  <Text
-    style={styles.pageNumberBox}
-    render={({ pageNumber, totalPages }) =>
-      `Página ${pageNumber} de ${totalPages}`
-    }
-    fixed
-  />
-);
-
-
-
 // const PageNumber = () => (
-//   <Text style={styles.pageNumberBox} fixed>
-//     1/1
-//   </Text>
+//   <Text
+//     style={styles.pageNumberBox}
+//     render={({ pageNumber, totalPages }) =>
+//       `Página ${pageNumber} de ${totalPages}`
+//     }
+//     fixed
+//   />
 // );
+
+
+
+const PageNumber = () => (
+  <Text style={styles.pageNumberBox} fixed>
+    1/1
+  </Text>
+);
 const Footer = () => (
   <View style={styles.footerBox2} fixed>
     <Image style={styles.image} src={footerLogo} />
@@ -181,258 +180,6 @@ const Footer = () => (
 
 // data extraido del endpoint
 const dataFilas = [
-  {
-    codigoGameaDe: "149272",
-    codigoGameaA: "149274",
-    descripcion:
-      "MESA RECTANGULAR 120X80X60 SECUNDARIA CAFE RECTANGULAR MADERA\nMaterial: MADERA",
-    rubro: "EQUIPO EDUCACIONAL Y RECREATIVO",
-    serie: "25PRU",
-    fechaIngreso: "04-may-2025",
-  },
-  {
-    codigoGameaDe: "149272",
-    codigoGameaA: "149274",
-    descripcion:
-      "MESA RECTANGULAR 120X80X60 SECUNDARIA CAFE RECTANGULAR MADERA\nMaterial: MADERA",
-    rubro: "EQUIPO EDUCACIONAL Y RECREATIVO",
-    serie: "25PRU",
-    fechaIngreso: "04-may-2025",
-  },
-  {
-    codigoGameaDe: "149272",
-    codigoGameaA: "149274",
-    descripcion:
-      "MESA RECTANGULAR 120X80X60 SECUNDARIA CAFE RECTANGULAR MADERA\nMaterial: MADERA",
-    rubro: "EQUIPO EDUCACIONAL Y RECREATIVO",
-    serie: "25PRU",
-    fechaIngreso: "04-may-2025",
-  },
-  {
-    codigoGameaDe: "149272",
-    codigoGameaA: "149274",
-    descripcion:
-      "MESA RECTANGULAR 120X80X60 SECUNDARIA CAFE RECTANGULAR MADERA\nMaterial: MADERA",
-    rubro: "EQUIPO EDUCACIONAL Y RECREATIVO",
-    serie: "25PRU",
-    fechaIngreso: "04-may-2025",
-  },
-  {
-    codigoGameaDe: "149272",
-    codigoGameaA: "149274",
-    descripcion:
-      "MESA RECTANGULAR 120X80X60 SECUNDARIA CAFE RECTANGULAR MADERA\nMaterial: MADERA",
-    rubro: "EQUIPO EDUCACIONAL Y RECREATIVO",
-    serie: "25PRU",
-    fechaIngreso: "04-may-2025",
-  },
-  {
-    codigoGameaDe: "149272",
-    codigoGameaA: "149274",
-    descripcion:
-      "MESA RECTANGULAR 120X80X60 SECUNDARIA CAFE RECTANGULAR MADERA\nMaterial: MADERA",
-    rubro: "EQUIPO EDUCACIONAL Y RECREATIVO",
-    serie: "25PRU",
-    fechaIngreso: "04-may-2025",
-  },
-  {
-    codigoGameaDe: "149272",
-    codigoGameaA: "149274",
-    descripcion:
-      "MESA RECTANGULAR 120X80X60 SECUNDARIA CAFE RECTANGULAR MADERA\nMaterial: MADERA",
-    rubro: "EQUIPO EDUCACIONAL Y RECREATIVO",
-    serie: "25PRU",
-    fechaIngreso: "04-may-2025",
-  },
-  {
-    codigoGameaDe: "149272",
-    codigoGameaA: "149274",
-    descripcion:
-      "MESA RECTANGULAR 120X80X60 SECUNDARIA CAFE RECTANGULAR MADERA\nMaterial: MADERA",
-    rubro: "EQUIPO EDUCACIONAL Y RECREATIVO",
-    serie: "25PRU",
-    fechaIngreso: "04-may-2025",
-  },
-  {
-    codigoGameaDe: "149272",
-    codigoGameaA: "149274",
-    descripcion:
-      "MESA RECTANGULAR 120X80X60 SECUNDARIA CAFE RECTANGULAR MADERA\nMaterial: MADERA",
-    rubro: "EQUIPO EDUCACIONAL Y RECREATIVO",
-    serie: "25PRU",
-    fechaIngreso: "04-may-2025",
-  },
-  {
-    codigoGameaDe: "149272",
-    codigoGameaA: "149274",
-    descripcion:
-      "MESA RECTANGULAR 120X80X60 SECUNDARIA CAFE RECTANGULAR MADERA\nMaterial: MADERA",
-    rubro: "EQUIPO EDUCACIONAL Y RECREATIVO",
-    serie: "25PRU",
-    fechaIngreso: "04-may-2025",
-  },
-  {
-    codigoGameaDe: "149272",
-    codigoGameaA: "149274",
-    descripcion:
-      "MESA RECTANGULAR 120X80X60 SECUNDARIA CAFE RECTANGULAR MADERA\nMaterial: MADERA",
-    rubro: "EQUIPO EDUCACIONAL Y RECREATIVO",
-    serie: "25PRU",
-    fechaIngreso: "04-may-2025",
-  },
-  {
-    codigoGameaDe: "149272",
-    codigoGameaA: "149274",
-    descripcion:
-      "MESA RECTANGULAR 120X80X60 SECUNDARIA CAFE RECTANGULAR MADERA\nMaterial: MADERA",
-    rubro: "EQUIPO EDUCACIONAL Y RECREATIVO",
-    serie: "25PRU",
-    fechaIngreso: "04-may-2025",
-  },
-  {
-    codigoGameaDe: "149272",
-    codigoGameaA: "149274",
-    descripcion:
-      "MESA RECTANGULAR 120X80X60 SECUNDARIA CAFE RECTANGULAR MADERA\nMaterial: MADERA",
-    rubro: "EQUIPO EDUCACIONAL Y RECREATIVO",
-    serie: "25PRU",
-    fechaIngreso: "04-may-2025",
-  },
-  {
-    codigoGameaDe: "149272",
-    codigoGameaA: "149274",
-    descripcion:
-      "MESA RECTANGULAR 120X80X60 SECUNDARIA CAFE RECTANGULAR MADERA\nMaterial: MADERA",
-    rubro: "EQUIPO EDUCACIONAL Y RECREATIVO",
-    serie: "25PRU",
-    fechaIngreso: "04-may-2025",
-  },
-  {
-    codigoGameaDe: "149272",
-    codigoGameaA: "149274",
-    descripcion:
-      "MESA RECTANGULAR 120X80X60 SECUNDARIA CAFE RECTANGULAR MADERA\nMaterial: MADERA",
-    rubro: "EQUIPO EDUCACIONAL Y RECREATIVO",
-    serie: "25PRU",
-    fechaIngreso: "04-may-2025",
-  },
-  {
-    codigoGameaDe: "149272",
-    codigoGameaA: "149274",
-    descripcion:
-      "MESA RECTANGULAR 120X80X60 SECUNDARIA CAFE RECTANGULAR MADERA\nMaterial: MADERA",
-    rubro: "EQUIPO EDUCACIONAL Y RECREATIVO",
-    serie: "25PRU",
-    fechaIngreso: "04-may-2025",
-  },
-  {
-    codigoGameaDe: "149272",
-    codigoGameaA: "149274",
-    descripcion:
-      "MESA RECTANGULAR 120X80X60 SECUNDARIA CAFE RECTANGULAR MADERA\nMaterial: MADERA",
-    rubro: "EQUIPO EDUCACIONAL Y RECREATIVO",
-    serie: "25PRU",
-    fechaIngreso: "04-may-2025",
-  },
-  {
-    codigoGameaDe: "149272",
-    codigoGameaA: "149274",
-    descripcion:
-      "MESA RECTANGULAR 120X80X60 SECUNDARIA CAFE RECTANGULAR MADERA\nMaterial: MADERA",
-    rubro: "EQUIPO EDUCACIONAL Y RECREATIVO",
-    serie: "25PRU",
-    fechaIngreso: "04-may-2025",
-  },
-  {
-    codigoGameaDe: "149272",
-    codigoGameaA: "149274",
-    descripcion:
-      "MESA RECTANGULAR 120X80X60 SECUNDARIA CAFE RECTANGULAR MADERA\nMaterial: MADERA",
-    rubro: "EQUIPO EDUCACIONAL Y RECREATIVO",
-    serie: "25PRU",
-    fechaIngreso: "04-may-2025",
-  },
-  {
-    codigoGameaDe: "149272",
-    codigoGameaA: "149274",
-    descripcion:
-      "MESA RECTANGULAR 120X80X60 SECUNDARIA CAFE RECTANGULAR MADERA\nMaterial: MADERA",
-    rubro: "EQUIPO EDUCACIONAL Y RECREATIVO",
-    serie: "25PRU",
-    fechaIngreso: "04-may-2025",
-  },
-  {
-    codigoGameaDe: "149272",
-    codigoGameaA: "149274",
-    descripcion:
-      "MESA RECTANGULAR 120X80X60 SECUNDARIA CAFE RECTANGULAR MADERA\nMaterial: MADERA",
-    rubro: "EQUIPO EDUCACIONAL Y RECREATIVO",
-    serie: "25PRU",
-    fechaIngreso: "04-may-2025",
-  },
-  {
-    codigoGameaDe: "149272",
-    codigoGameaA: "149274",
-    descripcion:
-      "MESA RECTANGULAR 120X80X60 SECUNDARIA CAFE RECTANGULAR MADERA\nMaterial: MADERA",
-    rubro: "EQUIPO EDUCACIONAL Y RECREATIVO",
-    serie: "25PRU",
-    fechaIngreso: "04-may-2025",
-  },
-  {
-    codigoGameaDe: "149272",
-    codigoGameaA: "149274",
-    descripcion:
-      "MESA RECTANGULAR 120X80X60 SECUNDARIA CAFE RECTANGULAR MADERA\nMaterial: MADERA",
-    rubro: "EQUIPO EDUCACIONAL Y RECREATIVO",
-    serie: "25PRU",
-    fechaIngreso: "04-may-2025",
-  },
-  {
-    codigoGameaDe: "149272",
-    codigoGameaA: "149274",
-    descripcion:
-      "MESA RECTANGULAR 120X80X60 SECUNDARIA CAFE RECTANGULAR MADERA\nMaterial: MADERA",
-    rubro: "EQUIPO EDUCACIONAL Y RECREATIVO",
-    serie: "25PRU",
-    fechaIngreso: "04-may-2025",
-  },
-  {
-    codigoGameaDe: "149272",
-    codigoGameaA: "149274",
-    descripcion:
-      "MESA RECTANGULAR 120X80X60 SECUNDARIA CAFE RECTANGULAR MADERA\nMaterial: MADERA",
-    rubro: "EQUIPO EDUCACIONAL Y RECREATIVO",
-    serie: "25PRU",
-    fechaIngreso: "04-may-2025",
-  },
-  {
-    codigoGameaDe: "149272",
-    codigoGameaA: "149274",
-    descripcion:
-      "MESA RECTANGULAR 120X80X60 SECUNDARIA CAFE RECTANGULAR MADERA\nMaterial: MADERA",
-    rubro: "EQUIPO EDUCACIONAL Y RECREATIVO",
-    serie: "25PRU",
-    fechaIngreso: "04-may-2025",
-  },
-  {
-    codigoGameaDe: "149272",
-    codigoGameaA: "149274",
-    descripcion:
-      "MESA RECTANGULAR 120X80X60 SECUNDARIA CAFE RECTANGULAR MADERA\nMaterial: MADERA",
-    rubro: "EQUIPO EDUCACIONAL Y RECREATIVO",
-    serie: "25PRU",
-    fechaIngreso: "04-may-2025",
-  },
-  {
-    codigoGameaDe: "149272",
-    codigoGameaA: "149274",
-    descripcion:
-      "MESA RECTANGULAR 120X80X60 SECUNDARIA CAFE RECTANGULAR MADERA\nMaterial: MADERA",
-    rubro: "EQUIPO EDUCACIONAL Y RECREATIVO",
-    serie: "25PRU",
-    fechaIngreso: "04-may-2025",
-  },
   {
     codigoGameaDe: "149272",
     codigoGameaA: "149274",
