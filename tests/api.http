@@ -1,6 +1,6 @@
 ###Test get states
 GET http://127.0.0.1:8000/api/v1/states?page=1&row_num=11&sort_by=order&sort_order=desc
-Authorization: Bearer 102|AZr7rPRPhMdeKrDifrIw99IDKMdUovvQ6A8nM6Ly5a6b08b3
+Authorization: Bearer 118|Fow0K9eELSfROUQw05zoqBfLp61YXOXU5DzU3UJm2a05acd0
 Accept: application/json
 ###Test post states
 POST http://127.0.0.1:8000/api/v1/states
@@ -53,11 +53,11 @@ Authorization: Bearer 90|3OBp0BQauFsX4k547Sjtx8X7lYmc7XbkLdwdD7G8beca6603
 ###Test show state
 GET http://127.0.0.1:8000/api/v1/states/2
 Accept: application/json
-Authorization: Bearer 90|3OBp0BQauFsX4k547Sjtx8X7lYmc7XbkLdwdD7G8beca6603
+Authorization: Bearer 118|Fow0K9eELSfROUQw05zoqBfLp61YXOXU5DzU3UJm2a05acd0
 ###Test get offices
-GET http://127.0.0.1:8000/api/v1/offices?state_name=act&row_num=10&sort_by=state_id&sort_order=desc
+GET http://127.0.0.1:8000/api/v1/offices?state_name=act&row_num=10&sort_by=state_id&sort_order=desc&search=dth
 Accept: application/json
-Authorization: Bearer 102|AZr7rPRPhMdeKrDifrIw99IDKMdUovvQ6A8nM6Ly5a6b08b3
+Authorization: Bearer 118|Fow0K9eELSfROUQw05zoqBfLp61YXOXU5DzU3UJm2a05acd0
 
 ###Test post offices
 POST http://127.0.0.1:8000/api/v1/offices

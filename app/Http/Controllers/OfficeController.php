@@ -25,8 +25,7 @@ class OfficeController extends Controller implements HasMiddleware
     public function index(FilterRequest $request)
     {
         try {
-            $query = Office::query();
-
+            $query = Office::with(['state', 'parent', 'childOffices']);
             $query->filterByState($request->input('state'))
                 ->filterByLevel($request->input('level'))
                 ->filterByParent($request->input('parent'))
