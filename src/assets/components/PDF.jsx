@@ -865,10 +865,9 @@ const PDF = () => (
         </View>
       </View>
       <Text>
-        {" "}
         {"\n"}
         {"\n"}
-        {"\n"}{" "}
+        {"\n"}
       </Text>
       <View style={styles.container}>
         <View style={[styles.column, { textAlign: "center" }]}>
