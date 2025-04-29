@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
     top: 0,
     left: 0,
     right: 0,
-    height: 71, // 2 cm
+    height: 90, // 2 cm
     // borderBottomWidth: 1,
     borderColor: "#000",
     justifyContent: "center",
@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
   },
   headerImage: {
     width: 447.63, // 15.8 cm en puntos
-    height: 62.37, // 2.2 cm en puntos
+    height: 60, // 2.2 cm en puntos
   },
   footerBox2: {
     position: "absolute",
@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
     height: 39.69, // 1.4 cm
   },
   pageNumberBox: {
-    borderWidth: 1,
+    // borderWidth: 1,
     borderColor: "green",
     position: "absolute",
     height: 20, // altura del borde superior
@@ -163,8 +163,6 @@ const Header = () => (
 //   />
 // );
 
-
-
 const PageNumber = () => (
   <Text style={styles.pageNumberBox} fixed>
     1/1
@@ -176,7 +174,6 @@ const Footer = () => (
     <PageNumber />
   </View>
 );
-
 
 // data extraido del endpoint
 const dataFilas = [
@@ -190,31 +187,33 @@ const dataFilas = [
     fechaIngreso: "04-may-2025",
   },
   {
-    codigoGameaDe: "149272",
-    codigoGameaA: "149274",
+    codigoGameaDe: "149275",
+    codigoGameaA: "149283",
     descripcion:
-      "MESA RECTANGULAR 120X80X60 SECUNDARIA CAFE RECTANGULAR MADERA\nMaterial: MADERA",
+      "SILLA 40X40X90 SECUNDARIA CAFE REJILLA MADERA\nMaterial: MADERA",
     rubro: "EQUIPO EDUCACIONAL Y RECREATIVO",
-    serie: "25PRU",
+    serie: "26PRU",
     fechaIngreso: "04-may-2025",
   },
-  
-  
 ];
-console.log(dataFilas);
+// console.log(dataFilas);
 
 const pageBreaks = [7, 18, 29]; // Saltos incondicionales
 const conditionalBreaks = [
   { position: 4, maxLength: 7 },
   { position: 15, maxLength: 19 },
-  { position: 26, maxLength: 29 }
+  { position: 26, maxLength: 29 },
 ];
+
+const total = dataFilas.reduce((acc, fila) => {
+  const aux = Number(fila.codigoGameaA) - Number(fila.codigoGameaDe) + 1;
+  return acc + aux;
+}, 0);
 
 const PDF = () => (
   <Document>
     <Page size="A4" style={styles.page}>
       <Header />
-
       {/* TITUTLO */}
       <Text style={styles.header}>
         ACTA DE VERIFICACIÓN E INCORPORACIÓN DE ACTIVOS{"\n"}Y ASIGNACIÓN DE
@@ -475,111 +474,105 @@ const PDF = () => (
           </View>
         </View>
       </View>
-      
 
-      
-        {/* Fila de datos */}
-        {dataFilas.map((fila, index) => (
-  <React.Fragment key={index}>
-    {/* Fila de la tabla */}
-    <View style={{ flexDirection: "column", width: "100%" }}>
-      <View style={{ flexDirection: "row", width: "100%" }}>
-        {/* CODIGO GAMEA (DE) */}
-        <View
-          style={[
-            styleTContl.tableCell,
-            {
-              width: "8.3325%",
-              padding: 0,
-              borderWidth: 1,
-              flexDirection: "row",
-            },
-          ]}
-        >
-          <View
-            style={{
-              flex: 1,
-              justifyContent: "center",
-              alignItems: "center",
-              paddingVertical: 4,
-            }}
-          >
-            <Text style={{ textAlign: "center", fontSize: 8.5 }}>
-              {fila.codigoGameaDe}
-            </Text>
+      {/* Fila de datos */}
+      {dataFilas.map((fila, index) => (
+        <React.Fragment key={index}>
+          {/* Fila de la tabla */}
+          <View style={{ flexDirection: "column", width: "100%" }}>
+            <View style={{ flexDirection: "row", width: "100%" }}>
+              {/* CODIGO GAMEA (DE) */}
+              <View
+                style={[
+                  styleTContl.tableCell,
+                  {
+                    width: "8.3325%",
+                    padding: 0,
+                    borderWidth: 1,
+                    flexDirection: "row",
+                  },
+                ]}
+              >
+                <View
+                  style={{
+                    flex: 1,
+                    justifyContent: "center",
+                    alignItems: "center",
+                    paddingVertical: 4,
+                  }}
+                >
+                  <Text style={{ textAlign: "center", fontSize: 8.5 }}>
+                    {fila.codigoGameaDe}
+                  </Text>
+                </View>
+              </View>
+
+              {/* CODIGO GAMEA (A) */}
+              <View
+                style={[
+                  styleTContl.tableCell,
+                  {
+                    width: "8.3325%",
+                    padding: 0,
+                    borderWidth: 1,
+                    flexDirection: "row",
+                  },
+                ]}
+              >
+                <View
+                  style={{
+                    flex: 1,
+                    justifyContent: "center",
+                    alignItems: "center",
+                    paddingVertical: 4,
+                  }}
+                >
+                  <Text style={{ textAlign: "center", fontSize: 7.5 }}>
+                    {fila.codigoGameaA}
+                  </Text>
+                </View>
+              </View>
+
+              {/* DESCRIPCIÓN */}
+              <View style={[styleTContl.tableCell, { width: "40.7%" }]}>
+                <Text style={{ textAlign: "justify", fontSize: 7.5 }}>
+                  {fila.descripcion}
+                </Text>
+              </View>
+
+              {/* RUBRO */}
+              <View style={[styleTContl.tableCell, { width: "17.62%" }]}>
+                <Text style={{ textAlign: "justify", fontSize: 7.5 }}>
+                  {fila.rubro}
+                </Text>
+              </View>
+
+              {/* SERIE */}
+              <View style={[styleTContl.tableCell, { width: "12%" }]}>
+                <Text style={{ textAlign: "center", fontSize: 7.5 }}>
+                  {fila.serie}
+                </Text>
+              </View>
+
+              {/* FECHA INGRESO */}
+              <View style={[styleTContl.tableCell, { width: "13%" }]}>
+                <Text style={{ textAlign: "center", fontSize: 7.5 }}>
+                  {fila.fechaIngreso}
+                </Text>
+              </View>
+            </View>
           </View>
-        </View>
 
-        {/* CODIGO GAMEA (A) */}
-        <View
-          style={[
-            styleTContl.tableCell,
-            {
-              width: "8.3325%",
-              padding: 0,
-              borderWidth: 1,
-              flexDirection: "row",
-            },
-          ]}
-        >
-          <View
-            style={{
-              flex: 1,
-              justifyContent: "center",
-              alignItems: "center",
-              paddingVertical: 4,
-            }}
-          >
-            <Text style={{ textAlign: "center", fontSize: 8.5 }}>
-              {fila.codigoGameaA}
-            </Text>
-          </View>
-        </View>
+          {/* Salto de página según condiciones */}
+          {(pageBreaks.includes(index + 1) ||
+            conditionalBreaks.some(
+              (rule) =>
+                index + 1 === rule.position && dataFilas.length < rule.maxLength
+            )) &&
+            index + 1 < dataFilas.length && <View break />}
+        </React.Fragment>
+      ))}
 
-        {/* DESCRIPCIÓN */}
-        <View style={[styleTContl.tableCell, { width: "40.7%" }]}>
-          <Text style={{ textAlign: "justify", fontSize: 7.5 }}>
-            {fila.descripcion}
-          </Text>
-        </View>
-
-        {/* RUBRO */}
-        <View style={[styleTContl.tableCell, { width: "17.62%" }]}>
-          <Text style={{ textAlign: "justify", fontSize: 8.5 }}>
-            {fila.rubro}
-          </Text>
-        </View>
-
-        {/* SERIE */}
-        <View style={[styleTContl.tableCell, { width: "12%" }]}>
-          <Text style={{ textAlign: "center", fontSize: 8.5 }}>
-            {fila.serie}
-          </Text>
-        </View>
-
-        {/* FECHA INGRESO */}
-        <View style={[styleTContl.tableCell, { width: "13%" }]}>
-          <Text style={{ textAlign: "center", fontSize: 8.5 }}>
-            {fila.fechaIngreso}
-          </Text>
-        </View>
-      </View>
-    </View>
-
-    {/* Salto de página según condiciones */}
-    {(pageBreaks.includes(index + 1) || 
-      conditionalBreaks.some(rule => index + 1 === rule.position && dataFilas.length < rule.maxLength)
-    ) && index + 1 < dataFilas.length && (
-      <View break />
-    )}
-  </React.Fragment>
-))}
-
-
-
-
-
-      
       <View style={{ flexDirection: "column", width: "100%" }}>
         <View
           style={[
@@ -605,7 +598,9 @@ const PDF = () => (
       {/* firmas, totales, observaciones */}
       <View style={styles.container}>
         <View style={[styles.column, { textAlign: "left" }]}>
-          <Text style={{ fontWeight: "bold" }}>TOTAL DE ACTIVOS: </Text>12
+          <Text style={{ fontWeight: "bold" }}>
+            TOTAL DE ACTIVOS: <Text>Total: {total}</Text>
+          </Text>
         </View>
         <View style={[styles.column, { textAlign: "right" }]}>
           <Text>El Alto, 04 de may de 2025</Text>
@@ -631,7 +626,7 @@ const PDF = () => (
       </View>
 
       {/* Pre-footer con numeración automática */}
-      <Footer fixed/>
+      <Footer fixed />
     </Page>
   </Document>
 );

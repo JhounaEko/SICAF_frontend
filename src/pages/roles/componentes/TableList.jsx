@@ -228,12 +228,29 @@ const TablaList = ({ getStatusCRUD, getDataSearh }) => {
         updateTableData={updateTableData}
         statusUpdate={true}
       />
+{/* REPORTES */}
+<div className="d-flex gap-3 mb-3">
+  {/* PDF */}
+  <button
+    className="btn btn-sm btn-danger d-flex align-items-center gap-2"
+    onClick={handleVerPDF}
+    disabled={loading}
+  >
+    <i className="fas fa-file-pdf"></i>
+    {loading ? "Generando PDF ..." : "PDF"}
+  </button>
 
-      <div className="mb-3 d-flex gap-2">
-        <button className="btn btn-sm btn-primary" onClick={handleVerPDF} disabled={loading}>
-          {loading ? "Generando PDF ..." : "VER PDF en nueva pestaña"}
-        </button>
-      </div>
+  {/* EXCEL */}
+  <button
+    className="btn btn-sm btn-success d-flex align-items-center gap-2"
+    // onClick={handleVerExcel}
+    onClick={handleVerPDF}
+    disabled={loading}
+  >
+    <i className="fas fa-file-excel"></i>
+    {loading ? "Generando Excel ..." : "EXCEL"}
+  </button>
+</div>
 
       {mostrarPDF && !loading && (
         <div style={{ height: "600px", border: "1px solid #ddd", marginBottom: "20px" }}>

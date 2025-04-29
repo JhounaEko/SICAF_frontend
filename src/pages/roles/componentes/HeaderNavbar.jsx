@@ -49,9 +49,12 @@ const HeaderNavbar = ({updateTableData, searchData}) => {
 		        </Form.Group>
             </div>
             <div className="col-sm"> 
-                    <button className="btn btn-danger m-1" > <i className = "fas fa-file-pdf"></i>PDF</button>
+                    {/* <button className="btn btn-danger m-1" > <i className = "fas fa-file-pdf"></i>PDF</button>
                     <button className="btn btn-success m-1" > <i className = "fas fa-file-excel"></i>EXCEL</button>
-                    <button className="btn btn-primary m-1" > <i className = "fas fa-file-word"></i>WORD</button>
+                    <button className="btn btn-primary m-1" > <i className = "fas fa-file-word"></i>WORD</button> */}
+                    <br />
+                    <br />
+                    <br />
             </div>
         </div>  
     </> );
