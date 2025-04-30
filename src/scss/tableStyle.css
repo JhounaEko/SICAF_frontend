@@ -22,3 +22,35 @@
     0 0 0 2px rgba(59, 130, 246, 0.3), 
     0 1px 2px rgba(0, 0, 0, 0.1);
 }
+
+/****/
+
+body .rdt_Table {
+    border: 3px solid #ccc;    
+    border-radius: 20px;
+    overflow: hidden; /* Para que el borde redondeado funcione correctamente */
+  }
+  
+  .cabecera-tabla {
+    background-color: #8c4be0;
+    font-weight: bold;
+  }
+  
+  .fila-tabla{
+    background-color: #dd2d2d;
+  }
+  
+  .cargando-spinner {
+    margin-right: 5px;
+  }
+  
+  .no-data-message {
+    color: gray;
+    font-style: italic;
+  }
+  
+  .paginacion-tabla nav ul.pagination { /* Ejemplo para estilizar la paginación de Bootstrap */
+    justify-content: flex-end; /* Alinear la paginación a la derecha */
+  }
+  
+  /* Puedes agregar más estilos específicos para otros elementos de la tabla */

@@ -1,13 +1,19 @@
 import CryptoJS from 'crypto-js'; 
 import axios from 'axios';
 import Cookies from 'js-cookie';
+import { addNotification } from './../../components/alert/alert.jsx';
 
 export const modelUseCreate = () => {
 
     const useCreate = async (dataForm) => {
         const sessionTokenSicaf = Cookies.get(process.env.REACT_APP_COOKIES_NAME_TOKEN);  
-        const decryptedToken = CryptoJS.AES.decrypt(sessionTokenSicaf, process.env.REACT_APP_API_KEY).toString(CryptoJS.enc.Utf8); 				             
-    
+        let decryptedToken;
+        if(sessionTokenSicaf){
+            decryptedToken = CryptoJS.AES.decrypt(sessionTokenSicaf, process.env.REACT_APP_API_KEY).toString(CryptoJS.enc.Utf8); 	     
+        } else {
+            decryptedToken = "not session" 
+        } 
+
         let returnResponse = {
             status: false,
             title:"",
@@ -16,7 +22,7 @@ export const modelUseCreate = () => {
     
         try{
             const respose = await axios.post(
-                process.env.REACT_APP_API_URL+'/api/v1/employees',                
+                process.env.REACT_APP_API_URL+'/api/v1/staff',                
                     dataForm
                 ,{
                     headers: {
@@ -28,16 +34,29 @@ export const modelUseCreate = () => {
             returnResponse.status = true;
             return returnResponse;
         } catch (error) {
-            returnResponse.status = false;
-            if (error.code == "ERR_BAD_REQUEST") {
-                returnResponse.title = "Aviso";
-                returnResponse.message =  error.response.data.message;
-            } else {
-                returnResponse.title = "Problema inesperado";
-                returnResponse.message =  "Revice su conexion";
-            }
             console.log(error);
-            return returnResponse;
+            returnResponse.status = false;
+            try {
+                if(error.response.status === 403){                    
+                    addNotification('info', 'Aviso', "No tiene permisos para registrar cargos", 'top-right',8000, "fas fa-exclamation-circle" ,null)	                                              
+                } else{
+                    if (error.code == "ERR_BAD_REQUEST") {
+                        if (error.response.data.message === "Unauthenticated."){                                                                          
+                            Cookies.remove(process.env.REACT_APP_COOKIES_NAME_TOKEN); 
+                            Cookies.remove(process.env.REACT_APP_COOKIES_NAME_DATA);                
+                            returnResponse.message = "Unauthenticated.";                              
+                        } else {
+                            addNotification('info', 'Aviso', error.response.data.message, 'top-right',8000, "fas fa-exclamation-circle" ,null)	                                                            
+                        }     
+                    } else {
+                        addNotification('danger', 'Problema inesperado', "Revice su conexion", 'top-right',8000, "fas fa-exclamation-circle" ,null)	                                                      
+                    }
+                }
+                return returnResponse; 
+            } catch(error){
+                addNotification('danger', 'Problema inesperado', "Revice su conexion", 'top-right',8000, "fas fa-exclamation-circle" ,null)	                          
+                return returnResponse;    
+            } 
         }  
     }
     return useCreate;
@@ -46,8 +65,13 @@ export const modelUseCreate = () => {
 
 export const modelChangeStatus = () =>{
     const useChangeStatus = async (statusRow, idRow) =>{
-        const sessionTokenSicaf = Cookies.get(process.env.REACT_APP_COOKIES_NAME_TOKEN);  
-        const decryptedToken = CryptoJS.AES.decrypt(sessionTokenSicaf, process.env.REACT_APP_API_KEY).toString(CryptoJS.enc.Utf8); 				             
+        const sessionTokenSicaf = Cookies.get(process.env.REACT_APP_COOKIES_NAME_TOKEN);
+        let decryptedToken;
+        if (sessionTokenSicaf) {
+            decryptedToken = CryptoJS.AES.decrypt(sessionTokenSicaf, process.env.REACT_APP_API_KEY).toString(CryptoJS.enc.Utf8);
+        } else {
+            decryptedToken = "not session"
+        } 
         let returnResponse = {
             status: false,
             response: {},
@@ -57,7 +81,7 @@ export const modelChangeStatus = () =>{
         }
        try {
             const response = await axios.patch(
-                `${process.env.REACT_APP_API_URL}/api/v1/employees/${idRow}` ,
+                `${process.env.REACT_APP_API_URL}/api/v1/staff/${idRow}` ,
                 {
                     "state_id": (statusRow === "INACTIVO")? 1 : 2 
                 }, {
@@ -70,10 +94,37 @@ export const modelChangeStatus = () =>{
             returnResponse.status=true;
             return returnResponse;
        } catch (error) {
+        console.log(error);
+        returnResponse.status = false;
+        try {
             console.log(error);
-            returnResponse.status=false;
-            returnResponse.error = error;
-            return returnResponse;     
+            returnResponse.status = false;
+            try {
+                if (error.response.status === 403) {
+                    addNotification('info', 'Aviso', "No tiene permisos para modificar el estado", 'top-right', 15000, "fas fa-exclamation-circle", null)                
+                } else {
+                    if (error.code == "ERR_BAD_REQUEST") {
+                        if (error.response.data.message === "Unauthenticated.") {
+                            Cookies.remove(process.env.REACT_APP_COOKIES_NAME_TOKEN);
+                            Cookies.remove(process.env.REACT_APP_COOKIES_NAME_DATA);
+                            returnResponse.message = "Unauthenticated.";
+                        } else {
+                            addNotification('info', 'Aviso', error.response.data.message, 'top-right', 8000, "fas fa-exclamation-circle", null)
+                        }
+                    } else {
+                        addNotification('danger', 'Problema inesperado', "Revice su conexion", 'top-right', 8000, "fas fa-exclamation-circle", null)                        
+                    }
+                }
+                return returnResponse;
+            } catch (error) {
+                addNotification('danger', 'Problema inesperado', "Revice su conexion", 'top-right', 8000, "fas fa-exclamation-circle", null)
+                return returnResponse;
+            }
+        } catch (error) {
+            console.log(error);
+            addNotification('danger', 'Problema inesperado', "Revice su conexion", 'top-right', 8000, "fas fa-exclamation-circle", null)
+            return returnResponse;
+        } 
        }        
     }
     return useChangeStatus;
@@ -82,8 +133,13 @@ export const modelChangeStatus = () =>{
 export const modelUseListTable = () =>{
     const useListTable = async (getPag = 1, getSortColumn = 'id', getOrder ="desc", getCountRows = 10 , getSearh = "") => {
 
-        const sessionTokenSicaf = Cookies.get(process.env.REACT_APP_COOKIES_NAME_TOKEN);  
-        const decryptedToken = CryptoJS.AES.decrypt(sessionTokenSicaf, process.env.REACT_APP_API_KEY).toString(CryptoJS.enc.Utf8); 				             
+        const sessionTokenSicaf = Cookies.get(process.env.REACT_APP_COOKIES_NAME_TOKEN);
+        let decryptedToken;
+        if (sessionTokenSicaf) {
+            decryptedToken = CryptoJS.AES.decrypt(sessionTokenSicaf, process.env.REACT_APP_API_KEY).toString(CryptoJS.enc.Utf8);
+        } else {
+            decryptedToken = "not session"
+        } 
         
         let returnResponse = {
             status: false,
@@ -93,15 +149,14 @@ export const modelUseListTable = () =>{
         }
         try {
             const respose = await axios.get(
-                process.env.REACT_APP_API_URL+'/api/v1/employees', 
+                process.env.REACT_APP_API_URL+'/api/v1/staff', 
                 {
-                    params: {
-                        state_id: 1,
-                        search: getSearh,
+                    params: {                                           
                         page: getPag,
                         sort_by: getSortColumn,
                         sort_order: getOrder,
-                        row_num: getCountRows
+                        row_num: getCountRows,
+                        search:getSearh
                     },
                     headers: {
                         Accept: 'application/json',
@@ -114,9 +169,36 @@ export const modelUseListTable = () =>{
             return returnResponse;
         } catch (error) {
             console.log(error);
-            returnResponse.title = "Problema inesperado";
-            returnResponse.message = "Revice su conexion";
-            return returnResponse;
+            returnResponse.status = false;
+            try {
+                console.log(error);
+                returnResponse.status = false;
+                try {
+                    if (error.response.status === 403) {
+                        addNotification('info', 'Aviso', "No tiene permisos para ver los registros", 'top-right', 15000, "fas fa-exclamation-circle", null)                
+                    } else {
+                        if (error.code == "ERR_BAD_REQUEST") {
+                            if (error.response.data.message === "Unauthenticated.") {
+                                Cookies.remove(process.env.REACT_APP_COOKIES_NAME_TOKEN);
+                                Cookies.remove(process.env.REACT_APP_COOKIES_NAME_DATA);
+                                returnResponse.message = "Unauthenticated.";
+                            } else {
+                                addNotification('info', 'Aviso', error.response.data.message, 'top-right', 8000, "fas fa-exclamation-circle", null)
+                            }
+                        } else {
+                            addNotification('danger', 'Problema inesperado', "Revice su conexion", 'top-right', 8000, "fas fa-exclamation-circle", null)                        
+                        }
+                    }
+                    return returnResponse;
+                } catch (error) {
+                    addNotification('danger', 'Problema inesperado', "Revice su conexion", 'top-right', 8000, "fas fa-exclamation-circle", null)
+                    return returnResponse;
+                }
+            } catch (error) {
+                console.log(error);
+                addNotification('danger', 'Problema inesperado', "Revice su conexion", 'top-right', 8000, "fas fa-exclamation-circle", null)
+                return returnResponse;
+            }
         }      
     }
     return useListTable;
@@ -131,11 +213,16 @@ export const modelChageDataRow = () =>{
             message:"",
             error:{}
         }
-        const sessionTokenSicaf = Cookies.get(process.env.REACT_APP_COOKIES_NAME_TOKEN);  
-        const decryptedToken = CryptoJS.AES.decrypt(sessionTokenSicaf, process.env.REACT_APP_API_KEY).toString(CryptoJS.enc.Utf8); 				             
+        const sessionTokenSicaf = Cookies.get(process.env.REACT_APP_COOKIES_NAME_TOKEN);
+        let decryptedToken;
+        if (sessionTokenSicaf) {
+            decryptedToken = CryptoJS.AES.decrypt(sessionTokenSicaf, process.env.REACT_APP_API_KEY).toString(CryptoJS.enc.Utf8);
+        } else {
+            decryptedToken = "not session"
+        } 
         try {
             const respose = await axios.patch(
-                `${process.env.REACT_APP_API_URL}/api/v1/employees/${dataForm.id}`  ,
+                `${process.env.REACT_APP_API_URL}/api/v1/staff/${dataForm.id}`  ,
                   dataForm,
                   {
                       headers: {
@@ -148,16 +235,28 @@ export const modelChageDataRow = () =>{
             return returnResponse;          
         } catch (error) {
             console.log(error);
-            returnResponse.status = false; 
-            returnResponse.error = error; 
-            if (error.code == "ERR_BAD_REQUEST") {
-                returnResponse.title = "Aviso";
-                returnResponse.message =  error.response.data.message;
-            } else {
-                returnResponse.title = "Problema inesperado";
-                returnResponse.message =  "Revice su conexion";
-            }
-            return returnResponse;
+            returnResponse.status = false;
+            try {
+                if(error.response.status === 403){                    
+                    addNotification('info', 'Aviso', "No tiene permisos para registrar cargos", 'top-right',8000, "fas fa-exclamation-circle" ,null)	                                              
+                } else{
+                    if (error.code == "ERR_BAD_REQUEST") {
+                        if (error.response.data.message === "Unauthenticated."){                                                                          
+                            Cookies.remove(process.env.REACT_APP_COOKIES_NAME_TOKEN); 
+                            Cookies.remove(process.env.REACT_APP_COOKIES_NAME_DATA);                
+                            returnResponse.message = "Unauthenticated.";                              
+                        } else {
+                            addNotification('info', 'Aviso', error.response.data.message, 'top-right',8000, "fas fa-exclamation-circle" ,null)	                                                            
+                        }     
+                    } else {
+                        addNotification('danger', 'Problema inesperado', "Revice su conexion", 'top-right',8000, "fas fa-exclamation-circle" ,null)	                                                      
+                    }
+                }
+                return returnResponse; 
+            } catch(error){
+                addNotification('danger', 'Problema inesperado', "Revice su conexion", 'top-right',8000, "fas fa-exclamation-circle" ,null)	                          
+                return returnResponse;    
+            } 
         }            
     }
     return useChangeDataRow;  

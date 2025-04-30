@@ -59,6 +59,7 @@ const TableList = (getStatusCRUD) => {
           }).then( async (result) => {
             if (result.isConfirmed) {
                 const dataReturn = await useChangeStatus(statusRow, idRow);
+                updateTableData();
                 if (dataReturn.status) {                    
                     Swal.fire({
                       title: "Se establecio el cambio de estado correctamente",
@@ -92,33 +93,33 @@ const TableList = (getStatusCRUD) => {
 			sortable: true,  
 			width: '40px', 
 		},
-		{ name: (<p className="m-0" style = {{fontWeight: 'bold', fontSize: '15px', textDecoration: 'underline'}}>Usuarios</p>),      
+		{ name: (<p className="m-0" style = {{fontWeight: 'bold', fontSize: '15px', textDecoration: 'underline'}}>Datos de usuario</p>),      
 		  sortable: true ,
-		  width: '240px',
+		  width: '200px',
           selectorKey: 'first_name',
 		  cell: (row) => <div className="m-0 p-0"> 
 		  					<b>{row.first_name+" "+row.last_name}</b>
 							<p className="m-0 p-0" style={{fontSize:'12px'}}>{row.email}</p> 
-							<p className="m-0 p-0" style={{fontSize:'12px'}}>{row.phone_number}</p>                    
-                            <p className="m-0 p-0" style={{fontSize:'12px'}}>{row.username}</p>
+							<p className="m-0 p-0" style={{fontSize:'12px'}}>{row.phone_number}</p>  
+                            <p style={{fontSize:'14px'}}>CI: {row.identity_card}  {(row.issued_by == "S/E")? "":row.issued_by}</p>                                              
 						</div> ,		 
 		},
-        { name: (<p className="m-0" style = {{fontWeight: 'bold', fontSize: '15px', textDecoration: 'underline'}}>C.I.</p>), 
+        { name: (<p className="m-0" style = {{fontWeight: 'bold', fontSize: '15px', textDecoration: 'underline'}}>Usuario</p>), 
 		  sortable: true,
 		  omit: false,
-          selectorKey:'identity_card',
+          selectorKey:'username',
 		  cell: (row) => <div className="m-0 p-0"> 
-							<p style={{fontSize:'14px'}}>{row.identity_card}  {(row.issued_by == "S/E")? "":row.issued_by}</p>
+							<p className="m-0 p-0" style={{fontSize:'12px'}}> {row.username}</p>
 						</div> ,
 		  width: '110px'	 
 		}, 
-		{ name: (<p className="m-0" style = {{fontWeight: 'bold', fontSize: '15px', textDecoration: 'underline'}}>Area</p>), 
+		{ name: (<p className="m-0" style = {{fontWeight: 'bold', fontSize: '15px', textDecoration: 'underline'}}>Oficina</p>), 
 		  sortable: true,
 		  omit: false,
           selectorKey : 'office_name',
 		  cell: (row) => <div className="m-0 p-0"> 
-							<b style={{fontSize:'12px'}}>{row.office.name}</b>
-							<p className="m-0 p-0" style={{fontSize:'12px'}}>{row.office.initials}</p> 							
+							<b style={{fontSize:'12px'}}>{row.office.name } ({row.office.initials})</b>
+							<p className="m-0 p-0" style={{fontSize:'12px'}}>{row.place.name}</p> 							
 						</div> ,
 		  width: '200px'	 
 		}, 
@@ -137,17 +138,24 @@ const TableList = (getStatusCRUD) => {
 			cell: (row) => (<p className="m-0 p-0" style={{fontSize:'12px'}}>{row.created_at}</p>),	
             selectorKey:'created_at',
             sortable: true, 
-            width: '80px',
+            width: '100px',
+		},
+        {
+			name: (<p className="m-0" style = {{fontWeight: 'bold', fontSize: '13px', textDecoration: 'underline'}}>Ultima actualización</p>),
+			cell: (row) => (<p className="m-0 p-0" style={{fontSize:'12px'}}>{row.updated_at}</p>),	
+            selectorKey:'updated_at',
+            sortable: true, 
+            width: '100px',
 		},
 		{ name: (<p className="m-0" style = {{fontWeight: 'bold', fontSize: '15px'}}>Estado</p >), 		
 		  sortable: true ,
           selectorKey:'state_id',
 		  cell:  (row) =>(
-			(row.state.name === "ACTIVO") ? (<div className="btn-flex">
+			(row.state.name === "ACTIVO") ? (<div className="btn-flex" title = "Desactivar registro">
 				<i className="fas fa-toggle-on fa-2x" id={`id_check${row.id}`} style = {{color: "#276BAA"}} onClick={ ()=> changeStatus(row.state.name, row.id)} ></i>
 				<p className="mx-1" style={{color: 'green', fontSize: '13px' }} htmlFor={`id_check${row.id}`} >ACTIVO</p>
 			</div>):
-			(<div className="btn-flex">
+			(<div className="btn-flex" title = "Activar registro">
 				<i className="fas fa-toggle-off fa-2x" id={`id_check${row.id}`} onClick={ ()=> changeStatus(row.state.name, row.id)} ></i>
 				<p className="mx-1" style={{color: 'red', fontSize: '13px' }} htmlFor={`id_check${row.id}`} >INACTIVO</p>
 			</div>)
@@ -160,6 +168,7 @@ const TableList = (getStatusCRUD) => {
 			<>
 			  	<button
 					className="btn btn-sm btn-info"
+                    title = "Editar datos"
 					onClick={() => {onChangeRow({
 						id: row.id,
 						first_name: row.first_name,
@@ -167,15 +176,24 @@ const TableList = (getStatusCRUD) => {
                         phone_number: row.phone_number,
                         username: row.username,
                         phone_number: row.phone_number,
-                        office: row.office,
+                        office: {
+                            id: row.office_location_id,
+                            office: {
+                                id: row.office.id,
+                                name: row.office.name,},
+                            place:{
+                                description: row.place.name,                                
+                            }
+
+                        },
                         roles: row.roles,
                         identity_card: row.identity_card,
                         issued_by: row.issued_by,
                         email: row.email,
 					});  }}>
-					<i className="fas fa-wrench"></i> Editar
+					<i className="fas fa-wrench"></i>
 			  	</button>	
-                  <div className="navbar-item navbar-user dropdown">                    
+                  <div className="navbar-item navbar-user dropdown" title = "Opciones para contraseña">                    
                     <a className="navbar-link dropdown-toggle d-flex align-items-center btn btn-sm btn-info m-1" data-bs-toggle="dropdown">                  
                         <span>                            
                             <span className="d-none d-md-inline">mas</span>

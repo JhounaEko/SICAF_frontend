@@ -1,141 +1,159 @@
-import CryptoJS from 'crypto-js'; 
+import CryptoJS from 'crypto-js';
 import axios from 'axios';
 import Cookies from 'js-cookie';
-import {addNotification} from './../../components/alert/alert.jsx';
+import { addNotification } from './../../components/alert/alert.jsx';
 
 export const modelUseCreate = () => {
 
     const useCreate = async (dataForm) => {
-        const sessionTokenSicaf = Cookies.get(process.env.REACT_APP_COOKIES_NAME_TOKEN);  
-        const decryptedToken = CryptoJS.AES.decrypt(sessionTokenSicaf, process.env.REACT_APP_API_KEY).toString(CryptoJS.enc.Utf8); 				             
-    
+        const sessionTokenSicaf = Cookies.get(process.env.REACT_APP_COOKIES_NAME_TOKEN);
+        let decryptedToken;
+        if (sessionTokenSicaf) {
+            decryptedToken = CryptoJS.AES.decrypt(sessionTokenSicaf, process.env.REACT_APP_API_KEY).toString(CryptoJS.enc.Utf8);
+        } else {
+            decryptedToken = "not session"
+        }
+
         let returnResponse = {
             status: false,
-            title:"",
-            message:""
+            title: "",
+            message: ""
         }
-    
-        try{
+
+        try {
             const respose = await axios.post(
-                process.env.REACT_APP_API_URL+'/api/v1/offices',                
-                    dataForm
-                ,{
+                process.env.REACT_APP_API_URL + '/api/v1/offices',
+                dataForm
+                , {
                     headers: {
                         Accept: 'application/json',
-                        Authorization: 'Bearer '+decryptedToken,
+                        Authorization: 'Bearer ' + decryptedToken,
                     }
                 }
             );
             returnResponse.status = true;
             return returnResponse;
-        } catch (error) {   
+        } catch (error) {
             console.log(error);
-            returnResponse.status =false;
+            returnResponse.status = false;
             try {
-                if(error.response.status === 403){                    
-                    addNotification('info', 'Aviso', "No tiene permisos para registrar oficinas", 'top-right',8000, "fas fa-exclamation-circle" ,null)	                          
-                    return returnResponse;
-                } else{
+                if (error.response.status === 403) {
+                    addNotification('info', 'Aviso', "No tiene permisos para registrar oficinas", 'top-right', 8000, "fas fa-exclamation-circle", null)
+                } else {
                     if (error.code == "ERR_BAD_REQUEST") {
-                        addNotification('info', 'aviso', error.response.data.message, 'top-right',8000, "fas fa-exclamation-circle" ,null)	                          
-                        return returnResponse;
+                        if (error.response.data.message === "Unauthenticated.") {
+                            Cookies.remove(process.env.REACT_APP_COOKIES_NAME_TOKEN);
+                            Cookies.remove(process.env.REACT_APP_COOKIES_NAME_DATA);
+                            returnResponse.message = "Unauthenticated.";
+                        } else {
+                            addNotification('info', 'Aviso', error.response.data.message, 'top-right', 8000, "fas fa-exclamation-circle", null)
+                        }
                     } else {
-                        addNotification('danger', 'Problema inesperado', "Revice su conexion", 'top-right',8000, "fas fa-exclamation-circle" ,null)	                          
-                        return returnResponse;
+                        addNotification('danger', 'Problema inesperado', "Revice su conexion", 'top-right', 8000, "fas fa-exclamation-circle", null)
+
                     }
                 }
-            } catch(error){
-                addNotification('danger', 'Problema inesperado', "Revice su conexion", 'top-right',8000, "fas fa-exclamation-circle" ,null)	                          
-                return returnResponse;    
-            }   
-        }  
+                return returnResponse;
+            } catch (error) {
+                addNotification('danger', 'Problema inesperado', "Revice su conexion", 'top-right', 8000, "fas fa-exclamation-circle", null)
+                return returnResponse;
+            }
+        }
     }
     return useCreate;
 
 }
 
-export const modelUseListSelect = () =>{
+export const modelUseListSelect = () => {
     const useListSelect = async (search, pagNum) => {
-        const sessionTokenSicaf = Cookies.get(process.env.REACT_APP_COOKIES_NAME_TOKEN);  
-        const decryptedToken = CryptoJS.AES.decrypt(sessionTokenSicaf, process.env.REACT_APP_API_KEY).toString(CryptoJS.enc.Utf8); 				             
+        const sessionTokenSicaf = Cookies.get(process.env.REACT_APP_COOKIES_NAME_TOKEN);
+        let decryptedToken;
+        if (sessionTokenSicaf) {
+            decryptedToken = CryptoJS.AES.decrypt(sessionTokenSicaf, process.env.REACT_APP_API_KEY).toString(CryptoJS.enc.Utf8);
+        } else {
+            decryptedToken = "not session"
+        }
 
         let returnResponse = {
             status: false,
             response: {},
-            title:"",
-            message:""
+            title: "",
+            message: ""
         }
 
         try {
-            const response =  await axios.get(
-                process.env.REACT_APP_API_URL+'/api/v1/offices', 
+            const response = await axios.get(
+                process.env.REACT_APP_API_URL + '/api/v1/office_locations',
                 {
                     params: {
                         state_id: 1,
-                        search: search,
+                        office_name: search,
                         page: pagNum,
                         sort_by: 'id',
                         sort_order: 'desc',
                     },
                     headers: {
                         Accept: 'application/json',
-                        Authorization: 'Bearer '+decryptedToken,
+                        Authorization: 'Bearer ' + decryptedToken,
                     },
                 }
             );
-            
+
             returnResponse.status = true;
             returnResponse.response = response;
             return returnResponse;
 
-        } catch (error) {               
+        } catch (error) {
             console.log(error);
-            returnResponse.status =false;
+            returnResponse.status = false;
             try {
-                if(error.response.status === 403){                    
-                    addNotification('info', 'Aviso', "No tiene permisos para listar oficinas", 'top-right',15000, "fas fa-exclamation-circle" ,null)	                                              
-                } else{
+                if (error.response.status === 403) {
+                    addNotification('info', 'Aviso', "No tiene permisos para listar oficinas", 'top-right', 15000, "fas fa-exclamation-circle", null)
+                } else {
                     if (error.code == "ERR_BAD_REQUEST") {
-                        if (error.response.data.message === "Unauthenticated."){                          
-                            console.log("sesion close");                         
-                            Cookies.remove(process.env.REACT_APP_COOKIES_NAME_TOKEN); 
-                            Cookies.remove(process.env.REACT_APP_COOKIES_NAME_DATA);                
-                            returnResponse.message = "Unauthenticated.";                              
+                        if (error.response.data.message === "Unauthenticated.") {
+                            Cookies.remove(process.env.REACT_APP_COOKIES_NAME_TOKEN);
+                            Cookies.remove(process.env.REACT_APP_COOKIES_NAME_DATA);
+                            returnResponse.message = "Unauthenticated.";
                         } else {
-                            addNotification('info', 'Aviso', error.response.data.message, 'top-right',8000, "fas fa-exclamation-circle" ,null)	                                                              
-                        } 
+                            addNotification('info', 'Aviso', error.response.data.message, 'top-right', 8000, "fas fa-exclamation-circle", null)
+                        }
                     } else {
-                        addNotification('danger', 'Problema inesperado', "Revice su conexion", 'top-right',8000, "fas fa-exclamation-circle" ,null)	                                                  
+                        addNotification('danger', 'Problema inesperado', "Revice su conexion", 'top-right', 8000, "fas fa-exclamation-circle", null)
                     }
                 }
                 return returnResponse;
-            } catch(error){
-                addNotification('danger', 'Problema inesperado', "Revice su conexion", 'top-right',8000, "fas fa-exclamation-circle" ,null)	                          
-                return returnResponse;    
-            }       
+            } catch (error) {
+                addNotification('danger', 'Problema inesperado', "Revice su conexion", 'top-right', 8000, "fas fa-exclamation-circle", null)
+                return returnResponse;
+            }
         }
-    } 
-    return useListSelect;  
+    }
+    return useListSelect;
 }
 
-export const modelUseListTable = () =>{
-    const useListTable = async (getPag = 1, getSortColumn = 'id', getOrder ="desc", getCountRows = 10 , getSearh = "") => {
+export const modelUseListTable = () => {
+    const useListTable = async (getPag = 1, getSortColumn = 'id', getOrder = "desc", getCountRows = 10, getSearh = "") => {
 
-        const sessionTokenSicaf = Cookies.get(process.env.REACT_APP_COOKIES_NAME_TOKEN);  
-        const decryptedToken = CryptoJS.AES.decrypt(sessionTokenSicaf, process.env.REACT_APP_API_KEY).toString(CryptoJS.enc.Utf8); 				             
-        
+        const sessionTokenSicaf = Cookies.get(process.env.REACT_APP_COOKIES_NAME_TOKEN);
+        let decryptedToken;
+        if (sessionTokenSicaf) {
+            decryptedToken = CryptoJS.AES.decrypt(sessionTokenSicaf, process.env.REACT_APP_API_KEY).toString(CryptoJS.enc.Utf8);
+        } else {
+            decryptedToken = "not session"
+        }
+
         let returnResponse = {
             status: false,
             response: {},
-            title:"",
-            message:""
+            title: "",
+            message: ""
         }
         try {
             const respose = await axios.get(
-                process.env.REACT_APP_API_URL+'/api/v1/offices', 
+                process.env.REACT_APP_API_URL + '/api/v1/offices',
                 {
-                    params: {
-                        state_id: 1,
+                    params: {                 
                         search: getSearh,
                         page: getPag,
                         sort_by: getSortColumn,
@@ -144,122 +162,158 @@ export const modelUseListTable = () =>{
                     },
                     headers: {
                         Accept: 'application/json',
-                        Authorization: 'Bearer '+decryptedToken,
+                        Authorization: 'Bearer ' + decryptedToken,
                     },
                 }
             );
-            returnResponse.status =true;
-            returnResponse.response =respose;
+            returnResponse.status = true;
+            returnResponse.response = respose;
             return returnResponse;
         } catch (error) {
             console.log(error);
-            returnResponse.status =false;
+            returnResponse.status = false;
             try {
-                if(error.response.status === 403){                    
-                    addNotification('info', 'Aviso', "No tiene permisos para la listar oficinas", 'top-right',8000, "fas fa-exclamation-circle" ,null)	                          
-                    return returnResponse;
-                } else{
-                    addNotification('danger', 'Problema inesperado', "Revice su conexion", 'top-right',8000, "fas fa-exclamation-circle" ,null)	                          
-                    return returnResponse;    
+                if (error.response.status === 403) {
+                    addNotification('info', 'Aviso', "No tiene permisos para la listar oficinas", 'top-right', 8000, "fas fa-exclamation-circle", null)               
+                } else {
+                    if (error.code == "ERR_BAD_REQUEST") {
+                        if (error.response.data.message === "Unauthenticated.") {
+                            Cookies.remove(process.env.REACT_APP_COOKIES_NAME_TOKEN);
+                            Cookies.remove(process.env.REACT_APP_COOKIES_NAME_DATA);
+                            returnResponse.message = "Unauthenticated.";
+                        } else {
+                            addNotification('info', 'Aviso', error.response.data.message, 'top-right', 8000, "fas fa-exclamation-circle", null)
+                        }
+                    } else {
+                        addNotification('danger', 'Problema inesperado', "Revice su conexion", 'top-right', 8000, "fas fa-exclamation-circle", null)
+                    }
                 }
-            } catch(error){
-                addNotification('danger', 'Problema inesperado', "Revice su conexion", 'top-right',8000, "fas fa-exclamation-circle" ,null)	                          
-                return returnResponse;    
-            }                                   
-        }      
+                return returnResponse;
+            } catch (error) {
+                addNotification('danger', 'Problema inesperado', "Revice su conexion", 'top-right', 8000, "fas fa-exclamation-circle", null)
+                return returnResponse;
+            }
+        }
     }
     return useListTable;
 }
 
-export const modelChangeStatus = () =>{
-    const useChangeStatus = async (statusRow, idRow) =>{
-        const sessionTokenSicaf = Cookies.get(process.env.REACT_APP_COOKIES_NAME_TOKEN);  
-        const decryptedToken = CryptoJS.AES.decrypt(sessionTokenSicaf, process.env.REACT_APP_API_KEY).toString(CryptoJS.enc.Utf8); 				             
+export const modelChangeStatus = () => {
+    const useChangeStatus = async (statusRow, idRow) => {
+        const sessionTokenSicaf = Cookies.get(process.env.REACT_APP_COOKIES_NAME_TOKEN);
+        let decryptedToken;
+        if (sessionTokenSicaf) {
+            decryptedToken = CryptoJS.AES.decrypt(sessionTokenSicaf, process.env.REACT_APP_API_KEY).toString(CryptoJS.enc.Utf8);
+        } else {
+            decryptedToken = "not session"
+        }
         let returnResponse = {
             status: false,
             response: {},
-            title:"",
-            message:"",
-            error:{}
+            title: "",
+            message: "",
+            error: {}
         }
-       try {
+        try {
             const response = await axios.patch(
-                `${process.env.REACT_APP_API_URL}/api/v1/offices/${idRow}` ,
+                `${process.env.REACT_APP_API_URL}/api/v1/offices/${idRow}`,
                 {
-                    "state_id": (statusRow === "INACTIVO")? 1 : 2 
+                    "state_id": (statusRow === "INACTIVO") ? 1 : 2
                 }, {
-                    headers: {
-                        'Content-Type': 'application/json',    
-                        'Authorization': "Bearer "+decryptedToken,  
-                    }  
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': "Bearer " + decryptedToken,
                 }
+            }
             );
-            returnResponse.status=true;
+            returnResponse.status = true;
             return returnResponse;
-       } catch (error) {
+        } catch (error) {
             console.log(error);
-            returnResponse.status=false;            
+            returnResponse.status = false;
             try {
-                if(error.response.status === 403){                    
-                    addNotification('info', 'Aviso', "No tiene permisos para modificar datos", 'top-right',15000, "fas fa-exclamation-circle" ,null)	                          
-                    return returnResponse;
-                } else{
+                if (error.response.status === 403) {
+                    addNotification('info', 'Aviso', "No tiene permisos para modificar datos", 'top-right', 15000, "fas fa-exclamation-circle", null)                
+                } else {
                     if (error.code == "ERR_BAD_REQUEST") {
-                        addNotification('info', 'aviso', error.response.data.message, 'top-right',8000, "fas fa-exclamation-circle" ,null)	                          
-                        return returnResponse;
+                        if (error.response.data.message === "Unauthenticated.") {
+                            Cookies.remove(process.env.REACT_APP_COOKIES_NAME_TOKEN);
+                            Cookies.remove(process.env.REACT_APP_COOKIES_NAME_DATA);
+                            returnResponse.message = "Unauthenticated.";
+                        } else {
+                            addNotification('info', 'Aviso', error.response.data.message, 'top-right', 8000, "fas fa-exclamation-circle", null)
+                        }
                     } else {
-                        addNotification('danger', 'Problema inesperado', "Revice su conexion", 'top-right',8000, "fas fa-exclamation-circle" ,null)	                          
-                        return returnResponse;
+                        addNotification('danger', 'Problema inesperado', "Revice su conexion", 'top-right', 8000, "fas fa-exclamation-circle", null)                        
                     }
                 }
-            } catch(error){
-                addNotification('danger', 'Problema inesperado', "Revice su conexion", 'top-right',8000, "fas fa-exclamation-circle" ,null)	                          
-                return returnResponse;    
-            }    
-       }        
+                return returnResponse;
+            } catch (error) {
+                addNotification('danger', 'Problema inesperado', "Revice su conexion", 'top-right', 8000, "fas fa-exclamation-circle", null)
+                return returnResponse;
+            }
+        }
     }
     return useChangeStatus;
 }
 
-export const modelChageDataRow = () =>{
-    const useChangeDataRow = async (dataForm) =>{
+export const modelChageDataRow = () => {
+    const useChangeDataRow = async (dataForm) => {
         let returnResponse = {
             status: false,
             response: {},
-            title:"",
-            message:"",
-            error:{}
+            title: "",
+            message: "",
+            error: {}
         }
-        const sessionTokenSicaf = Cookies.get(process.env.REACT_APP_COOKIES_NAME_TOKEN);  
-        const decryptedToken = CryptoJS.AES.decrypt(sessionTokenSicaf, process.env.REACT_APP_API_KEY).toString(CryptoJS.enc.Utf8); 				             
-        try {
+        const sessionTokenSicaf = Cookies.get(process.env.REACT_APP_COOKIES_NAME_TOKEN);
+        let decryptedToken;
+        if (sessionTokenSicaf) {
+            decryptedToken = CryptoJS.AES.decrypt(sessionTokenSicaf, process.env.REACT_APP_API_KEY).toString(CryptoJS.enc.Utf8);
+        } else {
+            decryptedToken = "not session"
+        }
+            try {
             const respose = await axios.patch(
-                `${process.env.REACT_APP_API_URL}/api/v1/offices/${dataForm.id}`  ,
-                  dataForm,
-                  {
-                      headers: {
-                          'Content-Type': 'application/json',    
-                          'Authorization': "Bearer "+decryptedToken,  
-                      }  
-                  }
-              );
-            returnResponse.status = true; 
-            return returnResponse;          
+                `${process.env.REACT_APP_API_URL}/api/v1/offices/${dataForm.id}`,
+                dataForm,
+                {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': "Bearer " + decryptedToken,
+                    }
+                }
+            );
+            returnResponse.status = true;
+            return returnResponse;
         } catch (error) {
-            console.log(error);
-            returnResponse.status = false; 
-            returnResponse.error = error; 
-            if (error.code == "ERR_BAD_REQUEST") {
-                returnResponse.title = "Aviso";
-                returnResponse.message =  error.response.data.message;
+            console.log(error);           
+            returnResponse.status = false;           
+           try {
+            if (error.response.status === 403) {
+                addNotification('info', 'Aviso', "No tiene permisos para modificar datos", 'top-right', 8000, "fas fa-exclamation-circle", null)
             } else {
-                returnResponse.title = "Problema inesperado";
-                returnResponse.message =  "Revice su conexion";
+                if (error.code == "ERR_BAD_REQUEST") {
+                    if (error.response.data.message === "Unauthenticated.") {                      
+                        Cookies.remove(process.env.REACT_APP_COOKIES_NAME_TOKEN);
+                        Cookies.remove(process.env.REACT_APP_COOKIES_NAME_DATA);
+                        returnResponse.message = "Unauthenticated.";
+                    } else {
+                        addNotification('info', 'Aviso', error.response.data.message, 'top-right', 8000, "fas fa-exclamation-circle", null)
+                    }
+                } else {
+                    addNotification('danger', 'Problema inesperado', "Revice su conexion", 'top-right', 8000, "fas fa-exclamation-circle", null)
+                }
             }
             return returnResponse;
-        }            
+           } catch (error) {
+            addNotification('danger', 'Problema inesperado', "Revice su conexion", 'top-right', 8000, "fas fa-exclamation-circle", null)
+            return returnResponse;
+           }
+           
+        }
     }
-    return useChangeDataRow;  
+    return useChangeDataRow;
 }
 
 //export default modelUseList;

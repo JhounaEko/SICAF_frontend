@@ -1,35 +1,42 @@
-import React,{ useState, useEffect, useRef} from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
-import {useForm } from 'react-hook-form';
-import {modelUseCreate , modelChageDataRow}  from './../modelEmpleados.jsx';
+import { useForm } from 'react-hook-form';
+import { modelUseCreate, modelChageDataRow } from './../modelEmpleados.jsx';
 import Swal from 'sweetalert2';
 import AsyncSelect from 'react-select/async';
 import { ReactNotifications } from 'react-notifications-component';
-import {addNotification} from './../../../components/alert/alert.jsx';
-import CryptoJS from 'crypto-js'; 
-import axios from 'axios';
-import Cookies from 'js-cookie';
+import { validacionesFirstName, validacionesLastName, validacionesCI, validacionesComplementoCi, validacionesCelular, validacionesEmail, separarValorCiComplemento } from './../../../components/validaciones/validaciones.jsx';
+import { modelUseListSelect } from './../../oficinas/modelOficina.jsx';
+import { modelUseListCargoSelect } from './../../cargo/modelCargo.jsx';
+import { useNavigate } from 'react-router-dom';
 
-const CompModalCreateUpdate = ({StatusModal,CloseModal,title, dataCurrentRow,functionRefreschDataTable}) => {
+const CompModalCreateUpdate = ({ StatusModal, CloseModal, title, dataCurrentRow, functionRefreschDataTable }) => {
 
     const useCreate = modelUseCreate();
-     const useChangeDataRow  = modelChageDataRow (); 
+    const useChangeDataRow = modelChageDataRow();
+    const useListSelect = modelUseListSelect();
+    const useListCargoSelect = modelUseListCargoSelect();
+    const navigation = useNavigate();
+
     const idRef = useRef(dataCurrentRow.id);
-    const { register,handleSubmit, reset, setValue,formState: { errors }} = useForm(); 
-        
-    const onSubmit = async (dataForm) =>{ 	
-        
-        if (getSelectOficce){
-			setSelectOficceStatus(false)	
-            setStateButton(true);
-                /** Se utiliza para crear permiso, cuando se pulsa en boton guardar */
-                if ( dataForm.id == 0 ){
-                    dataForm.office_id = getSelectOficce.id       
-                    const result = await useCreate(dataForm); 
-                    if (result.status){
+    const { register, handleSubmit, reset, setValue, formState: { errors } } = useForm();
+
+    const onSubmit = async (dataForm) => {
+
+        if (getSelectOficce) {
+            setSelectOficceStatus(false)
+            if (getSelectCargo) {
+                setSelectCargoStatus(false)
+                setStateButton(true);
+                /** Se utiliza para registrar datos */
+                if (dataForm.id == 0) {
+                    dataForm.office_location_id = getSelectOficce.id
+                    dataForm.position_id = getSelectCargo.id
+                    const result = await useCreate(dataForm);
+                    if (result.status) {
                         reserForm();
-                        functionRefreschDataTable();  
+                        functionRefreschDataTable();
                         Swal.fire({
                             title: "Registro exitoso",
                             icon: "success",
@@ -38,13 +45,23 @@ const CompModalCreateUpdate = ({StatusModal,CloseModal,title, dataCurrentRow,fun
                             confirmButtonColor: "#3085d6",
                         });
                     } else {
-                        addNotification('info', result.title, result.message, 'top-right',8000, "fas fa-exclamation-circle" ,null)  			
-                    }  
-                /** Se utiliza para modificar datos permiso, cuando se pulsa en el boton guardar */
-                } else {                    
-                   // dataForm.office_id = getSelectOficce.id                 
+                        if (result.message == "Unauthenticated.") {
+                            Swal.fire({
+                                title: "Sesion finalizada",
+                                icon: "success",
+                                draggable: true,
+                                timer: 3000,
+                                confirmButtonColor: "#3085d6",
+                            });
+                            navigation('/');
+                        }
+                    }
+                    /** Se utiliza para modificar datos permiso, cuando se pulsa en el boton guardar */
+                } else {
+                    dataForm.office_location_id = getSelectOficce.id
+                    dataForm.position_id = getSelectCargo.id
                     const result = await useChangeDataRow(dataForm);
-                    if (result.status){
+                    if (result.status) {
                         reserForm();
                         functionRefreschDataTable();
                         Swal.fire({
@@ -55,39 +72,123 @@ const CompModalCreateUpdate = ({StatusModal,CloseModal,title, dataCurrentRow,fun
                             confirmButtonColor: "#3085d6",
                         });
                     } else {
-                        addNotification('info', result.title, result.message, 'top-right',8000, "fas fa-exclamation-circle" ,null)  			     
-                    }              
+                        if (result.message == "Unauthenticated.") {
+                            Swal.fire({
+                                title: "Sesion finalizada",
+                                icon: "success",
+                                draggable: true,
+                                timer: 3000,
+                                confirmButtonColor: "#3085d6",
+                            });
+                            navigation('/');
+                        }
+                    }
                 }
-        } else  {
-            setSelectOficceStatus(true)	
-        }
-            setStateButton(false);                     
+                setStateButton(false);
+            } else {
+                setSelectCargoStatus(true)
+            }
+        } else {
+            setSelectOficceStatus(true)
+        }      
     }
 
 
     const [stateButton, setStateButton] = useState(false);
     const reserForm = () => {
-        idRef.current = 0;	
+        idRef.current = 0;
         reset();
         setSelectOficce(null);
-        CloseModal();         	      
-	};
+        CloseModal();
+    };
 
-    if (dataCurrentRow.id !== 0 && idRef.current != dataCurrentRow.id){       
+    if (dataCurrentRow.id !== 0 && idRef.current != dataCurrentRow.id) {
         idRef.current = dataCurrentRow.id;
-        setValue('id',dataCurrentRow.id);
-        setValue('first_name',dataCurrentRow.first_name);  
-        setValue('last_name',dataCurrentRow.last_name); 
-        setValue('phone_number',dataCurrentRow.phone_number); 
-        setValue('position',dataCurrentRow.position);           
+        setValue('id', dataCurrentRow.id);
+        setValue('first_name', dataCurrentRow.first_name);
+        setValue('last_name', dataCurrentRow.last_name);
+        setValue('phone_number', dataCurrentRow.phone_number);
+        setValue('email', dataCurrentRow.email);
+        const ci = separarValorCiComplemento(dataCurrentRow.identity_card);
+        setValue('identity_card', ci.numCi);
+        setValue('complement', ci.ciComplemento);
+        setValue('issued_by', (dataCurrentRow.issued_by == "") ? "S/E" : dataCurrentRow.issued_by);
     }
 
-    useEffect(() => {	
-        if (dataCurrentRow.office) {
-          setSelectOficce(dataCurrentRow.office);
+
+
+    /** ============================================ Select Cargo ========================================*/
+
+    const pageCurrentCargo = useRef(1);
+    const inputValueCargo = useRef('');
+    const hasMoreCargo = useRef(true);
+    const [isLoadingCargo, setIsLoadingCargo] = useState(false);
+    const [getSelectCargo, setSelectCargo] = useState();
+    const [getSelectCargoStatus, setSelectCargoStatus] = useState(false);
+    const [defaultOptionsCargo, setDefaultOptionsCargo] = useState([]);
+
+    const peticionCargo = async (search, pageNumber) => {
+        try {
+            setIsLoadingCargo(true);
+
+            const returnData = await useListCargoSelect(pageNumber, 'id', 'desc', 10, search);
+
+            if (returnData.status) {
+                if (returnData.response.data.results.meta.current_page < returnData.response.data.results.meta.last_page) {
+                    hasMoreOffice.current = true;
+                } else {
+                    hasMoreOffice.current = false;
+                }
+                if (returnData.response.data.results.data) {
+                    return returnData.response.data.results.data;
+                } else {
+                    return [];
+                }
+            } else {
+                if (returnData.message == "Unauthenticated.") {
+                    Swal.fire({
+                        title: "Sesion finalizada",
+                        icon: "success",
+                        draggable: true,
+                        timer: 3000,
+                        confirmButtonColor: "#3085d6",
+                    });
+                    navigation('/');
+                }
+                return [];
+            }
+        } catch (error) {
+            console.log(error)
+            return [];
+        } finally {
+            setIsLoadingCargo(false);
         }
-        console.log(dataCurrentRow.office);
-    }, [dataCurrentRow.office]);
+    }
+
+    /** Buscador de select office, se ejecuta una petición */
+    const loadOptionsCargo = async (inputVal, callback) => {
+        inputValueCargo.current = inputVal;
+        pageCurrentCargo.current = 1;
+        const options = await peticionCargo(inputVal, pageCurrentCargo.current);
+        callback(options);
+    };
+
+    /** Controla el scroll del select Cargo */
+    const handleMenuScrollToBottomCargo = async () => {
+        if (hasMoreCargo.current) {
+            pageCurrentCargo.current = pageCurrentCargo.current + 1;
+            const newOptions = await peticionCargo(inputValueOffice.current, pageCurrentCargo.current);
+            try {
+                if (newOptions.length != 0) {
+                    setDefaultOptionsCargo(prev => [...prev, ...newOptions]);
+                }
+            } catch (error) {
+
+            }
+        }
+    }
+
+
     /** ============================================ Select Office ========================================*/
 
     const pageCurrentOffice = useRef(1);
@@ -95,51 +196,52 @@ const CompModalCreateUpdate = ({StatusModal,CloseModal,title, dataCurrentRow,fun
     const hasMoreOffice = useRef(true);
     const [isLoadingOffice, setIsLoadingOffice] = useState(false);
     const [getSelectOficce, setSelectOficce] = useState(
-        (dataCurrentRow.id === 0)?null:dataCurrentRow.office
+        (dataCurrentRow.id === 0) ? null : dataCurrentRow.office
     );
     const [getSelectOficceStatus, setSelectOficceStatus] = useState(false);
     const [defaultOptionsOffice, setDefaultOptionsOffice] = useState([]);
-    
-    const sessionTokenSicaf = Cookies.get(process.env.REACT_APP_COOKIES_NAME_TOKEN); 
-	const decryptedToken = CryptoJS.AES.decrypt(sessionTokenSicaf, process.env.REACT_APP_API_KEY).toString(CryptoJS.enc.Utf8); 				         
 
-    const peticionOficce = async (search, pageNumber) =>{
-		try{
-			setIsLoadingOffice(true);
-			const response = await axios.get(process.env.REACT_APP_API_URL+'/api/v1/offices', {
-				params: {
-				state_id: 1,
-				search: search,
-				page: pageNumber,
-				sort_by: 'id',
-				sort_order: 'desc',
-				},
-				headers: {
-				Accept: 'application/json',
-				Authorization: 'Bearer '+decryptedToken,
-				},
-			});					
-			/** Se verifica que la pagina actual sea menor a la ultima pagina */				
-			if ( response.data.results.meta.current_page < response.data.results.meta.last_page ) {
-				hasMoreOffice.current = true;
-			}	else {
-				hasMoreOffice.current = false;
-			}	
-			if (response.data.results.data){
-				return response.data.results.data;
-			} else {
-				return [];
-			}																					
-		} catch (error) {
-			console.log(error)	
-			return [];
-		} finally {
-			setIsLoadingOffice(false);
-		  }
-	}
+
+    const peticionOficce = async (search, pageNumber) => {
+        try {
+            setIsLoadingOffice(true);
+
+            const returnData = await useListSelect(search, pageNumber);
+
+            if (returnData.status) {
+                if (returnData.response.data.results.meta.current_page < returnData.response.data.results.meta.last_page) {
+                    hasMoreOffice.current = true;
+                } else {
+                    hasMoreOffice.current = false;
+                }
+                if (returnData.response.data.results.data) {
+                    return returnData.response.data.results.data;
+                } else {
+                    return [];
+                }
+            } else {
+                if (returnData.message == "Unauthenticated.") {
+                    Swal.fire({
+                        title: "Sesion finalizada",
+                        icon: "success",
+                        draggable: true,
+                        timer: 3000,
+                        confirmButtonColor: "#3085d6",
+                    });
+                    navigation('/');
+                }
+                return [];
+            }
+        } catch (error) {
+            console.log(error)
+            return [];
+        } finally {
+            setIsLoadingOffice(false);
+        }
+    }
 
     /** Buscador de select office, se ejecuta una petición */
-    const loadOptionsOffice = async (inputVal, callback) => {	
+    const loadOptionsOffice = async (inputVal, callback) => {
         inputValueOffice.current = inputVal;
         pageCurrentOffice.current = 1;
         const options = await peticionOficce(inputVal, pageCurrentOffice.current);
@@ -147,218 +249,208 @@ const CompModalCreateUpdate = ({StatusModal,CloseModal,title, dataCurrentRow,fun
     };
 
     /** Permite cargar los primeros datos de la pagina 1 (datos oficina) */
-    useEffect(() => {  
+    useEffect(() => {
         const fetchPeticion = async () => {
-            const response = await peticionOficce ("",1);
-            setDefaultOptionsOffice(response);
+            if (StatusModal) {
+                const response = await peticionOficce("", 1);
+                setDefaultOptionsOffice(response);
+
+                const responseCargo = await peticionCargo("", 1);
+                setDefaultOptionsCargo(responseCargo);
+            }
         }
-        fetchPeticion();		
-    }, []);
+        fetchPeticion();
+    }, [StatusModal]);
 
     /** Controla el scroll del select office */
-	const handleMenuScrollToBottom = async () => {		
-		if (hasMoreOffice.current) {		
-			pageCurrentOffice.current = pageCurrentOffice.current +  1;
-			const newOptions = await peticionOficce(inputValueOffice.current, pageCurrentOffice.current);
-			try {
-					if (newOptions.length != 0){
-					setDefaultOptionsOffice(prev => [...prev, ...newOptions]);
-					}			
-			} catch (error) {
-				
-			}	
-		}
-	}
+    const handleMenuScrollToBottom = async () => {
+        if (hasMoreOffice.current) {
+            pageCurrentOffice.current = pageCurrentOffice.current + 1;
+            const newOptions = await peticionOficce(inputValueOffice.current, pageCurrentOffice.current);
+            try {
+                if (newOptions.length != 0) {
+                    setDefaultOptionsOffice(prev => [...prev, ...newOptions]);
+                }
+            } catch (error) {
 
-    return ( <>
-        <ReactNotifications/>
+            }
+        }
+    }
+
+    useEffect(() => {
+        if (dataCurrentRow.office_location) {
+            setSelectOficce(dataCurrentRow.office_location);
+        }
+
+        if (dataCurrentRow.position) {
+            setSelectCargo(dataCurrentRow.position);
+        }
+
+    }, [dataCurrentRow.office_location, dataCurrentRow.position]);
+
+    return (<>
+        <ReactNotifications />
         <Modal show={StatusModal} onHide={reserForm} scrollable={true} backdrop="static" keyboard={false}>
-			<Modal.Header closeButton>
+            <Modal.Header closeButton>
                 <Modal.Title><h4 className="modal-title"><i className="fas fa-briefcase fa-1_5x"></i> {title}</h4></Modal.Title>
-			</Modal.Header>
-			<Modal.Body>
+            </Modal.Header>
+            <Modal.Body>
                 <form onSubmit={handleSubmit(onSubmit)} id="myFormCargo">
                     <fieldset>
                         <legend className="mb-3"></legend>
-                        <div className="mb-3">	
+                        <div className="mb-3">
                             <div className="row gx-2">
                                 <div className="col-md-6 mb-0 mb-md-0">
-                                    <label className="required form-label" htmlFor="first_name">Nombre de empleado</label>	
-                                    <input className="form-control" 
-                                        type="hidden" 																		
-                                        id="id" 
+                                    <label className="required form-label" htmlFor="first_name">Nombre de empleado</label>
+                                    <input className="form-control"
+                                        type="hidden"
+                                        id="id"
                                         defaultValue={dataCurrentRow.id}
                                         placeholder=""
-                                        {...register("id", {	})} 
+                                        {...register("id", {})}
                                     />
-                                    <input className="form-control" 
-                                        type="text" 															
-                                        id="first_name"                                
-                                        placeholder="nombre cargo"
-                                        {...register("first_name", {
-                                            required: "El nombre es obligatorio",
-                                            maxLength: {
-                                            value: 60,
-                                            message: "El nombre no puede tener más de 60 caracteres",
-                                            },
-                                            minLength: {
-                                                value: 3,
-                                                message: "El nombre no puede tener menos de 4",
-                                            },
-                                            pattern: {
-                                            value: /^[a-zA-ZÁÉÍÓÚÑáéíóúñ\s\-.,]{0,98}[0-9]{0,2}$/,
-                                            message: "Nombre inválido: letras, tildes, guiones, puntos, comas, y hasta 2 números al final",
-                                            },
-                                        })} 
+                                    <input className="form-control"
+                                        type="text"
+                                        id="first_name"
+                                        placeholder="nombre del empleado"
+                                        {...register("first_name", validacionesFirstName)}
                                     />
                                     {errors.first_name && <div className='mb-0 mt-2 fs-12px' style={{ color: 'red' }}>{String(errors.first_name.message)}</div>}
                                 </div>
                                 <div className="col-md-6 mb-0 mb-md-0">
                                     <label className="required form-label" htmlFor="last_name">Apellido (s)</label>
-                                    <input className="form-control" 
-                                        type="text" 							
-                                        id="last_name" 
+                                    <input className="form-control"
+                                        type="text"
+                                        id="last_name"
                                         placeholder="apellidos"
-                                        {...register("last_name", {
-                                                required: "El campo es obligatorio",
-                                                pattern: {
-                                                    value: /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s'-]+$/u,
-                                                    message: "El nombre solo puede contener letras, tildes, espacios, y los caracteres ' y -",
-                                                },
-                                                maxLength: {
-                                                    value: 30,
-                                                    message: "El nombre no puede tener más de 30 caracteres",
-                                                },
-                                        })}  
+                                        {...register("last_name", validacionesLastName)}
                                     />
                                     {errors.last_name && <div className='mb-0 mt-2 fs-12px' style={{ color: 'red' }}>{String(errors.last_name.message)}</div>}
                                 </div>
                             </div>
-                        </div> 
+                        </div>
                         <div className="mb-3">
-							<div className="row gx-3">
-								<div className="col-md-4 mb-2 mb-md-0">
-									<label className="mb-2 fs-10 fw-bold">C.I.</label>
-									<input type="text" 
-										className="form-control fs-13px" 
-										id="identity_card"
-										placeholder="celula de identidad"
-										// {...register("identity_card", {
-										// required: "Campo obligatoria",
-										// minLength: {
-										// 	value: 6,
-										// 	message: "Min. 6 carac.",
-										// },
-										// maxLength: {
-										// 	value: 8,
-										// 	message: "Max. 8 carac.",
-										// },
-										// pattern: {
-										// 	value: /^[1-9]\d*$/,
-										// 	message: "Formato no válido",
-										// },
-										// })}
-									/>
-									{/* {errors.identity_card && <div className='mb-0 mt-2 fs-12px' style={{ color: 'red' }}>{String(errors.identity_card.message)}</div>} */}
-								</div>
-								<div className="col-md-4 mb-2 mb-md-0">
-									<label className="mb-2 fs-10 fw-bold">Complemento</label>
-									<input type="text" 
-										className="form-control fs-13px" 
-										id="complement"
-										placeholder="Complemento"
-										// {...register("complement", {                       
-										// })}
-									/>
-								</div>
-								<div className="col-md-4">
-									<label className="mb-2 fs-10 fw-bold">Expedido </label>
-									<select
-										id="issued_by"
-										className="form-select fs-13px"
-										defaultValue="S/E"  
-										// {...register("issued_by", {
-										// 	required: "Campo obligatorio",                      
-										// })}
-                                        >
-									<option value="LP">LP</option>
-									<option value="CH">CH</option>
-									<option value="CB">CB</option>
-									<option value="OR">OR</option>
-									<option value="PT">PT</option>
-									<option value="TJ">TJ</option>
-									<option value="SC">SC</option>
-									<option value="BE">BE</option>
-									<option value="PD">PD</option>
-									<option value="S/E">S/E</option>
-									</select>
-									{/* {errors.issued_by && <div className='mb-0 mt-2 fs-12px' style={{ color: 'red' }}>{String(errors.issued_by.message)}</div>} */}
-								</div>
-							</div>
-						</div> 
+                            <div className="row gx-3">
+                                <div className="col-md-4 mb-2 mb-md-0">
+                                    <label className="required mb-2 fs-10 fw-bold">C.I.</label>
+                                    <input type="text"
+                                        className="form-control fs-13px"
+                                        id="identity_card"
+                                        placeholder="celula de identidad"
+                                        {...register("identity_card", validacionesCI)}
+                                    />
+                                    {errors.identity_card && <div className='mb-0 mt-2 fs-12px' style={{ color: 'red' }}>{String(errors.identity_card.message)}</div>}
+                                </div>
+                                <div className="col-md-4 mb-2 mb-md-0">
+                                    <label className="mb-2 fs-10 fw-bold">Complemento</label>
+                                    <input type="text"
+                                        className="form-control fs-13px"
+                                        id="complement"
+                                        placeholder="Complemento"
+                                        {...register("complement", validacionesComplementoCi)}
+                                    />
+                                </div>
+                                <div className="col-md-4">
+                                    <label className="mb-2 fs-10 fw-bold">Expedido </label>
+                                    <select
+                                        id="issued_by"
+                                        name="issued_by"
+                                        className="form-select fs-13px"
+                                        defaultValue="S/E"
+                                        {...register("issued_by", {
+                                            required: "Campo obligatorio",
+                                        })}
+                                    >
+                                        <option value="LP">LP</option>
+                                        <option value="CH">CH</option>
+                                        <option value="CB">CB</option>
+                                        <option value="OR">OR</option>
+                                        <option value="PT">PT</option>
+                                        <option value="TJ">TJ</option>
+                                        <option value="SC">SC</option>
+                                        <option value="BE">BE</option>
+                                        <option value="PD">PD</option>
+                                        <option value="S/E">S/E</option>
+                                    </select>
+                                    {errors.issued_by && <div className='mb-0 mt-2 fs-12px' style={{ color: 'red' }}>{String(errors.issued_by.message)}</div>}
+                                </div>
+                            </div>
+                        </div>
                         <div className="mb-3">
                             <div className="row gx-2">
-                                <div className="col-md-6 mb-2 mb-md-0">  
-                                    <label className="required form-label" htmlFor="position"> <i className='fas fa-mobile'></i>&nbsp; Cargo</label>
-								    <input className="form-control"
-										type="text" 								
-										id="position" 									
-										placeholder="cargo"
-										{...register("position", {
-											required: "El número campo es obligatorio",											
-										})} 
-								    />
-                                    {errors.position && <div className='mb-3 fs-12px' style={{ color: 'red' }}>{String(errors.position.message)}</div>}
+                                <div className="col-md-6 mb-2 mb-md-0">
+                                    <label className="required form-label" htmlFor="email"> <i className='fas fa-at'></i>&nbsp; Correo</label>
+                                    <input className="form-control"
+                                        type="text"
+                                        id="email"
+                                        placeholder="correo"
+                                        {...register("email", validacionesEmail)}
+                                    />
+                                    {errors.email && <div className='mb-3 fs-12px' style={{ color: 'red' }}>{String(errors.email.message)}</div>}
                                 </div>
-                                <div className="col-md-6 mb-2 mb-md-0"> 
+                                <div className="col-md-6 mb-2 mb-md-0">
                                     <label className="required form-label" htmlFor="phone_number"> <i className='fas fa-mobile'></i>&nbsp; Celular</label>
-								    <input className="form-control"
-										type="number" 								
-										id="phone_number" 								
-										placeholder="número de celular"
-										{...register("phone_number", {
-											required: "El número de celular es obligatorio",
-											pattern: {
-												value: /^(6|7)[0-9]{7}$/,
-												message: "El número de teléfono debe comenzar con 6 o 7 y tener 8 dígitos en total",
-											},
-											maxLength: {
-												value: 8,
-												message: "El número de teléfono no puede tener más de 8 caracteres",
-											},
-										})} 
-								    />
+                                    <input className="form-control"
+                                        type="number"
+                                        id="phone_number"
+                                        placeholder="número de celular"
+                                        {...register("phone_number", validacionesCelular)}
+                                    />
                                     {errors.phone_number && <div className='mb-3 fs-12px' style={{ color: 'red' }}>{String(errors.phone_number.message)}</div>}
                                 </div>
-                            </div>          
-                        </div> 
+                            </div>
+                        </div>
                         <div className="form-group row mb-3">
-							<label className="col-lg-4 col-form-label required"> <i className="fas fa-briefcase"></i> Oficina</label>
-							<div className="col-lg-8">
-								<AsyncSelect
-									cacheOptions
-									loadOptions={loadOptionsOffice}
-									defaultOptions={defaultOptionsOffice}
-									getOptionLabel={(option) => option.name}
-									getOptionValue={(option) => option.id}
-									onMenuScrollToBottom={handleMenuScrollToBottom}
-									onChange={(elemento) => {setSelectOficce(elemento); setSelectOficceStatus(false) } } 
-									isLoading={isLoadingOffice}
-									placeholder="Seleccione una opción..."									
-									defaultValue={dataCurrentRow.office}							
-								/>
-							</div>
-                            { (getSelectOficceStatus)? (<div className='mb-3 fs-12px' style={{ color: 'red' }}>Seleccione alguna oficina</div>): (null) }																																	
-						</div>                                        
+                            <label className="col-lg-4 col-form-label required"> <i className="fas fa-briefcase"></i> Cargo</label>
+                            <div className="col-lg-8">
+                                <AsyncSelect
+                                    cacheOptions
+                                    loadOptions={loadOptionsCargo}
+                                    defaultOptions={defaultOptionsCargo}
+                                    getOptionLabel={(option) => (<div>
+                                        <div><strong>{option.name}</strong></div>
+                                        <div style={{ fontSize: '12px', color: '#666' }}>{option.description}</div>
+                                    </div>)}
+                                    getOptionValue={(option) => option.id}
+                                    onMenuScrollToBottom={handleMenuScrollToBottomCargo}
+                                    onChange={(elemento) => { setSelectCargo(elemento); setSelectCargoStatus(false) }}
+                                    isLoading={isLoadingCargo}
+                                    placeholder="Seleccione una opción..."
+                                    defaultValue={dataCurrentRow.position}
+                                />
+                            </div>
+                            {(getSelectCargoStatus) ? (<div className='mb-3 fs-12px' style={{ color: 'red' }}>Seleccione el cargo</div>) : (null)}
+                        </div>
+                        <div className="form-group row mb-3">
+                            <label className="col-lg-4 col-form-label required"> <i className="fas fa-briefcase"></i> Oficina</label>
+                            <div className="col-lg-8">
+                                <AsyncSelect
+                                    cacheOptions
+                                    loadOptions={loadOptionsOffice}
+                                    defaultOptions={defaultOptionsOffice}
+                                    getOptionLabel={(option) => (<div>
+                                        <div><strong>{option.office?.name}</strong></div>
+                                        <div style={{ fontSize: '12px', color: '#666' }}>{option.place?.description}</div>
+                                    </div>)}
+                                    getOptionValue={(option) => option.id}
+                                    onMenuScrollToBottom={handleMenuScrollToBottom}
+                                    onChange={(elemento) => { setSelectOficce(elemento); setSelectOficceStatus(false) }}
+                                    isLoading={isLoadingOffice}
+                                    placeholder="Seleccione una opción..."
+                                    defaultValue={dataCurrentRow.office_location}
+                                />
+                            </div>
+                            {(getSelectOficceStatus) ? (<div className='mb-3 fs-12px' style={{ color: 'red' }}>Seleccione alguna oficina</div>) : (null)}
+                        </div>
                     </fieldset>
                 </form>
             </Modal.Body>
             <Modal.Footer>
                 <Button className='btn btn-danger' type='button' onClick={reserForm} > <i className="fas fa-close"></i> Cerrar</Button>
-                <Button variant="primary" type='submit' form="myFormCargo"  disabled={stateButton}> {stateButton? (<span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"/>) : (<i className="fas fa-save"></i>)}  &nbsp;Guardar </Button>	
-			</Modal.Footer>
-		</Modal>
-    </> );
+                <Button variant="primary" type='submit' form="myFormCargo" disabled={stateButton}> {stateButton ? (<span className="spinner-border spinner-border-sm" role="status" aria-hidden="true" />) : (<i className="fas fa-save"></i>)}  &nbsp;Guardar </Button>
+            </Modal.Footer>
+        </Modal>
+    </>);
 }
- 
+
 export default CompModalCreateUpdate;
