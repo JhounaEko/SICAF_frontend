@@ -1,6 +1,6 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
-
+import Cookies from 'js-cookie';
 import App from './../app.jsx';
 import ProtectedRoute , {ProtectedRouteLogin} from './ProtectedRoute';
 import DashboardV1 from './../pages/dashboard/dashboard-v1.js';
@@ -30,7 +30,7 @@ import RolesManager from '../pages/roles/pages.jsx';
 import OfficeManager from '../pages/oficinas/pages.jsx';
 import Login from './../pages/login/pages.jsx';
 import RegisterPublicUser from './../pages/users/registerPublicUsuarios.jsx';
-import RegisterPublicPersonal from './../pages/users/registerPublicPersonal.jsx';
+import RegisterPublicPersonal from './../pages/empleados/registerPublicPersonal.jsx';
 import ManagerPermisos from './../pages/permisos/pages.jsx';
 import CargoManager from './../pages/cargo/pages.jsx';
 import EmpleadoManager from './../pages/empleados/pages.jsx';

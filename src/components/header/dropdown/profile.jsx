@@ -118,7 +118,6 @@ function DropdownProfile({ props }) {
 			url: process.env.REACT_APP_API_URL + '/api/v1/notifications',
 			headers: {
 				'Content-Type': 'application/json',
-				'Accept': 'application/json',
 				'Authorization': 'Bearer ' + decryptedToken,
 			}
 		}).then(response => {

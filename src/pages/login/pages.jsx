@@ -3,13 +3,20 @@ import { Link } from 'react-router-dom';
 import { useForm, } from 'react-hook-form';
 import Cookies from 'js-cookie';
 import CryptoJS from 'crypto-js';
-import { ReactNotifications, Store } from 'react-notifications-component';
+import { ReactNotifications } from 'react-notifications-component';
 import { useInitSesion } from './AuthLogin.jsx';
+import { Modal, Button } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
+
 const Login = () => {
+
+	const InitSesion = useInitSesion();
+	const navigate = useNavigate();
+
 	const { register, handleSubmit, reset, setValue, formState: { errors } } = useForm();
 	const [botonSubmitDisabled, setBotonSubmitDisabled] = useState(false);
 	const [checked, setChecked] = useState(false);
-	const InitSesion = useInitSesion();
+
 	useEffect(() => {
 		const savedUsername = Cookies.get(process.env.REACT_APP_COOKIES_NAME_USER);
 		const savedPassword = Cookies.get(process.env.REACT_APP_COOKIES_NAME_PASS);
@@ -26,9 +33,33 @@ const Login = () => {
 		setBotonSubmitDisabled(ref);
 	}
 
+	/*** ======================== Modal Roles ================ */
+	const [dataUserRolesMenus, setDataUserRolesMenus] = useState({ roles: [] });
+	const addDataUserRolesMenus = (ref) => {
+		setDataUserRolesMenus(ref);
+	}
+
+	const [modalVisible, setModalVisible] = useState(false);
+	const handleClose = () => {
+		setModalVisible(false);
+		setDataUserRolesMenus({ roles: [] });
+		Cookies.remove(process.env.REACT_APP_COOKIES_NAME_TOKEN);
+		Cookies.remove(process.env.REACT_APP_COOKIES_NAME_DATA);
+	}
+	const openModal = () => {
+		setModalVisible(true);
+	}
+
+	const handleRoleClick = (rolUser) => {		
+		dataUserRolesMenus.roles = [ rolUser];	
+		Cookies.set(process.env.REACT_APP_COOKIES_NAME_DATA, JSON.stringify(dataUserRolesMenus), { expires: parseInt(process.env.REACT_APP_TIME_COOKIES, 10) });							
+		navigate('/dashboard/v1', { state: dataUserRolesMenus });	
+	}
+
+	/*** ==========================  form login ======================== */
 	const onSubmit = (data) => {
 		setBotonSubmitDisabled(true);
-		InitSesion(data, checked, { changeOptionBoton });
+		InitSesion(data, checked, { changeOptionBoton, openModal, addDataUserRolesMenus });
 	}
 
 	const [showPassword, setShowPassword] = useState(false);
@@ -36,6 +67,29 @@ const Login = () => {
 
 	return (
 		<>
+			<Modal show={modalVisible} onHide={() => handleClose}>
+				<Modal.Header >
+					<Modal.Title>Roles asignados</Modal.Title>
+				</Modal.Header>
+				<Modal.Body>
+					{(dataUserRolesMenus.roles).map((rol) => (
+						
+						<Button
+							key={rol.id}
+							variant="outline-primary"
+							className="m-2"
+							onClick={() => handleRoleClick(rol)}
+						>
+							{rol.name}
+						</Button>
+					))}
+				</Modal.Body>
+				<Modal.Footer>
+					<Button variant="primary" onClick={handleClose}>
+						Cerrar
+					</Button>
+				</Modal.Footer>
+			</Modal>
 			<div className="login login-v2 fw-bold">
 				<div className="login-cover">
 					<div className="login-cover-img" style={{ backgroundImage: `url(/assets/img/img-03.jpeg` }}></div>
@@ -122,13 +176,13 @@ const Login = () => {
 								<button type="submit" className="btn btn-theme d-block w-100 h-45px btn-lg" disabled={botonSubmitDisabled}> {botonSubmitDisabled ? (<span className="spinner-border spinner-border-sm" role="status" aria-hidden="true" />) : (<i className="fas fa-sign-in-alt fa-1_5x"></i>)}  &nbsp; Ingresar</button>
 							</div>
 							<hr />
-							<p className = "fs-13px text-gray-500 text-center">--- Registrarme ---</p>
+							<p className="fs-13px text-gray-500 text-center">--- Registrarme ---</p>
 							<div className="d-flex">
 								<div className="text-gray-500 me-3">
-									<Link to="/user" className="btn btn-theme" title = "Persona administrativo del Sistema y Control de Activos Fijos (S.I.C.A.F.)" >Personal del sistema S.I.C.A.F.</Link>
+									<Link to="/user" className="btn btn-theme" title="Persona administrativo del Sistema y Control de Activos Fijos (S.I.C.A.F.)" >Personal del sistema S.I.C.A.F.</Link>
 								</div>
 								<div className="text-gray-500">
-									<Link to="/personal" className="btn btn-theme" title = "Personal del Gobierno Autonomo Municipal de El Alto">Personal del G.A.M.E.A.</Link>
+									<Link to="/personal" className="btn btn-theme" title="Personal del Gobierno Autonomo Municipal de El Alto">Personal del G.A.M.E.A.</Link>
 								</div>
 							</div>
 						</form>

@@ -2,8 +2,10 @@ import React, { useContext } from 'react';
 import { useResolvedPath, useMatch, NavLink, useLocation, matchPath } from 'react-router-dom';
 import { AppSettings } from './../../config/app-settings.js';
 import menus from './../../config/app-menu.jsx';
+import Cookies from 'js-cookie';
 
-function NavItem({ menu, ...props }: LinkProps) {
+
+function NavItem({ menu, ...props }) {
 	let resolved = useResolvedPath(menu.path);
   let match = useMatch({ path: resolved.pathname });
   
@@ -144,6 +146,54 @@ function SidebarNav() {
 		}
 	}
   
+	const userProps = JSON.parse(Cookies.get(process.env.REACT_APP_COOKIES_NAME_DATA))
+	console.log (userProps.roles[0].menus)	
+
+	function buildNestedMenu(items) {
+		const menuMap = new Map();
+		const tree = [];
+	  
+		// Paso 1: Indexar todos los elementos por su ID
+		items.forEach(item => {
+		  menuMap.set(item.id, {
+			path: item.route,
+			icon: item.icon,
+			title: item.label,
+			children: [],
+		  });
+		});
+	  
+		// Paso 2: Construir el árbol usando `parent`
+		items.forEach(item => {
+		  const current = menuMap.get(item.id);
+		  if (item.parent === null) {
+			tree.push(current);
+		  } else {
+			const parent = menuMap.get(item.parent);
+			if (parent) {
+			  parent.children.push(current);
+			}
+		  }
+		});
+	  
+		// Paso 3: Limpiar nodos sin hijos (opcional)
+		const clean = nodes => {
+		  for (let node of nodes) {
+			if (node.children.length === 0) {
+			  delete node.children;
+			} else {
+			  clean(node.children);
+			}
+		  }
+		};
+	  
+		clean(tree);
+		return tree;
+	  }
+
+	let controlMenu = buildNestedMenu(userProps.roles[0].menus);
+	
+
 	return (
 		<div className="menu">
 			{context.appSidebarSearch && (
@@ -151,8 +201,8 @@ function SidebarNav() {
 					<input type="text" className="form-control" placeholder="Sidebar menu filter..." onKeyUp={handleSidebarSearch} />
 				</div>
 			)}
-			<div className="menu-header">Navigation</div>
-			{menus.map((menu, i) => (
+		
+			{controlMenu.map((menu, i) => (
 				<NavItem key={i} menu={menu} />
 			))}
 		</div>

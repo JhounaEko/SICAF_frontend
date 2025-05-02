@@ -63,6 +63,46 @@ export const modelUseCreate = () => {
 
 }
 
+export const modelCreatePersonalPublic = () =>{
+    const useCreatePersonalPublic = async (dataForm) =>{      
+        let returnResponse = {
+            status: false,
+            title:"",
+            message:""
+        }
+    
+        try{
+            const respose = await axios.post(
+                process.env.REACT_APP_API_URL+'/api/v1/register_personal',                
+                    dataForm
+                ,{
+                    headers: {
+                        Accept: 'application/json',                      
+                    }
+                }
+            );
+            returnResponse.status = true;
+            return returnResponse;
+        } catch (error) {
+            console.log(error);
+            returnResponse.status = false;
+            try {
+                if(error.response.status === 403){                    
+                    addNotification('info', 'Aviso', "No tiene permisos para registrar cargos", 'top-right',8000, "fas fa-exclamation-circle" ,null)	                                              
+                } else{
+                    addNotification('info', 'Aviso', error.response.data.message, 'top-right',8000, "fas fa-exclamation-circle" ,null)	                                                            
+                }
+                return returnResponse; 
+            } catch(error){
+                addNotification('danger', 'Problema inesperado', "Revice su conexion", 'top-right',8000, "fas fa-exclamation-circle" ,null)	                          
+                return returnResponse;    
+            } 
+        } 
+    }
+
+    return useCreatePersonalPublic;
+}
+
 export const modelChangeStatus = () =>{
     const useChangeStatus = async (statusRow, idRow) =>{
         const sessionTokenSicaf = Cookies.get(process.env.REACT_APP_COOKIES_NAME_TOKEN);

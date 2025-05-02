@@ -84,27 +84,6 @@ function Header() {
 
 	}, [refreshNotificaciones]);
 
-
-
-	const items = [
-		{
-			message: 'fa-bug',
-			id: '5be01c6e-05b1-419a-aea5-e0f5d0e5dcfc',
-			created_at: 'Server Error Reports',
-		},
-		{
-			message: 'fa-envelope',
-			id: '5be01c6e-05ssb1-419a-aea5-e0f5d0e5dcfcdas',
-			created_at: 'Nuevo mensaje recibido',
-		},
-		{
-			message: 'fa-envelope',
-			id: '5be01c6e-05b1-419a-aea5-e0f5d0e5dcfcdsy',
-			created_at: 'dsdsd Nuevo mensaje recibido',
-		}
-	];
-
-
 	return (
 		<AppSettings.Consumer>			
 			{({ toggleAppSidebarMobile, toggleAppSidebarEnd, toggleAppSidebarEndMobile, toggleAppTopMenuMobile, appHeaderLanguageBar, appHeaderMegaMenu, appHeaderInverse, appSidebarTwo, appTopMenu, appSidebarNone }) => (

@@ -246,6 +246,59 @@ export const modelChangeStatus = () => {
     return useChangeStatus;
 }
 
+export const modelGetRol = () =>{
+    const sessionTokenSicaf = Cookies.get(process.env.REACT_APP_COOKIES_NAME_TOKEN);
+    let decryptedToken;
+    if (sessionTokenSicaf) {
+        decryptedToken = CryptoJS.AES.decrypt(sessionTokenSicaf, process.env.REACT_APP_API_KEY).toString(CryptoJS.enc.Utf8);
+    } else {
+        decryptedToken = "not session"
+    }
+    let returnResponse = {
+        status: false,
+        response: {},
+        title: "",
+        message: ""
+    }
+    const useGetRol = async (idRol) =>{
+        try {
+            const response = await axios.get(
+                process.env.REACT_APP_API_URL + '/api/v1/roles/'+idRol,
+                {                  
+                    headers: {
+                        Accept: 'application/json',
+                        Authorization: 'Bearer ' + decryptedToken,
+                    },
+                }
+            );
+            returnResponse.status = true;
+            returnResponse.response = response;
+            return returnResponse;
+        } catch (error) {
+            returnResponse.status = false;
+            console.log(error)
+            if (error.response.status === 403) {
+                addNotification('info', 'Aviso', "No tiene permisos para ver lo roles", 'top-right', 8000, "fas fa-exclamation-circle", null)
+            } else {
+                if (error.code == "ERR_BAD_REQUEST") {
+                    if (error.response.data.message === "Unauthenticated.") {                      
+                        Cookies.remove(process.env.REACT_APP_COOKIES_NAME_TOKEN);
+                        Cookies.remove(process.env.REACT_APP_COOKIES_NAME_DATA);
+                        returnResponse.message = "Unauthenticated.";
+                    } else {
+                        addNotification('info', 'Aviso', error.response.data.message, 'top-right', 8000, "fas fa-exclamation-circle", null)
+                    }
+                } else {
+                    addNotification('danger', 'Problema inesperado', "Revice su conexion", 'top-right', 8000, "fas fa-exclamation-circle", null)
+                }
+            }
+            return returnResponse;
+        }
+    }
+
+    return useGetRol;
+}
+
 const modelUseListPermition = () => {
     const sessionTokenSicaf = Cookies.get(process.env.REACT_APP_COOKIES_NAME_TOKEN);
     let decryptedToken;

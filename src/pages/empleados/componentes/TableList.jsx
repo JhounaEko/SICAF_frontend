@@ -141,16 +141,16 @@ const TableList = (getDataRefresch) => {
             sortable: true,
             selectorKey: 'state_id',
             cell: (row) => (
-                (row.state.name === "ACTIVO") ? (<div className="btn-flex">
+                (row.state.name === "ACTIVO") ? (<div className="btn-flex-my">
                     <i className="fas fa-toggle-on fa-2x" id={`id_check${row.id}`} style={{ color: "#276BAA" }} onClick={() => changeStatus(row.state.name, row.id)} ></i>
-                    <p className="mx-1" style={{ color: 'green', fontSize: '13px' }} htmlFor={`id_check${row.id}`} >ACTIVO</p>
+                    <span className="badge badge rounded-pill badge-subtle-success">ACTIVO <i className="fas fa-check"></i></span>
                 </div>) :
-                    (<div className="btn-flex">
+                    (<div className="btn-flex-my">
                         <i className="fas fa-toggle-off fa-2x" id={`id_check${row.id}`} onClick={() => changeStatus(row.state.name, row.id)} ></i>
-                        <p className="mx-1" style={{ color: 'red', fontSize: '13px' }} htmlFor={`id_check${row.id}`} >INACTIVO</p>
+                        <span className="badge bg-danger rounded-pill" >INACTIVO <i className="fas fa-ban"></i></span>
                     </div>)
             ),
-            width: '120px',
+            width: '110px',
         },
         {
             name: (<p className="m-0" style={{ fontWeight: 'bold', fontSize: '15px' }}>Acciones</p>),
@@ -243,7 +243,8 @@ const TableList = (getDataRefresch) => {
         />
 
         <DataTable title={<span></span>}
-            columns={columns}                        
+            columns={columns}    
+            headRowClassName="rdt_TableHead rdt_TableRow"        
             data={getDataTables}
             selectableRows={false}
             pagination

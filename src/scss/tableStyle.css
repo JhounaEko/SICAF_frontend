@@ -1,4 +1,4 @@
-.text-header-filter{
+/* .text-header-filter{
     font-weight: bold;
     font-size: 15px;
     text-decoration: underline;
@@ -21,36 +21,53 @@
     0 0 0 0px transparent,    
     0 0 0 2px rgba(59, 130, 246, 0.3), 
     0 1px 2px rgba(0, 0, 0, 0.1);
+} */
+
+.badge {
+  display: inline-block;
+  padding: 0.355555em 0.711111em;
+  font-size: 1.00em;
+  font-weight: 800;
+  line-height: 1;
+  color: #fff;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
+  border-radius: 0.25rem;
 }
 
+.rounded-pill {
+  border-radius: 50rem;
+}
+
+.badge-subtle-success{
+  color: #00894f;
+  background-color: #d9f8eb;
+}
+
+.btn-flex-my {
+  display: flex;
+  flex-direction: column;  /* Coloca elementos en una sola columna */
+  align-items: center;     /* Centra horizontalmente */
+  justify-content: center; /* Centra verticalmente si el div tiene altura */
+}
 /****/
 
-body .rdt_Table {
-    border: 3px solid #ccc;    
-    border-radius: 20px;
-    overflow: hidden; /* Para que el borde redondeado funcione correctamente */
-  }
-  
-  .cabecera-tabla {
-    background-color: #8c4be0;
-    font-weight: bold;
-  }
-  
-  .fila-tabla{
-    background-color: #dd2d2d;
-  }
-  
-  .cargando-spinner {
-    margin-right: 5px;
-  }
-  
-  .no-data-message {
-    color: gray;
-    font-style: italic;
-  }
-  
-  .paginacion-tabla nav ul.pagination { /* Ejemplo para estilizar la paginación de Bootstrap */
-    justify-content: flex-end; /* Alinear la paginación a la derecha */
-  }
-  
-  /* Puedes agregar más estilos específicos para otros elementos de la tabla */
+.rdt_TableHead { 
+  background-color: #f7f7f700;
+  color: #333;
+  font-weight: bold;
+  font-size: 15px; 
+  border-radius: 10px 10px 0px 0px;
+  border: 2px solid #85c2ff79;
+}
+
+.rdt_TableRow {
+  transition: background-color 0.2s ease-in-out;
+  border-radius: 0px 0px 10px 10px;
+  border: 1px solid #85c2ff09;
+}
+
+.rdt_TableRow:hover {
+  background-color: #f1f1f1;
+}
