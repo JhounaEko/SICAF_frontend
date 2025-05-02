@@ -143,6 +143,9 @@ const PDF = ({ estados }) => (
   <Document>
     <Page size="A4" style={styles.page}>
       <Header />
+      <Text style={styles.header}>
+              {"\n"}SISTEMA DE INFORMACION 
+            </Text>
 
       <View style={{ flexDirection: "row", position: "relative" }}>
         <View style={{ width: "70%", justifyContent: "center", alignItems: "center",}}>
