@@ -1,6 +1,10 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
+<<<<<<< HEAD
 import Cookies from 'js-cookie';
+=======
+
+>>>>>>> 6db992017ba0a6f7330d960638668cd8a498ba8d
 import App from './../app.jsx';
 import ProtectedRoute , {ProtectedRouteLogin} from './ProtectedRoute';
 import DashboardV1 from './../pages/dashboard/dashboard-v1.js';

@@ -97,7 +97,11 @@ function Header() {
 							</button>
 						)}
 						<Link to="/" className="navbar-brand"><span className="navbar-logo"></span> <b>S.I.</b> C.A.F.</Link>
+<<<<<<< HEAD
 
+=======
+						
+>>>>>>> 6db992017ba0a6f7330d960638668cd8a498ba8d
 						{appHeaderMegaMenu && (
 							<button type="button" className="navbar-mobile-toggler" data-bs-toggle="collapse" data-bs-target="#top-navbar">
 								<span className="fa-stack fa-lg text-inverse">
@@ -107,12 +111,21 @@ function Header() {
 							</button>
 						)}
 						{appTopMenu && !appSidebarNone && (
+<<<<<<< HEAD
 							<button type="button" className="navbar-mobile-toggler" onClick={toggleAppTopMenuMobile}>
 								<span className="fa-stack fa-lg text-inverse">
 									<i className="far fa-square fa-stack-2x"></i>
 									<i className="fa fa-cog fa-stack-1x"></i>
 								</span>
 							</button>
+=======
+						<button type="button" className="navbar-mobile-toggler" onClick={toggleAppTopMenuMobile}>
+							<span className="fa-stack fa-lg text-inverse">
+								<i className="far fa-square fa-stack-2x"></i>
+								<i className="fa fa-cog fa-stack-1x"></i>
+							</span>
+						</button>
+>>>>>>> 6db992017ba0a6f7330d960638668cd8a498ba8d
 						)}
 						{appSidebarNone && appTopMenu && (
 							<button type="button" className="navbar-mobile-toggler" onClick={toggleAppTopMenuMobile}>
@@ -129,6 +142,7 @@ function Header() {
 							</button>
 						)}
 					</div>
+<<<<<<< HEAD
 
 					{appHeaderMegaMenu && (
 						<DropdownMegaMenu />
@@ -147,6 +161,26 @@ function Header() {
 							<div className="navbar-divider d-none d-md-block"></div>
 						)}
 
+=======
+					
+					{appHeaderMegaMenu && (
+						<DropdownMegaMenu />
+					)}
+					
+					<div className="navbar-nav">						
+						<DropdownNotification />
+						
+						{appHeaderLanguageBar && (
+							<DropdownLanguage />
+						)}
+						
+						<DropdownProfile props = {location.state} />
+						
+						{appSidebarTwo && (
+							<div className="navbar-divider d-none d-md-block"></div>
+						)}
+						
+>>>>>>> 6db992017ba0a6f7330d960638668cd8a498ba8d
 						{appSidebarTwo && (
 							<div className="navbar-item d-none d-md-block">
 								<Link to="/" onClick={toggleAppSidebarEnd} className="navbar-link icon">

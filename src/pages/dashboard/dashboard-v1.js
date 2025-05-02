@@ -301,6 +301,7 @@ function DashboardV1() {
 			
 				
 				
+<<<<<<< HEAD
 					<Panel>
 						<PanelHeader>Message</PanelHeader>
 						<PanelBody>
@@ -513,3 +514,217 @@ function DashboardV1() {
 };
 
 export default DashboardV1;
+=======
+// 					<Panel>
+// 						<PanelHeader>Message</PanelHeader>
+// 						<PanelBody>
+// 							<PerfectScrollbar className="h-300px" options={{suppressScrollX: true}}>
+// 								<div className="d-flex">
+// 									<Link to="/dashboard/v1" className="w-60px">
+// 										<img src="" alt="" className="mw-100 rounded-pill" />
+// 									</Link>
+// 									<div className="flex-1 ps-3">
+// 										<h5>John Doe</h5>
+// 										<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi id nunc non eros fermentum vestibulum ut id felis. Nunc molestie libero eget urna aliquet, vitae laoreet felis ultricies. Fusce sit amet massa malesuada, tincidunt augue vitae, gravida felis.</p>
+// 									</div>
+// 								</div>
+// 								<hr className="bg-gray-500" />
+// 								<div className="d-flex">
+// 									<Link to="/dashboard/v1" className="w-60px">
+// 										<img src="" alt="" className="mw-100 rounded-pill" />
+// 									</Link>
+// 									<div className="flex-1 ps-3">
+// 										<h5>Terry Ng</h5>
+// 										<p>Sed in ante vel ipsum tristique euismod posuere eget nulla. Quisque ante sem, scelerisque iaculis interdum quis, eleifend id mi. Fusce congue leo nec mauris malesuada, id scelerisque sapien ultricies.</p>
+// 									</div>
+// 								</div>
+// 								<hr className="bg-gray-500" />
+// 								<div className="d-flex">
+// 									<Link to="/dashboard/v1" className="w-60px">
+// 										<img src="" alt="" className="mw-100 rounded-pill" />
+// 									</Link>
+// 									<div className="flex-1 ps-3">
+// 										<h5>Fiona Log</h5>
+// 										<p>Pellentesque dictum in tortor ac blandit. Nulla rutrum eu leo vulputate ornare. Nulla a semper mi, ac lacinia sapien. Sed volutpat ornare eros, vel semper sem sagittis in. Quisque risus ipsum, iaculis quis cursus eu, tristique sed nulla.</p>
+// 									</div>
+// 								</div>
+// 								<hr className="bg-gray-500" />
+// 								<div className="d-flex">
+// 									<Link to="/dashboard/v1" className="w-60px">
+// 										<img src="" alt="" className="mw-100 rounded-pill" />
+// 									</Link>
+// 									<div className="flex-1 ps-3">
+// 										<h5>John Doe</h5>
+// 										<p>Morbi molestie lorem quis accumsan elementum. Morbi condimentum nisl iaculis, laoreet risus sed, porta neque. Proin mi leo, dapibus at ligula a, aliquam consectetur metus.</p>
+// 									</div>
+// 								</div>
+// 							</PerfectScrollbar>
+// 						</PanelBody>
+// 						<PanelFooter>
+// 							<form>
+// 								<div className="input-group">
+// 									<input type="text" className="form-control bg-light" placeholder="Enter message" />
+// 									<button className="btn btn-primary" type="button"><i className="fa fa-pencil-alt"></i></button>
+// 								</div>
+// 							</form>
+// 						</PanelFooter>
+// 					</Panel>
+// 				</div>
+// 				<div className="col-xl-4">
+// 					<Panel>
+// 						<PanelHeader>Analytics Details</PanelHeader>
+// 						<PanelBody className="p-0">
+// 							<div className="table-responsive">
+// 								<table className="table table-panel align-middle mb-0">
+// 									<thead>
+// 										<tr>	
+// 											<th>Source</th>
+// 											<th>Total</th>
+// 											<th>Trend</th>
+// 										</tr>
+// 									</thead>
+// 									<tbody>
+// 										<tr>
+// 											<td><label className="badge bg-danger">Unique Visitor</label></td>
+// 											<td>13,203 <span className="text-success"><i className="fa fa-arrow-up"></i></span></td>
+// 											<td className="align-middle">
+// 												<div className="w-100px my-n1">
+// 													<ApexChart type="line" height="20" options={sparkLineOptions} series={sparklineData} />
+// 												</div>
+// 											</td>
+// 										</tr>
+// 										<tr>
+// 											<td><label className="badge bg-warning">Bounce Rate</label></td>
+// 											<td>28.2%</td>
+// 											<td className="align-middle">
+// 												<div className="w-100px my-n1">
+// 													<ApexChart type="line" height="20" options={sparkLineOptions2} series={sparklineData2} />
+// 												</div>
+// 											</td>
+// 										</tr>
+// 										<tr>
+// 											<td><label className="badge bg-success">Total Page Views</label></td>
+// 											<td>1,230,030</td>
+// 											<td className="align-middle">
+// 												<div className="w-100px my-n1">
+// 													<ApexChart type="line" height="20" options={sparkLineOptions3} series={sparklineData3} />
+// 												</div>
+// 											</td>
+// 										</tr>
+// 										<tr>
+// 											<td><label className="badge bg-blue">Avg Time On Site</label></td>
+// 											<td>00:03:45</td>
+// 											<td className="align-middle">
+// 												<div className="w-100px my-n1">
+// 													<ApexChart type="line" height="20" options={sparkLineOptions4} series={sparklineData4} />
+// 												</div>
+// 											</td>
+// 										</tr>
+// 										<tr>
+// 											<td><label className="badge bg-gray-500">% New Visits</label></td>
+// 											<td>40.5%</td>
+// 											<td className="align-middle">
+// 												<div className="w-100px my-n1">
+// 													<ApexChart type="line" height="20" options={sparkLineOptions5} series={sparklineData5} />
+// 												</div>
+// 											</td>
+// 										</tr>
+// 										<tr>
+// 											<td><label className="badge bg-inverse">Return Visitors</label></td>
+// 											<td>73.4%</td>
+// 											<td className="align-middle">
+// 												<div className="w-100px my-n1">
+// 													<ApexChart type="line" height="20" options={sparkLineOptions6} series={sparklineData6} />
+// 												</div>
+// 											</td>
+// 										</tr>
+// 									</tbody>
+// 								</table>
+// 							</div>
+// 						</PanelBody>
+// 					</Panel>		
+// 					<Panel>
+// 						<PanelHeader>Todo List</PanelHeader>
+// 						<PanelBody className="p-0">
+// 							<div className="todolist">
+// 								<div className="todolist-item active">
+// 									<div className="todolist-input">
+// 										<div className="form-check">
+// 											<input type="checkbox" onChange={handleOnChange} className="form-check-input" id="todolist1" data-change="todolist" checked />
+// 										</div>
+// 									</div>
+// 									<label className="todolist-label" htmlFor="todolist1">Donec vehicula pretium nisl, id lacinia nisl tincidunt id.</label>
+// 								</div>
+// 								<div className="todolist-item">
+// 									<div className="todolist-input">
+// 										<div className="form-check">
+// 											<input type="checkbox" onChange={handleOnChange} className="form-check-input" id="todolist2" data-change="todolist" />
+// 										</div>
+// 									</div>
+// 									<label className="todolist-label" htmlFor="todolist2">Duis a ullamcorper massa.</label>
+// 								</div>
+// 								<div className="todolist-item">
+// 									<div className="todolist-input">
+// 										<div className="form-check">
+// 											<input type="checkbox" onChange={handleOnChange} className="form-check-input" id="todolist3" data-change="todolist" />
+// 										</div>
+// 									</div>
+// 									<label className="todolist-label" htmlFor="todolist3">Phasellus bibendum, odio nec vestibulum ullamcorper.</label>
+// 								</div>
+// 								<div className="todolist-item">
+// 									<div className="todolist-input">
+// 										<div className="form-check">
+// 											<input type="checkbox" onChange={handleOnChange} className="form-check-input" id="todolist4" data-change="todolist" />
+// 										</div>
+// 									</div>
+// 									<label className="todolist-label" htmlFor="todolist4">Duis pharetra mi sit amet dictum congue.</label>
+// 								</div>
+// 								<div className="todolist-item">
+// 									<div className="todolist-input">
+// 										<div className="form-check">
+// 											<input type="checkbox" onChange={handleOnChange} className="form-check-input" id="todolist5" data-change="todolist" />
+// 										</div>
+// 									</div>
+// 									<label className="todolist-label" htmlFor="todolist5">Duis pharetra mi sit amet dictum congue.</label>
+// 								</div>
+// 								<div className="todolist-item">
+// 									<div className="todolist-input">
+// 										<div className="form-check">
+// 											<input type="checkbox" onChange={handleOnChange} className="form-check-input" id="todolist6" data-change="todolist" />
+// 										</div>
+// 									</div>
+// 									<label className="todolist-label" htmlFor="todolist6">Phasellus bibendum, odio nec vestibulum ullamcorper.</label>
+// 								</div>
+// 								<div className="todolist-item">
+// 									<div className="todolist-input">
+// 										<div className="form-check">
+// 											<input type="checkbox" onChange={handleOnChange} className="form-check-input" id="todolist7" data-change="todolist" />
+// 										</div>
+// 									</div>
+// 									<label className="todolist-label" htmlFor="todolist7">Donec vehicula pretium nisl, id lacinia nisl tincidunt id.</label>
+// 								</div>
+// 							</div>
+// 						</PanelBody>
+// 					</Panel>
+// 					<Panel>
+// 						<PanelHeader>
+// 							Word Visitors
+// 						</PanelHeader>
+// 						<div style={{height: '300px'}}>
+// 							<div id="jvectorMap" style={{height: '300px'}}></div>
+// 						</div>
+// 					</Panel>
+// 					<Panel>
+// 						<PanelHeader>
+// 							Calendar
+// 						</PanelHeader>
+// 						<Calendar value={date} />
+// 					</Panel>
+// 				</div>
+// 			</div>
+// 		</div>
+// 	)
+// };
+
+// export default DashboardV1;
+>>>>>>> 6db992017ba0a6f7330d960638668cd8a498ba8d

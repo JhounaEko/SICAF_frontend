@@ -1,14 +1,5 @@
 
 
-// import Cookies from 'js-cookie';
-// import React, { useEffect } from 'react';
-// const userProps = JSON.parse(Cookies.get(process.env.REACT_APP_COOKIES_NAME_DATA))
-
-
-
-
-// console.log("data menus")
-
 const Menu = [
   { path: 'dashboard', icon: 'fa fa-sitemap', title: 'Dashboard',
     children: [
@@ -57,11 +48,18 @@ const Menu = [
   },
   { path: '/table', icon: 'fa fa-table', title: 'Tables',
     children: [
+<<<<<<< HEAD
       { path: '/table/elements',  icon: 'fa fa-table', title: 'Table Elements' },
       { path: '/table/plugins', title: 'Table Plugins' }
     ]
   }, 
   { path: '/table', icon: 'fa fa-table', title: 'Tablessss'}
+=======
+      { path: '/table/elements', title: 'Table Elements' },
+      { path: '/table/plugins', title: 'Table Plugins' }
+    ]
+  }, 
+>>>>>>> 6db992017ba0a6f7330d960638668cd8a498ba8d
 ]
 
 export default Menu;

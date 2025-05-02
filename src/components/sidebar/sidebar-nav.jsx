@@ -146,6 +146,7 @@ function SidebarNav() {
 		}
 	}
   
+<<<<<<< HEAD
 	const userProps = JSON.parse(Cookies.get(process.env.REACT_APP_COOKIES_NAME_DATA))
 	console.log (userProps.roles[0].menus)	
 
@@ -194,6 +195,8 @@ function SidebarNav() {
 	let controlMenu = buildNestedMenu(userProps.roles[0].menus);
 	
 
+=======
+>>>>>>> 6db992017ba0a6f7330d960638668cd8a498ba8d
 	return (
 		<div className="menu">
 			{context.appSidebarSearch && (
@@ -201,8 +204,13 @@ function SidebarNav() {
 					<input type="text" className="form-control" placeholder="Sidebar menu filter..." onKeyUp={handleSidebarSearch} />
 				</div>
 			)}
+<<<<<<< HEAD
 		
 			{controlMenu.map((menu, i) => (
+=======
+			<div className="menu-header">Navigation</div>
+			{menus.map((menu, i) => (
+>>>>>>> 6db992017ba0a6f7330d960638668cd8a498ba8d
 				<NavItem key={i} menu={menu} />
 			))}
 		</div>
