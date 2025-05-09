@@ -2,6 +2,7 @@ import CryptoJS from 'crypto-js';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import { addNotification } from './../../components/alert/alert.jsx';
+
 export const modelUseCreate = () => {
 
     const useCreate = async (dataForm) => {
@@ -21,7 +22,7 @@ export const modelUseCreate = () => {
 
         try {
             const respose = await axios.post(
-                process.env.REACT_APP_API_URL + '/api/v1/permissions',
+                process.env.REACT_APP_API_URL + '/api/v1/places',
                 dataForm
                 , {
                     headers: {
@@ -37,7 +38,7 @@ export const modelUseCreate = () => {
             returnResponse.status = false;
             try {
                 if (error.response.status === 403) {
-                    addNotification('info', 'Aviso', "No tiene permisos para registrar permisos", 'top-right', 8000, "fas fa-exclamation-circle", null)
+                    addNotification('info', 'Aviso', "No tiene permisos para registrar datos", 'top-right', 8000, "fas fa-exclamation-circle", null)
                 } else {
                     if (error.code == "ERR_BAD_REQUEST") {
                         if (error.response.data.message === "Unauthenticated.") {
@@ -49,6 +50,7 @@ export const modelUseCreate = () => {
                         }
                     } else {
                         addNotification('danger', 'Problema inesperado', "Revice su conexion", 'top-right', 8000, "fas fa-exclamation-circle", null)
+
                     }
                 }
                 return returnResponse;
@@ -60,65 +62,6 @@ export const modelUseCreate = () => {
     }
     return useCreate;
 
-}
-
-export const modelChangeStatus = () => {
-    const useChangeStatus = async (statusRow, idRow) => {
-        const sessionTokenSicaf = Cookies.get(process.env.REACT_APP_COOKIES_NAME_TOKEN);
-        let decryptedToken;
-        if (sessionTokenSicaf) {
-            decryptedToken = CryptoJS.AES.decrypt(sessionTokenSicaf, process.env.REACT_APP_API_KEY).toString(CryptoJS.enc.Utf8);
-        } else {
-            decryptedToken = "not session"
-        }
-        let returnResponse = {
-            status: false,
-            response: {},
-            title: "",
-            message: "",
-            error: {}
-        }
-        try {
-            const response = await axios.patch(
-                `${process.env.REACT_APP_API_URL}/api/v1/permissions/${idRow}`,
-                {
-                    "state_id": (statusRow === "INACTIVO") ? 1 : 2
-                }, {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': "Bearer " + decryptedToken,
-                }
-            }
-            );
-            returnResponse.status = true;
-            return returnResponse;
-        } catch (error) {
-            console.log(error);
-            returnResponse.status = false;
-            try {
-                if (error.response.status === 403) {
-                    addNotification('info', 'Aviso', "No tiene permisos para cambiar el estado", 'top-right', 8000, "fas fa-exclamation-circle", null)
-                } else {
-                    if (error.code == "ERR_BAD_REQUEST") {
-                        if (error.response.data.message === "Unauthenticated.") {
-                            Cookies.remove(process.env.REACT_APP_COOKIES_NAME_TOKEN);
-                            Cookies.remove(process.env.REACT_APP_COOKIES_NAME_DATA);
-                            returnResponse.message = "Unauthenticated.";
-                        } else {
-                            addNotification('info', 'Aviso', error.response.data.message, 'top-right', 8000, "fas fa-exclamation-circle", null)
-                        }
-                    } else {
-                        addNotification('danger', 'Problema inesperado', "Revice su conexion", 'top-right', 8000, "fas fa-exclamation-circle", null)
-                    }
-                }
-                return returnResponse;
-            } catch (error) {
-                addNotification('danger', 'Problema inesperado', "Revice su conexion", 'top-right', 8000, "fas fa-exclamation-circle", null)
-                return returnResponse;
-            }
-        }
-    }
-    return useChangeStatus;
 }
 
 export const modelUseListTable = () => {
@@ -140,9 +83,9 @@ export const modelUseListTable = () => {
         }
         try {
             const respose = await axios.get(
-                process.env.REACT_APP_API_URL + '/api/v1/permissions',
+                process.env.REACT_APP_API_URL + '/api/v1/places',
                 {
-                    params: {                  
+                    params: {                 
                         search: getSearh,
                         page: getPag,
                         sort_by: getSortColumn,
@@ -163,7 +106,7 @@ export const modelUseListTable = () => {
             returnResponse.status = false;
             try {
                 if (error.response.status === 403) {
-                    addNotification('info', 'Aviso', "No tiene permisos para la listar los permisos", 'top-right', 8000, "fas fa-exclamation-circle", null)
+                    addNotification('info', 'Aviso', "No tiene permisos para la listar los lugares", 'top-right', 8000, "fas fa-exclamation-circle", null)               
                 } else {
                     if (error.code == "ERR_BAD_REQUEST") {
                         if (error.response.data.message === "Unauthenticated.") {
@@ -187,6 +130,65 @@ export const modelUseListTable = () => {
     return useListTable;
 }
 
+export const modelChangeStatus = () => {
+    const useChangeStatus = async (statusRow, idRow) => {
+        const sessionTokenSicaf = Cookies.get(process.env.REACT_APP_COOKIES_NAME_TOKEN);
+        let decryptedToken;
+        if (sessionTokenSicaf) {
+            decryptedToken = CryptoJS.AES.decrypt(sessionTokenSicaf, process.env.REACT_APP_API_KEY).toString(CryptoJS.enc.Utf8);
+        } else {
+            decryptedToken = "not session"
+        }
+        let returnResponse = {
+            status: false,
+            response: {},
+            title: "",
+            message: "",
+            error: {}
+        }
+        try {
+            const response = await axios.patch(
+                `${process.env.REACT_APP_API_URL}/api/v1/places/${idRow}`,
+                {
+                    "state_id": (statusRow === "INACTIVO") ? 1 : 2
+                }, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': "Bearer " + decryptedToken,
+                }
+            }
+            );
+            returnResponse.status = true;
+            return returnResponse;
+        } catch (error) {
+            console.log(error);
+            returnResponse.status = false;
+            try {
+                if (error.response.status === 403) {
+                    addNotification('info', 'Aviso', "No tiene permisos para modificar datos", 'top-right', 15000, "fas fa-exclamation-circle", null)                
+                } else {
+                    if (error.code == "ERR_BAD_REQUEST") {
+                        if (error.response.data.message === "Unauthenticated.") {
+                            Cookies.remove(process.env.REACT_APP_COOKIES_NAME_TOKEN);
+                            Cookies.remove(process.env.REACT_APP_COOKIES_NAME_DATA);
+                            returnResponse.message = "Unauthenticated.";
+                        } else {
+                            addNotification('info', 'Aviso', error.response.data.message, 'top-right', 8000, "fas fa-exclamation-circle", null)
+                        }
+                    } else {
+                        addNotification('danger', 'Problema inesperado', "Revice su conexion", 'top-right', 8000, "fas fa-exclamation-circle", null)                        
+                    }
+                }
+                return returnResponse;
+            } catch (error) {
+                addNotification('danger', 'Problema inesperado', "Revice su conexion", 'top-right', 8000, "fas fa-exclamation-circle", null)
+                return returnResponse;
+            }
+        }
+    }
+    return useChangeStatus;
+}
+
 export const modelChageDataRow = () => {
     const useChangeDataRow = async (dataForm) => {
         let returnResponse = {
@@ -197,10 +199,15 @@ export const modelChageDataRow = () => {
             error: {}
         }
         const sessionTokenSicaf = Cookies.get(process.env.REACT_APP_COOKIES_NAME_TOKEN);
-        const decryptedToken = CryptoJS.AES.decrypt(sessionTokenSicaf, process.env.REACT_APP_API_KEY).toString(CryptoJS.enc.Utf8);
-        try {
+        let decryptedToken;
+        if (sessionTokenSicaf) {
+            decryptedToken = CryptoJS.AES.decrypt(sessionTokenSicaf, process.env.REACT_APP_API_KEY).toString(CryptoJS.enc.Utf8);
+        } else {
+            decryptedToken = "not session"
+        }
+            try {
             const respose = await axios.patch(
-                `${process.env.REACT_APP_API_URL}/api/v1/permissions/${dataForm.id}`,
+                `${process.env.REACT_APP_API_URL}/api/v1/places/${dataForm.id}`,
                 dataForm,
                 {
                     headers: {
@@ -212,14 +219,14 @@ export const modelChageDataRow = () => {
             returnResponse.status = true;
             return returnResponse;
         } catch (error) {
+            console.log(error);           
+            returnResponse.status = false;           
            try {
-            console.log(error);
-            returnResponse.status = false;
             if (error.response.status === 403) {
-                addNotification('info', 'Aviso', "No tiene permisos actualizar datos", 'top-right', 8000, "fas fa-exclamation-circle", null)
+                addNotification('info', 'Aviso', "No tiene permisos para modificar datos", 'top-right', 8000, "fas fa-exclamation-circle", null)
             } else {
                 if (error.code == "ERR_BAD_REQUEST") {
-                    if (error.response.data.message === "Unauthenticated.") {
+                    if (error.response.data.message === "Unauthenticated.") {                      
                         Cookies.remove(process.env.REACT_APP_COOKIES_NAME_TOKEN);
                         Cookies.remove(process.env.REACT_APP_COOKIES_NAME_DATA);
                         returnResponse.message = "Unauthenticated.";
@@ -234,8 +241,8 @@ export const modelChageDataRow = () => {
            } catch (error) {
             addNotification('danger', 'Problema inesperado', "Revice su conexion", 'top-right', 8000, "fas fa-exclamation-circle", null)
             return returnResponse;
-
            }
+           
         }
     }
     return useChangeDataRow;

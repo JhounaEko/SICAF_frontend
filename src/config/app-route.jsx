@@ -1,10 +1,6 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
-<<<<<<< HEAD
 import Cookies from 'js-cookie';
-=======
-
->>>>>>> 6db992017ba0a6f7330d960638668cd8a498ba8d
 import App from './../app.jsx';
 import ProtectedRoute , {ProtectedRouteLogin} from './ProtectedRoute';
 import DashboardV1 from './../pages/dashboard/dashboard-v1.js';
@@ -38,6 +34,8 @@ import RegisterPublicPersonal from './../pages/empleados/registerPublicPersonal.
 import ManagerPermisos from './../pages/permisos/pages.jsx';
 import CargoManager from './../pages/cargo/pages.jsx';
 import EmpleadoManager from './../pages/empleados/pages.jsx';
+import ManagerMenu from './../pages/menus/pages.jsx';
+import ManagerLugares from './../pages/lugares/pages.jsx';
 
 const AppRoute = [
 	{
@@ -111,6 +109,22 @@ const AppRoute = [
 				element:  <ProtectedRoute><Outlet /></ProtectedRoute>,
 				children: [
 					{ path: 'pages', element: <EmpleadoManager /> },						
+					{ path: '*', element: <ExtraError /> }
+				]
+			},	
+			{
+				path: 'menus/*', 
+				element:  <ProtectedRoute><Outlet /></ProtectedRoute>,
+				children: [
+					{ path: 'pages', element: <ManagerMenu /> },						
+					{ path: '*', element: <ExtraError /> }
+				]
+			},	
+			{
+				path: 'lugar/*', 
+				element:  <ProtectedRoute><Outlet /></ProtectedRoute>,
+				children: [
+					{ path: 'pages', element: <ManagerLugares /> },						
 					{ path: '*', element: <ExtraError /> }
 				]
 			},			

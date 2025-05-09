@@ -24,23 +24,23 @@ const HeaderNavbar = ({functionRefreschDataTable, searchData}) => {
 
         <CompModalCreateUpdate
             StatusModal = {modal}
-            title  = "Agregar nuevo Cargo"
+            title  = "Agregar nuevo registro de lugar"
             CloseModal = {closeModal} 
             dataCurrentRow = {{id:0}}
             functionRefreschDataTable = {functionRefreschDataTable}                             
         />
      <div className="row">
         <div className="col-sm">
-            <button className="btn btn-info btn-rounded px-4 rounded-pill" onClick={openModal}><i className="fas fa-briefcase fa-1_5x"></i> Agregar Cargo</button>
+            <button className="btn btn-info btn-rounded px-4 rounded-pill" onClick={openModal}> <i class="fas fa-plus fa-1_5x"></i> Agregar Lugar</button>
         </div>
         <div className="col-sm">   
-            <Form.Group as={Row} className="" controlId="searchCargo">
-                <Form.Label column sm="3">Buscar:</Form.Label>
+            <Form.Group as={Row} className="" controlId="SearchStaff">
+                <Form.Label column sm="4">Buscar:</Form.Label>
                 <Col sm="8">
                     <Form.Control 
                         className='form-control m-1 p-1'
                         plaintext
-                        placeholder="nombre del cargo"
+                        placeholder="Buscar registro .... "
                         style={{ backgroundColor: '#f0f0f0', color: '#333' }}
                         onChange={(event) =>{ FuntionSearchData(event.target.value);}} 
                     />

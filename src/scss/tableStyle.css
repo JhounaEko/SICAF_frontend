@@ -52,7 +52,7 @@
   justify-content: center; /* Centra verticalmente si el div tiene altura */
 }
 /****/
-
+/* 
 .rdt_TableHead { 
   background-color: #f7f7f700;
   color: #333;
@@ -70,4 +70,4 @@
 
 .rdt_TableRow:hover {
   background-color: #f1f1f1;
-}
+} */

@@ -17,7 +17,7 @@ const CompModalCreateUpdate = ({ StatusModal, CloseModal, title, dataCurrentRow,
     const navigation = useNavigate();
 
     const idRef = useRef(dataCurrentRow.id);
-    const { register, handleSubmit, unregister, reset, setValue, formState: { errors } } = useForm();
+    const { register, handleSubmit, reset, setValue, formState: { errors } } = useForm();
 
 
 
@@ -43,9 +43,10 @@ const CompModalCreateUpdate = ({ StatusModal, CloseModal, title, dataCurrentRow,
                 const result = await useCreate(dataForm);
                 if (result.status) {
                     reserForm();
-                    functionRefreschDataTable();
+                    console.log(typeof functionRefreschDataTable);
+                    functionRefreschDataTable(true);
                     Swal.fire({
-                        title: "Registro exitoso",
+                        title: "Registro exitosooooo",
                         icon: "success",
                         draggable: true,
                         timer: 3000,
@@ -140,7 +141,6 @@ const CompModalCreateUpdate = ({ StatusModal, CloseModal, title, dataCurrentRow,
     const pageCurrentOffice = useRef(1);
     const [isLoadingOffice, setIsLoadingOffice] = useState(false);
     const [getSelectOficce, setSelectOficce] = useState({ id: 0 });
-    const [getSelectOficceDependencia, setSelectOficceDependencia] = useState(false);
     const [defaultOptionsOffice, setDefaultOptionsOffice] = useState([]);
     const handleMenuScrollToBottom = async () => {
         if (hasMoreOffice.current) {
@@ -170,20 +170,25 @@ const CompModalCreateUpdate = ({ StatusModal, CloseModal, title, dataCurrentRow,
                 setDefaultOptionsOffice(response);
             }
             fetchPeticion();
-        }
+            
+            /** When update data form */
+            if (dataCurrentRow.id !== 0 && idRef.current != dataCurrentRow.id) {
+                idRef.current = dataCurrentRow.id;
+                setValue('id', dataCurrentRow.id);
+                setValue('name', dataCurrentRow.name);
+                setValue('level', dataCurrentRow.level);
+                setValue('initials', dataCurrentRow.initials);
+                
+                if (dataCurrentRow.level != 0 || dataCurrentRow.level != 1) {
+                    setSelectLevels(dataCurrentRow.level);
+                    setSelectOficce(dataCurrentRow.parent);
+                }
+            }
+        }        
+      
     }, [StatusModal]);
-
-    if (dataCurrentRow.id !== 0 && idRef.current != dataCurrentRow.id) {
-        idRef.current = dataCurrentRow.id;
-        setValue('id', dataCurrentRow.id);
-        setValue('name', dataCurrentRow.name);
-        setValue('level', dataCurrentRow.level);
-        setValue('initials', dataCurrentRow.initials);
-        if (dataCurrentRow.level != 0 || dataCurrentRow.level != 1) {
-            setSelectLevels(dataCurrentRow.level);
-            setSelectOficce(dataCurrentRow.parent);
-        }
-    }
+  
+    
 
     return (<>
         <ReactNotifications />
@@ -244,9 +249,9 @@ const CompModalCreateUpdate = ({ StatusModal, CloseModal, title, dataCurrentRow,
                             {errors.initials && <div className='mb-0 mt-2 fs-12px' style={{ color: 'red' }}>{String(errors.initials.message)}</div>}
                         </div>
                         <div className="mb-3">
-                            <label className="required form-label" htmlFor="levels">Nivel</label>
+                            <label className="required form-label" htmlFor="level">Nivel</label>
                             <select
-                                id="levels"
+                                id="level"
                                 className="form-select fs-13px"
                                 {...register("level", { required: "El nivel es obligatorio" })}
                                 onChange={(element) => { setSelectLevels(element.target.value); }}
@@ -263,8 +268,7 @@ const CompModalCreateUpdate = ({ StatusModal, CloseModal, title, dataCurrentRow,
                                 <div className="mb-3">
                                     <label className="required form-label" htmlFor="office">Dependencia</label>
                                     <AsyncSelect
-                                        id="office"
-                                        cacheOptions
+                                        id="office"                                        
                                         loadOptions={loadOptionsOfficeSearch}
                                         defaultOptions={defaultOptionsOffice}
                                         getOptionLabel={(option) => option.name}
@@ -273,7 +277,7 @@ const CompModalCreateUpdate = ({ StatusModal, CloseModal, title, dataCurrentRow,
                                         onChange={(elemento) => { setSelectOficce(elemento); }}
                                         isLoading={isLoadingOffice}
                                         placeholder="Seleccione una opción..."
-                                        defaultValue={getSelectOficce}
+                                        defaultValue={dataCurrentRow.parent}
                                     />
                                 </div>
                             ) : null

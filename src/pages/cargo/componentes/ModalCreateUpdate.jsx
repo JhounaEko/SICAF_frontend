@@ -18,7 +18,13 @@ const CompModalCreateUpdate = ({ StatusModal, CloseModal, title, dataCurrentRow,
 
 
     const idRef = useRef(dataCurrentRow.id);
-    const { register, handleSubmit, reset, setValue, formState: { errors } } = useForm();
+    const { register, handleSubmit, reset, setValue, formState: { errors } } = useForm(
+        // {
+        //     defaultValues: {
+        //       name: dataCurrentRow.name?? "",
+        //     },
+        //   }
+    );
 
     const onSubmit = async (dataForm) => {
         setStateButton(true);
@@ -83,13 +89,17 @@ const CompModalCreateUpdate = ({ StatusModal, CloseModal, title, dataCurrentRow,
         reset();
         CloseModal();
     };
-
-    if (dataCurrentRow.id !== 0 && idRef.current != dataCurrentRow.id) {
-        idRef.current = dataCurrentRow.id;
-        setValue('id', dataCurrentRow.id);
-        setValue('name', dataCurrentRow.name);
-        setValue('description', dataCurrentRow.description);
-    }
+   
+    useEffect(() => {
+        if (StatusModal){
+            if (dataCurrentRow.id !== 0 && idRef.current != dataCurrentRow.id) {
+                idRef.current = dataCurrentRow.id;
+                setValue('id', dataCurrentRow.id);
+                setValue('name', dataCurrentRow.name);
+                setValue('description', dataCurrentRow.description);         
+            }
+        }
+    }, [StatusModal]);
 
     return (<>
         <ReactNotifications />
@@ -113,9 +123,9 @@ const CompModalCreateUpdate = ({ StatusModal, CloseModal, title, dataCurrentRow,
                             <input className="form-control"
                                 type="text"
                                 id="name"
-                                placeholder="nombre cargo"
+                                placeholder="nombre cargo"                         
                                 {...register("name", {
-                                    required: "El nombre es obligatorio",
+                                    required: "El nombre es obligatorio",                                   
                                     maxLength: {
                                         value: 60,
                                         message: "El nombre no puede tener más de 60 caracteres",

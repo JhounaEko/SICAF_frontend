@@ -31,7 +31,7 @@ const TableList = (getDataRefresch) => {
     /** Se utiliza actualizar la tabla, cuando  */
     const [getRefreschDataTable, setRefreschDataTable] = useState(false);
     const functionRefreschDataTable = (ref) => {
-        setRefreschDataTable(!getRefreschDataTable);
+        setRefreschDataTable(!getRefreschDataTable);  
     };
 
 
@@ -194,7 +194,7 @@ const TableList = (getDataRefresch) => {
             setProgressData(false);
         }
         peticionListOffice();
-    }, [getPag, getSort, getCountRows, getRefreschDataTable, getDataRefresch.getRefreschDataTableGlobal, getDataRefresch.getDataSearh]);
+    }, [getPag, getSort, getCountRows, getRefreschDataTable /**Update */, getDataRefresch.getDataSearh, getDataRefresch.getRefreschDataTable /** Create*/]);
 
 
     const handleSort = (columnTable, direction) => {

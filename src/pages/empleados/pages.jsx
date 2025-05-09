@@ -1,8 +1,17 @@
-import React,{ useState, useEffect} from 'react';
+import Cookies from 'js-cookie';
+import React,{ useState, useRef} from 'react';
+import useRouteAccess from './../../components/pRoutasCookies.jsx'
 import HeaderNavbar from './componentes/HeaderNavbar.jsx'
 import TableList from './componentes/TableList.jsx'
 
+
+
 const EmpleadoManager = () => {
+    
+    const hasAccess = useRouteAccess();       
+    if (!hasAccess) { 
+        return <div> No tienes acceso a esta página</div>;
+    }
 
      /** Se utiliza para incorporar los datos de busqueda, cuando se tiene datos en el input  */
      const [getDataSearh,setDataSearh] = useState("");

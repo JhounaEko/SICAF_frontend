@@ -7,7 +7,7 @@ import Swal from 'sweetalert2';
 import AsyncSelect from 'react-select/async';
 import { ReactNotifications } from 'react-notifications-component';
 import { validacionesFirstName, validacionesLastName, validacionesCI, validacionesComplementoCi, validacionesCelular, validacionesEmail, separarValorCiComplemento } from './../../../components/validaciones/validaciones.jsx';
-import { modelUseListSelect } from './../../oficinas/modelOficina.jsx';
+import { modelUseListSelectOfficeLocation } from './../../oficinas/modelOficina.jsx';
 import { modelUseListCargoSelect } from './../../cargo/modelCargo.jsx';
 import { useNavigate } from 'react-router-dom';
 
@@ -15,7 +15,7 @@ const CompModalCreateUpdate = ({ StatusModal, CloseModal, title, dataCurrentRow,
 
     const useCreate = modelUseCreate();
     const useChangeDataRow = modelChageDataRow();
-    const useListSelect = modelUseListSelect();
+    const useListSelectOfficeLocation = modelUseListSelectOfficeLocation();
     const useListCargoSelect = modelUseListCargoSelect();
     const navigation = useNavigate();
 
@@ -101,22 +101,7 @@ const CompModalCreateUpdate = ({ StatusModal, CloseModal, title, dataCurrentRow,
         setSelectOficce(null);
         CloseModal();
     };
-
-    if (dataCurrentRow.id !== 0 && idRef.current != dataCurrentRow.id) {
-        idRef.current = dataCurrentRow.id;
-        setValue('id', dataCurrentRow.id);
-        setValue('first_name', dataCurrentRow.first_name);
-        setValue('last_name', dataCurrentRow.last_name);
-        setValue('phone_number', dataCurrentRow.phone_number);
-        setValue('email', dataCurrentRow.email);
-        const ci = separarValorCiComplemento(dataCurrentRow.identity_card);
-        setValue('identity_card', ci.numCi);
-        setValue('complement', ci.ciComplemento);
-        setValue('issued_by', (dataCurrentRow.issued_by == "") ? "S/E" : dataCurrentRow.issued_by);
-    }
-
-
-
+      
     /** ============================================ Select Cargo ========================================*/
 
     const pageCurrentCargo = useRef(1);
@@ -206,7 +191,7 @@ const CompModalCreateUpdate = ({ StatusModal, CloseModal, title, dataCurrentRow,
         try {
             setIsLoadingOffice(true);
 
-            const returnData = await useListSelect(search, pageNumber);
+            const returnData = await useListSelectOfficeLocation(search, pageNumber);
 
             if (returnData.status) {
                 if (returnData.response.data.results.meta.current_page < returnData.response.data.results.meta.last_page) {
@@ -252,6 +237,20 @@ const CompModalCreateUpdate = ({ StatusModal, CloseModal, title, dataCurrentRow,
     useEffect(() => {
         const fetchPeticion = async () => {
             if (StatusModal) {
+                 /** when data update */
+                if (dataCurrentRow.id !== 0 && idRef.current != dataCurrentRow.id) {
+                    idRef.current = dataCurrentRow.id;
+                    setValue('id', dataCurrentRow.id);
+                    setValue('first_name', dataCurrentRow.first_name);
+                    setValue('last_name', dataCurrentRow.last_name);
+                    setValue('phone_number', dataCurrentRow.phone_number);
+                    setValue('email', dataCurrentRow.email);
+                    const ci = separarValorCiComplemento(dataCurrentRow.identity_card);
+                    setValue('identity_card', ci.numCi);
+                    setValue('complement', ci.ciComplemento);
+                    setValue('issued_by', (dataCurrentRow.issued_by == "") ? "S/E" : dataCurrentRow.issued_by);
+                }
+
                 const response = await peticionOficce("", 1);
                 setDefaultOptionsOffice(response);
 

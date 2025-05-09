@@ -1,4 +1,4 @@
-import React, { useState , useRef } from 'react';
+import React, { useState , useRef, useEffect } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import { useForm } from 'react-hook-form';
@@ -81,12 +81,18 @@ const CompModalCreateUpdate = ({ StatusModal, CloseModal, title, dataCurrentRow,
         CloseModal();
     };
 
-    if (dataCurrentRow.id !== 0 && idRef.current != dataCurrentRow.id) {
-        console.log("data update");
-        idRef.current = dataCurrentRow.id;
-        setValue('id', dataCurrentRow.id);
-        setValue('name', dataCurrentRow.name);
-    }
+  
+
+    useEffect(()=>{
+        if (StatusModal){
+            if (dataCurrentRow.id !== 0 && idRef.current != dataCurrentRow.id) {
+                console.log("data update");
+                idRef.current = dataCurrentRow.id;
+                setValue('id', dataCurrentRow.id);
+                setValue('name', dataCurrentRow.name);
+            }
+        }
+    },[StatusModal]);
 
     return (<>
         <ReactNotifications />

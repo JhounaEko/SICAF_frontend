@@ -2,7 +2,6 @@ import React from 'react';
 import CryptoJS from 'crypto-js';
 import axios from 'axios';
 import Cookies from 'js-cookie';
-import { addNotification } from './../alert/alert.jsx';
 
 const modelUseNotificaciones = () => {
     const sessionTokenSicaf = Cookies.get(process.env.REACT_APP_COOKIES_NAME_TOKEN);

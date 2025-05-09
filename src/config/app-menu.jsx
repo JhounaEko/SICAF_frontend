@@ -48,18 +48,11 @@ const Menu = [
   },
   { path: '/table', icon: 'fa fa-table', title: 'Tables',
     children: [
-<<<<<<< HEAD
       { path: '/table/elements',  icon: 'fa fa-table', title: 'Table Elements' },
       { path: '/table/plugins', title: 'Table Plugins' }
     ]
   }, 
   { path: '/table', icon: 'fa fa-table', title: 'Tablessss'}
-=======
-      { path: '/table/elements', title: 'Table Elements' },
-      { path: '/table/plugins', title: 'Table Plugins' }
-    ]
-  }, 
->>>>>>> 6db992017ba0a6f7330d960638668cd8a498ba8d
 ]
 
 export default Menu;

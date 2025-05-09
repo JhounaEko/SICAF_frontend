@@ -1,14 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import DataTable from 'react-data-table-component';
 import Swal from 'sweetalert2';
-import { modelUseListTable, modelChangeStatus } from './../modelCargo.jsx';
+import { modelUseListTable, modelChangeStatus } from './../modelLugares.jsx';
 import { ReactNotifications } from 'react-notifications-component';
 import CompModalCreateUpdate from './ModalCreateUpdate.jsx';
 import { useNavigate } from 'react-router-dom';
 
 const TableList = (getDataRefresch) => {
 
+    /** Method globales */
     const navigation = useNavigate();
+    const useListTable = modelUseListTable();
+    const useChangeStatus = modelChangeStatus();
 
     /** begin modal update */
     const [modal, setModal] = useState(false);
@@ -18,8 +21,7 @@ const TableList = (getDataRefresch) => {
     const [getDataModalUpdate, setDataModalUpdate] = useState({ id: 0, });
     /** end modal update */
 
-    const useListTable = modelUseListTable();
-    const useChangeStatus = modelChangeStatus();
+
     const [getDataTables, setDataTables] = useState([]);
     const [getPag, setPag] = useState(1);
     const [getNumRow, setNumRow] = useState(1);
@@ -84,42 +86,62 @@ const TableList = (getDataRefresch) => {
     }
     const columns = [
         {
-            name: "#",
+            name: '#',
             selector: (row, index) => getNumRow + index,
             selectorKey: 'id',
             sortable: true,
             width: '40px',
         },
         {
-            name: (<p className="m-0" style={{ fontWeight: 'bold', fontSize: '15px', textDecoration: 'underline' }}>Nombre permiso</p>),
+            name: (<p className="m-0" style={{ fontWeight: 'bold', fontSize: '15px', textDecoration: 'underline' }}>Codigo</p>),
             sortable: true,
-            width: '170px',
-            selectorKey: 'name',
-            cell: (row) => <p>{row.name}</p>,
+            width: '90px',
+            selectorKey: 'code',
+            cell: (row) => <div className="m-0 p-0"><b>{row.code}</b> </div>,
         },
         {
-            name: (<p className="m-0" style={{ fontWeight: 'bold', fontSize: '15px', textDecoration: 'underline' }}>Descripcion</p>),
+            name: (<p className="m-0" style={{ fontWeight: 'bold', fontSize: '15px', textDecoration: 'underline' }}>Descripción</p>),
             sortable: true,
-            width: '300px',
+            omit: false,
             selectorKey: 'description',
-            cell: (row) => <p>{row.description}</p>,
+            cell: (row) => <div className="m-0 p-0">
+                <p className="m-0 p-0" style={{ fontSize: '12px' }}> {row.description}</p>
+            </div>,
+            width: '150px'
         },
         {
-            name: (<p className="m-0" style={{ fontWeight: 'bold', fontSize: '15px', textDecoration: 'underline' }}>Fecha de registro</p>),
+            name: (<p className="m-0" style={{ fontWeight: 'bold', fontSize: '13px', textDecoration: 'underline' }}>Abreviación</p>),
+            cell: (row) => (<p className="m-0 p-0" style={{ fontSize: '12px' }}>{row.abbreviation}</p>),
+            selectorKey: 'abbreviation',
+            omit: false,
             sortable: true,
-            selectorKey: 'created_at',
-            cell: (row) => <p style={{ fontSize: '14px' }}> {row.created_at}</p>,
-            width: '180px',
+            width: '140px',
         },
+        {
+            name: (<p className="m-0" style={{ fontWeight: 'bold', fontSize: '13px', textDecoration: 'underline' }}>Fecha de registro</p>),
+            cell: (row) => (<p className="m-0 p-0" style={{ fontSize: '12px' }}>{row.created_at}</p>),
+            selectorKey: 'created_at',
+            omit: false,
+            sortable: true,
+            width: '140px',
+        },
+        {
+            name: (<p className="m-0" style={{ fontWeight: 'bold', fontSize: '15px', textDecoration: 'underline' }}>Detalles</p>),
+            sortable: true,
+            selectorKey: 'details',
+            omit: false,
+            cell: (row) => <p style={{ fontSize: '14px' }}> {row.details}</p>,
+            width: '140px',
+        },         
         {
             name: (<p className="m-0" style={{ fontWeight: 'bold', fontSize: '15px', textDecoration: 'underline' }}>Ultima actualización</p>),
             sortable: true,
-            selectorKey: 'created_at',
+            selectorKey: 'updated_at',
             cell: (row) => <p style={{ fontSize: '14px' }}> {row.updated_at}</p>,
-            width: '180px',
+            width: '140px',
         },
         {
-            name: (<p className="m-0" style={{ fontWeight: 'bold', fontSize: '15px' }}>Estado</p>),
+            name: (<p className="m-0" style={{ fontWeight: 'bold', fontSize: '15px' }}>Estado</p >),
             sortable: true,
             selectorKey: 'state_id',
             cell: (row) => (
@@ -132,11 +154,10 @@ const TableList = (getDataRefresch) => {
                         <span className="badge bg-danger rounded-pill" >INACTIVO <i className="fas fa-ban"></i></span>
                     </div>)
             ),
-            width: '120px',
+            width: '110px',
         },
         {
             name: (<p className="m-0" style={{ fontWeight: 'bold', fontSize: '15px' }}>Acciones</p>),
-            sortable: false,
             cell: (row) => (
                 <>
                     <button
@@ -144,16 +165,17 @@ const TableList = (getDataRefresch) => {
                         onClick={() => {
                             onChangeRow({
                                 id: row.id,
-                                name: row.name,
+                                code: row.code,
                                 description: row.description,
-                            })
+                                abbreviation: row.abbreviation,
+                                details: row.details,                               
+                            });
                         }}>
                         <i className="fas fa-wrench"></i> Editar
                     </button>
                 </>
-            )
-        }
-
+            ),
+        },
     ]
 
     useEffect(() => {
@@ -184,6 +206,7 @@ const TableList = (getDataRefresch) => {
                     });
                     navigation('/');
                 }
+
             }
             setProgressData(false);
         }
@@ -200,14 +223,15 @@ const TableList = (getDataRefresch) => {
 
         <CompModalCreateUpdate
             StatusModal={modal}
-            title="Editar Cargo"
+            title="Editar Registro"
             CloseModal={closeModal}
             dataCurrentRow={getDataModalUpdate}
             functionRefreschDataTable={functionRefreschDataTable}
         />
 
-        <DataTable title={<span></span>}      
+        <DataTable title={<span></span>}
             columns={columns}
+            headRowClassName="rdt_TableHead rdt_TableRow"
             data={getDataTables}
             selectableRows={false}
             pagination

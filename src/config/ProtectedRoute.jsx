@@ -12,10 +12,10 @@ const ProtectedRoute = ({ children }) => {
             Cookies.remove(process.env.REACT_APP_COOKIES_NAME_DATA); 
         }
         return children; 
-    } catch (error) {
-        return <Navigate to="/" replace />; 
+    } catch (error) {      
         Cookies.remove(process.env.REACT_APP_COOKIES_NAME_TOKEN); 
         Cookies.remove(process.env.REACT_APP_COOKIES_NAME_DATA); 
+        return <Navigate to="/" replace />; 
     }
 };
 

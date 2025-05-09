@@ -3,7 +3,7 @@ export const validacionesFirstName = {
     required: "El campo es obligatorio",
     pattern: {
         value: /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s'-]+$/u,
-        message: "El nombre solo puede contener letras, tildes, espacios, y los caracteres ' y -",
+        message: "El nombre solo puede contener letras",
     },
     maxLength: {
         value: 30,
@@ -78,5 +78,41 @@ export const validacionesEmail = {
     pattern: {
         value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
         message: "El correo electrónico no tiene un formato válido",
+    },
+}
+
+export const validacionesDescripcion = {
+    required: "El campo es obligatorio",
+    pattern: {
+        value: /^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ\s'’°#.-]+$/u,
+        message: "Solo se permiten letras, números y algunos símbolos como -, ', °, # y puntos.",
+    },
+    maxLength: {
+        value: 100,
+        message: "El campo no puede tener más de 100 caracteres",
+    },
+}
+
+export const validacionesCodigo = {
+    required: "El campo es obligatorio",
+    pattern: {
+        value: /^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ\s'’°#.-]+$/u,
+        message: "Solo se permiten letras, números y algunos símbolos como -, ', °, # y puntos.",
+    },
+    maxLength: {
+        value: 12,
+        message: "El campo no puede tener más de 12 caracteres",
+    },
+}
+
+export const validacionesAbreviacion = {
+    required: "El campo es obligatorio",
+    pattern: {
+        value: /^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ\s'’°#.-]+$/u,
+        message: "Solo se permiten letras, números y algunos símbolos como -, ', °, # y puntos.",
+    },
+    maxLength: {
+        value: 12,
+        message: "El campo no puede tener más de 12 caracteres",
     },
 }

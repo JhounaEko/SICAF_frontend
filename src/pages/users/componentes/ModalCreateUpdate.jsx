@@ -10,7 +10,7 @@ import { addNotification } from './../../../components/alert/alert.jsx';
 import { modelUseCreate, modelChageDataRow } from './../modelUsuarios.jsx';
 import { useNavigate } from 'react-router-dom';
 import { modelUseListRol } from './../../roles/modelRoles.jsx';
-import { modelUseListSelect } from './../../oficinas/modelOficina.jsx';
+import { modelUseListSelectOfficeLocation } from './../../oficinas/modelOficina.jsx';
 
 const CompModalCreateUpdate = ({ StatusModal, title, CloseModal, updateTableData, data, statusUpdate = false }) => {
 
@@ -19,7 +19,7 @@ const CompModalCreateUpdate = ({ StatusModal, title, CloseModal, updateTableData
 	const useCreate = modelUseCreate();
 	const navigation = useNavigate();
 	const useListRol = modelUseListRol();
-	const useListSelect = modelUseListSelect();
+	const useListSelectOfficeLocation = modelUseListSelectOfficeLocation();
 	/** Complementos modal */
 	const [stateButton, setStateButton] = useState(false);
 	const idRef = useRef(data.id);
@@ -131,7 +131,7 @@ const CompModalCreateUpdate = ({ StatusModal, title, CloseModal, updateTableData
 	const peticionOficce = async (search, pageNumber) => {
 		try {
 			setIsLoadingOffice(true);
-			const returnData = await useListSelect(search, pageNumber);
+			const returnData = await useListSelectOfficeLocation(search, pageNumber);
 			/** Se verifica que la pagina actual sea menor a la ultima pagina */
 			if (returnData.status) {
 				if (returnData.response.data.results.meta.current_page < returnData.response.data.results.meta.last_page) {
@@ -276,38 +276,38 @@ const CompModalCreateUpdate = ({ StatusModal, title, CloseModal, updateTableData
 	useEffect(() => {
 
 		const fetchPeticion = async () => {
-			if (StatusModal) {
+			if (StatusModal) {	
+				/** when updata data in component modal */		
+				if (data.id !== 0 && statusUpdate && idRef.current != data.id) {
+					idRef.current = data.id
+					setValue('id', data.id);
+					setValue('first_name', data.first_name);
+					setValue('last_name', data.last_name);
+					setValue('phone_number', data.phone_number);
+					setValue('username', data.username);
+					setValue('email', data.email);
+					const ci = separarValorCiComplemento(data.identity_card);
+					setValue('identity_card', ci.numCi);
+					setValue('complement', ci.ciComplemento);
+					setValue('issued_by', (data.issued_by == "") ? "S/E" : data.issued_by);
+					unregister("password");
+					unregister("password_confirmation");
+				}
+
+				/** when load data rol in component select */
 				const response = await peticionRoles("", 1);
 				setDefaultOptionsRoles(response);
 			}
 		}
 		fetchPeticion();
 	}, [StatusModal]);
-
-
-	
-
-	if (data.id !== 0 && statusUpdate && idRef.current != data.id) {
-		idRef.current = data.id
-		setValue('id', data.id);
-		setValue('first_name', data.first_name);
-		setValue('last_name', data.last_name);
-		setValue('phone_number', data.phone_number);
-		setValue('username', data.username);
-		setValue('email', data.email);
-		const ci = separarValorCiComplemento(data.identity_card);
-		setValue('identity_card', ci.numCi);
-		setValue('complement', ci.ciComplemento);
-		setValue('issued_by', (data.issued_by == "") ? "S/E" : data.issued_by);
-		unregister("password");
-		unregister("password_confirmation");
-	}
-
+		
 	useEffect(() => {
 		if (data.office) {
 			setSelectOficce(data.office);
 		}
 	}, [data.office]);
+
 
 	useEffect(() => {
 		if (Array.isArray(data.roles) && data.roles.length > 0) {

@@ -6,11 +6,11 @@ import AsyncSelect from 'react-select/async';
 import { validacionesFirstName, validacionesLastName, validacionesCI } from './../../components/validaciones/validaciones.jsx';
 import axios from 'axios';
 import Swal from 'sweetalert2';
-import {modelUseListSelect} from './../oficinas/modelOficina.jsx';
+import {modelUseListSelectOfficeLocation} from './../oficinas/modelOficina.jsx';
 import {modelUseListRol} from './../roles/modelRoles.jsx';
 
 function RegisterPublicUser() {
-  const useListSelect = modelUseListSelect();
+  const useListSelectOfficeLocation = modelUseListSelectOfficeLocation();
   const useListRol = modelUseListRol();
   const { register, handleSubmit, reset, setValue, formState: { errors }, getValues } = useForm(
     {
@@ -145,7 +145,7 @@ function RegisterPublicUser() {
     const peticionOficce = async (search, pageNumber) =>{
         try{
           setIsLoadingOffice(true);
-          const returnData = await useListSelect(search,pageNumber);	
+          const returnData = await useListSelectOfficeLocation(search,pageNumber);	
           /** Se verifica que la pagina actual sea menor a la ultima pagina */				
           if (returnData.status){
             if ( returnData.response.data.results.meta.current_page < returnData.response.data.results.meta.last_page ) {

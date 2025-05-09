@@ -1,8 +1,14 @@
 import React, {useState} from 'react';
 import HeaderNavbar from './componentes/HeaderNavbar.jsx'
 import TableList from './componentes/TableList.jsx'
+import useRouteAccess from './../../components/pRoutasCookies.jsx'
 
 const OfficeManager = () => {
+
+    const hasAccess = useRouteAccess();       
+    if (!hasAccess) {       
+        return <div>No tienes acceso a esta página</div>;
+    }
 
     /** Se utiliza para incorporar los datos de busqueda, cuando se tiene datos en el input  */
     const [getDataSearh,setDataSearh] = useState("");

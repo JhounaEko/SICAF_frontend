@@ -146,25 +146,23 @@ function SidebarNav() {
 		}
 	}
   
-<<<<<<< HEAD
 	const userProps = JSON.parse(Cookies.get(process.env.REACT_APP_COOKIES_NAME_DATA))
-	console.log (userProps.roles[0].menus)	
 
 	function buildNestedMenu(items) {
 		const menuMap = new Map();
 		const tree = [];
 	  
-		// Paso 1: Indexar todos los elementos por su ID
+		/** Permite indexar los item por medio de su ID */
 		items.forEach(item => {
 		  menuMap.set(item.id, {
 			path: item.route,
-			icon: item.icon,
+			icon: item?.icon ?? "",
 			title: item.label,
 			children: [],
 		  });
 		});
-	  
-		// Paso 2: Construir el árbol usando `parent`
+	 
+		/** Permite construir los menus principales de las ramas */
 		items.forEach(item => {
 		  const current = menuMap.get(item.id);
 		  if (item.parent === null) {
@@ -176,8 +174,8 @@ function SidebarNav() {
 			}
 		  }
 		});
-	  
-		// Paso 3: Limpiar nodos sin hijos (opcional)
+		
+ 		/** Permite quitar la clave children a las ramas, para tamaños igual a cero */
 		const clean = nodes => {
 		  for (let node of nodes) {
 			if (node.children.length === 0) {
@@ -189,14 +187,12 @@ function SidebarNav() {
 		};
 	  
 		clean(tree);
+
 		return tree;
 	  }
 
 	let controlMenu = buildNestedMenu(userProps.roles[0].menus);
 	
-
-=======
->>>>>>> 6db992017ba0a6f7330d960638668cd8a498ba8d
 	return (
 		<div className="menu">
 			{context.appSidebarSearch && (
@@ -204,13 +200,8 @@ function SidebarNav() {
 					<input type="text" className="form-control" placeholder="Sidebar menu filter..." onKeyUp={handleSidebarSearch} />
 				</div>
 			)}
-<<<<<<< HEAD
 		
 			{controlMenu.map((menu, i) => (
-=======
-			<div className="menu-header">Navigation</div>
-			{menus.map((menu, i) => (
->>>>>>> 6db992017ba0a6f7330d960638668cd8a498ba8d
 				<NavItem key={i} menu={menu} />
 			))}
 		</div>

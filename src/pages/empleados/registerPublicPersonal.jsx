@@ -4,7 +4,7 @@ import { ReactNotifications, Store } from 'react-notifications-component';
 import { validacionesFirstName, validacionesLastName, validacionesCI, validacionesComplementoCi, validacionesCelular, validacionesEmail } from './../../components/validaciones/validaciones.jsx';
 import { get, useForm, } from 'react-hook-form';
 import { modelCreatePersonalPublic } from './modelEmpleados.jsx';
-import { modelUseListSelect } from '../oficinas/modelOficina.jsx';
+import { modelUseListSelectOfficeLocation } from '../oficinas/modelOficina.jsx';
 import { modelUseListCargoSelect } from '../cargo/modelCargo.jsx';
 import axios from 'axios';
 import Swal from 'sweetalert2';
@@ -14,7 +14,7 @@ function RegisterPublicPersonal() {
 
   const navigate = useNavigate();
   const useCreatePersonalPublic = modelCreatePersonalPublic();
-  const useListSelect = modelUseListSelect();  //oficce location
+  const useListSelectOfficeLocation = modelUseListSelectOfficeLocation();  //oficce location
   const useListCargoSelect = modelUseListCargoSelect();
 
   const { register, handleSubmit, reset, setValue, formState: { errors }, getValues } = useForm(
@@ -188,7 +188,7 @@ function RegisterPublicPersonal() {
     try {
       setIsLoadingOffice(true);
 
-      const returnData = await useListSelect(search, pageNumber);
+      const returnData = await useListSelectOfficeLocation(search, pageNumber);
 
       if (returnData.status) {
         if (returnData.response.data.results.meta.current_page < returnData.response.data.results.meta.last_page) {

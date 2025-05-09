@@ -89,7 +89,7 @@ const Login = () => {
 						Cerrar
 					</Button>
 				</Modal.Footer>
-			</Modal>
+			</Modal>		
 			<div className="login login-v2 fw-bold">
 				<div className="login-cover">
 					<div className="login-cover-img" style={{ backgroundImage: `url(/assets/img/img-03.jpeg` }}></div>

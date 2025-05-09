@@ -146,8 +146,7 @@ export const modelUseListRol = () => {
             const response = await axios.get(
                 process.env.REACT_APP_API_URL + '/api/v1/roles',
                 {
-                    params: {
-                        state_id: 1,
+                    params: {                      
                         search: getSearh,
                         page: getPag,
                         sort_by: getSortColumn,
