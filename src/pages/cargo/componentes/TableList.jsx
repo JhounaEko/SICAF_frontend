@@ -5,6 +5,10 @@ import { modelUseListTable, modelChangeStatus } from './../modelCargo.jsx';
 import { ReactNotifications } from 'react-notifications-component';
 import CompModalCreateUpdate from './ModalCreateUpdate.jsx';
 import { useNavigate } from 'react-router-dom';
+//// mod para inicio de reporte PDF
+import { pdf } from "@react-pdf/renderer";
+import PDFformato from "../../../../src/assets/components/PDF_tablas.jsx";
+////
 
 const TableList = (getDataRefresch) => {
 
@@ -84,7 +88,8 @@ const TableList = (getDataRefresch) => {
     }
     const columns = [
         {
-            name: "#",
+            // name: "#",
+            name: (<p className="m-0" style={{ fontWeight: 'bold', fontSize: '15px', textDecoration: 'underline' }}>Nro.</p>),
             selector: (row, index) => getNumRow + index,
             selectorKey: 'id',
             sortable: true,
@@ -123,11 +128,11 @@ const TableList = (getDataRefresch) => {
             sortable: true,
             selectorKey: 'state_id',
             cell: (row) => (
-                (row.state.name === "ACTIVO") ? (<div className="btn-flex-my">
+                (row.state.name === "ACTIVO") ? (<div className="btn-flex-my" title = "Estado actual del registro activo">
                     <i className="fas fa-toggle-on fa-2x" style={{ color: "#276BAA" }} onClick={() => changeStatus(row.state.name, row.id)} ></i>
                     <span className="badge badge rounded-pill badge-subtle-success">ACTIVO <i className="fas fa-check"></i></span>
                 </div>) :
-                    (<div className="btn-flex-my">
+                    (<div className="btn-flex-my" title = "Estado actual del registro inactivo">
                         <i className="fas fa-toggle-off fa-2x" onClick={() => changeStatus(row.state.name, row.id)} ></i>
                         <span className="badge bg-danger rounded-pill" >INACTIVO <i className="fas fa-ban"></i></span>
                     </div>)
@@ -195,6 +200,17 @@ const TableList = (getDataRefresch) => {
         setSort({ column: columnTable.selectorKey, order: direction });
     };
 
+    // TITULO DE TABLA
+    const titulo = 'CARGOS';
+    const childrenTexts = columns.map(col => {
+//   return col.name?.props?.children || '';
+  return col.name?.props || '';
+});
+// console.log("Children:", childrenTexts);
+
+    // console.log("COLUMS:",columns);
+    console.log("Datos que se están enviando al PDF:",titulo, getDataTables, childrenTexts);
+
     return (<>
         <ReactNotifications />
 
@@ -205,6 +221,22 @@ const TableList = (getDataRefresch) => {
             dataCurrentRow={getDataModalUpdate}
             functionRefreschDataTable={functionRefreschDataTable}
         />
+
+{/* //// MOD REPORTE PDF //// */}
+<div className="mb-3 text-end">
+<button
+    className="btn btn-sm btn-success"
+    onClick={async () => {
+    // console.log("Datos que se están enviando al PDF:", getDataTables);
+    const blob = await pdf(<PDFformato data={getDataTables} titulo={titulo} columnas={childrenTexts} />).toBlob(); //  `data` así se espera en el componente
+    const url = URL.createObjectURL(blob);
+    window.open(url, "_blank");
+    }}
+>
+    <i className="fas fa-file-pdf me-1"></i> Ver PDF
+</button>
+</div>
+{/* //// FIN MOD PDF //// */}
 
         <DataTable title={<span></span>}      
             columns={columns}

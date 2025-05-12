@@ -4,7 +4,12 @@ import Swal from 'sweetalert2';
 import { modelUseListTable, modelChangeStatus } from './../modelOficina.jsx';
 import { ReactNotifications } from 'react-notifications-component';
 import CompModalCreateUpdate from './ModalCreateUpdate.jsx';
+import ModalLocalizacion from './ModalLocalizacion.jsx';
 import { useNavigate } from 'react-router-dom';
+//// mod para inicio de reporte PDF
+import { pdf } from "@react-pdf/renderer";
+import PDFformato from "../../../../src/assets/components/PDF_tablas.jsx";
+////
 
 const TableList = (getDataRefresch) => {
 
@@ -17,6 +22,14 @@ const TableList = (getDataRefresch) => {
     }
     const [getDataModalUpdate, setDataModalUpdate] = useState({ id: 0, });
     /** end modal update */
+
+    /** begin modal localitation */
+    const [modalLocation, setModalLocation] = useState(false);
+    const closeModalLocation = () => {
+        setModalLocation(false);
+    }
+    const [getDataModalLocationUpdate, setDataModalLocationUpdate] = useState({ id: 0, });
+    /** end modal localitation */
 
     const useListTable = modelUseListTable();
     const useChangeStatus = modelChangeStatus();
@@ -31,7 +44,7 @@ const TableList = (getDataRefresch) => {
     /** Se utiliza actualizar la tabla, cuando  */
     const [getRefreschDataTable, setRefreschDataTable] = useState(false);
     const functionRefreschDataTable = (ref) => {
-        setRefreschDataTable(!getRefreschDataTable);  
+        setRefreschDataTable(!getRefreschDataTable);
     };
 
 
@@ -48,22 +61,28 @@ const TableList = (getDataRefresch) => {
                 confirmButtonColor: "#3085d6",
             });
         } else {
-           if (dataReturn.message =="Unauthenticated." ) {
-            Swal.fire({
-                title: "Sesion finalizada",
-                icon: "success",
-                draggable: true,
-                timer: 3000,
-                confirmButtonColor: "#3085d6",
-            });
-            navigation('/');
-           }
+            if (dataReturn.message == "Unauthenticated.") {
+                Swal.fire({
+                    title: "Sesion finalizada",
+                    icon: "success",
+                    draggable: true,
+                    timer: 3000,
+                    confirmButtonColor: "#3085d6",
+                });
+                navigation('/');
+            }
         }
     }
 
     const onChangeRow = (data) => {
         setModal(true);
         setDataModalUpdate(data);
+    }
+
+    const onChangeLocation = (idRow, nameRow) => {
+        setModalLocation(true);
+        console.log(idRow);
+        setDataModalLocationUpdate({ id: idRow, name: nameRow });
     }
 
     const changeStatus = (statusRow, idRow) => {
@@ -104,7 +123,6 @@ const TableList = (getDataRefresch) => {
             selectorKey: 'initials',
             cell: (row) => <p style={{ fontSize: '14px' }}> {row.initials}</p>
         },
-       
         {
             name: (<p className="m-0" style={{ fontWeight: 'bold', fontSize: '15px', textDecoration: 'underline' }}>Nivel jerárquico</p>),
             sortable: true,
@@ -124,13 +142,13 @@ const TableList = (getDataRefresch) => {
             sortable: true,
             selectorKey: 'state_id',
             cell: (row) => (
-                (row.state.name === "ACTIVO") ? (<div className="btn-flex">
+                (row.state.name === "ACTIVO") ? (<div className="btn-flex-my" title="Estado actual del registro activo">
                     <i className="fas fa-toggle-on fa-2x" style={{ color: "#276BAA" }} onClick={() => changeStatus(row.state.name, row.id)} ></i>
-                    <p className="form-check-label mb-2 ms-1" style={{ color: 'green', fontSize: '13px' }}>ACTIVO</p>
+                    <span className="badge badge rounded-pill badge-subtle-success">ACTIVO <i className="fas fa-check"></i></span>
                 </div>) :
-                    (<div className="btn-flex">
+                    (<div className="btn-flex-my" title="Estado actual del registro inactivo">
                         <i className="fas fa-toggle-off fa-2x" onClick={() => changeStatus(row.state.name, row.id)} ></i>
-                        <p className="form-check-label mb-2 ms-1" style={{ color: 'red', fontSize: '13px' }}>INACTIVO</p>
+                        <span className="badge bg-danger rounded-pill" >INACTIVO <i className="fas fa-ban"></i></span>
                     </div>)
             ),
             width: '120px',
@@ -153,8 +171,11 @@ const TableList = (getDataRefresch) => {
                                     name: row.parent.name ? row.parent.name : ""
                                 }
                             })
-                        }}>
+                        }} title="Permite editar los datos especificos de la oficina">
                         <i className="fas fa-wrench"></i> Editar
+                    </button>
+                    <button className='btn btn-sm btn-info mx-1' title="Se muestran las ubicaciones de la oficina" onClick={() => onChangeLocation(row.id, row.name)}>
+                        <i className="fas fa-map-marker-alt"></i> Ubicación
                     </button>
                 </>
             )
@@ -201,6 +222,10 @@ const TableList = (getDataRefresch) => {
         setSort({ column: columnTable.selectorKey, order: direction });
     };
 
+    // TITULO DE TABLA
+    const titulo = 'OFICINAS';
+    console.log("Datos que se están enviando al PDF:",titulo, getDataTables);
+
     return (<>
         <ReactNotifications />
 
@@ -211,6 +236,30 @@ const TableList = (getDataRefresch) => {
             dataCurrentRow={getDataModalUpdate}
             functionRefreschDataTable={functionRefreschDataTable}
         />
+
+        <ModalLocalizacion
+            StatusModal={modalLocation}
+            title="LOCALIZACIÓN DE "
+            CloseModal={closeModalLocation}
+            dataCurrentRow={getDataModalLocationUpdate}
+            //functionRefreschDataTable={functionRefreschDataTable}
+        />
+
+{/* //// MOD REPORTE PDF //// */}
+<div className="mb-3 text-end">
+<button
+    className="btn btn-sm btn-success"
+    onClick={async () => {
+    console.log("Datos que se están enviando al PDF:", getDataTables);
+    const blob = await pdf(<PDFformato data={getDataTables} titulo={titulo} />).toBlob(); //  `data` así se espera en el componente
+    const url = URL.createObjectURL(blob);
+    window.open(url, "_blank");
+    }}
+>
+    <i className="fas fa-file-pdf me-1"></i> Ver PDF
+</button>
+</div>
+{/* //// FIN MOD PDF //// */}
 
         <DataTable title={<span></span>}
             columns={columns}

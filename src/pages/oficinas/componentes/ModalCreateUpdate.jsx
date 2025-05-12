@@ -19,8 +19,6 @@ const CompModalCreateUpdate = ({ StatusModal, CloseModal, title, dataCurrentRow,
     const idRef = useRef(dataCurrentRow.id);
     const { register, handleSubmit, reset, setValue, formState: { errors } } = useForm();
 
-
-
     const onSubmit = async (dataForm) => {
         let refPeticion = false;
         if (dataForm.level != 1) {
@@ -93,7 +91,6 @@ const CompModalCreateUpdate = ({ StatusModal, CloseModal, title, dataCurrentRow,
             setStateButton(false);
         }
     }
-
 
     const [stateButton, setStateButton] = useState(false);
     const reserForm = () => {

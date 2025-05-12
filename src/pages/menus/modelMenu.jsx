@@ -37,7 +37,7 @@ export const modelUseListTable = () => {
                     },
                 }
             );
-           
+           console.log(respose);
             returnResponse.status = true;
             returnResponse.response = respose;
             return returnResponse;

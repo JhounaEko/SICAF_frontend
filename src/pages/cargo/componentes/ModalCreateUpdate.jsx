@@ -103,7 +103,7 @@ const CompModalCreateUpdate = ({ StatusModal, CloseModal, title, dataCurrentRow,
 
     return (<>
         <ReactNotifications />
-        <Modal show={StatusModal} onHide={reserForm} scrollable={true} backdrop="static" keyboard={false}>
+        <Modal show={StatusModal} size="lg" onHide={reserForm} scrollable={true} backdrop="static" keyboard={false}>
             <Modal.Header closeButton>
                 <Modal.Title><h4 className="modal-title"><i className="fas fa-briefcase fa-1_5x"></i> {title}</h4></Modal.Title>
             </Modal.Header>

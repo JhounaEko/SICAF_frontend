@@ -5,6 +5,10 @@ import { modelUseListTable, modelChangeStatus } from './../modelPermisos.jsx';
 import { ReactNotifications } from 'react-notifications-component';
 import CompModalCreateUpdate from './ModalCreateUpdate.jsx';
 import { useNavigate } from 'react-router-dom';
+//// mod para inicio de reporte PDF
+import { pdf } from "@react-pdf/renderer";
+import PDFformato from "../../../../src/assets/components/PDF_tablas.jsx";
+////
 
 const TableList = (getDataRefresch) => {
 
@@ -187,6 +191,10 @@ const TableList = (getDataRefresch) => {
         setSort({ column: columnTable.selectorKey, order: direction });
     };
 
+    // TITULO DE TABLA
+    const titulo = 'PERMISOS';
+    console.log("Datos que se están enviando al PDF:",titulo, getDataTables);
+
     return (<>
         <ReactNotifications />
 
@@ -197,6 +205,22 @@ const TableList = (getDataRefresch) => {
             dataCurrentRow={getDataModalUpdate}
             functionRefreschDataTable={functionRefreschDataTable}
         />
+
+{/* //// MOD REPORTE PDF //// */}
+<div className="mb-3 text-end">
+<button
+    className="btn btn-sm btn-success"
+    onClick={async () => {
+    console.log("Datos que se están enviando al PDF:", getDataTables);
+    const blob = await pdf(<PDFformato data={getDataTables} titulo={titulo} />).toBlob(); //  `data` así se espera en el componente
+    const url = URL.createObjectURL(blob);
+    window.open(url, "_blank");
+    }}
+>
+    <i className="fas fa-file-pdf me-1"></i> Ver PDF
+</button>
+</div>
+{/* //// FIN MOD PDF //// */}
 
         <DataTable title={<span></span>}
             columns={columns}

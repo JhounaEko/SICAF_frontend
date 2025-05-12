@@ -10,6 +10,13 @@ import {
 import headerLogo from "../../assets/img/header.png";
 import footerLogo from "../../assets/img/footer.png";
 
+// MOD GET datos de secion
+import Cookies from "js-cookie"; // datos de secion
+const dataUser = Cookies.get(process.env.REACT_APP_COOKIES_NAME_DATA);
+let parsedUser = JSON.parse(dataUser);
+// console.log("Datos SECION",parsedUser.first_name, parsedUser.last_name);
+// FIN MOD GET datos secion
+
 const styles = StyleSheet.create({
   page: {
     fontFamily: "Helvetica",
@@ -21,7 +28,7 @@ const styles = StyleSheet.create({
     paddingRight: 28.3465, // 1 cm derecha
   },
   title: {
-    fontSize: 16,
+    fontSize: 13,
     marginBottom: 20,
     textAlign: "center",
     fontWeight: "bold",
@@ -48,7 +55,7 @@ const styles = StyleSheet.create({
   },
 
   col: {
-    width: "30%",
+    width: "30%",// Ajusta esto según tus necesidades
     borderRightWidth: 1,
     borderBottomWidth: 1,
     borderColor: "#000",
@@ -110,15 +117,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
   },
-  signature: {
-    marginTop: 30,
-    flexDirection: "row", // ← alinear horizontalmente
-    justifyContent: "space-around", // ← distribuir el espacio equitativamente
-  },
-  signatureBox: {
-    width: "45%", // ← ocupar casi la mitad de la página
-    textAlign: "center",
-  },
 });
 
 const Header = () => (
@@ -129,7 +127,7 @@ const Header = () => (
 
 const PageNumber = () => (
   <Text style={styles.pageNumberBox} fixed>
-    1/1
+    {/* 1/1 */}
   </Text>
 );
 const Footer = () => (
@@ -137,19 +135,35 @@ const Footer = () => (
     <Image style={styles.image} src={footerLogo} />
     <PageNumber />
   </View>
-);
+);        
+const pruuu = (columnas) => {
+  console.log('Tipo:', typeof columnas);
+  console.log('¿Es array?:', Array.isArray(columnas));
+  console.log('Contenido:', columnas);
+};    
 
-const PDF = ({ estados }) => (
-  <Document>
-    <Page size="A4" style={styles.page}>
+const PDF = ({ data, titulo, columnas }) => (
+  
+  <Document title={"REPORTE DE "+titulo}>
+    <Page size="A4" orientation="landscape" style={styles.page}>
+        {/* <Page
+          size="A4"
+          // orientation={titulo === '' ? undefined : 'landscape'}
+          style={styles.page}
+        > */}
+
       <Header />
-      <Text style={styles.header}>
-              {"\n"}SISTEMA DE INFORMACION 
-            </Text>
+      <Text style={styles.header}>{"\n"}SISTEMA DE INFORMACION Y CONTROL DE ACTIVOS FIJOS</Text>
 
       <View style={{ flexDirection: "row", position: "relative" }}>
-        <View style={{ width: "70%", justifyContent: "center", alignItems: "center",}}>
-          <Text style={styles.title}>Lista de Roles</Text>
+        <View
+          style={{
+            width: "70%",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <Text style={styles.title}>LISTA DE {titulo}</Text>
         </View>
 
         <View style={{ width: "30%" }}>
@@ -195,7 +209,9 @@ const PDF = ({ estados }) => (
                 </Text>
               </View>
               <View style={{ width: "50%", padding: 4 }}>
-                <Text style={{ fontSize: 9 }}>rider.yanarico</Text>
+                <Text style={{ fontSize: 8 }}>
+                  {parsedUser.first_name} {parsedUser.last_name}
+                </Text>
               </View>
             </View>
 
@@ -219,7 +235,14 @@ const PDF = ({ estados }) => (
                 </Text>
               </View>
               <View style={{ width: "50%", padding: 4 }}>
-                <Text style={{ fontSize: 9 }}>04/may/2025</Text>
+                <Text style={{ fontSize: 9 }}>
+                  <Text>{`${new Date()
+                    .getDate()
+                    .toString()
+                    .padStart(2, "0")}/${new Date()
+                    .toLocaleString("es-ES", { month: "short" })
+                    .toLowerCase()}/${new Date().getFullYear()}`}</Text>
+                </Text>
               </View>
             </View>
           </View>
@@ -228,42 +251,46 @@ const PDF = ({ estados }) => (
       <Text>{"\n"}</Text>
       <View style={styles.table}>
         {/* CONTENIDO */}
-        <View style={styles.tableRow}>
-          <View style={styles.colSmall}>
-            <Text style={styles.header}>Nro.</Text>
-          </View>
-          <View style={styles.col}>
-            <Text style={styles.header}>Nombre</Text>
-          </View>
-          <View style={styles.col}>
-            <Text style={styles.header}>Estado</Text>
-          </View>
-          <View style={styles.col}>
-            <Text style={styles.header}>Creado</Text>
-          </View>
-        </View>
+<View style={styles.tableRow}>
+  {Array.isArray(columnas) &&
+    columnas.slice(0, -1).map((text, index) => (
+      <View style={index === 0 ? styles.colSmall : styles.col} key={index}>
+        <Text style={styles.header}>{text.children}</Text>
+      </View>
+    ))}
+</View>
 
+{/* //////////////////////////////////////////////////////////////////// */}
         {/* Filas de datos */}
-        {Array.isArray(estados) &&
-          estados.map((item, index) => (
+
+        {Array.isArray(data) &&
+          data.map((item, index) => (
             <View style={[styles.tableRow, { fontSize: 7.5 }]} key={index}>
+
               <View style={styles.colSmall}>
                 <Text style={{ textAlign: "center" }}>{index + 1}</Text>
               </View>
               <View style={styles.col}>
-                <Text>{item.name}</Text>
+                <Text>{item.description || item.name || `${item.first_name || ''} ${item.last_name || ''}`.trim()}</Text>
               </View>
               <View style={[styles.col, { textAlign: "center" }]}>
-                <Text>{item.state?.name || "N/A"}</Text>
+                <Text>{item.state.name}</Text>
               </View>
               <View style={[styles.col, { textAlign: "center" }]}>
                 <Text>{item.created_at?.split("T")[0]}</Text>
               </View>
+              <View style={[styles.col, { textAlign: "center" }]}>
+                <Text>{item.updated_at?.split("T")[0]}</Text>
+              </View>
+              <View style={[styles.col, { textAlign: "center" }]}>
+                <Text>{item.updated_at?.split("T")[0]}</Text>
+              </View>
+
             </View>
           ))}
+          
       </View>
-
-      <Footer fixed />
+    <Footer fixed />
     </Page>
   </Document>
 );

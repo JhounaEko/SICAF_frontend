@@ -31,7 +31,7 @@ const HeaderNavbar = ({functionRefreschDataTable, searchData}) => {
         />
      <div className="row">
         <div className="col-sm">
-            <button className="btn btn-info btn-rounded px-4 rounded-pill" onClick={openModal}> <i class="fas fa-plus fa-1_5x"></i> Agregar Lugar</button>
+            <button className="btn btn-info btn-rounded px-4 rounded-pill" onClick={openModal}> <i className="fas fa-plus fa-1_5x"></i> Agregar Lugar</button>
         </div>
         <div className="col-sm">   
             <Form.Group as={Row} className="" controlId="SearchStaff">
