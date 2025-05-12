@@ -90,7 +90,8 @@ const TableList = (getDataRefresch) => {
     }
     const columns = [
         {
-            name: '#',
+            // name: '#',
+            name: (<p className="m-0" style={{ fontWeight: 'bold', fontSize: '15px', textDecoration: 'underline' }}>Nro.</p>),
             selector: (row, index) => getNumRow + index,
             selectorKey: 'id',
             sortable: true,
@@ -224,6 +225,10 @@ const TableList = (getDataRefresch) => {
 
     // TITULO DE TABLA
     const titulo = 'LUGARES';
+    // COLUMNAS
+    const childrenTexts = columns.map(col => {
+        return col.name?.props || '';
+    });
     console.log("Datos que se están enviando al PDF:",titulo, getDataTables);
 
     return (<>
@@ -243,7 +248,7 @@ const TableList = (getDataRefresch) => {
     className="btn btn-sm btn-success"
     onClick={async () => {
     console.log("Datos que se están enviando al PDF:", getDataTables);
-    const blob = await pdf(<PDFformato data={getDataTables} titulo={titulo} />).toBlob(); //  `data` así se espera en el componente
+    const blob = await pdf(<PDFformato data={getDataTables} titulo={titulo} columnas={childrenTexts} />).toBlob(); //  `data` así se espera en el componente
     const url = URL.createObjectURL(blob);
     window.open(url, "_blank");
     }}

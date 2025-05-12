@@ -44,6 +44,9 @@ const styles = StyleSheet.create({
   },
   tableRow: {
     flexDirection: "row",
+    flexWrap: "nowrap",
+    minWidth: 0,
+    alignItems: "stretch",
   },
   colSmall: {
     width: "10%",
@@ -136,11 +139,6 @@ const Footer = () => (
     <PageNumber />
   </View>
 );        
-const pruuu = (columnas) => {
-  console.log('Tipo:', typeof columnas);
-  console.log('¿Es array?:', Array.isArray(columnas));
-  console.log('Contenido:', columnas);
-};    
 
 const PDF = ({ data, titulo, columnas }) => (
   
@@ -251,6 +249,7 @@ const PDF = ({ data, titulo, columnas }) => (
       <Text>{"\n"}</Text>
       <View style={styles.table}>
         {/* CONTENIDO */}
+        {/* CABEZERA */}
 <View style={styles.tableRow}>
   {Array.isArray(columnas) &&
     columnas.slice(0, -1).map((text, index) => (
@@ -265,25 +264,82 @@ const PDF = ({ data, titulo, columnas }) => (
 
         {Array.isArray(data) &&
           data.map((item, index) => (
+
             <View style={[styles.tableRow, { fontSize: 7.5 }]} key={index}>
 
               <View style={styles.colSmall}>
                 <Text style={{ textAlign: "center" }}>{index + 1}</Text>
               </View>
+
+{/* CASO LUGAR */}
+              <View style={styles.col}>
+                <Text>{item.code}</Text>
+              </View>
+
               <View style={styles.col}>
                 <Text>{item.description || item.name || `${item.first_name || ''} ${item.last_name || ''}`.trim()}</Text>
               </View>
-              <View style={[styles.col, { textAlign: "center" }]}>
-                <Text>{item.state.name}</Text>
+{/* //////////////////// */}
+              
+              <View style={styles.col}>
+                <Text>{item.abbreviation}</Text>
               </View>
               <View style={[styles.col, { textAlign: "center" }]}>
                 <Text>{item.created_at?.split("T")[0]}</Text>
               </View>
+              <View style={styles.col}>
+                <Text>{item.details}</Text>
+              </View>
+
+{/* CASO CARGO */}
+              {/* <View style={styles.col}>
+                <Text>{item.description}</Text>
+              </View> */}
+
+{/* CASO USUARIO */}
+              {/* <View style={styles.col}>
+                <Text>{item.office.name}</Text>
+              </View>
+              <View style={styles.col}>
+                <Text>{item.position.name}</Text>
+              </View> */}
+
+{/* VACIO CASO PERMISOS */}
+              {/* <View style={styles.col}>
+                <Text>{item.initials}</Text>
+              </View>
+              <View style={styles.col}>
+                <Text>{item.level}</Text>
+              </View>
+
+              <View style={styles.col}>
+                <Text>{item.permissions.length}</Text>
+              </View>
+
+              <View style={styles.col}>
+                <Text>{item.username}</Text>
+              </View>
+              <View style={styles.col}>
+                <Text>{item.office.name}</Text>
+              </View>
+              <View style={styles.col}>
+                {Array.isArray(item.roles) &&
+                  item.roles.map((role, index) => (
+                    <Text key={index}>{role.name}</Text>
+                  ))}
+              </View> */}
+{/* //////////////////// */}
+{/* SE ESCONDE PARA CASO LUGARES */}
+              {/* <View style={[styles.col, { textAlign: "center" }]}>
+                <Text>{item.created_at?.split("T")[0]}</Text>
+              </View> */}
+              {/* se esconde para caso OFICINAS */}
               <View style={[styles.col, { textAlign: "center" }]}>
                 <Text>{item.updated_at?.split("T")[0]}</Text>
               </View>
+
               <View style={[styles.col, { textAlign: "center" }]}>
-                <Text>{item.updated_at?.split("T")[0]}</Text>
+                <Text>{item.state.name}</Text>
               </View>
 
             </View>

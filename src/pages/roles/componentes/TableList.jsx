@@ -82,35 +82,36 @@ const TablaList = (getStatusCRUD) => {
 
     const columns = [
         {
-            name: '#',
+            // name: '#',
+            name: (<p className="m-0" style={{ fontWeight: 'bold', fontSize: '15px', textDecoration: 'underline' }}>Nro.</p>),
             sortable: true,
             selectorKey: 'id',
             selector: (row, index) => getNumRow + index,
             width: '40px',
         },
         {
-            name: (<p className="m-0 text-header-filter">Nombre de rol</p>),
+            name: (<p className="m-0" style={{ fontWeight: 'bold', fontSize: '15px', textDecoration: 'underline' }}>Nombre de rol</p>),
             sortable: true,
             cell: (row) => row.name,
             selectorKey: 'name',
             width: '250px',
         },
         {
-            name: (<p className="m-0 text-header-filter" >Fecha de registro</p>),
+            name: (<p className="m-0" style={{ fontWeight: 'bold', fontSize: '15px', textDecoration: 'underline' }}>Fecha de registro</p>),
             sortable: true,
             selectorKey: 'created_at',
             cell: (row) => row.created_at,
             width: '150px',
         },
         {
-            name: (<p className="m-0 text-header-filter" >Ultima actualización</p>),
+            name: (<p className="m-0" style={{ fontWeight: 'bold', fontSize: '15px', textDecoration: 'underline' }}>Ultima actualización</p>),
             sortable: true,
             selectorKey: 'updated_at',
             cell: (row) => row.updated_at,
             width: '150px',
         },
         {
-            name: (<p className="m-0 text-header-not-filter" >Cantidad de permisos</p>),
+            name: (<p className="m-0" style={{ fontWeight: 'bold', fontSize: '15px', textDecoration: 'underline' }}>Cantidad de permisos</p>),
             sortable: false,
             cell: (row) => <div className="m-0 text-center text-border-color" onClick={() => {
                 onChangeRow({
@@ -122,7 +123,7 @@ const TablaList = (getStatusCRUD) => {
             width: '130px',
         },
         {
-            name: (<p className="m-0 text-header-filter" >Estado</p>),
+            name: (<p className="m-0" style={{ fontWeight: 'bold', fontSize: '15px', textDecoration: 'underline' }}>Estado</p>),
             sortable: true,
             selectorKey: 'state_id',
             cell: (row) => (
@@ -137,7 +138,7 @@ const TablaList = (getStatusCRUD) => {
             ),
         },
         {
-            name: (<p className="m-0 text-header-not-filter" >Acciones</p>),
+            name: (<p className="m-0" style={{ fontWeight: 'bold', fontSize: '15px', textDecoration: 'underline' }}>Acciones</p>),
             sortable: false,
             cell: (row) => (
                 <>
@@ -235,8 +236,12 @@ const TablaList = (getStatusCRUD) => {
 
     // TITULO DE TABLA
     const titulo = 'ROLES';
+    // COLUMNAS
+    const childrenTexts = columns.map(col => {
+        return col.name?.props || '';
+    });
     console.log("Datos que se están enviando al PDF:",titulo, getDataTables);
-    
+
     return (
         <>
             <ReactNotifications />
@@ -254,7 +259,7 @@ const TablaList = (getStatusCRUD) => {
           className="btn btn-sm btn-success"
           onClick={async () => {
             console.log("Datos que se están enviando al PDF:", getDataTables);
-            const blob = await pdf(<PDFformato data={getDataTables} titulo={titulo} />).toBlob(); //  `data` así se espera en el componente
+            const blob = await pdf(<PDFformato data={getDataTables} titulo={titulo} columnas={childrenTexts} />).toBlob(); //  `data` así se espera en el componente
             const url = URL.createObjectURL(blob);
             window.open(url, "_blank");
           }}

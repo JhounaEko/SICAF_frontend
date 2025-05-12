@@ -202,13 +202,10 @@ const TableList = (getDataRefresch) => {
 
     // TITULO DE TABLA
     const titulo = 'CARGOS';
+    // COLUMNAS
     const childrenTexts = columns.map(col => {
-//   return col.name?.props?.children || '';
-  return col.name?.props || '';
-});
-// console.log("Children:", childrenTexts);
-
-    // console.log("COLUMS:",columns);
+        return col.name?.props || '';
+    });
     console.log("Datos que se están enviando al PDF:",titulo, getDataTables, childrenTexts);
 
     return (<>
