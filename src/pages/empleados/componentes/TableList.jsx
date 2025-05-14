@@ -9,6 +9,7 @@ import { useNavigate } from 'react-router-dom';
 import { pdf } from "@react-pdf/renderer";
 import PDFformato from "../../../../src/assets/components/PDF_tablas.jsx";
 ////
+import EXCELformato from "../../../../src/assets/components/EXCEL_tablas.jsx";
 
 const TableList = (getDataRefresch) => {
 
