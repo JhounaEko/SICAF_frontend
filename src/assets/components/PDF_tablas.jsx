@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
     fontSize: 10,
     lineHeight: 1.5,
     paddingTop: 85.039, // 2.5 cm arriba
-    paddingBottom: 56.693, // 2 cm abajo
+    paddingBottom: 68.80, // 2.25 cm abajo
     paddingLeft: 56.693, // 2 cm izquierda
     paddingRight: 28.3465, // 1 cm derecha
   },
@@ -58,7 +58,7 @@ const styles = StyleSheet.create({
   },
 
   col: {
-    width: "30%",// Ajusta esto según tus necesidades
+    width: "30%", // Ajusta esto según tus necesidades
     borderRightWidth: 1,
     borderBottomWidth: 1,
     borderColor: "#000",
@@ -84,8 +84,8 @@ const styles = StyleSheet.create({
     paddingTop: 5,
   },
   headerImage: {
-    width: 447.63, // 15.8 cm en puntos
-    height: 60, // altura
+    width: 550, // ancho
+    height: 70, // altura
   },
   footerBox2: {
     position: "absolute",
@@ -99,13 +99,14 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
   },
   image: {
-    width: 453.54, // 16 cm
-    height: 39.69, // 1.4 cm
+    // imagen footer
+    width: 550,
+    sheight: 55,
   },
   pageNumberBox: {
     borderColor: "green",
     position: "absolute",
-    height: 20, // altura del borde superior
+    height: 25, // altura del borde superior
     bottom: 56.693, // justo arriba del footer (2cm)
     left: 250, // centrado manualmente
     width: 100, // ancho fijo para centrar mejor si se desea
@@ -116,7 +117,7 @@ const styles = StyleSheet.create({
     borderRadius: 4, // opcional: para que se vea más suave
   },
   footer: {
-    marginTop: 20,
+    marginTop: 25,
     flexDirection: "row",
     justifyContent: "space-between",
   },
@@ -138,20 +139,220 @@ const Footer = () => (
     <Image style={styles.image} src={footerLogo} />
     <PageNumber />
   </View>
-);        
+);
+const renderRowContent = (titulo, item, index) => {
+  const date = (d) => d?.split("T")[0];
+
+  const baseCell = (
+    <View style={styles.colSmall} key="index">
+      <Text style={{ textAlign: "center" }}>{index + 1}</Text>
+    </View>
+  );
+
+  switch (titulo) {
+    case "LUGARES":
+      return [
+        baseCell,
+        <View style={styles.col} key="code">
+          <Text>{item.code}</Text>
+        </View>,
+        <View style={styles.col} key="desc">
+          <Text>
+            {item.description ||
+              item.name ||
+              `${item.first_name || ""} ${item.last_name || ""}`}
+          </Text>
+        </View>,
+        <View style={styles.col} key="abbr">
+          <Text>{item.abbreviation}</Text>
+        </View>,
+        <View style={styles.col} key="created">
+          <Text>{date(item.created_at)}</Text>
+        </View>,
+        <View style={styles.col} key="details">
+          <Text>{item.details}</Text>
+        </View>,
+        <View style={styles.col} key="updated">
+          <Text>{date(item.updated_at)}</Text>
+        </View>,
+        <View style={styles.col} key="state">
+          <Text>{item.state.name}</Text>
+        </View>,
+      ];
+
+    case "EMPLEADOS":
+      return [
+        baseCell,
+        <View style={styles.col} key="desc">
+          <Text>
+            {item.description ||
+              item.name ||
+              `${item.first_name || ""} ${item.last_name || ""}`}
+          </Text>
+        </View>,
+
+        <View style={styles.col} key="desc2">
+          <Text>{item.office.name}</Text>
+        </View>,
+        <View style={styles.col} key="desc2">
+          <Text>{item.position.name}</Text>
+        </View>,
+
+        <View style={styles.col} key="created">
+          <Text>{date(item.created_at)}</Text>
+        </View>,
+        <View style={styles.col} key="updated">
+          <Text>{date(item.updated_at)}</Text>
+        </View>,
+        <View style={styles.col} key="state">
+          <Text>{item.state.name}</Text>
+        </View>,
+      ];
+
+    case "CARGOS":
+      return [
+        baseCell,
+        <View style={styles.col} key="desc">
+          <Text>{item.name}</Text>
+        </View>,
+        <View style={styles.col} key="desc2">
+          <Text>{item.description}</Text>
+        </View>,
+        <View style={styles.col} key="created">
+          <Text>{date(item.created_at)}</Text>
+        </View>,
+        <View style={styles.col} key="updated">
+          <Text>{date(item.updated_at)}</Text>
+        </View>,
+        <View style={styles.col} key="state">
+          <Text>{item.state.name}</Text>
+        </View>,
+      ];
+
+    case "PERMISOS":
+      return [
+        baseCell,
+        <View style={styles.col} key="desc">
+          <Text>
+            {item.description ||
+              item.name ||
+              `${item.first_name || ""} ${item.last_name || ""}`}
+          </Text>
+        </View>,
+        <View style={styles.col} key="created">
+          <Text>{date(item.created_at)}</Text>
+        </View>,
+        <View style={styles.col} key="updated">
+          <Text>{date(item.updated_at)}</Text>
+        </View>,
+        <View style={styles.col} key="state">
+          <Text>{item.state.name}</Text>
+        </View>,
+      ];
+
+    case "OFICINAS":
+      return [
+        baseCell,
+        <View style={styles.col} key="desc">
+          <Text>
+            {item.description ||
+              item.name ||
+              `${item.first_name || ""} ${item.last_name || ""}`}
+          </Text>
+        </View>,
+        <View style={styles.col} key="init">
+          <Text>{item.initials}</Text>
+        </View>,
+        <View style={styles.col} key="level">
+          <Text>{item.level}</Text>
+        </View>,
+        <View style={styles.col} key="created">
+          <Text>{date(item.created_at)}</Text>
+        </View>,
+        <View style={styles.col} key="state">
+          <Text>{item.state.name}</Text>
+        </View>,
+      ];
+
+    case "ROLES":
+      return [
+        baseCell,
+        <View style={styles.col} key="desc">
+          <Text>
+            {item.description ||
+              item.name ||
+              `${item.first_name || ""} ${item.last_name || ""}`}
+          </Text>
+        </View>,
+        <View style={styles.col} key="created">
+          <Text>{date(item.created_at)}</Text>
+        </View>,
+        <View style={styles.col} key="updated">
+          <Text>{date(item.updated_at)}</Text>
+        </View>,
+        <View style={styles.col} key="perm">
+          <Text>{item.permissions.length}</Text>
+        </View>,
+        <View style={styles.col} key="state">
+          <Text>{item.state.name}</Text>
+        </View>,
+      ];
+
+    case "USUARIOS":
+      return [
+        baseCell,
+        <View style={styles.col} key="name">
+          <Text>
+            {item.description ||
+              item.name ||
+              `${item.first_name || ""} ${item.last_name || ""}`}
+          </Text>
+        </View>,
+        <View style={styles.col} key="username">
+          <Text>{item.username}</Text>
+        </View>,
+        <View style={styles.col} key="office">
+          <Text>{item.office.name}</Text>
+        </View>,
+        <View style={styles.col} key="roles">
+          <Text>{item.roles.map((role) => role.name).join(", ")}</Text>
+        </View>,
+        <View style={styles.col} key="created">
+          <Text>{date(item.created_at)}</Text>
+        </View>,
+        <View style={styles.col} key="updated">
+          <Text>{date(item.updated_at)}</Text>
+        </View>,
+        <View style={styles.col} key="state">
+          <Text>{item.state.name}</Text>
+        </View>,
+      ];
+
+    default:
+      return [
+        baseCell,
+        <View style={styles.col} key="fallback">
+          <Text>Sin formato definido</Text>
+        </View>,
+      ];
+  }
+};
 
 const PDF = ({ data, titulo, columnas }) => (
-  
-  <Document title={"REPORTE DE "+titulo}>
-    <Page size="A4" orientation="landscape" style={styles.page}>
-        {/* <Page
-          size="A4"
-          // orientation={titulo === '' ? undefined : 'landscape'}
-          style={styles.page}
-        > */}
-
+  <Document title={"REPORTE DE " + titulo}>
+    <Page
+      size="A4"
+      orientation={
+        ["PERMISOS", "OFICINAS", "ROLES", "CARGOS"].includes(titulo)
+          ? undefined
+          : "landscape"
+      }
+      style={styles.page}
+    >
       <Header />
-      <Text style={styles.header}>{"\n"}SISTEMA DE INFORMACION Y CONTROL DE ACTIVOS FIJOS</Text>
+      <Text style={styles.header}>
+        {"\n"}SISTEMA DE INFORMACION Y CONTROL DE ACTIVOS FIJOS
+      </Text>
 
       <View style={{ flexDirection: "row", position: "relative" }}>
         <View
@@ -250,108 +451,434 @@ const PDF = ({ data, titulo, columnas }) => (
       <View style={styles.table}>
         {/* CONTENIDO */}
         {/* CABEZERA */}
-<View style={styles.tableRow}>
-  {Array.isArray(columnas) &&
-    columnas.slice(0, -1).map((text, index) => (
-      <View style={index === 0 ? styles.colSmall : styles.col} key={index}>
-        <Text style={styles.header}>{text.children}</Text>
-      </View>
-    ))}
-</View>
+        <View style={styles.tableRow}>
+          {Array.isArray(columnas) &&
+            columnas.slice(0, -1).map((text, index) => (
+              <View
+                style={index === 0 ? styles.colSmall : styles.col}
+                key={index}
+              >
+                <Text style={styles.header}>{text.children}</Text>
+              </View>
+            ))}
+        </View>
 
-{/* //////////////////////////////////////////////////////////////////// */}
+        {/* //////////////////////////////////////////////////////////////////// */}
         {/* Filas de datos */}
 
         {Array.isArray(data) &&
           data.map((item, index) => (
-
             <View style={[styles.tableRow, { fontSize: 7.5 }]} key={index}>
-
-              <View style={styles.colSmall}>
-                <Text style={{ textAlign: "center" }}>{index + 1}</Text>
-              </View>
-
-{/* CASO LUGAR */}
-              <View style={styles.col}>
-                <Text>{item.code}</Text>
-              </View>
-
-              <View style={styles.col}>
-                <Text>{item.description || item.name || `${item.first_name || ''} ${item.last_name || ''}`.trim()}</Text>
-              </View>
-{/* //////////////////// */}
-              
-              <View style={styles.col}>
-                <Text>{item.abbreviation}</Text>
-              </View>
-              <View style={[styles.col, { textAlign: "center" }]}>
-                <Text>{item.created_at?.split("T")[0]}</Text>
-              </View>
-              <View style={styles.col}>
-                <Text>{item.details}</Text>
-              </View>
-
-{/* CASO CARGO */}
-              {/* <View style={styles.col}>
-                <Text>{item.description}</Text>
-              </View> */}
-
-{/* CASO USUARIO */}
-              {/* <View style={styles.col}>
-                <Text>{item.office.name}</Text>
-              </View>
-              <View style={styles.col}>
-                <Text>{item.position.name}</Text>
-              </View> */}
-
-{/* VACIO CASO PERMISOS */}
-              {/* <View style={styles.col}>
-                <Text>{item.initials}</Text>
-              </View>
-              <View style={styles.col}>
-                <Text>{item.level}</Text>
-              </View>
-
-              <View style={styles.col}>
-                <Text>{item.permissions.length}</Text>
-              </View>
-
-              <View style={styles.col}>
-                <Text>{item.username}</Text>
-              </View>
-              <View style={styles.col}>
-                <Text>{item.office.name}</Text>
-              </View>
-              <View style={styles.col}>
-                {Array.isArray(item.roles) &&
-                  item.roles.map((role, index) => (
-                    <Text key={index}>{role.name}</Text>
-                  ))}
-              </View> */}
-{/* //////////////////// */}
-{/* SE ESCONDE PARA CASO LUGARES */}
-              {/* <View style={[styles.col, { textAlign: "center" }]}>
-                <Text>{item.created_at?.split("T")[0]}</Text>
-              </View> */}
-              {/* se esconde para caso OFICINAS */}
-              <View style={[styles.col, { textAlign: "center" }]}>
-                <Text>{item.updated_at?.split("T")[0]}</Text>
-              </View>
-
-              <View style={[styles.col, { textAlign: "center" }]}>
-                <Text>{item.state.name}</Text>
-              </View>
-
+              {renderRowContent(titulo, item, index)}
             </View>
           ))}
-          
       </View>
-    <Footer fixed />
+      <Footer fixed />
     </Page>
   </Document>
 );
 
 export default PDF;
+///////////////////////////////////
+// const PDF = ({ data, titulo, columnas }) => (
+//   <Document title={"REPORTE DE " + titulo}>
+//     <Page
+//       size="A4"
+//       orientation={
+//         ["PERMISOS", "OFICINAS", "ROLES", "CARGOS"].includes(titulo)
+//           ? undefined
+//           : "landscape"
+//       }
+//       style={styles.page}
+//     >
+//       <Header />
+//       <Text style={styles.header}>
+//         {"\n"}SISTEMA DE INFORMACION Y CONTROL DE ACTIVOS FIJOS
+//       </Text>
+
+//       <View style={{ flexDirection: "row", position: "relative" }}>
+//         <View
+//           style={{
+//             width: "70%",
+//             justifyContent: "center",
+//             alignItems: "center",
+//           }}
+//         >
+//           <Text style={styles.title}>LISTA DE {titulo}</Text>
+//         </View>
+
+//         <View style={{ width: "30%" }}>
+//           <View
+//             style={{
+//               display: "table",
+//               width: "100%",
+//               border: "1px solid #000",
+//             }}
+//           >
+//             {/* Fila 1: Título "IMPRESIÓN" */}
+//             <View style={{ flexDirection: "row" }}>
+//               <View style={{ width: "100%", padding: 4 }}>
+//                 <Text
+//                   style={{
+//                     textAlign: "center",
+//                     fontWeight: "bold",
+//                     fontSize: 9,
+//                   }}
+//                 >
+//                   IMPRESIÓN
+//                 </Text>
+//               </View>
+//             </View>
+
+//             {/* Fila 2: USUARIO */}
+//             <View style={{ flexDirection: "row" }}>
+//               <View
+//                 style={{
+//                   width: "50%",
+//                   padding: 4,
+//                   alignItems: "flex-end",
+//                 }}
+//               >
+//                 <Text
+//                   style={{
+//                     textAlign: "right",
+//                     fontWeight: "bold",
+//                     fontSize: 9,
+//                   }}
+//                 >
+//                   USUARIO:
+//                 </Text>
+//               </View>
+//               <View style={{ width: "50%", padding: 4 }}>
+//                 <Text style={{ fontSize: 8 }}>
+//                   {parsedUser.first_name} {parsedUser.last_name}
+//                 </Text>
+//               </View>
+//             </View>
+
+//             {/* Fila 3: FECHA */}
+//             <View style={{ flexDirection: "row" }}>
+//               <View
+//                 style={{
+//                   width: "50%",
+//                   padding: 4,
+//                   alignItems: "flex-end",
+//                 }}
+//               >
+//                 <Text
+//                   style={{
+//                     textAlign: "right",
+//                     fontWeight: "bold",
+//                     fontSize: 9,
+//                   }}
+//                 >
+//                   FECHA:
+//                 </Text>
+//               </View>
+//               <View style={{ width: "50%", padding: 4 }}>
+//                 <Text style={{ fontSize: 9 }}>
+//                   <Text>{`${new Date()
+//                     .getDate()
+//                     .toString()
+//                     .padStart(2, "0")}/${new Date()
+//                     .toLocaleString("es-ES", { month: "short" })
+//                     .toLowerCase()}/${new Date().getFullYear()}`}</Text>
+//                 </Text>
+//               </View>
+//             </View>
+//           </View>
+//         </View>
+//       </View>
+//       <Text>{"\n"}</Text>
+//       <View style={styles.table}>
+//         {/* CONTENIDO */}
+//         {/* CABEZERA */}
+//         <View style={styles.tableRow}>
+//           {Array.isArray(columnas) &&
+//             columnas.slice(0, -1).map((text, index) => (
+//               <View
+//                 style={index === 0 ? styles.colSmall : styles.col}
+//                 key={index}
+//               >
+//                 <Text style={styles.header}>{text.children}</Text>
+//               </View>
+//             ))}
+//         </View>
+
+//         {/* //////////////////////////////////////////////////////////////////// */}
+//         {/* Filas de datos */}
+
+//         {Array.isArray(data) &&
+//           data.map((item, index) => (
+//             <View style={[styles.tableRow, { fontSize: 7.5 }]} key={index}>
+//               {/* CASO LUGAR */}
+//               {titulo === "LUGARES" && (
+//                 <>
+//                   {/* # */}
+//                   <View style={styles.colSmall}>
+//                     <Text style={{ textAlign: "center" }}>{index + 1}</Text>
+//                   </View>
+
+//                   <View style={styles.col}>
+//                     <Text>{item.code}</Text>
+//                   </View>
+
+//                   <View style={styles.col}>
+//                     <Text>
+//                       {item.description ||
+//                         item.name ||
+//                         `${item.first_name || ""} ${
+//                           item.last_name || ""
+//                         }`.trim()}
+//                     </Text>
+//                   </View>
+
+//                   <View style={styles.col}>
+//                     <Text>{item.abbreviation}</Text>
+//                   </View>
+
+//                   <View style={[styles.col, { textAlign: "center" }]}>
+//                     <Text>{item.created_at?.split("T")[0]}</Text>
+//                   </View>
+
+//                   <View style={styles.col}>
+//                     <Text>{item.details}</Text>
+//                   </View>
+
+//                   <View style={[styles.col, { textAlign: "center" }]}>
+//                     <Text>{item.updated_at?.split("T")[0]}</Text>
+//                   </View>
+
+//                   <View style={[styles.col, { textAlign: "center" }]}>
+//                     <Text>{item.state.name}</Text>
+//                   </View>
+//                 </>
+//               )}
+
+//               <View style={[styles.col, { textAlign: "center" }]}>
+//                 <Text>{item.created_at?.split("T")[0]}</Text>
+//               </View>
+
+//               {/* CASO CARGO */}
+//               {titulo === "CARGOS" && (
+//                 <>
+//                   {/* # */}
+//                   <View style={styles.colSmall}>
+//                     <Text style={{ textAlign: "center" }}>{index + 1}</Text>
+//                   </View>
+
+//                   <View style={styles.col}>
+//                     <Text>
+//                       {item.description ||
+//                         item.name ||
+//                         `${item.first_name || ""} ${
+//                           item.last_name || ""
+//                         }`.trim()}
+//                     </Text>
+//                   </View>
+
+//                   <View style={styles.col}>
+//                     <Text>{item.description}</Text>
+//                   </View>
+
+//                   <View style={[styles.col, { textAlign: "center" }]}>
+//                     <Text>{item.created_at?.split("T")[0]}</Text>
+//                   </View>
+
+//                   <View style={[styles.col, { textAlign: "center" }]}>
+//                     <Text>{item.updated_at?.split("T")[0]}</Text>
+//                   </View>
+
+//                   <View style={[styles.col, { textAlign: "center" }]}>
+//                     <Text>{item.state.name}</Text>
+//                   </View>
+//                 </>
+//               )}
+
+//               {/* CASO USUARIO */}
+//               {titulo === "CARGOS" && (
+//                 <>
+//                   {/* # */}
+//                   <View style={styles.colSmall}>
+//                     <Text style={{ textAlign: "center" }}>{index + 1}</Text>
+//                   </View>
+
+//                   <View style={styles.col}>
+//                     <Text>
+//                       {item.description ||
+//                         item.name ||
+//                         `${item.first_name || ""} ${
+//                           item.last_name || ""
+//                         }`.trim()}
+//                     </Text>
+//                   </View>
+//                   <View style={styles.col}>
+//                     <Text>{item.office.name}</Text>
+//                   </View>
+//                   <View style={styles.col}>
+//                     <Text>{item.position.name}</Text>
+//                   </View>
+//                   <View style={[styles.col, { textAlign: "center" }]}>
+//                     <Text>{item.created_at?.split("T")[0]}</Text>
+//                   </View>
+
+//                   <View style={[styles.col, { textAlign: "center" }]}>
+//                     <Text>{item.updated_at?.split("T")[0]}</Text>
+//                   </View>
+
+//                   <View style={[styles.col, { textAlign: "center" }]}>
+//                     <Text>{item.state.name}</Text>
+//                   </View>
+//                 </>
+//               )}
+
+//               {/* CASO PERMISOS */}
+//               {titulo === "PERMISOS" && (
+//                 <>
+//                   {/* # */}
+//                   <View style={styles.colSmall}>
+//                     <Text style={{ textAlign: "center" }}>{index + 1}</Text>
+//                   </View>
+
+//                   <View style={styles.col}>
+//                     <Text>
+//                       {item.description ||
+//                         item.name ||
+//                         `${item.first_name || ""} ${
+//                           item.last_name || ""
+//                         }`.trim()}
+//                     </Text>
+//                   </View>
+
+//                   <View style={[styles.col, { textAlign: "center" }]}>
+//                     <Text>{item.created_at?.split("T")[0]}</Text>
+//                   </View>
+
+//                   <View style={[styles.col, { textAlign: "center" }]}>
+//                     <Text>{item.updated_at?.split("T")[0]}</Text>
+//                   </View>
+
+//                   <View style={[styles.col, { textAlign: "center" }]}>
+//                     <Text>{item.state.name}</Text>
+//                   </View>
+//                 </>
+//               )}
+
+//               {/* CASO OFICINAS */}
+//               {titulo === "OFICINAS" && (
+//                 <>
+//                   {/* # */}
+//                   <View style={styles.colSmall}>
+//                     <Text style={{ textAlign: "center" }}>{index + 1}</Text>
+//                   </View>
+
+//                   <View style={styles.col}>
+//                     <Text>
+//                       {item.description ||
+//                         item.name ||
+//                         `${item.first_name || ""} ${
+//                           item.last_name || ""
+//                         }`.trim()}
+//                     </Text>
+//                   </View>
+//                   <View style={styles.col}>
+//                     <Text>{item.initials}</Text>
+//                   </View>
+//                   <View style={styles.col}>
+//                     <Text>{item.level}</Text>
+//                   </View>
+//                   <View style={[styles.col, { textAlign: "center" }]}>
+//                     <Text>{item.created_at?.split("T")[0]}</Text>
+//                   </View>
+
+//                   <View style={[styles.col, { textAlign: "center" }]}>
+//                     <Text>{item.state.name}</Text>
+//                   </View>
+//                 </>
+//               )}
+
+//               {/* CASO ROLES */}
+//               {titulo === "ROLES" && (
+//                 <>
+//                   {/* # */}
+//                   <View style={styles.colSmall}>
+//                     <Text style={{ textAlign: "center" }}>{index + 1}</Text>
+//                   </View>
+
+//                   <View style={styles.col}>
+//                     <Text>
+//                       {item.description ||
+//                         item.name ||
+//                         `${item.first_name || ""} ${
+//                           item.last_name || ""
+//                         }`.trim()}
+//                     </Text>
+//                   </View>
+//                   <View style={styles.col}>
+//                     <Text>{item.permissions.length}</Text>
+//                   </View>
+//                   <View style={[styles.col, { textAlign: "center" }]}>
+//                     <Text>{item.created_at?.split("T")[0]}</Text>
+//                   </View>
+//                   <View style={[styles.col, { textAlign: "center" }]}>
+//                     <Text>{item.updated_at?.split("T")[0]}</Text>
+//                   </View>
+//                   <View style={[styles.col, { textAlign: "center" }]}>
+//                     <Text>{item.state.name}</Text>
+//                   </View>
+//                 </>
+//               )}
+
+//               {/* CASO USUARIOS */}
+//               {titulo === "USUARIOS" && (
+//                 <>
+//                   {/* # */}
+//                   <View style={styles.colSmall}>
+//                     <Text style={{ textAlign: "center" }}>{index + 1}</Text>
+//                   </View>
+
+//                   <View style={styles.col}>
+//                     <Text>
+//                       {item.description ||
+//                         item.name ||
+//                         `${item.first_name || ""} ${
+//                           item.last_name || ""
+//                         }`.trim()}
+//                     </Text>
+//                   </View>
+
+//                   <View style={styles.col}>
+//                     <Text>{item.username}</Text>
+//                   </View>
+//                   <View style={styles.col}>
+//                     <Text>{item.office.name}</Text>
+//                   </View>
+//                   <View style={styles.col}>
+//                     {Array.isArray(item.roles) &&
+//                       item.roles.map((role, index) => (
+//                         <Text key={index}>{role.name}</Text>
+//                       ))}
+//                   </View>
+
+//                   <View style={[styles.col, { textAlign: "center" }]}>
+//                     <Text>{item.created_at?.split("T")[0]}</Text>
+//                   </View>
+//                   <View style={[styles.col, { textAlign: "center" }]}>
+//                     <Text>{item.updated_at?.split("T")[0]}</Text>
+//                   </View>
+//                   <View style={[styles.col, { textAlign: "center" }]}>
+//                     <Text>{item.state.name}</Text>
+//                   </View>
+//                 </>
+//               )}
+//             </View>
+//           ))}
+//       </View>
+//       <Footer fixed />
+//     </Page>
+//   </Document>
+// );
+///////////////////////////////////
 
 // import React from 'react';
 // import {

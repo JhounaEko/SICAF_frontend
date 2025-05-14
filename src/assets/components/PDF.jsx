@@ -9,6 +9,10 @@ import {
 } from "@react-pdf/renderer";
 import headerLogo from "../../assets/img/header.png";
 import footerLogo from "../../assets/img/footer.png";
+// MOD GET datos de secion
+import Cookies from "js-cookie"; // datos de secion
+const dataUser = Cookies.get(process.env.REACT_APP_COOKIES_NAME_DATA);
+let parsedUser = JSON.parse(dataUser);
 
 const styles = StyleSheet.create({
   page: {
@@ -296,6 +300,11 @@ const PDF = () => (
                 <Text style={{ fontWeight: "bold" }}>TELEFONO:</Text>12345678
               </Text>
             </View>
+            <View style={[styles.tableCell, { width: "50%" }]}>
+              <Text>
+                <Text style={{ fontWeight: "bold" }}></Text>
+              </Text>
+            </View>
           </View>
           <View
             style={[
@@ -310,7 +319,7 @@ const PDF = () => (
                 justifyContent: "flex-end",
               },
             ]}
-          >
+          ><Text>{"\n"}{"\n"}</Text>
             {/* Mini tabla con solo bordes externos */}
             <View
               style={{
@@ -354,7 +363,9 @@ const PDF = () => (
                   </Text>
                 </View>
                 <View style={{ width: "50%", padding: 4 }}>
-                  <Text style={{ fontSize: 9 }}>rider.yanarico</Text>
+                  <Text style={{ fontSize: 8 }}>
+                    {parsedUser.first_name} {parsedUser.last_name}
+                  </Text>
                 </View>
               </View>
 
@@ -378,7 +389,15 @@ const PDF = () => (
                   </Text>
                 </View>
                 <View style={{ width: "50%", padding: 4 }}>
-                  <Text style={{ fontSize: 9 }}>04/may/2025</Text>
+                  <Text style={{ fontSize: 9 }}>
+                    <Text>{`${new Date()
+                      .getDate()
+                      .toString()
+                      .padStart(2, "0")}/${new Date()
+                      .toLocaleString("es-ES", { month: "short" })
+                      .toLowerCase()}/${new Date().getFullYear()}`}
+                    </Text>
+                  </Text>
                 </View>
               </View>
             </View>
