@@ -233,7 +233,12 @@ const TableList = (getDataRefresch) => {
 
   {/* //// MOD REPORTE EXCEL //// */}
   <div>
-    <ExcelExport data={getDataTables} titulo={titulo} columnas={childrenTexts} />
+    {/* <ExcelExport data={getDataTables} titulo={titulo} columnas={childrenTexts} /> */}
+    <ExcelExport
+        titulo={titulo}
+        columnas={["id", "name", "state.name", "state.code", "created_at", "updated_at"]}
+        data={getDataTables}
+      />
   </div>
   {/* //// FIN MOD EXCEL //// */}
 </div>

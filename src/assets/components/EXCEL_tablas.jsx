@@ -1,86 +1,86 @@
 import React from "react";
-// IMPORTE PARA MOD REPORTES EXCEL
-import ExcelJS from 'exceljs';
-import { saveAs } from 'file-saver';
+import ExcelJS from "exceljs";
+import { saveAs } from "file-saver";
+import Cookies from "js-cookie";
 
-import headerLogo from "../../assets/img/header.png";
-import footerLogo from "../../assets/img/footer.png";
-
-// MOD GET datos de secion
-import Cookies from "js-cookie"; // datos de secion
 const dataUser = Cookies.get(process.env.REACT_APP_COOKIES_NAME_DATA);
-let parsedUser = JSON.parse(dataUser);
-// console.log("Datos SECION",parsedUser.first_name, parsedUser.last_name);
-// FIN MOD GET datos secion
+let parsedUser = null;
+if (dataUser) {
+  try {
+    parsedUser = JSON.parse(dataUser);
+  } catch (error) {
+    console.error("Error al parsear dataUser:", error);
+  }
+}
 
-const ExcelExport = () => {
+const ExcelExport = ({ data, titulo, columnas }) => {
   const exportExcel = async () => {
     const workbook = new ExcelJS.Workbook();
-    const worksheet = workbook.addWorksheet('Reporte de Usuarios');
+    const worksheet = workbook.addWorksheet("Reporte");
 
-    // Definir columnas
-    worksheet.columns = [
-      { header: 'ID', key: 'id', width: 10 },
-      { header: 'Nombre', key: 'nombre', width: 30 },
-      { header: 'Correo', key: 'correo', width: 30 },
-      { header: 'Edad', key: 'edad', width: 10 },
-    ];
-
-    // Datos de ejemplo
-    const data = [
-      { id: 1, nombre: 'Juan Pérez', correo: 'juan@example.com', edad: 25 },
-      { id: 2, nombre: 'Ana Gómez', correo: 'ana@example.com', edad: 30 },
-      { id: 3, nombre: 'Luis Ruiz', correo: 'luis@example.com', edad: 28 },
-    ];
-
-    // Agregar filas
-    data.forEach((item) => worksheet.addRow(item));
-
-    // Estilizar encabezado
-    const headerRow = worksheet.getRow(1);
+    // Agrega encabezado
+    const headerRow = worksheet.addRow(columnas);
     headerRow.eachCell((cell) => {
-      cell.font = { bold: true, color: { argb: 'FFFFFFFF' } };
+      cell.font = { bold: true, color: { argb: "000000" } };
       cell.fill = {
-        type: 'pattern',
-        pattern: 'solid',
-        fgColor: { argb: 'FF007ACC' },
+        type: "pattern",
+        pattern: "solid",
+        fgColor: { argb: "FF007C" },
       };
-      cell.alignment = { vertical: 'middle', horizontal: 'center' };
+      cell.alignment = { vertical: "middle", horizontal: "center" };
       cell.border = {
-        top: { style: 'thin' },
-        left: { style: 'thin' },
-        bottom: { style: 'thin' },
-        right: { style: 'thin' },
+        top: { style: "thin" },
+        left: { style: "thin" },
+        bottom: { style: "thin" },
+        right: { style: "thin" },
       };
     });
+    headerRow.height = 30;
 
-    // Ajustar altura de la fila del encabezado
-    headerRow.height = 20;
-
-    // Generar buffer
-    const buffer = await workbook.xlsx.writeBuffer();
-
-    // Guardar archivo
-    const blob = new Blob([buffer], {
-      type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+    // Agrega filas de datos
+    data.forEach((item) => {
+      const rowValues = columnas.map((key) => {
+        // Soporte para campos anidados como 'state.name'
+        const keys = key.split(".");
+        let value = item;
+        for (let k of keys) {
+          value = value?.[k];
+        }
+        return value ?? "";
+      });
+      worksheet.addRow(rowValues);
     });
 
-    saveAs(blob, 'Reporte_Usuarios.xlsx');
+    // Ajustar ancho de columnas
+    worksheet.columns.forEach((column) => {
+      let maxLength = 10;
+      column.eachCell({ includeEmpty: true }, (cell) => {
+        const cellValue = cell.value ? cell.value.toString() : "";
+        maxLength = Math.max(maxLength, cellValue.length);
+      });
+      column.width = maxLength + 2;
+    });
+
+    // Descargar archivo
+    const buffer = await workbook.xlsx.writeBuffer();
+    const blob = new Blob([buffer], {
+      type:
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+    });
+
+    saveAs(blob, `Reporte_${titulo}.xlsx`);
   };
 
   return (
-    
-    <button
-    className="btn btn-sm btn-primary"
-      onClick={exportExcel}
-    >
-      <i className = "fas fa-file-excel"></i> Ver EXCEL
+    <button className="btn btn-sm btn-primary" onClick={exportExcel}>
+      <i className="fas fa-file-excel me-1"></i> Ver EXCEL
     </button>
-    
   );
 };
 
 export default ExcelExport;
+
+
 
 
         // <View

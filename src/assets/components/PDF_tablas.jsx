@@ -13,7 +13,16 @@ import footerLogo from "../../assets/img/footer.png";
 // MOD GET datos de secion
 import Cookies from "js-cookie"; // datos de secion
 const dataUser = Cookies.get(process.env.REACT_APP_COOKIES_NAME_DATA);
-let parsedUser = JSON.parse(dataUser);
+let parsedUser = null;
+
+if (dataUser) {
+  try {
+    parsedUser = JSON.parse(dataUser);
+  } catch (error) {
+    console.error("Error al parsear dataUser:", error);
+    parsedUser = null;
+  }
+}
 // console.log("Datos SECION",parsedUser.first_name, parsedUser.last_name);
 // FIN MOD GET datos secion
 
