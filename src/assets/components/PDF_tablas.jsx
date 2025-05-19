@@ -93,7 +93,7 @@ const styles = StyleSheet.create({
     paddingTop: 5,
   },
   headerImage: {
-    width: 550, // ancho
+    width: 450, // ancho
     height: 70, // altura
   },
   footerBox2: {
@@ -109,7 +109,7 @@ const styles = StyleSheet.create({
   },
   image: {
     // imagen footer
-    width: 550,
+    width: 450,
     sheight: 55,
   },
   pageNumberBox: {
@@ -467,7 +467,7 @@ const PDF = ({ data, titulo, columnas }) => (
                 style={index === 0 ? styles.colSmall : styles.col}
                 key={index}
               >
-                <Text style={styles.header}>{text.children}</Text>
+                <Text style={[styles.header, { fontSize: 8 }]}>{text.children}</Text>
               </View>
             ))}
         </View>

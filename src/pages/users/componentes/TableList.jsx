@@ -13,6 +13,9 @@ import {  useNavigate  } from 'react-router-dom';
 import { pdf } from "@react-pdf/renderer";
 import PDFformato from "../../../../src/assets/components/PDF_tablas.jsx";
 ////
+//// mod para inicio de reporte EXCEL
+import ExcelExport from "../../../../src/assets/components/EXCEL_tablas.jsx";
+////
 
 const TableList = (getStatusCRUD) => {
     
@@ -456,21 +459,34 @@ const TableList = (getStatusCRUD) => {
             statusUpdate = {true}                  
         /> 
 
-{/* //// MOD REPORTE PDF //// */}
-<div className="mb-3 text-end">
-    <button
+<div className="d-flex justify-content-end align-items-center mb-3 gap-2">
+  {/* //// MOD REPORTE PDF //// */}
+  <button
     className="btn btn-sm btn-success"
     onClick={async () => {
-        console.log("Datos que se están enviando al PDF:", getDataTables);
-        const blob = await pdf(<PDFformato data={getDataTables} titulo={titulo} columnas={childrenTexts} />).toBlob(); //  `data` así se espera en el componente
-        const url = URL.createObjectURL(blob);
-        window.open(url, "_blank");
+      console.log("Datos en el PDF:", getDataTables);
+      const blob = await pdf(
+        <PDFformato data={getDataTables} titulo={titulo} columnas={childrenTexts} />
+      ).toBlob();
+      const url = URL.createObjectURL(blob);
+      window.open(url, "_blank");
     }}
-    >
+  >
     <i className="fas fa-file-pdf me-1"></i> Ver PDF
-    </button>
+  </button>
+  {/* //// FIN MOD PDF //// */}
+
+  {/* //// MOD REPORTE EXCEL //// */}
+  <div>
+    {/* <ExcelExport data={getDataTables} titulo={titulo} columnas={childrenTexts} /> */}
+    <ExcelExport
+        titulo={titulo}
+        columnas={["id", "name", "state.name", "created_at", "updated_at"]}
+        data={getDataTables}
+      />
+  </div>
+  {/* //// FIN MOD EXCEL //// */}
 </div>
-{/* //// FIN MOD PDF //// */}
 
         <DataTable       
             title={<span className="mb-1 text-primary fs-4 fw-bold">📋 Lista de usuarios</span>}           

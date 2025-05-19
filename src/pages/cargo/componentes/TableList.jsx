@@ -9,6 +9,9 @@ import { useNavigate } from 'react-router-dom';
 import { pdf } from "@react-pdf/renderer";
 import PDFformato from "../../../../src/assets/components/PDF_tablas.jsx";
 ////
+//// mod para inicio de reporte EXCEL
+import ExcelExport from "../../../../src/assets/components/EXCEL_tablas.jsx";
+////
 
 const TableList = (getDataRefresch) => {
 

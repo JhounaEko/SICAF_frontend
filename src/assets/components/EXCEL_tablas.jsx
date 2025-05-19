@@ -1,7 +1,7 @@
-import React from "react";
 import ExcelJS from "exceljs";
 import { saveAs } from "file-saver";
 import Cookies from "js-cookie";
+import logo from "../../assets/img/img1.png";
 
 const dataUser = Cookies.get(process.env.REACT_APP_COOKIES_NAME_DATA);
 let parsedUser = null;
@@ -18,14 +18,56 @@ const ExcelExport = ({ data, titulo, columnas }) => {
     const workbook = new ExcelJS.Workbook();
     const worksheet = workbook.addWorksheet("Reporte");
 
-    // Agrega encabezado
-    const headerRow = worksheet.addRow(columnas);
-    headerRow.eachCell((cell) => {
+    // 1. ENCABEZADO CON LOGO E INFORMACIÓN
+    worksheet.mergeCells("A3:I7");
+    const titleCell = worksheet.getCell("A3");
+    titleCell.value =
+      `"NOMBRE DE LA ENTIDAD"\n` +
+      `INVENTARIO DETALLADO DE ACTIVOS FIJOS   [Y/O ACTIVOS INTANGIBLES]\n` +
+      `[DESCRIPCIÓN DE PROYECTO DE INVERSIÓN] (cuando corresponda)\n` +
+      `Al 31 de diciembre de ....\n` +
+      `(Expresado en Bolivianos)`;
+    titleCell.alignment = {
+      vertical: "middle",
+      horizontal: "center",
+      wrapText: true,
+    };
+    titleCell.font = { name: "Arial", size: 11, bold: true };
+
+    // 2. Insertar imagen
+    const response = await fetch(logo);
+    const imageBlob = await response.blob();
+    const arrayBuffer = await imageBlob.arrayBuffer();
+    const imageId = workbook.addImage({
+      buffer: arrayBuffer,
+      extension: "png",
+    });
+    worksheet.addImage(imageId, {
+      tl: { col: 1, row: 1 },
+      ext: { width: 120, height: 120 },
+    });
+
+    // 3. Fila donde empiezan los datos
+    const startRow = 10;
+
+    // 4. ENCABEZADOS DE TABLA
+    const encabezadosVisibles = {
+      id: "Nro",
+      name: "NOMBRE PERMISO",
+      "state.name": "ESTADO",
+      created_at: "FECHA CREACION",
+      updated_at: "ULTIMA ACTUALIZACION"
+    };
+
+    const headerRow = worksheet.getRow(startRow);
+    columnas.forEach((col, index) => {
+      const cell = headerRow.getCell(index + 2);
+      cell.value = encabezadosVisibles[col] ?? col;
       cell.font = { bold: true, color: { argb: "000000" } };
       cell.fill = {
         type: "pattern",
         pattern: "solid",
-        fgColor: { argb: "FF007C" },
+        fgColor: { argb: "BDD7EE" },
       };
       cell.alignment = { vertical: "middle", horizontal: "center" };
       cell.border = {
@@ -37,37 +79,85 @@ const ExcelExport = ({ data, titulo, columnas }) => {
     });
     headerRow.height = 30;
 
-    // Agrega filas de datos
-    data.forEach((item) => {
+    // 5. FILAS DE DATOS
+    data.forEach((item, i) => {
+      const row = worksheet.getRow(startRow + 1 + i);
+
       const rowValues = columnas.map((key) => {
-        // Soporte para campos anidados como 'state.name'
+        if (key === "id") return i + 1; // Reemplaza "id" con número
         const keys = key.split(".");
         let value = item;
-        for (let k of keys) {
-          value = value?.[k];
-        }
+        for (let k of keys) value = value?.[k];
         return value ?? "";
       });
-      worksheet.addRow(rowValues);
+
+      rowValues.forEach((val, idx) => {
+        const cell = row.getCell(idx + 2); // Comienza en la columna B
+        cell.value = val;
+        cell.alignment = { vertical: "middle", horizontal: "left" };
+        cell.border = {
+          top: { style: "thin" },
+          left: { style: "thin" },
+          bottom: { style: "thin" },
+          right: { style: "thin" },
+        };
+      });
     });
 
-    // Ajustar ancho de columnas
+    // 6. INFORMACIÓN DE USUARIO
+    const lastDataRow = startRow + data.length + 2;
+    const userCell = worksheet.getCell(lastDataRow, 2);
+    userCell.value = `${parsedUser?.first_name ?? ""} ${parsedUser?.last_name ?? ""}`;
+    userCell.font = { italic: true };
+    userCell.alignment = { vertical: "middle", horizontal: "center" };
+
+    const dateCell = worksheet.getCell(lastDataRow + 1, 2);
+    const now = new Date();
+    const formattedDate = `${now.getDate().toString().padStart(2, "0")}/${now
+      .toLocaleString("es-ES", { month: "short" })
+      .toLowerCase()}/${now.getFullYear()}`;
+    dateCell.value = formattedDate;
+    dateCell.font = { italic: true };
+    dateCell.alignment = { vertical: "middle", horizontal: "center" };
+
+    // 7. AJUSTE DE ANCHO
     worksheet.columns.forEach((column) => {
       let maxLength = 10;
       column.eachCell({ includeEmpty: true }, (cell) => {
-        const cellValue = cell.value ? cell.value.toString() : "";
-        maxLength = Math.max(maxLength, cellValue.length);
+        if (cell.row < 10) return;
+        const val = cell.value ? cell.value.toString() : "";
+        maxLength = Math.max(maxLength, val.length);
       });
-      column.width = maxLength + 2;
+      column.width = maxLength + 3;
     });
 
-    // Descargar archivo
+    // 8. ZONA DE IMPRESIÓN (borde derecho a 2 columnas del último dato)
+    const totalCols = columnas.length + 2;
+    for (let i = 0; i <= totalCols; i++) {
+      worksheet.getColumn(i + 1);
+    }
+
+    worksheet.pageSetup = {
+      margins: {
+        left: 0.5,
+        right: 0.5,
+        top: 0.75,
+        bottom: 0.75,
+        header: 0.3,
+        footer: 0.3,
+      },
+      orientation: "portrait",
+      paperSize: 9,
+      fitToPage: true,
+      fitToWidth: 1,
+      fitToHeight: 0,
+    };
+
+    // 9. DESCARGAR ARCHIVO
     const buffer = await workbook.xlsx.writeBuffer();
     const blob = new Blob([buffer], {
-      type:
-        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
     });
-
     saveAs(blob, `Reporte_${titulo}.xlsx`);
   };
 
@@ -79,97 +169,3 @@ const ExcelExport = ({ data, titulo, columnas }) => {
 };
 
 export default ExcelExport;
-
-
-
-
-        // <View
-        //   style={{
-        //     width: "70%",
-        //     justifyContent: "center",
-        //     alignItems: "center",
-        //   }}
-        // >
-        //   <Text style={styles.title}>LISTA DE {titulo}</Text>
-        // </View>
-        // <View style={{ width: "30%" }}>
-        //   <View
-        //     style={{
-        //       display: "table",
-        //       width: "100%",
-        //       border: "1px solid #000",
-        //     }}
-        //   >
-        //     {/* Fila 1: Título "IMPRESIÓN" */}
-        //     <View style={{ flexDirection: "row" }}>
-        //       <View style={{ width: "100%", padding: 4 }}>
-        //         <Text
-        //           style={{
-        //             textAlign: "center",
-        //             fontWeight: "bold",
-        //             fontSize: 9,
-        //           }}
-        //         >
-        //           IMPRESIÓN
-        //         </Text>
-        //       </View>
-        //     </View>
-
-        //     {/* Fila 2: USUARIO */}
-        //     <View style={{ flexDirection: "row" }}>
-        //       <View
-        //         style={{
-        //           width: "50%",
-        //           padding: 4,
-        //           alignItems: "flex-end",
-        //         }}
-        //       >
-        //         <Text
-        //           style={{
-        //             textAlign: "right",
-        //             fontWeight: "bold",
-        //             fontSize: 9,
-        //           }}
-        //         >
-        //           USUARIO:
-        //         </Text>
-        //       </View>
-        //       <View style={{ width: "50%", padding: 4 }}>
-        //         <Text style={{ fontSize: 8 }}>
-        //           {parsedUser.first_name} {parsedUser.last_name}
-        //         </Text>
-        //       </View>
-        //     </View>
-
-        //     {/* Fila 3: FECHA */}
-        //     <View style={{ flexDirection: "row" }}>
-        //       <View
-        //         style={{
-        //           width: "50%",
-        //           padding: 4,
-        //           alignItems: "flex-end",
-        //         }}
-        //       >
-        //         <Text
-        //           style={{
-        //             textAlign: "right",
-        //             fontWeight: "bold",
-        //             fontSize: 9,
-        //           }}
-        //         >
-        //           FECHA:
-        //         </Text>
-        //       </View>
-        //       <View style={{ width: "50%", padding: 4 }}>
-        //         <Text style={{ fontSize: 9 }}>
-        //           <Text>{`${new Date()
-        //             .getDate()
-        //             .toString()
-        //             .padStart(2, "0")}/${new Date()
-        //             .toLocaleString("es-ES", { month: "short" })
-        //             .toLowerCase()}/${new Date().getFullYear()}`}</Text>
-        //         </Text>
-        //       </View>
-        //     </View>
-        //   </View>
-        // </View>

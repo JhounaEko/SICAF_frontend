@@ -201,7 +201,7 @@ const TableList = (getDataRefresch) => {
     const childrenTexts = columns.map(col => {
         return col.name?.props || '';
     });
-    console.log("Datos que se están enviando al PDF:",titulo, getDataTables);
+    console.log("Datos que se están enviando al PDF:",titulo, getDataTables,childrenTexts);
 
     return (<>
         <ReactNotifications />
@@ -219,7 +219,7 @@ const TableList = (getDataRefresch) => {
   <button
     className="btn btn-sm btn-success"
     onClick={async () => {
-      console.log("Datos que se están enviando al PDF:", getDataTables);
+      console.log("Datos en el PDF:", getDataTables);
       const blob = await pdf(
         <PDFformato data={getDataTables} titulo={titulo} columnas={childrenTexts} />
       ).toBlob();
@@ -236,12 +236,13 @@ const TableList = (getDataRefresch) => {
     {/* <ExcelExport data={getDataTables} titulo={titulo} columnas={childrenTexts} /> */}
     <ExcelExport
         titulo={titulo}
-        columnas={["id", "name", "state.name", "state.code", "created_at", "updated_at"]}
+        columnas={["id", "name", "state.name", "created_at", "updated_at"]}
         data={getDataTables}
       />
   </div>
   {/* //// FIN MOD EXCEL //// */}
 </div>
+
 
         <DataTable title={<span></span>}
             columns={columns}
