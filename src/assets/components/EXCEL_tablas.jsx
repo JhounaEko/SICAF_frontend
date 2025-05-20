@@ -51,13 +51,77 @@ const ExcelExport = ({ data, titulo, columnas }) => {
     const startRow = 10;
 
     // 4. ENCABEZADOS DE TABLA
-    const encabezadosVisibles = {
-      id: "Nro",
-      name: "NOMBRE PERMISO",
-      "state.name": "ESTADO",
-      created_at: "FECHA CREACION",
-      updated_at: "ULTIMA ACTUALIZACION"
-    };
+    let encabezadosVisibles = {};
+
+    switch (titulo) {
+      case "USUARIOS":
+        encabezadosVisibles = {
+          id: "Nro",
+          full_name: "NOMBRE",
+          username: "USUARIO",
+          "office.name": "OFICINA",
+          roles: "ROLES",
+          created_at: "FECHA CREACION",
+          updated_at: "ULTIMA ACTUALIZACION",
+          "state.name": "ESTADO",
+        };
+        break;
+      case "ROLES":
+        encabezadosVisibles = {
+          id: "Nro",
+          name: "NOMBRE",
+          created_at: "FECHA CREACION",
+          updated_at: "ULTIMA ACTUALIZACION",
+          "permissions.length": "CANTIDAD DE PERMISOS",
+          "state.name": "ESTADO",
+        };
+        break;
+      case "CARGOS":
+        encabezadosVisibles = {
+          id: "Nro",
+          name: "NOMBRE DE PERMISO",
+          description: "DESCRIPCION",
+          created_at: "FECHA DE REGISTRO",
+          updated_at: "ULTIMA ACTUALIZAICON",
+          "state.name": "ESTADO",
+        };
+        break;
+      case "EMPLEADOS":
+        encabezadosVisibles = {
+          id: "Nro",
+          full_name: "USUARIOS",
+          "office.name": "OFICINA",
+          "position.name": "CARGO",
+          created_at: "FECHA DE REGISTRO",
+          updated_at: "ULTIMA ACTUALIZACION",
+          "state.name": "ESTADO",
+        };
+        break;
+      case "OFICINAS":
+        encabezadosVisibles = {
+          id: "Nro",
+          name: "OFICINA",
+          initials: "ACRONIMO",
+          level: "NIVEL JERARQUICO",
+          created_at: "FECHA DE REGISTRO",
+          "state.name": "ESTADO",
+        };
+        break;
+      case "LUGARES":
+        encabezadosVisibles = {
+          id: "Nro",
+          code: "CODIGO",
+          description: "DESCRIPCION",
+          abbreviation: "ABREVIACION",
+          created_at: "FECHA DE REGISTRO",
+          details: "DETALLES",
+          updated_at: "ULTIMA ACTUALIZACION",
+          "state.name": "ESTADO",
+        };
+        break;
+      default:
+        console.warn("Título no reconocido:", titulo);
+    }
 
     const headerRow = worksheet.getRow(startRow);
     columnas.forEach((col, index) => {
@@ -84,7 +148,19 @@ const ExcelExport = ({ data, titulo, columnas }) => {
       const row = worksheet.getRow(startRow + 1 + i);
 
       const rowValues = columnas.map((key) => {
-        if (key === "id") return i + 1; // Reemplaza "id" con número
+        if (key === "id") return i + 1;
+        if (key === "full_name") {
+          return `${item.first_name ?? ""} ${item.last_name ?? ""}`.trim();
+        }
+        if (key === "roles") {
+          return Array.isArray(item.roles)
+            ? item.roles.map((r) => r.name).join("\n")
+            : "";
+        }
+        if (key === "permissions.length") {
+          return item.permissions?.length ?? 0;
+        }
+
         const keys = key.split(".");
         let value = item;
         for (let k of keys) value = value?.[k];
@@ -94,7 +170,7 @@ const ExcelExport = ({ data, titulo, columnas }) => {
       rowValues.forEach((val, idx) => {
         const cell = row.getCell(idx + 2); // Comienza en la columna B
         cell.value = val;
-        cell.alignment = { vertical: "middle", horizontal: "left" };
+        cell.alignment = { vertical: "middle", horizontal: "left", wrapText: true };
         cell.border = {
           top: { style: "thin" },
           left: { style: "thin" },
@@ -131,7 +207,7 @@ const ExcelExport = ({ data, titulo, columnas }) => {
       column.width = maxLength + 3;
     });
 
-    // 8. ZONA DE IMPRESIÓN (borde derecho a 2 columnas del último dato)
+    // 8. ZONA DE IMPRESIÓN
     const totalCols = columnas.length + 2;
     for (let i = 0; i <= totalCols; i++) {
       worksheet.getColumn(i + 1);

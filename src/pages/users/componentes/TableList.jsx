@@ -481,7 +481,7 @@ const TableList = (getStatusCRUD) => {
     {/* <ExcelExport data={getDataTables} titulo={titulo} columnas={childrenTexts} /> */}
     <ExcelExport
         titulo={titulo}
-        columnas={["id", "name", "state.name", "created_at", "updated_at"]}
+        columnas = {["id", "full_name", "username", "office.name", "roles", "created_at", "updated_at", "state.name"]}
         data={getDataTables}
       />
   </div>

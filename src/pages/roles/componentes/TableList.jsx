@@ -256,21 +256,34 @@ const TablaList = (getStatusCRUD) => {
                 updateTableData={updateTableData}
                 statusUpdate={true}
             />
-{/* //// MOD REPORTE PDF //// */}
-      <div className="mb-3 text-end">
-        <button
-          className="btn btn-sm btn-success"
-          onClick={async () => {
-            console.log("Datos que se están enviando al PDF:", getDataTables);
-            const blob = await pdf(<PDFformato data={getDataTables} titulo={titulo} columnas={childrenTexts} />).toBlob(); //  `data` así se espera en el componente
-            const url = URL.createObjectURL(blob);
-            window.open(url, "_blank");
-          }}
-        >
-          <i className="fas fa-file-pdf me-1"></i> Ver PDF
-        </button>
-      </div>
-      {/* //// FIN MOD PDF //// */}
+<div className="d-flex justify-content-end align-items-center mb-3 gap-2">
+  {/* //// MOD REPORTE PDF //// */}
+  <button
+    className="btn btn-sm btn-success"
+    onClick={async () => {
+      console.log("Datos en el PDF:", getDataTables);
+      const blob = await pdf(
+        <PDFformato data={getDataTables} titulo={titulo} columnas={childrenTexts} />
+      ).toBlob();
+      const url = URL.createObjectURL(blob);
+      window.open(url, "_blank");
+    }}
+  >
+    <i className="fas fa-file-pdf me-1"></i> Ver PDF
+  </button>
+  {/* //// FIN MOD PDF //// */}
+
+  {/* //// MOD REPORTE EXCEL //// */}
+  <div>
+    {/* <ExcelExport data={getDataTables} titulo={titulo} columnas={childrenTexts} /> */}
+    <ExcelExport
+        titulo={titulo}
+        columnas={["id", "name", "created_at", "updated_at", "permissions.length", "state.name"]}
+        data={getDataTables}
+      />
+  </div>
+  {/* //// FIN MOD EXCEL //// */}
+</div>
             <DataTable title={<span></span>}
                 columns={columns}
                 data={getDataTables}
