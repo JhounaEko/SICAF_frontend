@@ -244,4 +244,4 @@ const ExcelExport = ({ data, titulo, columnas }) => {
   );
 };
 
-export default ExcelExport;
+export default ExcelExport; 
