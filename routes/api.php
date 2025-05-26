@@ -20,6 +20,7 @@ use App\Http\Controllers\IncreaseTypeController;
 use App\Http\Controllers\ItemGroupController;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\MotiveController;
+use App\Http\Controllers\NoteController;
 use App\Http\Controllers\NoteTypeController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\OfficeController;
@@ -51,27 +52,21 @@ Route::prefix('v1')->group(function () {
 
     Route::post('login', [AuthController::class, 'login']);
     Route::get('office_locations', [OfficeLocationController::class, 'index'])->name('v1.office_locations.index')->middleware(SetSortableColumns::class);
-    
+    Route::get('roles', [RoleController::class, 'index'])->name('v1.roles.index')->middleware(SetSortableColumns::class);
+    Route::get('positions', [PositionController::class, 'index'])->name('v1.positions.index')->middleware(SetSortableColumns::class);
+
     Route::middleware(['auth:sanctum'])->group(function () {
         Route::middleware([SetSortableColumns::class])->group(function () {
             Route::get('states', [StateController::class, 'index'])->name('v1.states.index');
             Route::get('offices', [OfficeController::class, 'index'])->name('v1.offices.index');
             Route::get('users', [UserController::class, 'index'])->name('v1.users.index');
             Route::get('permissions', [PermissionController::class, 'index'])->name('v1.permissions.index');
-            Route::get('roles', [RoleController::class, 'index'])->name('v1.roles.index');
             Route::get('staff', [StaffController::class, 'index'])->name('v1.staff.index');
             Route::get('menus', [MenuController::class, 'index'])->name('v1.menus.index');
             Route::get('motives', [MotiveController::class, 'index'])->name('v1.motives.index');
             Route::get('note_types', [NoteTypeController::class, 'index'])->name('v1.note_types.index');
-            Route::get('increase_types', [IncreaseTypeController::class, 'index'])->name('v1.increase_types.index');       
-    });
-        Route::apiResource('states', StateController::class)->except('index');
-        Route::apiResource('offices', OfficeController::class)->except('index');
-        Route::apiResource('users', UserController::class)->except('index');
-        Route::post('users/password', [UserController::class, 'updatePassword']);  // cambiar password // usesrs
-        Route::patch('users/{user}/reset-password-change-limit', [UserController::class, 'resetPasswordChangeLimit']); ////solo el admin puede realizar
             Route::get('increase_types', [IncreaseTypeController::class, 'index'])->name('v1.increase_types.index');
-            Route::get('positions', [PositionController::class, 'index'])->name('v1.positions.index');
+           
             Route::get('audits', [AuditController::class, 'index'])->name('v1.audits.index');;
             Route::get('historic_exchange_rates', [HistoricExchangeRateController::class, 'index'])->name('v1.historic_exchange_rates.index');
             Route::get('historic_changes', [HistoricChangeController::class, 'index'])->name('v1.historic_changes.index');
@@ -89,10 +84,9 @@ Route::prefix('v1')->group(function () {
             Route::get('reports', [ReportController::class, 'index'])->name('v1.reports.index');
             Route::get('documents', [DocumentController::class, 'index'])->name('v1.documents.index');
             Route::get('places', [PlaceController::class, 'index'])->name('v1.places.index');
-        
             Route::get('plates', [PlateController::class, 'index'])->name('v1.plates.index');
             Route::get('income_notes', [IncomeNoteController::class, 'index'])->name('v1.income_notes.index');
-
+            Route::get('notes', [NoteController::class, 'index'])->name('v1.notes.index');
         });
         Route::apiResource('states', StateController::class)->except('index');
         Route::apiResource('offices', OfficeController::class)->except('index');
@@ -130,8 +124,8 @@ Route::prefix('v1')->group(function () {
         Route::apiResource('plates', PlateController::class)->except('index');
         Route::apiResource('income_notes', IncomeNoteController::class)->except('index');
         Route::apiResource('office_locations', OfficeLocationController::class)->except('index');
-
+        Route::apiResource('notes', NoteController::class)->except('index');
 
         Route::post('logout', [AuthController::class, 'logout']);
     });
-
+});

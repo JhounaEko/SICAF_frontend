@@ -168,7 +168,7 @@ class Staff extends Model implements Auditable
     {
         if ($officeName) {
             $query->whereHas('officeLocation.office', function ($q) use ($officeName) {
-                $q->where('name', 'ILIKE', "%{$officeName}%");
+                $q->where('name', 'LIKE', "%{$officeName}%");
             });
         }
     }

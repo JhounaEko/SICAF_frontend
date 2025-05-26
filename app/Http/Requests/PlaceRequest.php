@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class PlaceRequest extends FormRequest
 {
@@ -21,16 +22,24 @@ class PlaceRequest extends FormRequest
                 'description' => ['sometimes', 'string', 'max:100'],
                 'abbreviation' => ['sometimes', 'string', 'max:12'],
                 'state_id' => ['sometimes', 'int', 'exists:states,id'],
-                'code' => ['nullable', 'string'],
-                'details' => ['sometimes', 'string']
+                'code' => ['nullable', 'string', Rule::unique('places', 'code')->ignore($this->place)],
+                'details' => ['sometimes','nullable', 'string']
             ];
         }
         return [
             'description' => ['required', 'string', 'max:100'],
             'abbreviation' => ['required', 'string', 'max:12'],
             'state_id' => ['nullable', 'int', 'exists:states,id'],
-            'code' => ['required', 'string'],
+            'code' => ['required', 'string', Rule::unique('places', 'code')->ignore($this->place)],
             'details' => ['nullable', 'string']
         ];
     }
+
+    public function messages()
+    {
+        return [           
+            'code.unique' => 'El codigo ingresado ya está registrado. Por favor, use uno diferente.',        
+        ];
+        
+    } 
 }

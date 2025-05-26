@@ -9,7 +9,6 @@ use App\Http\Responses\ApiResponse;
 use App\Models\Staff;
 use Illuminate\Http\Request;
 use App\Services\StaffService;
-
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Facades\DB;
@@ -17,11 +16,12 @@ use PHPUnit\Event\Application\Started;
 
 class StaffController extends Controller implements HasMiddleware
 {
+
     public static function middleware()
     {
         return [
             new Middleware('permission:VIEW STAFF', only: ['index', 'show']),
-            // new Middleware('permission:REGISTER STAFF', only: ['store']),
+           // new Middleware('permission:REGISTER STAFF', only: ['store']),
             new Middleware('permission:UPDATE STAFF', only: ['update'])
         ];
     }
@@ -77,6 +77,8 @@ class StaffController extends Controller implements HasMiddleware
             $data = $request->validated();
             $staff = $service->createStaff($data);
             return ApiResponse::success('Personal registrado exitosamente.', 201, $staff);
+        } catch (\Illuminate\Database\UniqueConstraintViolationException $e) {
+            return ApiResponse::error('El carnet de identidad proporcionado ya está en uso.', 422);
         } catch (\Exception $e) {
             DB::rollBack();
             return ApiResponse::error('Ocurrió un error al registrar el personal.', 500, $e->getMessage());
@@ -93,7 +95,7 @@ class StaffController extends Controller implements HasMiddleware
     }
 
     public function update(StaffRequest $request, Staff $staff, StaffService $service)
-    {
+    {      
         try {
             $data = $request->validated();
             $updatedStaff = $service->updateStaff($staff, $data);

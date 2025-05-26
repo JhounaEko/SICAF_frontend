@@ -26,25 +26,25 @@ class StaffResource extends JsonResource
             'email' => $this->email,
             'position' => [
                 'name' => $this->position->name,
+                'description' => $this->position->description,
                 'id' => $this->position->id,
             ],
+            'office_location_id' => $this->office_location_id,
             'office' => [
+                'id' => $this->office->id,
                 'name' => $this->office->name,
                 'initials' => $this->office->initials,
             ],
-            'place' => $this->place ? [
-                'name' => $this->place->description,
+            'place' => $this->place ? [            
+                'description' => $this->place->description,
                 'initials' => $this->place->abbreviation,
             ] : [],
-<<<<<<< HEAD
             // 'place' => $this->whenLoaded('place', function () { // Usa whenLoaded si quieres que solo aparezca si la relación fue cargada (eager loaded)
             //      return [
             //          'name' => $this->place->description,
             //          'initials' => $this->place->abbreviation,
             //      ];
             //  }, []),
-=======
->>>>>>> c0edfbddffe3215d0d0eaaec425bd440f367ec58
             'state' => [
                 'name' => $this->state->name,
                 'code' => $this->state->code,

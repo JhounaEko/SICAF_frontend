@@ -52,8 +52,7 @@ class UserRequest extends FormRequest
             'password' => ['required', 'string', 'min:8', 'confirmed'],
             'password_change_count' => ['nullable', 'integer'],
             'email' => ['required', 'string', 'email', 'regex:/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/', Rule::unique('users', 'email')->ignore($this->user)],
-            'office_location_id' => ['required', 'integer', 'exists:office_locations,id'],
-            
+            'office_location_id' => ['required', 'integer', 'exists:office_locations,id'],            
             'state_id' => ['nullable', 'integer', 'exists:states,id'],
             'roles' => ['sometimes', 'array'],
             'roles.*' => ['exists:roles,id']

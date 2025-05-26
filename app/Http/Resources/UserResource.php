@@ -45,15 +45,17 @@ class UserResource extends JsonResource
                     }) : [],
                 ];
             }) : [],
+   
+            'office_location_id'=> $this->office_location_id,
             'office'       => $this->office ? [
                 'id'       => $this->office->id,
                 'name'     => $this->office->name,
                 'initials' => $this->office->initials,
-<<<<<<< HEAD
-            ],
+            ]:[],
             'place' => $this->place ? [
                 'name' => $this->place->description,
                 'initials' => $this->place->abbreviation,
+                'abbreviation' => $this->place->abbreviation,
             ] : [],
             // 'place' => $this->whenLoaded('place', function () { // Usa whenLoaded si quieres que solo aparezca si la relación fue cargada (eager loaded)
             //      return [
@@ -61,14 +63,6 @@ class UserResource extends JsonResource
             //          'initials' => $this->place->abbreviation,
             //      ];
             //  }, []),
-=======
-            ] : [],
-            'place'            => $this->place ? [
-                'id'           => $this->place->id,
-                'description'         => $this->place->description,
-                'abbreviation' => $this->place->abbreviation,
-            ] : [],
->>>>>>> c0edfbddffe3215d0d0eaaec425bd440f367ec58
             'state' => [
                 'name' => $this->state->name,
                 'code' => $this->state->code,

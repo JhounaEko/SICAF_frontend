@@ -28,9 +28,9 @@ class MenuController extends Controller
     public function index(FilterRequest $request)
     {
         try {
-            $query = Menu::query();
+            $query = Menu::with(['parentMenu']);
 
-            $query->filterByState($request->input('state_id'))
+            $query->filterByState($request->input('state'))
                 ->filterByLabelOrRoute($request->input('search'))
                 ->filterByStateName($request->input('state_name'))
                 ->filterByDates($request->input('start_date'), $request->input('end_date'));
@@ -39,33 +39,34 @@ class MenuController extends Controller
                 try {
                     $query->sort($request->input('sort_by'), $request->input('sort_order', 'asc'));
                 } catch (\Exception $e) {
-                    return ApiResponse::error('Error al ordenar.', 400, $e->getMessage());
+                    return ApiResponse::error('Error in sorting.', 400, $e->getMessage());
                 }
             }
 
             if ($request->boolean('include_hierarchy')) {
-                $menus = $query->whereNull('parent') // Filtra solo los menús de nivel superior
-                      ->with(['childMenus.childMenus', 'state']) // Carga la jerarquía (ajusta la profundidad según sea necesario) y el estado
-                      ->paginate(10);
+                $query->whereNull('parent') // Filtra solo los menús de nivel superior
+                      ->with(['childMenus']);
             } else {
-                $menus = $query->with('state')->paginate(10);
+                $query->with('state');
             }
+
+
+            $perPage = $request->input('row_num'); 
+            $menus = $query->paginate($perPage);
 
             if ($menus->isEmpty()) {
-                return ApiResponse::error('No hay menús registrados.', 200);
+                return ApiResponse::error("There're not registered menus.", 200);
             }
 
-            $collection = $request->boolean('simple_view')
-                ? SimpleMenuResource::collection($menus)
-                : MenuResource::collection($menus);
 
+            $collection = MenuResource::collection($menus);
             $responseData = $collection->response()->getData(true);
-
-            return ApiResponse::success('Menús encontrados.', 200, $responseData);
+            return ApiResponse::success('Menus found.', 200, $responseData);
         } catch (\Exception $e) {
-            return ApiResponse::error('Ocurrió un error inesperado.', 500, $e->getMessage());
+            return ApiResponse::error('An unexpected error ocurred.', 500, $e->getMessage());
         }
     }
+
 
     public function store(MenuRequest $request)
     {
@@ -102,5 +103,50 @@ class MenuController extends Controller
             DB::rollBack();
             return ApiResponse::error('Ocurrió un error al actualizar el menú.', 500, $e->getMessage());
         }
+    }
+
+    /** Function auxliar, when get the data, for peticion GET*/
+    function buildMenuTree(array $items): array
+    {
+        $menuMap = [];
+        $tree = [];
+        $items = $items['data'];  // Asegúrate de que 'data' exista y contenga los elementos
+    
+        // Crear el mapa de menús
+        foreach ($items as $item) {
+            if (!isset($item['id'])) {
+                continue;
+            }
+    
+            $item['children'] = [];
+            $menuMap[$item['id']] = $item;
+        }
+    
+        // Construir la jerarquía del árbol
+        foreach ($menuMap as $id => $item) {  // Cambié &$item a $item
+            if ($item['parent'] === null) {  // Si no tiene padre, es un nodo raíz
+                $tree[] = $item;
+            } else {  // Si tiene un padre, agregarlo como hijo
+                if (isset($menuMap[$item['parent']])) {
+                    $menuMap[$item['parent']]['children'][] = $item;
+                }
+            }
+        }
+    
+        // Limpiar el árbol (eliminar 'children' vacíos)
+        $clean = function (&$nodes) use (&$clean) {
+            foreach ($nodes as &$node) {
+                if (empty($node['children'])) {
+                    unset($node['children']);
+                } else {
+                    $clean($node['children']);
+                }
+            }
+        };
+    
+        $clean($tree);
+    
+        // Devolver el árbol en lugar de el mapa plano
+        return $tree;
     }
 }

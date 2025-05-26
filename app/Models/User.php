@@ -9,6 +9,7 @@ use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use OwenIt\Auditing\Contracts\Auditable;
+use App\Models\Role as AppRoleModel;
 
 class User extends Authenticatable implements Auditable
 {
@@ -59,6 +60,12 @@ class User extends Authenticatable implements Auditable
         ];
     }
 
+    // public function roles()
+    // {
+
+    //     return $this->belongsToMany(AppRoleModel::class, 'model_has_roles', 'model_id', 'role_id');
+    // }
+
     public function officeLocation()
     {
         return $this->belongsTo(OfficeLocation::class, 'office_location_id');
@@ -74,7 +81,7 @@ class User extends Authenticatable implements Auditable
             'office_location_id',  // FK en users
             'office_id'            // FK en office_locations
         );
-    }
+    }   
 
     public function place()
     {

@@ -79,6 +79,7 @@ return [
             'label',
             'route',
             'parent',
+            'level',
             'icon',
             'state_id',
             'created_at',

@@ -17,7 +17,7 @@ class PositionController extends Controller implements HasMiddleware
     public static function middleware()
     {
         return [
-            new Middleware('permission:VIEW POSITIONS', only: ['index', 'show']),
+            new Middleware('permission:VIEW POSITIONS', only: ['show']),
             new Middleware('permission:REGISTER POSITIONS', only: ['store']),
             new Middleware('permission:UPDATE POSITIONS', only: ['update']),
         ];

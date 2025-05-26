@@ -33,7 +33,7 @@ class UserController extends Controller implements HasMiddleware
         try {
             $query = User::with([
                 'office','place','state',
-                'roles.permissions'
+                'roles.permissions', 'roles.menus'
               ]);
             $query->filterByState($request->input('state'))
                 ->filterByOffice($request->input('office'))

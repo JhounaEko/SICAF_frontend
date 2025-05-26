@@ -29,14 +29,28 @@ class AuthController extends Controller
                 return ApiResponse::error('El usuario no tiene roles asignados.', 403); // 403 Prohibido
             }
 
-            $roles = $user->roles->map(function ($role) {
+            $roles = $user->roles->filter(function ($role) {
+                    return $role->state_id == 1;
+                })->map(function ($role) {
                 return [
                     'id' => $role->id,
                     'name' => $role->name,
+                    'menus' => $role->menus ? $role->menus->filter(function ($menu) {
+                        return $menu->state_id == 1;
+                    })->map(function ($menu) { // Agrega esta verificación
+                        return [ 
+                            'id' => $menu->id,
+                            'label' => $menu->label,
+                            'route' => $menu->route,
+                            'icon' => $menu->icon,
+                            'level' => $menu->level,
+                            'parent' => $menu->parent,
+                        ];
+                    })->values()->toArray() : [],
                     // Agrega otros campos del rol si es necesario
                 ];
             });
-
+          
             try {
                 DB::beginTransaction();
                 $tokenName = $user->username . ' - ' . now()->format('Y-m-d');

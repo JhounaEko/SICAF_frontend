@@ -41,7 +41,7 @@ class Menu extends Model implements Auditable
         $this->attributes['icon'] = mb_strtoupper(trim($value));
     }
 
-    public function parent()
+    public function parentMenu()
     {
         return $this->belongsTo(Menu::class, 'parent');
     }

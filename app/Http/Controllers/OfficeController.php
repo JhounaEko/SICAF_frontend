@@ -76,6 +76,7 @@ class OfficeController extends Controller implements HasMiddleware
 
     public function show(FilterRequest $request, $id)
     {
+
         try {
             if (!is_numeric($id)) {
                 return ApiResponse::error('Formato de ID inválido.', 400);

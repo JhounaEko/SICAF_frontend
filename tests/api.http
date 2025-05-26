@@ -1,7 +1,6 @@
 ###Test get states
 GET http://127.0.0.1:8000/api/v1/states?page=1&sort_by=id&row_num=5
-
-Authorization: Bearer 92|r207hKOF8nHDkk4d7SNog4Tm41LHgvHAqhriAEfO9f5b8a9e
+Authorization: Bearer 407|cg469sf2qhES3ZrYm6iPEVpYvWZzPn9XNhZtOvGqf4c36444
 
 Accept: application/json
 ###Test post states
@@ -185,11 +184,12 @@ Accept: application/json
 }
 
 ### 92|r207hKOF8nHDkk4d7SNog4Tm41LHgvHAqhriAEfO9f5b8a9e
+### 407|cg469sf2qhES3ZrYm6iPEVpYvWZzPn9XNhZtOvGqf4c36444
 
 ###Test logout user
 POST http://127.0.0.1:8000/api/v1/logout
 Content-Type: application/json
-Authorization: Bearer 114|7CyiPIG3hVljifx82uY0h8D8ficEiu95rn0TLzudbdf3d1df
+Authorization: Bearer 406|wVH8ScOGjeLwWdCP7jUH1uLxLpxP5RaKlmqRz5PH763224ff
 # Authorization: Bearer 28|re2vU9qxuCEdSKHrbpmpTT41Yl2kXwzscKQVG2iW27938767
 Accept: application/json
 ###Test register users no authenticated
@@ -1384,6 +1384,10 @@ GET http://127.0.0.1:8000/api/v1/office_locations?page=1&sort_by=id&sort_order=a
 Accept: application/json
 ###Test post OFFICE LOCATIONS
 POST http://127.0.0.1:8000/api/v1/office_locations
+
+office_name = .....
+y: place_name = .....
+
 Content-Type: application/json
 Accept: application/json
 Authorization: Bearer 115|mdovb47kc8OVSSCwO4NQSkXho4wMJL1WA9GC7pBuafb779d6
