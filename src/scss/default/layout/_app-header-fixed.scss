@@ -1,0 +1,12 @@
+.app-header-fixed {
+	padding-top: $app-header-height;
+	
+	@include media-breakpoint-down(md) {
+		padding-top: ($app-header-height-sm * 2) + rem(1px);
+	}
+	
+	& .app-header {
+		position: fixed;
+		border-radius: 0px 0px 20px 20px;
+	}
+}
