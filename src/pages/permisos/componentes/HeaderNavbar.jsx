@@ -3,7 +3,7 @@ import CompModalCreateUpdate from './ModalCreateUpdate.jsx';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 
-const HeaderNavbar = ({ functionRefreschDataTable, searchData }) => {
+const HeaderNavbar = ({ functionRefreschDataTable, searchData, funtionActivePdf, }) => {
 
     /** Modal */
     const [modal, setModal] = useState(false);
@@ -42,8 +42,22 @@ const HeaderNavbar = ({ functionRefreschDataTable, searchData }) => {
             <div className="col-sm">
 
             </div>
-            <div className="col-sm">
-            </div>
+            <div className="col-lg-4">
+          <div className="d-flex justify-content-end gap-2">
+            <button
+              className="btn btn-danger btn-rounded rounded-pill"
+              onClick={funtionActivePdf}
+            >
+              <i className="fa fa-file-pdf me-1"></i> PDF
+            </button>
+            <button
+              className="btn btn-success btn-rounded rounded-pill"
+              onClick={funtionActivePdf}
+            >
+              <i className="fa fa-file-pdf me-1"></i> EXCEL
+            </button>
+          </div>
+        </div>
         </div>
     </>);
 }

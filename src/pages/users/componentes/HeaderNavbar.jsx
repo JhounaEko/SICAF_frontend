@@ -9,7 +9,7 @@ import 'moment/locale/es';
 import 'react-datetime/css/react-datetime.css';
 import { ReactNotifications } from 'react-notifications-component';
 import { addNotification } from './../../../components/alert/alert.jsx';
-const HeaderNavbar = ({ updateTableData, searchData, searchDataParameter }) => {
+const HeaderNavbar = ({ updateTableData, searchData, searchDataParameter, funtionActivePdf, }) => {
 
     /** Modal */
     const [modal, setModal] = useState(false);
@@ -152,8 +152,22 @@ const HeaderNavbar = ({ updateTableData, searchData, searchDataParameter }) => {
                     <option value="data_crate">fecha de registro</option>
                 </select>
             </div>
-            <div className="col-sm">
-            </div>
+            <div className="col-lg-4">
+          <div className="d-flex justify-content-end gap-2">
+            <button
+              className="btn btn-danger btn-rounded rounded-pill"
+              onClick={funtionActivePdf}
+            >
+              <i className="fa fa-file-pdf me-1"></i> PDF
+            </button>
+            <button
+              className="btn btn-success btn-rounded rounded-pill"
+              onClick={funtionActivePdf}
+            >
+              <i className="fa fa-file-pdf me-1"></i> EXCEL
+            </button>
+          </div>
+        </div>
         </div>
     </>);
 }

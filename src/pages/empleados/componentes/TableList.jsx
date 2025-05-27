@@ -188,15 +188,18 @@ const TableList = (getDataRefresch) => {
                     setDataTables(returnData.response.data.results.data);
                     setRowTotal(returnData.response.data.results.meta.total);
                     setNumRow(returnData.response.data.results.meta.from);
+                    getDataRefresch.functionGeneradorPdf(returnData.response.data.results.data)
                 } catch (error) {
                     setRowTotal(0);
                     setDataTables([])
                     setNumRow(0);
+                    getDataRefresch.functionGeneradorPdf([])
                 }
             } else {
                 setRowTotal(0);
                 setDataTables([])
                 setNumRow(0);
+                getDataRefresch.functionGeneradorPdf([])
                 if (returnData.message == "Unauthenticated.") {
                     messageFinallySesion();
                     navigation('/');
@@ -235,7 +238,7 @@ const TableList = (getDataRefresch) => {
                 height: '300px', 
                 backgroundColor: 'rgba(255, 255, 255, 0.36)',
                 width: '100%',
-              }}><span className="spinner-border spinner-border-xl fs-2" role="status" aria-hidden="true" />cargando...</div>}
+              }}><span className="spinner-border spinner-border-xl fs-2" role="status" aria-hidden="true" />cargando datos...</div>}
             onChangePage={(newPage) => setPag(newPage)}
             paginationTotalRows={getRowTotal}
             onSort={handleSort}

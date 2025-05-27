@@ -200,7 +200,7 @@ const TableList = (getDataRefresch) => {
                 height: '300px', 
                 backgroundColor: 'rgba(255, 255, 255, 0.36)',
                 width: '100%',
-              }}><span className="spinner-border spinner-border-xl fs-2" role="status" aria-hidden="true" />cargando...</div>}
+              }}><span className="spinner-border spinner-border-xl fs-2" role="status" aria-hidden="true" />cargando datos...</div>}
             onChangePage={(newPage) => setPag(newPage)}
             paginationTotalRows={getRowTotal}
             onSort={handleSort}

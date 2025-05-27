@@ -8,7 +8,8 @@ import { addNotification } from './../../../components/alert/alert.jsx';
 import { useNavigate } from 'react-router-dom';
 
 
-const TablaList = (getStatusCRUD) => {
+// const TablaList = (getStatusCRUD) => {
+const TablaList = ({ getStatusCRUD }) => {
 
     const useListRol = modelUseListRol();
     const useChangeStatus = modelChangeStatus();
@@ -50,15 +51,18 @@ const TablaList = (getStatusCRUD) => {
                     setRowTotal(returnData.response.data.results.meta.total);
                     setDataTables(returnData.response.data.results.data)
                     setNum(returnData.response.data.results.meta.from);
+                    // getDataRefresch.functionGeneradorPdf(returnData.response.data.results.data)
                 } else {
                     setRowTotal(0);
                     setDataTables([])
                     setNum(0);
+                    // getDataRefresch.functionGeneradorPdf([])
                 }
             } else {
                 setRowTotal(0);
                 setDataTables([])
                 setNum(0);
+                // getDataRefresch.functionGeneradorPdf([])
                 if (returnData.message == "Unauthenticated.") {
                     Swal.fire({
                         title: "Sesion finalizada",
@@ -73,7 +77,7 @@ const TablaList = (getStatusCRUD) => {
             setProgressData(false)
         }
         peticionListRoles();
-    }, [getPag, getSort, getCountRows, getStatusCRUD, getStatusUpdate]);
+    }, [getPag, getSort, getCountRows, getStatusCRUD, getStatusUpdate,getStatusCRUD.getDataSearh, getStatusCRUD.getParameterSearh]);
 
     const columns = [
         {
@@ -223,7 +227,7 @@ const TablaList = (getStatusCRUD) => {
                     height: '300px', 
                     backgroundColor: 'rgba(255, 255, 255, 0.36)',
                     width: '100%',
-                  }}><span className="spinner-border spinner-border-xl fs-2" role="status" aria-hidden="true" />cargando...</div>}
+                  }}><span className="spinner-border spinner-border-xl fs-2" role="status" aria-hidden="true" />cargandon datos...</div>}
                 onChangePage={(newPage) => setPag(newPage)}
                 paginationTotalRows={getRowTotal}
                 onSort={handleSort}

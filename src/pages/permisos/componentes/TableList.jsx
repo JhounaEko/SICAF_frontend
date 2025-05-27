@@ -145,15 +145,18 @@ const TableList = (getDataRefresch) => {
                     setDataTables(returnData.response.data.results.data);
                     setRowTotal(returnData.response.data.results.meta.total);
                     setNumRow(returnData.response.data.results.meta.from);
+                    getDataRefresch.functionGeneradorPdf(returnData.response.data.results.data)
                 } catch (error) {
                     setRowTotal(0);
                     setDataTables([])
                     setNumRow(0);
+                    getDataRefresch.functionGeneradorPdf([])
                 }
             } else {
                 setRowTotal(0);
                 setDataTables([])
                 setNumRow(0);
+                getDataRefresch.functionGeneradorPdf([])
                 if (returnData.message == "Unauthenticated.") {
                     messageFinallySesion();
                     navigation('/');
