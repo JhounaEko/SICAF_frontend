@@ -100,63 +100,90 @@ const HeaderNavbar = ({ updateTableData, searchData, searchDataParameter, funtio
             }}
             updateTableData={updateTableData}
         />
-        <div className="row">
-            <div className="col-lg-3">
-                <button className="btn btn-theme btn-rounded px-4 rounded-pill" onClick={openModal}> <i className="fas fa-plus fa-1_5x"></i> Nuevo rol</button>
-            </div>
-            <div className="col-lg-4">
-                <Form.Group as={Row} className="" controlId="searchRol">
-                    {(parameterSearchDataCreate == "data_create") ? (
-                        <div className="form-group row">
-                            <label className="col-lg-3 col-form-label">Fechas:</label>
-                            <div className="col-lg-9">
-                                <div className="row gx-2">
-                                    <div className="col-6">
-                                        <DateTime dateFormat="YYYY-MM-DD" timeFormat={false} isValidDate={minDateRange} inputProps={{ placeholder: 'Inicio' }} closeOnSelect={true} onChange={minDateChange} />
-                                    </div>
-                                    <div className="col-6">
-                                        <DateTime dateFormat="YYYY-MM-DD" timeFormat={false} isValidDate={maxDateRange} inputProps={{ placeholder: 'Fin', disabled: false }} closeOnSelect={true} onChange={maxDateChange} />
-                                    </div>
-                                </div>
-                            </div>
-                            <button type="button" onClick={() => submitDateSearch()} className='btn btn-sm btn-theme m-1 p-0 pt-1 pb-1 btn-rounded rounded-pill'> <i className="fa fa-search fa-lg"></i>  Buscar </button>
-                        </div>
-                    ) : (<>
-                        <div className="position-relative">
-                            <input type="text" className="form-control ps-35px rounded-3" placeholder={placeHolderInputSearch} value={searchValue} onChange={(event) => { setSearchValue(event.target.value); ActionSearchData(event.target.value); }} />
-                            <button className="btn position-absolute start-0 top-0 shadow-none"><i className="fa fa-search fa-lg"></i></button>
-                        </div>
-                    </>)
-                    }
-                </Form.Group>
-            </div>
-            <div className="col-lg-2">
-                <select
-                    id="issued_by"
-                    className="form-select "
-                    defaultValue="search"
-                    onChange={(element) => { FuntionSearchParameter(element.target.value, element.target.options[element.target.selectedIndex].text); setParameterSearchDataCreate(element.target.value); }}>
-                    <option value="search">  nombre de rol</option>
-                    <option value="data_create">fecha de registro</option>
-                </select>
-            </div>
-            <div className="col-lg-4">
-          <div className="d-flex justify-content-end gap-2">
-            <button
-              className="btn btn-danger btn-rounded rounded-pill"
-              onClick={funtionActivePdf}
-            >
-              <i className="fa fa-file-pdf me-1"></i> PDF
-            </button>
-            <button
-              className="btn btn-success btn-rounded rounded-pill"
-              onClick={funtionActivePdf}
-            >
-              <i className="fa fa-file-pdf me-1"></i> EXCEL
-            </button>
-          </div>
-        </div>
-        </div>
+        <div className="d-flex flex-wrap align-items-center gap-3">
+  {/* Botón Nuevo Rol */}
+  <div>
+    <button className="btn btn-theme btn-rounded px-4 rounded-pill" onClick={openModal}>
+      <i className="fas fa-plus fa-1_5x"></i> Nuevo rol
+    </button>
+  </div>
+
+  {/* Selector de búsqueda */}
+  <div>
+    <select
+      id="issued_by"
+      className="form-select"
+      style={{ minWidth: "180px" }}
+      defaultValue="search"
+      onChange={(e) => {
+        FuntionSearchParameter(e.target.value, e.target.options[e.target.selectedIndex].text);
+        setParameterSearchDataCreate(e.target.value);
+      }}
+    >
+      <option value="search">nombre de rol</option>
+      <option value="data_create">fecha de registro</option>
+    </select>
+  </div>
+
+  {/* Filtro por fechas o input */}
+  <div style={{ flex: 1 }}>
+    {parameterSearchDataCreate === "data_create" ? (
+      <div className="d-flex align-items-center gap-2">
+        <label className="form-label mb-0">Fechas:</label>
+        <DateTime
+          dateFormat="YYYY-MM-DD"
+          timeFormat={false}
+          isValidDate={minDateRange}
+          inputProps={{ placeholder: 'Inicio' }}
+          closeOnSelect={true}
+          onChange={minDateChange}
+        />
+        <DateTime
+          dateFormat="YYYY-MM-DD"
+          timeFormat={false}
+          isValidDate={maxDateRange}
+          inputProps={{ placeholder: 'Fin' }}
+          closeOnSelect={true}
+          onChange={maxDateChange}
+        />
+        <button
+          type="button"
+          onClick={submitDateSearch}
+          className="btn btn-sm btn-theme btn-rounded rounded-pill"
+        >
+          <i className="fa fa-search fa-lg"></i> Buscar
+        </button>
+      </div>
+    ) : (
+      <div className="position-relative">
+        <input
+          type="text"
+          className="form-control ps-35px rounded-3"
+          placeholder={placeHolderInputSearch}
+          value={searchValue}
+          onChange={(e) => {
+            setSearchValue(e.target.value);
+            ActionSearchData(e.target.value);
+          }}
+        />
+        <button className="btn position-absolute start-0 top-0 shadow-none">
+          <i className="fa fa-search fa-lg"></i>
+        </button>
+      </div>
+    )}
+  </div>
+
+  {/* Botones PDF / Excel */}
+  <div className="d-flex gap-2">
+    <button className="btn btn-danger btn-rounded rounded-pill" onClick={funtionActivePdf}>
+      <i className="fa fa-file-pdf me-1"></i> PDF
+    </button>
+    {/* <button className="btn btn-success btn-rounded rounded-pill" onClick={funtionActivePdf}>
+      <i className="fa fa-file-pdf me-1"></i> EXCEL
+    </button> */}
+  </div>
+</div>
+
     </>);
 }
 

@@ -258,8 +258,7 @@ const TableList = (getStatusCRUD) => {
                         setNumRow(0);
                         getDataRefresch.functionGeneradorPdf([])
                     }                 
-            } else {    
-                getDataRefresch.functionGeneradorPdf([])            
+            } else {                
                 if (returnData.message=="Unauthenticated."){  
                     messageFinallySesion();                  
                     navigation('/');                    
@@ -268,7 +267,7 @@ const TableList = (getStatusCRUD) => {
                 setRowTotal(0);
                 setDataTables([])
                 setNumRow(0);
-                
+                getDataRefresch.functionGeneradorPdf([])
             }
             setProgressData(false);	
         }

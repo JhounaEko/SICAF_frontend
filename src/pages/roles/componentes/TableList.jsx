@@ -9,7 +9,9 @@ import { useNavigate } from 'react-router-dom';
 
 
 // const TablaList = (getStatusCRUD) => {
-const TablaList = ({ getStatusCRUD }) => {
+// const TablaList = ({ getStatusCRUD }) => {
+const TablaList = ({ getStatusCRUD, functionGeneradorPdf }) => {
+
 
     const useListRol = modelUseListRol();
     const useChangeStatus = modelChangeStatus();
@@ -48,21 +50,22 @@ const TablaList = ({ getStatusCRUD }) => {
             const returnData = await useListRol(getPag, getCountRows, getStatusCRUD.getDataSearh, getStatusCRUD.getParameterSearh, getSort.column, getSort.order);                                               
             if (returnData.status) {
                 if (returnData.response.data.results) {
+                    const data = returnData.response.data.results.data;
                     setRowTotal(returnData.response.data.results.meta.total);
                     setDataTables(returnData.response.data.results.data)
                     setNum(returnData.response.data.results.meta.from);
-                    // getDataRefresch.functionGeneradorPdf(returnData.response.data.results.data)
+                    if (functionGeneradorPdf) functionGeneradorPdf(data);
                 } else {
                     setRowTotal(0);
                     setDataTables([])
                     setNum(0);
-                    // getDataRefresch.functionGeneradorPdf([])
+                    if (functionGeneradorPdf) functionGeneradorPdf([]);
                 }
             } else {
                 setRowTotal(0);
                 setDataTables([])
                 setNum(0);
-                // getDataRefresch.functionGeneradorPdf([])
+                if (functionGeneradorPdf) functionGeneradorPdf([]);
                 if (returnData.message == "Unauthenticated.") {
                     Swal.fire({
                         title: "Sesion finalizada",
