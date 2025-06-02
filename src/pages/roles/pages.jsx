@@ -35,15 +35,15 @@ const RolesManager = () => {
     const functionGeneradorPdf = (dataTableComponent) =>{
         setDataTablePdf(dataTableComponent);       
      }
-
+console.log(dataTablePdf);
     const funtionActivePdf = async () =>{       
         const blob = await pdf(<PDFformato 
             data={dataTablePdf} 
-            titulo={"CARGOS"} 
-            columnas={['Nro.','Cargo','Descripcion','Fecha de registro','Ultima actualizacion','Estado']}
+            titulo={"ROLES"} 
+            columnas={['Nro.', 'Rol', 'Fecha de registro', 'Ultima actualizacion', 'Cantidad de Permisos', 'Estado']}
             styleFontSize = {[{fontSize: "7px" },{fontSize: "7px" },{fontSize: "7px" },{fontSize: "7px" },{fontSize: "7px" },{fontSize: "7px" }]}
             styleWightCell = {[{ width: "10%" }, { width: "30%" }, { width: "40%" }, { width: "25%" }, { width: "25%" }, { width: "20%" }]}
-            atributosData = {['id', 'name', 'description', 'created_at', 'updated_at', 'state.name']}
+            atributosData = {['id', 'name', 'created_at', 'updated_at', 'permissions.length', 'state.name']}
             numRowFirtPage = {12}
             numRowotherPage = {18}
              />).toBlob();   

@@ -32,10 +32,11 @@ const CargoManager = () => {
 
     /** Se utiliza para generar el pdf  */
     const [dataTablePdf, setDataTablePdf] = useState([]);
+
     const functionGeneradorPdf = (dataTableComponent) =>{
         setDataTablePdf(dataTableComponent);       
      }
-
+console.log(dataTablePdf);
     const funtionActivePdf = async () =>{       
         const blob = await pdf(<PDFformato 
             data={dataTablePdf} 

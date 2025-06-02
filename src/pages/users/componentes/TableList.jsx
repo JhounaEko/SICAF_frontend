@@ -245,18 +245,18 @@ const TableList = (getStatusCRUD) => {
     useEffect( ()=>{	
         const peticionList = async () =>{
             setProgressData(true);
-            const returnData = await useListTable(getPag, getSort.column, getSort.order, getCountRows, getStatusCRUD.getParameterSearh, getStatusCRUD.getDataSearh);
+            const returnData = await useListTable(getPag, getSort.column, getSort.order, getCountRows, getStatusCRUD.getDataSearh, getStatusCRUD.getParameterSearh);
             if (returnData.status) {
                     try {
                         setDataTables(returnData.response.data.results.data);
                         setRowTotal(returnData.response.data.results.meta.total);
                         setNumRow(returnData.response.data.results.meta.from);	
-                        getDataRefresch.functionGeneradorPdf(returnData.response.data.results.data)
+                        getStatusCRUD.functionGeneradorPdf(returnData.response.data.results.data)
                     } catch (error) {
                         setRowTotal(0);
                         setDataTables([])
                         setNumRow(0);
-                        getDataRefresch.functionGeneradorPdf([])
+                        getStatusCRUD.functionGeneradorPdf([])
                     }                 
             } else {                
                 if (returnData.message=="Unauthenticated."){  
@@ -267,12 +267,12 @@ const TableList = (getStatusCRUD) => {
                 setRowTotal(0);
                 setDataTables([])
                 setNumRow(0);
-                getDataRefresch.functionGeneradorPdf([])
+                getStatusCRUD.functionGeneradorPdf([])
             }
             setProgressData(false);	
         }
         peticionList();
-    },[getPag,getCountRows,getRefreschDataTable,getSort,getStatusCRUD.getStatusCRUD,getStatusCRUD.getDataSearh,getStatusUpdate]);
+    },[getPag,getCountRows,getRefreschDataTable,getSort,getStatusCRUD.getRefreschDataTable,getStatusCRUD.getDataSearh,getStatusUpdate]);
 
     /** Form change password */
     const { register, handleSubmit, reset, setValue,formState: { errors }} = useForm(); 
