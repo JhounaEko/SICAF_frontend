@@ -139,7 +139,7 @@ const TableList = (getDataRefresch) => {
     useEffect(() => {
         const peticionList = async () => {
             setProgressData(true);
-            const returnData = await useListTable(getPag, getSort.column, getSort.order, getCountRows, getDataRefresch.getDataSearh);
+            const returnData = await useListTable(getPag, getSort.column, getSort.order, getCountRows, getDataRefresch.getDataSearh, getDataRefresch.getParameterSearh);
             if (returnData.status) {
                 try {
                     setDataTables(returnData.response.data.results.data);

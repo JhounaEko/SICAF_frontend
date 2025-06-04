@@ -45,7 +45,7 @@ console.log(dataTablePdf);
             styleFontSize = {[{fontSize: "7px" },{fontSize: "7px" },{fontSize: "7px" },{fontSize: "7px" },{fontSize: "7px" },{fontSize: "7px" }]}
             styleWightCell = {[{ width: "10%" }, { width: "30%" }, { width: "40%" }, { width: "25%" }, { width: "25%" }, { width: "20%" }]}
             atributosData = {['id', 'name', 'description', 'created_at', 'updated_at', 'state.name']}
-            numRowFirtPage = {12}
+            numRowFirtPage = {15}
             numRowotherPage = {18}
              />).toBlob();   
         const url = URL.createObjectURL(blob);

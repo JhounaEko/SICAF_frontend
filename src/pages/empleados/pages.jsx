@@ -32,43 +32,49 @@ const EmpleadoManager = () => {
 
   /** Se utiliza para generar el pdf  */
   const [dataTablePdf, setDataTablePdf] = useState([]);
+
   const functionGeneradorPdf = (dataTableComponent) => {
     setDataTablePdf(dataTableComponent);
   };
-
+  console.log(dataTablePdf);
   const funtionActivePdf = async () => {
+    // Combinar first_name y last_name en una sola propiedad
+    const dataTransformada = dataTablePdf.map((item) => ({
+      ...item,
+      full_name: `${item.first_name} ${item.last_name}`,
+    }));
+
     const blob = await pdf(
       <PDFformato
-        data={dataTablePdf}
+        data={dataTransformada}
         titulo={"CARGOS"}
         columnas={[
           "Nro.",
+          "Usuario", // full_name
+          "Carnet",
+          "Oficinas",
           "Cargo",
-          "Descripcion",
           "Fecha de registro",
           "Ultima actualizacion",
           "Estado",
         ]}
-        styleFontSize={[
-          { fontSize: "7px" },
-          { fontSize: "7px" },
-          { fontSize: "7px" },
-          { fontSize: "7px" },
-          { fontSize: "7px" },
-          { fontSize: "7px" },
-        ]}
+        styleFontSize={new Array(8).fill({ fontSize: "7px" })} // 8 ESPACIOS
         styleWightCell={[
-          { width: "10%" },
-          { width: "30%" },
-          { width: "40%" },
-          { width: "25%" },
-          { width: "25%" },
+          { width: "5%" },
           { width: "20%" },
+          { width: "13%" },
+          { width: "20%" },
+          { width: "15%" },
+          { width: "10%" },
+          { width: "10%" },
+          { width: "7%" },
         ]}
         atributosData={[
           "id",
-          "name",
-          "description",
+          "full_name", // usamos el nuevo campo combinado
+          "identity_card",
+          "office.name",
+          "position.name",
           "created_at",
           "updated_at",
           "state.name",
