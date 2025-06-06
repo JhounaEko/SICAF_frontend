@@ -42,45 +42,47 @@ const OfficeManager = () => {
   };
   console.log(dataTablePdf);
   const funtionActivePdf = async () => {
-    const blob = await pdf(
-      <PDFformato
-        data={dataTablePdf}
-        titulo={"OFICINAS"}
-        columnas={[
-          "Nro.",
-          "Oficina",
-          "Dependencia",
-          "Nivel de dependencia",
-          "Fecha de registro",
-          "Ultima actualizacion",
-          "Estado",
-        ]}
-        styleFontSize={new Array(7).fill({ fontSize: "7px" })}
-        styleWightCell={[
-          { width: "7%" },
-          { width: "30%" },
-          { width: "40%" },
-          { width: "20%" },
-          { width: "20%" },
-          { width: "20%" },
-          { width: "15%" },
-        ]}
-        atributosData={[
-          "id",
-          "name",
-          "parent.name",
-          "level",
-          "created_at",
-          "updated_at",
-          "state.name",
-        ]}
-        numRowFirtPage={12}
-        numRowotherPage={15}
-      />
-    ).toBlob();
-    const url = URL.createObjectURL(blob);
-    window.open(url, "_blank");
-  };
+  const blob = await pdf(
+    <PDFformato
+      data={dataTablePdf}
+      titulo={"OFICINAS"}
+      columnas={[
+        "Nro.",
+        "Oficina",
+        "Dependencia",
+        "Nivel de dependencia",
+        "Fecha de registro",
+        "Ultima actualizacion",
+        "Estado",
+      ]}
+      styleFontSize={new Array(7).fill({ fontSize: "6.5px" })}
+      styleWightCell={[
+        { width: "6%" },
+        { width: "22%" },
+        { width: "25%" },
+        { width: "15%" },
+        { width: "12%" },
+        { width: "12%" },
+        { width: "10%" },
+      ]}
+      atributosData={[
+        "id",
+        "name",
+        "parent.name",
+        "level",
+        "created_at",
+        "updated_at",
+        "state.name",
+      ]}
+      numRowFirtPage={12}
+      numRowotherPage={15}
+    />
+  ).toBlob();
+
+  const url = URL.createObjectURL(blob);
+  window.open(url, "_blank");
+};
+
 
   return (
     <>
