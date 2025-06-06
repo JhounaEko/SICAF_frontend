@@ -191,15 +191,18 @@ const TableList = (getDataRefresch) => {
                     setDataTables(returnData.response.data.results.data);
                     setRowTotal(returnData.response.data.results.meta.total);
                     setNumRow(returnData.response.data.results.meta.from);
+                    getDataRefresch.functionGeneradorPdf(returnData.response.data.results.data)
                 } catch (error) {
                     setRowTotal(0);
                     setDataTables([])
                     setNumRow(0);
+                    getDataRefresch.functionGeneradorPdf([])
                 }
             } else {
                 setRowTotal(0);
                 setDataTables([])
                 setNumRow(0);
+                getDataRefresch.functionGeneradorPdf([])
                 if (returnData.message == "Unauthenticated.") {
                     messageFinallySesion();
                     navigation('/');
@@ -208,7 +211,7 @@ const TableList = (getDataRefresch) => {
             setProgressData(false);
         }
         peticionListOffice();
-    }, [getPag, getSort, getCountRows, getRefreschDataTable /**Update */, getDataRefresch.getDataSearh, getDataRefresch.getRefreschDataTable /** Create*/, getDataRefresch.getLevel]);
+    }, [getPag, getSort, getCountRows, getRefreschDataTable /**Update */, getDataRefresch.getRefreschDataTable, getDataRefresch.getDataSearh /** Create*/, getDataRefresch.getLevel]);
 
 
     const handleSort = (columnTable, direction) => {
